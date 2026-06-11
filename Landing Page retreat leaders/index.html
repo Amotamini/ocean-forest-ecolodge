@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host Your Retreat — Ocean Forest Ecolodge, Costa Rica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* ── BRAND COLORS — extracted from the Ocean Forest logo ── */
+    --teal-deep:   #16707E;   /* outer koru band / dark ocean        */
+    --teal:        #2AADA8;   /* primary brand teal                  */
+    --teal-light:  #3DCFD0;   /* inner koru / highlight              */
+    --lime:        #5ABE3A;   /* leaf outer ribs                     */
+    --lime-bright: #A0D428;   /* leaf tip accent / CTA               */
+
+    /* ── PAGE PALETTE ── */
+    --ink:    #1a1f1a;
+    --forest: #1C6638;   /* deep forest (was #2d4a2d) */
+    --canopy: #2A9055;   /* mid green   (was #3d6b3d) */
+    --moss:   #4CB870;   /* light green (was #6b8f5e) */
+    --mist:   #e8ede4;
+    --sand:   #f2ede5;
+    --ocean:  #16707E;   /* deep teal   (was #2a5f72) */
+    --gold:   #2AADA8;   /* primary teal replaces warm gold */
+    --white:  #fafaf8;
+    --serif:  'Cormorant Garamond', Georgia, serif;
+    --sans:   'DM Sans', system-ui, sans-serif;
+    --mono:   'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 18px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(26, 31, 26, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--mist);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-cta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: #3DCFD0; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 0 80px;
+    overflow: hidden;
+  }
+
+  /* Layered gradient simulating the jungle-meets-ocean scene */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        160deg,
+        #0d2414 0%,
+        #1a3d20 18%,
+        #2d5a30 35%,
+        #1e4a3a 52%,
+        #163a45 68%,
+        #0e2535 85%,
+        #091820 100%
+      );
+  }
+
+  /* Animated canopy texture */
+  .hero-canopy {
+    position: absolute;
+    inset: 0;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(ellipse 120px 80px at 15% 20%, #3d7a40 0%, transparent 70%),
+      radial-gradient(ellipse 90px 60px at 35% 10%, #2d6030 0%, transparent 70%),
+      radial-gradient(ellipse 140px 90px at 60% 15%, #4a8050 0%, transparent 70%),
+      radial-gradient(ellipse 80px 50px at 80% 8%, #357040 0%, transparent 70%),
+      radial-gradient(ellipse 100px 70px at 92% 25%, #3a7545 0%, transparent 70%),
+      radial-gradient(ellipse 60px 40px at 25% 30%, #2a5530 0%, transparent 60%),
+      radial-gradient(ellipse 110px 75px at 70% 30%, #3d7040 0%, transparent 65%);
+  }
+
+  /* Ocean shimmer at bottom */
+  .hero-ocean {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(30, 80, 100, 0.3) 40%,
+      rgba(20, 60, 80, 0.6) 100%
+    );
+  }
+
+  /* Golden sun */
+  .hero-sun {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(255, 220, 120, 0.9) 0%,
+      rgba(200, 160, 60, 0.6) 35%,
+      rgba(180, 120, 30, 0.2) 65%,
+      transparent 100%
+    );
+    animation: pulse-sun 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse-sun {
+    0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
+    50% { transform: translateX(-50%) scale(1.06); opacity: 1; }
+  }
+
+  /* Silhouette of the yoga shala / pagoda form */
+  .hero-shala {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 260px;
+    opacity: 0.18;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .hero-headline {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 7vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.0;
+    color: var(--white);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: #c8e8c0;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: rgba(232, 237, 228, 0.75);
+    max-width: 560px;
+    margin: 28px 0 44px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #3DCFD0; transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--mist);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232, 237, 228, 0.4);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); border-color: var(--white); }
+
+  /* ── STATS STRIP ── */
+  .stats-strip {
+    background: var(--forest);
+    padding: 28px 48px;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .stat {
+    text-align: center;
+    padding: 0 48px;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    flex-shrink: 0;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-number {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232, 237, 228, 0.55);
+    display: block;
+    margin-top: 6px;
+  }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 100px 48px;
+  }
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--forest);
+    margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--canopy); }
+
+  .section-body {
+    font-size: 1.05rem;
+    color: #4a4f4a;
+    line-height: 1.75;
+    max-width: 640px;
+  }
+
+  /* ── WHO WE ARE ── */
+  .about {
+    background: var(--sand);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-visual {
+    position: relative;
+  }
+  /* Illustrated pagoda / shala shape */
+  .shala-illustration {
+    width: 100%;
+    max-width: 440px;
+  }
+  .about-pull {
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 2.5vw, 2.1rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.4;
+    color: var(--forest);
+    border-left: 2px solid var(--gold);
+    padding-left: 28px;
+    margin-top: 36px;
+  }
+
+  /* ── MADE FOR YOU ── */
+  .for-you {
+    background: var(--white);
+  }
+  .for-you-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 56px;
+  }
+  .for-you-list {
+    list-style: none;
+  }
+  .for-you-list li {
+    padding: 20px 0;
+    border-bottom: 1px solid #dde3d8;
+    font-size: 1.05rem;
+    color: #3a3f3a;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .for-you-list li::before {
+    content: '→';
+    font-family: var(--mono);
+    color: var(--gold);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .not-for {
+    background: var(--mist);
+    padding: 32px;
+    margin-top: 0;
+  }
+  .not-for-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 12px;
+  }
+  .not-for p {
+    font-size: 0.95rem;
+    color: #5a6055;
+    line-height: 1.7;
+  }
+
+  /* ── SPACES ── */
+  .spaces {
+    background: var(--ink);
+    color: var(--mist);
+  }
+  .spaces .section-title { color: var(--mist); }
+  .spaces .section-title em { color: var(--gold); }
+  .spaces .eyebrow { color: var(--gold); opacity: 0.7; }
+
+  .shala-feature {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 56px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .shala-specs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 32px;
+  }
+  .spec {
+    background: rgba(255,255,255,0.05);
+    padding: 20px;
+  }
+  .spec-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(232, 237, 228, 0.4);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .spec-value {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 300;
+    color: var(--white);
+  }
+
+  .shala-description {
+    font-size: 1.05rem;
+    color: rgba(232, 237, 228, 0.75);
+    line-height: 1.75;
+  }
+
+  .shala-name {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  /* Accommodation cards */
+  .accom-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 40px;
+  }
+  .accom-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 36px 28px;
+    transition: background 0.2s;
+  }
+  .accom-card:hover { background: rgba(255,255,255,0.07); }
+  .accom-type {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .accom-name {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .accom-desc {
+    font-size: 0.92rem;
+    color: rgba(232, 237, 228, 0.6);
+    line-height: 1.65;
+    margin-bottom: 20px;
+  }
+  .accom-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .accom-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(232, 237, 228, 0.45);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 5px 10px;
+  }
+
+  /* ── WHAT'S INCLUDED ── */
+  .included {
+    background: var(--forest);
+    color: var(--mist);
+  }
+  .included .section-title { color: var(--white); }
+  .included .eyebrow { color: var(--gold); opacity: 0.8; }
+
+  .included-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .include-item {
+    background: rgba(0,0,0,0.2);
+    padding: 36px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .include-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .include-title {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .include-desc {
+    font-size: 0.92rem;
+    color: rgba(232, 237, 228, 0.65);
+    line-height: 1.65;
+  }
+
+  /* Leader free stay banner */
+  .leader-banner {
+    background: var(--gold);
+    color: var(--ink);
+    padding: 28px 36px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    grid-column: 1 / -1;
+  }
+  .leader-banner-text {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-style: italic;
+  }
+  .leader-banner-sub {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
+  /* ── EXCURSIONS ── */
+  .excursions {
+    background: var(--sand);
+  }
+  .excursion-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .excursion-item {
+    padding: 28px;
+    border-left: 2px solid var(--moss);
+  }
+  .excursion-name {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 8px;
+  }
+  .excursion-price {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .excursion-desc {
+    font-size: 0.9rem;
+    color: #5a6055;
+    line-height: 1.6;
+  }
+
+  /* ── PRICING ── */
+  .pricing {
+    background: var(--white);
+  }
+  .pricing-intro {
+    font-size: 1.05rem;
+    color: #4a4f4a;
+    line-height: 1.75;
+    max-width: 620px;
+    margin-bottom: 56px;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .price-card {
+    border: 1px solid #dde3d8;
+    padding: 40px 32px;
+    position: relative;
+  }
+  .price-card.featured {
+    background: var(--forest);
+    border-color: var(--forest);
+    color: var(--mist);
+  }
+  .price-card.featured .price-type { color: var(--gold); }
+  .price-card.featured .price-name { color: var(--white); }
+  .price-card.featured .price-rooms { color: rgba(232,237,228,0.6); }
+  .price-card.featured .price-caption { color: rgba(232,237,228,0.5); }
+  .price-badge {
+    position: absolute;
+    top: -12px;
+    left: 32px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+  }
+  .price-type {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .price-name {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--forest);
+    margin-bottom: 6px;
+  }
+  .price-rooms {
+    font-size: 0.88rem;
+    color: #6a7065;
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .price-amount {
+    font-family: var(--serif);
+    font-size: 2.6rem;
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1;
+  }
+  .price-card.featured .price-amount { color: var(--gold); }
+  .price-per {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--moss);
+    display: block;
+    margin-top: 6px;
+    margin-bottom: 20px;
+  }
+  .price-card.featured .price-per { color: rgba(232,237,228,0.5); }
+  .price-caption {
+    font-size: 0.88rem;
+    color: #6a7065;
+    line-height: 1.55;
+  }
+
+  .pricing-note {
+    margin-top: 32px;
+    padding: 24px 28px;
+    background: var(--mist);
+    font-size: 0.92rem;
+    color: #5a6055;
+    line-height: 1.65;
+  }
+  .pricing-note strong {
+    font-weight: 500;
+    color: var(--forest);
+  }
+
+  /* Payment plan */
+  .payment-plan {
+    margin-top: 56px;
+  }
+  .payment-plan-title {
+    font-family: var(--serif);
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--forest);
+    margin-bottom: 28px;
+  }
+  .payment-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .payment-step {
+    background: var(--mist);
+    padding: 28px;
+  }
+  .payment-pct {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--forest);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .payment-when {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--moss);
+    margin-bottom: 8px;
+    display: block;
+  }
+  .payment-desc {
+    font-size: 0.88rem;
+    color: #5a6055;
+    line-height: 1.55;
+  }
+
+  /* ── LOCATION ── */
+  .location {
+    background: var(--ink);
+    color: var(--mist);
+  }
+  .location .section-title { color: var(--white); }
+  .location .eyebrow { color: var(--gold); opacity: 0.7; }
+  .location-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 56px;
+    align-items: start;
+  }
+  .location-map {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 48px;
+    text-align: center;
+  }
+  .location-facts {
+    list-style: none;
+  }
+  .location-facts li {
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 1rem;
+    color: rgba(232, 237, 228, 0.75);
+    line-height: 1.6;
+  }
+  .location-facts li:last-child { border-bottom: none; }
+  .fact-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    flex-shrink: 0;
+    width: 90px;
+    margin-top: 3px;
+  }
+
+  /* wildlife list */
+  .wildlife-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .wildlife-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(232, 237, 228, 0.5);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px 12px;
+  }
+
+  /* Map SVG placeholder */
+  .map-svg-area {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .process {
+    background: var(--sand);
+  }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .process-step {
+    background: var(--white);
+    padding: 36px 28px;
+  }
+  .step-num {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--moss);
+    opacity: 0.4;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .step-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--forest);
+    margin-bottom: 10px;
+  }
+  .step-desc {
+    font-size: 0.9rem;
+    color: #5a6055;
+    line-height: 1.65;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: var(--forest);
+    text-align: center;
+    padding: 120px 48px;
+  }
+  .cta-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.8;
+    margin-bottom: 24px;
+    display: block;
+  }
+  .cta-headline {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+  .cta-headline em { font-style: italic; color: #c8e8c0; }
+  .cta-sub {
+    font-size: 1.05rem;
+    color: rgba(232, 237, 228, 0.65);
+    max-width: 520px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .btn-wa {
+    background: #25D366;
+    color: var(--white);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-wa:hover { background: #20ba5a; transform: translateY(-1px); }
+  .btn-email {
+    background: transparent;
+    color: var(--mist);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    border: 1px solid rgba(232, 237, 228, 0.3);
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-email:hover { border-color: var(--white); color: var(--white); }
+  .cta-contact-detail {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: rgba(232, 237, 228, 0.4);
+  }
+  .cta-contact-detail a {
+    color: rgba(232, 237, 228, 0.6);
+    text-decoration: none;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: rgba(232, 237, 228, 0.4);
+    text-transform: uppercase;
+  }
+  .footer-links {
+    display: flex;
+    gap: 32px;
+  }
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(232, 237, 228, 0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: rgba(232, 237, 228, 0.7); }
+  .footer-tagline {
+    font-size: 0.82rem;
+    color: rgba(232, 237, 228, 0.25);
+    text-align: right;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    section { padding: 72px 24px; }
+    .stats-strip { padding: 24px; gap: 0; }
+    .stat { padding: 0 24px; }
+    .hero-content { padding: 0 24px; }
+    .about-grid,
+    .for-you-grid,
+    .shala-feature,
+    .location-grid,
+    .pricing-grid,
+    .payment-steps,
+    .accom-grid,
+    .excursion-list,
+    .process-steps,
+    .included-grid { grid-template-columns: 1fr; gap: 32px; }
+    .leader-banner { grid-column: auto; }
+    .pricing-grid { gap: 16px; }
+    .price-card { padding: 32px 24px; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .footer-tagline { text-align: left; }
+  }
+
+  @media (max-width: 600px) {
+    .hero-headline { font-size: 2.6rem; }
+    .shala-feature { padding: 28px; }
+    .cta-section { padding: 80px 24px; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero-sun { animation: none; }
+  }
+
+  /* ── NAV LOGO ── */
+  .nav-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-mark {
+    height: 38px;
+    width: 38px;
+    flex-shrink: 0;
+    border-radius: 50%;
+  }
+  .nav-logo-text {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  /* ── BOOK A CALL BUTTON (reusable) ── */
+  .btn-book-call {
+    background: var(--lime-bright);
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+  }
+  .btn-book-call:hover { background: #B8E030; transform: translateY(-1px); }
+  .btn-book-call svg { flex-shrink: 0; }
+
+  /* nav variant — smaller */
+  nav .btn-book-call {
+    font-size: 0.72rem;
+    padding: 10px 22px;
+    background: var(--teal);
+    color: var(--white);
+  }
+  nav .btn-book-call:hover { background: var(--teal-light); }
+
+  /* ── BOOKING MODAL ── */
+  .booking-modal {
+    display: none;
+    position: fixed;
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+  .booking-modal.open { display: flex; }
+
+  .modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 20, 10, 0.75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    cursor: pointer;
+  }
+
+  .modal-panel {
+    position: relative;
+    z-index: 1;
+    background: var(--white);
+    width: 100%;
+    max-width: 760px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+  }
+
+  .modal-header {
+    padding: 40px 44px 28px;
+    border-bottom: 1px solid #dde3d8;
+    flex-shrink: 0;
+  }
+  .modal-header .eyebrow { color: var(--moss); margin-bottom: 10px; }
+  .modal-title {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 300;
+    color: var(--forest);
+    margin-bottom: 10px;
+    line-height: 1.15;
+  }
+  .modal-sub {
+    font-size: 0.95rem;
+    color: #5a6055;
+    line-height: 1.65;
+    max-width: 540px;
+  }
+
+  .modal-calendar {
+    flex: 1;
+    overflow: hidden;
+    background: #f7f9f6;
+    min-height: 420px;
+  }
+
+  .calendar-iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 420px;
+    border: none;
+    display: block;
+  }
+
+  /* Placeholder shown when no Calendar URL is configured */
+  .calendar-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 420px;
+    padding: 48px;
+    text-align: center;
+    gap: 20px;
+  }
+  .calendar-placeholder-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.6rem;
+  }
+  .calendar-placeholder h3 {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: var(--forest);
+  }
+  .calendar-placeholder p {
+    font-size: 0.92rem;
+    color: #5a6055;
+    max-width: 360px;
+    line-height: 1.65;
+  }
+  .calendar-direct-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  .cal-link {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+  }
+  .cal-link-primary {
+    background: var(--forest);
+    color: white;
+  }
+  .cal-link-primary:hover { background: var(--canopy); }
+  .cal-link-secondary {
+    background: transparent;
+    color: var(--forest);
+    border: 1px solid #c0cbb8;
+  }
+  .cal-link-secondary:hover { border-color: var(--forest); }
+
+  .modal-footer {
+    padding: 16px 44px;
+    border-top: 1px solid #dde3d8;
+    background: var(--mist);
+    font-size: 0.85rem;
+    color: #6a7065;
+    flex-shrink: 0;
+  }
+  .modal-footer a {
+    color: var(--teal);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(42,173,168,0.3);
+  }
+  .modal-footer a:hover { border-color: var(--teal); }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: #8a9080;
+    cursor: pointer;
+    padding: 6px 10px;
+    transition: color 0.15s;
+    z-index: 2;
+  }
+  .modal-close:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .modal-header { padding: 32px 24px 20px; }
+    .modal-footer { padding: 14px 24px; }
+    .modal-panel { max-height: 95vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo-link">
+    <img src="images/logo.svg" alt="Ocean Forest Ecolodge logo" class="nav-logo-mark">
+    <span class="nav-logo-text">Ocean Forest Ecolodge</span>
+  </a>
+  <button class="btn-book-call" id="nav-book-btn">Book a Call</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-canopy"></div>
+  <div class="hero-ocean"></div>
+  <div class="hero-sun"></div>
+
+  <!-- Pagoda silhouette SVG -->
+  <svg class="hero-shala" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M160 20 L280 90 L270 90 L270 100 L290 100 L290 110 L30 110 L30 100 L50 100 L50 90 L40 90 Z" fill="white" opacity="0.8"/>
+    <path d="M160 50 L240 100 L230 100 L230 108 L240 108 L240 115 L80 115 L80 108 L90 108 L90 100 L80 100 Z" fill="white" opacity="0.6"/>
+    <path d="M160 80 L210 110 L210 115 L110 115 L110 110 Z" fill="white" opacity="0.5"/>
+    <rect x="60" y="110" width="200" height="80" fill="white" opacity="0.15"/>
+    <rect x="80" y="110" width="20" height="80" fill="white" opacity="0.3"/>
+    <rect x="140" y="110" width="20" height="80" fill="white" opacity="0.3"/>
+    <rect x="220" y="110" width="20" height="80" fill="white" opacity="0.3"/>
+    <rect x="60" y="190" width="200" height="10" fill="white" opacity="0.3"/>
+    <rect x="130" y="140" width="60" height="50" fill="white" opacity="0.25"/>
+    <path d="M110 190 Q160 180 210 190" stroke="white" stroke-width="1" opacity="0.3" fill="none"/>
+  </svg>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">Osa Peninsula · Costa Rica · Since 2000</p>
+    <h1 class="hero-headline">
+      Your retreat.<br>
+      <em>Wilder</em> than<br>
+      you planned.
+    </h1>
+    <p class="hero-sub">Ocean Forest Ecolodge sits between Corcovado National Park and the Pacific — a beachfront jungle sanctuary built for retreat leaders who want their work to feel as alive as the landscape around it.</p>
+    <div class="hero-actions">
+      <button class="btn-primary btn-book-call" id="hero-book-btn" style="font-size:0.75rem; padding:16px 36px;">Book a Discovery Call</button>
+      <a href="#spaces" class="btn-ghost">See the Spaces ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat">
+    <span class="stat-number">32</span>
+    <span class="stat-label">Max guests</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">46ft</span>
+    <span class="stat-label">Yoga shala height</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">3–10</span>
+    <span class="stat-label">Days, your choice</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">6km</span>
+    <span class="stat-label">To Corcovado</span>
+  </div>
+  <div class="stat">
+    <span class="stat-number">2000</span>
+    <span class="stat-label">Year founded</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <span class="eyebrow">Who we are</span>
+        <h2 class="section-title">A beachfront sanctuary.<br><em>Built for practice.</em></h2>
+        <p class="section-body">In 2000 we transformed an old horse pasture into a yoga shala, right on the beach. What started as a single structure became something larger — a fully self-contained ecolodge surrounded by ethnobotanical gardens, permaculture grounds, and one of the most biodiverse forest corridors on the planet.</p>
+        <p class="section-body" style="margin-top: 18px;">We've spent over two decades refining what it means to host a retreat well. That means trained staff who stay out of your way until you need them, food made by local chefs with whatever the land offers that day, and a physical space that does real work on your students before class even starts.</p>
+        <blockquote class="about-pull">"We've devoted much of our income to rainforest and oceanic wildlife conservation. When you bring your group here, that's part of what they're supporting too."</blockquote>
+      </div>
+      <div class="about-visual reveal">
+        <!-- Illustrated lodge from above -->
+        <svg class="shala-illustration" viewBox="0 0 440 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sky / ocean gradient background -->
+          <rect width="440" height="360" fill="url(#sky-grad)"/>
+          <defs>
+            <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#163a45"/>
+              <stop offset="40%" stop-color="#1e4a3a"/>
+              <stop offset="70%" stop-color="#2d5a30"/>
+              <stop offset="100%" stop-color="#1a3d20"/>
+            </linearGradient>
+            <linearGradient id="ocean-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#1a5068" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#0d2535" stop-opacity="0.9"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Ocean strip at top -->
+          <rect x="0" y="0" width="440" height="80" fill="url(#ocean-grad)"/>
+
+          <!-- Beach line -->
+          <path d="M0 80 Q110 72 220 78 Q330 84 440 76 L440 95 Q330 102 220 97 Q110 93 0 98 Z" fill="#c8a84b" opacity="0.3"/>
+
+          <!-- Forest canopy blobs -->
+          <ellipse cx="60" cy="180" rx="55" ry="42" fill="#2d5a30" opacity="0.9"/>
+          <ellipse cx="110" cy="195" rx="48" ry="38" fill="#3d6b3d" opacity="0.8"/>
+          <ellipse cx="360" cy="175" rx="55" ry="44" fill="#2d5a30" opacity="0.9"/>
+          <ellipse cx="310" cy="192" rx="50" ry="38" fill="#3d6b3d" opacity="0.8"/>
+          <ellipse cx="40" cy="250" rx="40" ry="32" fill="#2a5228" opacity="0.7"/>
+          <ellipse cx="400" cy="248" rx="42" ry="33" fill="#2a5228" opacity="0.7"/>
+
+          <!-- Main shala pagoda structure -->
+          <!-- Base platform -->
+          <rect x="155" y="195" width="130" height="85" fill="#5a3820" opacity="0.9"/>
+          <!-- Roof layers -->
+          <path d="M220 120 L310 175 L295 175 L295 185 L315 185 L315 195 L125 195 L125 185 L145 185 L145 175 L130 175 Z" fill="#7a4a28" opacity="0.95"/>
+          <path d="M220 145 L285 182 L278 182 L278 190 L285 190 L285 197 L155 197 L155 190 L162 190 L162 182 L155 182 Z" fill="#6a3e22" opacity="0.9"/>
+          <path d="M220 165 L260 192 L258 197 L182 197 L180 192 Z" fill="#5a3418" opacity="0.85"/>
+          <!-- Columns -->
+          <rect x="165" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
+          <rect x="205" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
+          <rect x="227" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
+          <rect x="267" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
+          <!-- Floor levels glow -->
+          <rect x="163" y="195" width="114" height="5" fill="#c8a84b" opacity="0.3"/>
+          <rect x="163" y="245" width="114" height="3" fill="#c8a84b" opacity="0.2"/>
+
+          <!-- Garden paths -->
+          <path d="M220 280 Q200 295 180 320 Q200 315 220 310 Q240 315 260 320 Q240 295 220 280 Z" fill="#4a7a3a" opacity="0.5"/>
+
+          <!-- Sun -->
+          <circle cx="220" cy="40" r="22" fill="#c8a84b" opacity="0.7"/>
+          <circle cx="220" cy="40" r="14" fill="#e8c060" opacity="0.8"/>
+
+          <!-- Birds dots -->
+          <circle cx="170" cy="55" r="2" fill="white" opacity="0.5"/>
+          <circle cx="178" cy="50" r="2" fill="white" opacity="0.5"/>
+          <circle cx="260" cy="60" r="2" fill="white" opacity="0.4"/>
+          <circle cx="268" cy="55" r="2" fill="white" opacity="0.4"/>
+
+          <!-- Frame -->
+          <rect x="1" y="1" width="438" height="358" fill="none" stroke="#c8a84b" stroke-width="1" opacity="0.2"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR YOU -->
+<section class="for-you">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Made for retreat leaders</span>
+    <h2 class="section-title reveal">Is Ocean Forest<br><em>right for your group?</em></h2>
+    <div class="for-you-grid">
+      <div>
+        <ul class="for-you-list reveal">
+          <li>You want your students fully immersed in nature — no city distractions, no competing noise</li>
+          <li>You're looking for a venue that handles logistics so you can focus entirely on teaching</li>
+          <li>Your group is between 8 and 32 people</li>
+          <li>You want 3 to 10 days of dedicated retreat time</li>
+          <li>Yoga, movement, dance, ceremony, workshops, or any combination — you bring the program, we provide the space</li>
+          <li>You value sustainability — our income goes directly back into rainforest conservation</li>
+          <li>Your participants are ready for an experience that genuinely changes them</li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="not-for">
+          <p class="not-for-title">Worth knowing</p>
+          <p>We're remote by design — 1.5 hours by small plane from San José, or a day's travel by road and boat. That remoteness is exactly what makes transformation possible here. But it does require participants who are comfortable with a real journey to get here. If your group needs easy accessibility or urban amenities nearby, we're probably not the right fit.</p>
+        </div>
+        <div style="margin-top: 24px; padding: 28px; background: var(--mist);">
+          <p class="not-for-title">What you bring</p>
+          <p style="font-size: 0.95rem; color: #5a6055; line-height: 1.7;">Your program, your teaching, your students. That's all. We handle everything else — accommodation, three meals a day, space setup, local logistics, and any activities your group wants to add on.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPACES -->
+<section class="spaces" id="spaces">
+  <div class="section-inner">
+    <span class="eyebrow reveal">The spaces</span>
+    <h2 class="section-title reveal">Where you'll work,<br><em>rest, and move.</em></h2>
+
+    <!-- Shala feature -->
+    <div class="shala-feature reveal">
+      <div>
+        <p class="shala-name">The Yoga Shala</p>
+        <p class="shala-description">A 46-foot, three-level pagoda built entirely from reclaimed local hardwoods. The ground floor — what we call the Dharma Hall — is 1,614 square feet of tiled space, always cool even in peak heat. Good for workshops, gatherings, and ceremony. The second floor is what teachers remember: smooth polished hardwood, full of light, fully equipped with props. It has its own name here: "foot candy."</p>
+        <p class="shala-description" style="margin-top: 16px;">It sits right on the beach. You practice to the sound of the ocean. The jungle starts where the property ends.</p>
+        <div class="shala-specs">
+          <div class="spec">
+            <span class="spec-label">Height</span>
+            <span class="spec-value">46 feet / 3 levels</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Dharma Hall</span>
+            <span class="spec-value">1,614 sq ft</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Floor</span>
+            <span class="spec-value">Hardwood, polished</span>
+          </div>
+          <div class="spec">
+            <span class="spec-label">Equipment</span>
+            <span class="spec-value">Full props included</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <!-- Shala interior illustration -->
+        <svg viewBox="0 0 380 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width: 380px;">
+          <defs>
+            <linearGradient id="floor-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8B5E3C"/>
+              <stop offset="100%" stop-color="#5a3820"/>
+            </linearGradient>
+            <linearGradient id="ceiling-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#3d2510"/>
+              <stop offset="100%" stop-color="#5a3820"/>
+            </linearGradient>
+          </defs>
+          <!-- Background - jungle outside -->
+          <rect width="380" height="300" fill="#1a3520"/>
+          <!-- Jungle elements through openings -->
+          <ellipse cx="60" cy="180" rx="45" ry="55" fill="#2d5a30" opacity="0.8"/>
+          <ellipse cx="320" cy="175" rx="45" ry="55" fill="#2d5a30" opacity="0.8"/>
+          <rect x="140" y="80" width="100" height="140" fill="#163a20" opacity="0.6"/>
+          <!-- Ceiling rafters -->
+          <path d="M0 0 L190 60 L380 0 L380 20 L190 80 L0 20 Z" fill="url(#ceiling-grad)" opacity="0.95"/>
+          <!-- Cross beams -->
+          <line x1="0" y1="30" x2="380" y2="30" stroke="#4a2e14" stroke-width="6" opacity="0.7"/>
+          <line x1="0" y1="55" x2="380" y2="55" stroke="#4a2e14" stroke-width="4" opacity="0.5"/>
+          <!-- Floor perspective -->
+          <path d="M0 220 L190 180 L380 220 L380 300 L0 300 Z" fill="url(#floor-grad)"/>
+          <!-- Floor grain lines -->
+          <line x1="0" y1="240" x2="380" y2="240" stroke="#7a4e30" stroke-width="1" opacity="0.4"/>
+          <line x1="0" y1="260" x2="380" y2="260" stroke="#7a4e30" stroke-width="1" opacity="0.4"/>
+          <line x1="0" y1="280" x2="380" y2="280" stroke="#7a4e30" stroke-width="1" opacity="0.3"/>
+          <!-- Columns -->
+          <rect x="30" y="50" width="14" height="230" fill="#4a2e14" opacity="0.9"/>
+          <rect x="90" y="65" width="12" height="215" fill="#4a2e14" opacity="0.8"/>
+          <rect x="278" y="65" width="12" height="215" fill="#4a2e14" opacity="0.8"/>
+          <rect x="336" y="50" width="14" height="230" fill="#4a2e14" opacity="0.9"/>
+          <!-- Light shafts from openings -->
+          <path d="M140 30 L240 30 L260 180 L120 180 Z" fill="white" opacity="0.04"/>
+          <!-- Yoga mat suggestion -->
+          <rect x="145" y="182" width="90" height="35" rx="2" fill="#6b5a8e" opacity="0.6"/>
+          <rect x="170" y="185" width="40" height="29" fill="#8a75aa" opacity="0.3"/>
+          <!-- People silhouettes practicing -->
+          <ellipse cx="175" cy="170" rx="8" ry="10" fill="#2a1a0a" opacity="0.7"/>
+          <path d="M167 180 Q175 200 183 180" fill="#2a1a0a" opacity="0.6"/>
+          <ellipse cx="220" cy="168" rx="8" ry="10" fill="#2a1a0a" opacity="0.7"/>
+          <path d="M212 178 Q220 198 228 178" fill="#2a1a0a" opacity="0.6"/>
+          <!-- Warm light glow from above -->
+          <ellipse cx="190" cy="40" rx="80" ry="30" fill="#c8a84b" opacity="0.15"/>
+          <!-- Hammock suggestion on right -->
+          <path d="M295 140 Q315 155 295 168" stroke="#8a6a4a" stroke-width="3" fill="none" opacity="0.7"/>
+          <path d="M295 140 Q325 152 295 168 Q310 148 295 140 Z" fill="#8a6a4a" opacity="0.4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Accommodation cards -->
+    <h3 style="font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: rgba(232,237,228,0.8); margin: 64px 0 24px; font-style: italic;">Accommodation for up to 32 guests</h3>
+    <div class="accom-grid">
+      <div class="accom-card reveal">
+        <span class="accom-type">Beachfront</span>
+        <div class="accom-name">Beach Bungalows</div>
+        <p class="accom-desc">Right on the shore. Private en suite, double bed, balcony with hammock and chairs looking straight out at the Pacific. Wake up, step outside, hear the ocean.</p>
+        <div class="accom-meta">
+          <span class="accom-tag">3 units</span>
+          <span class="accom-tag">2–3 guests each</span>
+          <span class="accom-tag">Ocean view</span>
+        </div>
+      </div>
+      <div class="accom-card reveal">
+        <span class="accom-type">Forest</span>
+        <div class="accom-name">Jungle Suites</div>
+        <p class="accom-desc">Spacious rooms opening onto private balconies with forest views and partial ocean glimpses. Hammocks, writing desks, hardwood floors. The jungle is close enough to hear.</p>
+        <div class="accom-meta">
+          <span class="accom-tag">4 units</span>
+          <span class="accom-tag">2–4 guests each</span>
+          <span class="accom-tag">Forest view</span>
+        </div>
+      </div>
+      <div class="accom-card reveal">
+        <span class="accom-type">Group</span>
+        <div class="accom-name">Lapa Lapa Rooms</div>
+        <p class="accom-desc">Two connected rooms adjacent to the main yoga shala — reserved for retreat facilitators. Close enough to the practice space to arrive and leave with nothing in between.</p>
+        <div class="accom-meta">
+          <span class="accom-tag">2 rooms</span>
+          <span class="accom-tag">Up to 5 people</span>
+          <span class="accom-tag">Next to shala</span>
+        </div>
+      </div>
+      <div class="accom-card reveal">
+        <span class="accom-type">Shared</span>
+        <div class="accom-name">Quadruple Bungalow</div>
+        <p class="accom-desc">1 double + 2 singles, private bathroom. Good for small groups, families, or participants who want to share costs without sharing a wall with strangers.</p>
+        <div class="accom-meta">
+          <span class="accom-tag">1 unit</span>
+          <span class="accom-tag">Up to 4 guests</span>
+          <span class="accom-tag">Most affordable</span>
+        </div>
+      </div>
+      <div class="accom-card reveal">
+        <span class="accom-type">Solo / Couple</span>
+        <div class="accom-name">Garden Bungalow</div>
+        <p class="accom-desc">Simple and quiet, tucked into the gardens. Ideal for a solo traveler or a couple who wants their own space. Unpretentious, comfortable, surrounded by green.</p>
+        <div class="accom-meta">
+          <span class="accom-tag">1 unit</span>
+          <span class="accom-tag">1–2 guests</span>
+          <span class="accom-tag">Garden setting</span>
+        </div>
+      </div>
+      <div class="accom-card" style="display: flex; align-items: center; justify-content: center; padding: 36px; background: rgba(200, 168, 75, 0.08); border-color: rgba(200, 168, 75, 0.2);">
+        <div style="text-align: center;">
+          <p style="font-family: var(--serif); font-size: 1.8rem; font-weight: 300; font-style: italic; color: var(--gold); line-height: 1.2; margin-bottom: 12px;">32 guests,<br>11 units</p>
+          <p style="font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(232,237,228,0.35);">Flexible room allocation based on your group's needs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section class="included">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Retreat package</span>
+    <h2 class="section-title reveal">Everything covered.<br><em>Nothing to manage.</em></h2>
+    <p style="font-size: 1.05rem; color: rgba(232,237,228,0.65); max-width: 580px; line-height: 1.75; margin-top: 8px;" class="reveal">Every retreat package includes the following. You bring your program. We handle the rest.</p>
+
+    <div class="included-grid">
+      <div class="include-item reveal">
+        <span class="include-icon">🛏️</span>
+        <div>
+          <div class="include-title">Full Accommodation</div>
+          <p class="include-desc">All rooms for your group for the full duration of the retreat. Flexible allocation based on group size and preferences. Minimum 3 nights, up to 10.</p>
+        </div>
+      </div>
+      <div class="include-item reveal">
+        <span class="include-icon">🍽️</span>
+        <div>
+          <div class="include-title">3 Meals Daily + Beverages</div>
+          <p class="include-desc">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service until 3pm. Dietary preferences accommodated.</p>
+        </div>
+      </div>
+      <div class="include-item reveal">
+        <span class="include-icon">🧘</span>
+        <div>
+          <div class="include-title">Exclusive Yoga Shala Use</div>
+          <p class="include-desc">The entire 3-level pagoda is yours for the duration of your retreat. No other groups sharing the space. Full yoga props included.</p>
+        </div>
+      </div>
+      <div class="include-item reveal">
+        <span class="include-icon">🌿</span>
+        <div>
+          <div class="include-title">Guided Río Claro Tour</div>
+          <p class="include-desc">A complimentary guided excursion to Río Claro for your whole group — a river walk through primary jungle with our local guide.</p>
+        </div>
+      </div>
+      <div class="include-item reveal">
+        <span class="include-icon">🗺️</span>
+        <div>
+          <div class="include-title">Travel Logistics Support</div>
+          <p class="include-desc">We help coordinate your group's local round-trip travel. Getting 12 people to a remote jungle lodge without stress requires experience. We have it.</p>
+        </div>
+      </div>
+      <div class="include-item reveal">
+        <span class="include-icon">👥</span>
+        <div>
+          <div class="include-title">On-Site Staff Throughout</div>
+          <p class="include-desc">Our trained team stays on-property for the duration of your retreat — available to help with setup, transitions, and anything unexpected that comes up.</p>
+        </div>
+      </div>
+
+      <div class="leader-banner reveal">
+        <span style="font-size: 2rem;">🎁</span>
+        <div>
+          <p class="leader-banner-text">The group leader stays complimentary.</p>
+          <p class="leader-banner-sub">For groups of 10+ guests + 1 facilitator. Your stay is on us.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXCURSIONS -->
+<section class="excursions">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Optional add-ons</span>
+    <h2 class="section-title reveal">Beyond the shala,<br><em>the Osa waits.</em></h2>
+    <p class="section-body reveal">Optional excursions to add depth and adventure to your retreat schedule. All with local expert guides.</p>
+    <div class="excursion-list">
+      <div class="excursion-item reveal">
+        <p class="excursion-name">Corcovado — Sirena Station</p>
+        <p class="excursion-price">$120 per person</p>
+        <p class="excursion-desc">The most biodiverse national park on Earth. Sirena Station sits deep in primary forest — tapirs, scarlet macaws, peccaries, and all four monkey species in one walk.</p>
+      </div>
+      <div class="excursion-item reveal">
+        <p class="excursion-name">Corcovado — San Pedrillo</p>
+        <p class="excursion-price">$110 per person</p>
+        <p class="excursion-desc">A different entry point into Corcovado. Waterfall swims, coastal forest, dramatic Pacific cliffs. Slightly more accessible than Sirena.</p>
+      </div>
+      <div class="excursion-item reveal">
+        <p class="excursion-name">Caño Island Snorkeling</p>
+        <p class="excursion-price">$99 per person</p>
+        <p class="excursion-desc">Caño Island Biological Reserve. Reef fish, white-tipped sharks, sea turtles, rays — one of the best snorkeling spots in the Pacific.</p>
+      </div>
+      <div class="excursion-item reveal">
+        <p class="excursion-name">Caño Island Diving</p>
+        <p class="excursion-price">$165 per person</p>
+        <p class="excursion-desc">For certified divers. Deeper reefs, larger marine life, and visibility up to 20 meters in good conditions.</p>
+      </div>
+      <div class="excursion-item reveal">
+        <p class="excursion-name">Horse Riding</p>
+        <p class="excursion-price">$80 per person</p>
+        <p class="excursion-desc">Ride through jungle trails and along the coast with experienced local guides. Good for groups wanting something slower and grounded.</p>
+      </div>
+      <div class="excursion-item reveal">
+        <p class="excursion-name">More on property</p>
+        <p class="excursion-price">Included / varies</p>
+        <p class="excursion-desc">Massage, waterfall hikes, river walks, night jungle walks. Ask us about what's in season when you're here.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Rates & pricing</span>
+    <h2 class="section-title reveal">Transparent pricing.<br><em>No surprises.</em></h2>
+    <p class="pricing-intro reveal">Rates are per person for 7 nights and include accommodation, three daily meals, exclusive use of the yoga shala, the guided Río Claro tour, and all taxes. Shorter or longer stays available — contact us for custom packages.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <span class="price-type">Premium</span>
+        <div class="price-name">Beach Bungalows &amp; Top Jungle Suites</div>
+        <p class="price-rooms">Coco Solo, Palmiche, Naranjo · White Hawk Top<br>Ocean view · Private en suite</p>
+        <div class="price-amount">$1,250</div>
+        <span class="price-per">High season · per person · 7 nights</span>
+        <p class="price-caption">$1,100 green season. Based on double occupancy. Includes all meals, shala access, and guided Río Claro tour.</p>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-badge">Most popular</div>
+        <span class="price-type">Mid-range</span>
+        <div class="price-name">Jungle Suites &amp; Garden Bungalow</div>
+        <p class="price-rooms">Solo Bueno · Cachimbo · Mango<br>Forest view · Private en suite</p>
+        <div class="price-amount">$1,100–1,200</div>
+        <span class="price-per">High season · per person · 7 nights</span>
+        <p class="price-caption">$900–1,100 green season. Spacious rooms, private balconies, hardwood interiors. The forest is your neighbor.</p>
+      </div>
+      <div class="price-card reveal">
+        <span class="price-type">Budget-friendly</span>
+        <div class="price-name">Quadruple Bungalow &amp; Lapa Lapa</div>
+        <p class="price-rooms">Shared configurations · Lapa Lapa reserved for facilitators</p>
+        <div class="price-amount">~$145</div>
+        <span class="price-per">Per person · per night</span>
+        <p class="price-caption">Most affordable option. Great for groups who want to fill capacity. Lapa Lapa connects directly to the yoga shala.</p>
+      </div>
+    </div>
+
+    <div class="pricing-note reveal">
+      <strong>Group leader complimentary stay:</strong> When your group reaches 10 guests + 1 facilitator, the retreat leader's accommodation is included at no charge. We can provide a full breakdown by room type for your specific group size — just ask.
+    </div>
+
+    <!-- Payment plan -->
+    <div class="payment-plan">
+      <h3 class="payment-plan-title reveal">Simple payment plan</h3>
+      <div class="payment-steps">
+        <div class="payment-step reveal">
+          <div class="payment-pct">20%</div>
+          <span class="payment-when">To secure your dates</span>
+          <p class="payment-desc">Deposit due at booking to hold your accommodation and dates. Fully applied to the total.</p>
+        </div>
+        <div class="payment-step reveal">
+          <div class="payment-pct">50%</div>
+          <span class="payment-when">2 months before arrival</span>
+          <p class="payment-desc">Midpoint payment. Flexible options available if your timeline needs adjustment.</p>
+        </div>
+        <div class="payment-step reveal">
+          <div class="payment-pct">30%</div>
+          <span class="payment-when">1 month before arrival</span>
+          <p class="payment-desc">Final balance settles the booking. Arrive knowing everything is confirmed and ready.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location">
+  <div class="section-inner">
+    <span class="eyebrow reveal">Location</span>
+    <h2 class="section-title reveal">The edge of the world.<br><em>Two hours from San José.</em></h2>
+    <div class="location-grid">
+      <div class="reveal">
+        <!-- Location map illustration -->
+        <div class="location-map">
+          <svg viewBox="0 0 340 280" fill="none" xmlns="http://www.w3.org/2000/svg" class="map-svg-area">
+            <rect width="340" height="280" rx="0" fill="#0d2535"/>
+            <!-- Ocean background -->
+            <rect width="340" height="280" fill="url(#ocean-loc)"/>
+            <defs>
+              <linearGradient id="ocean-loc" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0d2535"/>
+                <stop offset="100%" stop-color="#163a45"/>
+              </linearGradient>
+            </defs>
+            <!-- Osa Peninsula shape -->
+            <path d="M120 30 Q140 25 155 40 Q175 55 185 80 Q200 110 195 140 Q190 170 175 190 Q160 210 145 230 Q130 250 120 260 Q110 240 105 220 Q100 195 108 170 Q115 145 110 120 Q105 95 100 70 Q95 50 110 35 Z" fill="#2d5a30" opacity="0.9"/>
+            <!-- Main land mass -->
+            <path d="M60 20 Q90 15 120 30 Q110 35 100 70 Q105 95 110 120 Q115 145 108 170 Q100 195 105 220 L80 220 Q60 200 50 175 Q40 150 45 120 Q50 90 55 65 Q58 40 60 20 Z" fill="#2d5a30" opacity="0.8"/>
+            <!-- Corcovado National Park area -->
+            <path d="M120 160 Q140 155 165 165 Q170 180 165 200 Q150 215 135 220 Q120 215 115 200 Q110 182 120 160 Z" fill="#3d7040" opacity="0.7"/>
+            <!-- Corcovado label -->
+            <text x="140" y="188" font-size="7" fill="rgba(255,255,255,0.4)" font-family="monospace" text-anchor="middle">CORCOVADO</text>
+            <!-- Ocean Forest location dot -->
+            <circle cx="115" cy="135" r="8" fill="#c8a84b" opacity="0.9"/>
+            <circle cx="115" cy="135" r="4" fill="#fff" opacity="0.95"/>
+            <circle cx="115" cy="135" r="16" fill="#c8a84b" opacity="0.2"/>
+            <!-- Location label -->
+            <rect x="128" y="122" width="90" height="26" fill="rgba(0,0,0,0.7)" rx="2"/>
+            <text x="173" y="133" font-size="7.5" fill="#c8a84b" font-family="monospace" text-anchor="middle">OCEAN FOREST</text>
+            <text x="173" y="143" font-size="6.5" fill="rgba(255,255,255,0.6)" font-family="monospace" text-anchor="middle">Drake Bay, Osa</text>
+            <!-- Drake Bay label -->
+            <text x="98" y="118" font-size="6" fill="rgba(255,255,255,0.35)" font-family="monospace" text-anchor="middle">Drake Bay</text>
+            <!-- Distance line to Corcovado -->
+            <line x1="115" y1="143" x2="135" y2="162" stroke="#c8a84b" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+            <text x="145" y="158" font-size="6" fill="rgba(255,255,255,0.35)" font-family="monospace">6km</text>
+            <!-- Pacific Ocean label -->
+            <text x="280" y="150" font-size="8" fill="rgba(255,255,255,0.15)" font-family="serif" font-style="italic" text-anchor="middle" transform="rotate(-90 280 150)">Pacific Ocean</text>
+            <!-- Caño Island -->
+            <circle cx="260" cy="160" r="10" fill="#2a5a40" opacity="0.7"/>
+            <text x="260" y="163" font-size="5.5" fill="rgba(255,255,255,0.4)" font-family="monospace" text-anchor="middle">Caño</text>
+            <!-- San José indicator -->
+            <circle cx="300" cy="40" r="4" fill="rgba(255,255,255,0.3)"/>
+            <text x="300" y="34" font-size="6.5" fill="rgba(255,255,255,0.35)" font-family="monospace" text-anchor="middle">San José</text>
+            <line x1="295" y1="42" x2="155" y2="65" stroke="rgba(255,255,255,0.12)" stroke-width="1" stroke-dasharray="4,4"/>
+            <text x="228" y="52" font-size="6" fill="rgba(255,255,255,0.25)" font-family="monospace" text-anchor="middle">1.5 hrs ✈</text>
+            <!-- Frame -->
+            <rect x="1" y="1" width="338" height="278" fill="none" stroke="rgba(200,168,75,0.2)" stroke-width="1"/>
+          </svg>
+          <p style="font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(232,237,228,0.3); margin-top: 12px;">Playa Rincón de San Josecito · Osa Peninsula · Costa Rica</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <ul class="location-facts">
+          <li>
+            <span class="fact-label">Getting here</span>
+            1.5-hour flight from San José, or full-day travel by road and boat via Sierpe. We help coordinate your group's arrival.
+          </li>
+          <li>
+            <span class="fact-label">Corcovado</span>
+            6 kilometers from the entrance to Corcovado National Park — the most biodiverse place on Earth per unit area.
+          </li>
+          <li>
+            <span class="fact-label">Caño Island</span>
+            Easily reachable by boat for snorkeling and diving excursions. One of the Pacific's best marine reserves.
+          </li>
+          <li>
+            <span class="fact-label">Beach</span>
+            Playa Rincón de San Josecito. Private, pristine, and right at the edge of the property.
+          </li>
+          <li>
+            <span class="fact-label">Connectivity</span>
+            We are genuinely remote. That's the point. Wi-Fi is available at the main lodge, but this is not the place to stay attached to your inbox.
+          </li>
+        </ul>
+        <div class="wildlife-tags">
+          <span class="wildlife-tag">Scarlet Macaws</span>
+          <span class="wildlife-tag">Howler Monkeys</span>
+          <span class="wildlife-tag">Toucans</span>
+          <span class="wildlife-tag">Tapirs</span>
+          <span class="wildlife-tag">Humpback Whales</span>
+          <span class="wildlife-tag">Sea Turtles</span>
+          <span class="wildlife-tag">Dolphins</span>
+          <span class="wildlife-tag">White-tipped Sharks</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="section-inner">
+    <span class="eyebrow reveal">How it works</span>
+    <h2 class="section-title reveal">From inquiry to<br><em>first morning practice.</em></h2>
+    <div class="process-steps">
+      <div class="process-step reveal">
+        <div class="step-num">1</div>
+        <div class="step-title">Reach out</div>
+        <p class="step-desc">Send a WhatsApp message or email with your group size, preferred dates, and retreat type. We respond quickly and without a sales script.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">2</div>
+        <div class="step-title">Quick call</div>
+        <p class="step-desc">A short conversation to match your program to the space, discuss room allocation, and answer any logistics questions. We've answered them all before.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">3</div>
+        <div class="step-title">Book & deposit</div>
+        <p class="step-desc">20% deposit secures your dates. We handle travel coordination and setup from there. You focus on building your program.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="step-num">4</div>
+        <div class="step-title">Arrive & teach</div>
+        <p class="step-desc">Your group arrives, the shala is ready, the food is on, and the staff is there. Your only job is to do what you do best.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="inquire">
+  <span class="cta-eyebrow">Ready to host here?</span>
+  <h2 class="cta-headline">Let's talk about<br>your <em>retreat</em>.</h2>
+  <p class="cta-sub">Book a short discovery call with Eli — tell us your vision, dates, and group size. No sales pressure. We've hosted hundreds of retreats; we'll know in 15 minutes if it's a fit.</p>
+  <div class="cta-buttons">
+    <button class="btn-book-call" id="cta-book-btn" style="font-size:0.78rem; padding:20px 48px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Book a Discovery Call
+    </button>
+  </div>
+  <p class="cta-contact-detail">
+    Prefer email or WhatsApp? ·
+    <a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a> ·
+    <a href="https://wa.me/50687379416" target="_blank">WhatsApp Eli</a>
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Ocean Forest Ecolodge</span>
+  <div class="footer-links">
+    <a href="https://www.instagram.com/ocean_forest_ecolodge" target="_blank">Instagram</a>
+    <a href="https://www.facebook.com/oceanforestelcolodge" target="_blank">Facebook</a>
+    <a href="mailto:eli@oceanforest.org">Email</a>
+    <a href="https://wa.me/50687379416" target="_blank">WhatsApp</a>
+  </div>
+  <p class="footer-tagline">Osa Peninsula · Costa Rica<br>Since 2000 · For the forest.</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     BOOKING MODAL — Google Calendar Appointment Scheduling
+
+     HOW TO CONNECT YOUR GOOGLE CALENDAR:
+     1. Open Google Calendar → click the gear icon → Settings
+     2. In the left sidebar, click "Appointment schedules" → "New appointment schedule"
+     3. Configure your available times and call duration (15–30 min recommended)
+     4. Click "Open booking page" → copy the URL from your browser
+     5. Paste that URL in the BOOKING_URL variable below (replace the placeholder)
+
+     The URL looks like: https://calendar.google.com/calendar/appointments/schedules/AcZssZ...
+     Add ?gv=true at the end to enable iframe embedding.
+═════════════════════════════════════════════════════════════════════════ -->
+
+<div class="booking-modal" id="booking-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-panel">
+    <button class="modal-close" id="modal-close" aria-label="Close booking modal">×</button>
+
+    <div class="modal-header">
+      <span class="eyebrow">Schedule a conversation</span>
+      <h2 class="modal-title" id="modal-title">Book a Discovery Call</h2>
+      <p class="modal-sub">Choose a time that works for you. We'll talk through your retreat vision, dates, and group — 15 minutes, no sales pressure. Eli answers every call personally.</p>
+    </div>
+
+    <div class="modal-calendar" id="modal-calendar-area">
+      <!-- The iframe is injected by JS only when the modal opens (avoids loading on page load) -->
+    </div>
+
+    <div class="modal-footer">
+      Rather reach out directly? &nbsp;·&nbsp;
+      <a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a>
+      &nbsp;·&nbsp;
+      <a href="https://wa.me/50687379416" target="_blank" rel="noopener">WhatsApp Eli</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── CONFIGURATION ──────────────────────────────────────────────────────────
+  // Paste your Google Calendar appointment scheduling URL here.
+  // Get it from: Google Calendar → Settings → Appointment schedules → Open booking page
+  // Append ?gv=true to enable iframe embedding.
+  const BOOKING_URL = '';
+  // Example: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ...?gv=true'
+  // ──────────────────────────────────────────────────────────────────────────
+
+  // ── SCROLL REVEAL ─────────────────────────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // ── NAV TRANSPARENCY ──────────────────────────────────────────────────────
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 60
+      ? 'rgba(26, 31, 26, 0.97)'
+      : 'rgba(26, 31, 26, 0.85)';
+  });
+
+  // ── BOOKING MODAL ─────────────────────────────────────────────────────────
+  const modal        = document.getElementById('booking-modal');
+  const backdrop     = document.getElementById('modal-backdrop');
+  const closeBtn     = document.getElementById('modal-close');
+  const calArea      = document.getElementById('modal-calendar-area');
+  let calendarLoaded = false;
+
+  function openModal() {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Lazy-load the calendar iframe on first open
+    if (!calendarLoaded) {
+      calendarLoaded = true;
+      if (BOOKING_URL) {
+        const iframe = document.createElement('iframe');
+        iframe.src             = BOOKING_URL;
+        iframe.className       = 'calendar-iframe';
+        iframe.title           = 'Book a call with Ocean Forest Ecolodge';
+        iframe.setAttribute('scrolling', 'yes');
+        calArea.appendChild(iframe);
+      } else {
+        // Placeholder shown until the Google Calendar URL is configured
+        calArea.innerHTML = `
+          <div class="calendar-placeholder">
+            <div class="calendar-placeholder-icon">📅</div>
+            <h3>Ready to connect your calendar</h3>
+            <p>Once your Google Calendar appointment scheduling link is added, visitors will book directly here. Until then, reach out via email or WhatsApp.</p>
+            <div class="calendar-direct-links">
+              <a href="mailto:eli@oceanforest.org" class="cal-link cal-link-primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email Eli
+              </a>
+              <a href="https://wa.me/50687379416" target="_blank" rel="noopener" class="cal-link cal-link-secondary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>`;
+      }
+    }
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // Wire all "Book a Call" triggers
+  document.querySelectorAll('[id$="-book-btn"], #cta-book-btn').forEach(btn => {
+    btn.addEventListener('click', openModal);
+  });
+
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+
+  // Escape key closes modal
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+  });
+</script>
+</body>
+</html>

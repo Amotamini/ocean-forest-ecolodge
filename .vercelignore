@@ -4,3 +4,6 @@ node_modules
 .cursor
 .git
 .DS_Store
+.claude
+Main Website restyled/node_modules
+Main Website restyled/.env.local

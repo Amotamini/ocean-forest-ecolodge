@@ -1,0 +1,64 @@
+/*
+ * OCEAN FOREST ECOLODGE — Brand Color Palette
+ * Extracted from the official Ocean Forest logo (circular koru + leaf mark).
+ *
+ * Usage: import this file OR copy the :root block into your stylesheet.
+ * Every color maps to a visible element in the logo SVG.
+ */
+
+:root {
+
+  /* ── TEAL SPECTRUM (koru / ocean side of logo) ─────────────────────────── */
+  --of-teal-deep:   #16707E;   /* Outer koru band — darkest ocean shadow          */
+  --of-teal:        #2AADA8;   /* Primary brand teal — main koru / center dot     */
+  --of-teal-light:  #3DCFD0;   /* Inner koru band — brightest highlight           */
+
+  /* ── GREEN SPECTRUM (leaf / forest side of logo) ───────────────────────── */
+  --of-forest-deep: #1C6638;   /* Leaf base / root — deepest forest               */
+  --of-forest:      #2A9055;   /* Primary forest green — leaf mid-zone            */
+  --of-canopy:      #4CB870;   /* Canopy green — upper leaf ribs                  */
+  --of-lime:        #5ABE3A;   /* Bright lime — outer leaf ribs                   */
+  --of-lime-bright: #A0D428;   /* Brightest lime — leaf tip highlights            */
+
+  /* ── NEUTRALS ───────────────────────────────────────────────────────────── */
+  --of-ink:         #1a1f1a;   /* Near-black — body text, dark backgrounds        */
+  --of-mist:        #e8ede4;   /* Pale sage — light section backgrounds, captions */
+  --of-sand:        #f2ede5;   /* Warm off-white — alternating section fill       */
+  --of-white:       #fafaf8;   /* Base white — page background, card backgrounds  */
+
+}
+
+/*
+ * SWATCH REFERENCE
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ *   Teal spectrum        Hex        Role
+ *   ─────────────────    ────────   ─────────────────────────────────────────
+ *   Deep ocean teal      #16707E    Dark backgrounds, deep shadow elements
+ *   Primary teal         #2AADA8    Links, borders, icon strokes, stat numbers
+ *   Light teal           #3DCFD0    Highlights, hover states, inner glow
+ *
+ *   Green spectrum       Hex        Role
+ *   ─────────────────    ────────   ─────────────────────────────────────────
+ *   Deep forest          #1C6638    Dark section backgrounds, hero gradient
+ *   Forest green         #2A9055    Section backgrounds, headline accents
+ *   Canopy green         #4CB870    Supporting text, tags, secondary accents
+ *   Lime                 #5ABE3A    Active states, badge backgrounds
+ *   Lime bright          #A0D428    Primary CTA buttons, high-emphasis accents
+ *
+ *   Neutrals             Hex        Role
+ *   ─────────────────    ────────   ─────────────────────────────────────────
+ *   Ink                  #1a1f1a    Body text, deep overlays
+ *   Mist                 #e8ede4    Card backgrounds, input fields, captions
+ *   Sand                 #f2ede5    Alternating sections, light fills
+ *   White                #fafaf8    Page background, hero overlay text
+ *
+ * CONTRAST PAIRINGS (WCAG AA safe)
+ * ─────────────────────────────────────────────────────────────────────────────
+ *   --of-ink text    on  --of-mist / --of-sand / --of-white    ✓ (dark-on-light)
+ *   --of-white text  on  --of-teal-deep / --of-forest-deep     ✓ (light-on-dark)
+ *   --of-ink text    on  --of-teal / --of-lime-bright          ✓ (dark-on-accent)
+ *
+ * NOTE: Do NOT use --of-lime-bright as text color on white — insufficient contrast.
+ * Use --of-forest or --of-teal-deep for body text on light backgrounds instead.
+ */
