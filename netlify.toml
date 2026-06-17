@@ -1,0 +1,15 @@
+# Ocean Forest — retreat leaders landing page (monorepo subfolder)
+# Mirrors root vercel.json: publish subfolder, clean URLs, no trailing slash
+
+[build]
+  publish = "Landing Page retreat leaders"
+  command = ""
+
+[build.processing.html]
+  pretty_urls = true
+
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 301
+  force = true
