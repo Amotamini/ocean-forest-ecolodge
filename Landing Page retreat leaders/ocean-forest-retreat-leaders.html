@@ -88,42 +88,50 @@
     overflow: hidden;
   }
 
-  /* Layered gradient simulating the jungle-meets-ocean scene */
+  /* Dark overlay for text legibility over hero video */
   .hero-bg {
     position: absolute;
     inset: 0;
+    z-index: 1;
     background:
       linear-gradient(
         160deg,
-        #0d2414 0%,
-        #1a3d20 18%,
-        #2d5a30 35%,
-        #1e4a3a 52%,
-        #163a45 68%,
-        #0e2535 85%,
-        #091820 100%
+        rgba(13, 36, 20, 0.72) 0%,
+        rgba(26, 61, 32, 0.55) 18%,
+        rgba(45, 90, 48, 0.45) 35%,
+        rgba(30, 74, 58, 0.5) 52%,
+        rgba(22, 58, 69, 0.6) 68%,
+        rgba(14, 37, 53, 0.75) 85%,
+        rgba(9, 24, 32, 0.85) 100%
       );
   }
 
-  /* Animated canopy texture */
+  /* Hero background video */
   .hero-canopy {
     position: absolute;
     inset: 0;
-    opacity: 0.35;
-    background-image:
-      radial-gradient(ellipse 120px 80px at 15% 20%, #3d7a40 0%, transparent 70%),
-      radial-gradient(ellipse 90px 60px at 35% 10%, #2d6030 0%, transparent 70%),
-      radial-gradient(ellipse 140px 90px at 60% 15%, #4a8050 0%, transparent 70%),
-      radial-gradient(ellipse 80px 50px at 80% 8%, #357040 0%, transparent 70%),
-      radial-gradient(ellipse 100px 70px at 92% 25%, #3a7545 0%, transparent 70%),
-      radial-gradient(ellipse 60px 40px at 25% 30%, #2a5530 0%, transparent 60%),
-      radial-gradient(ellipse 110px 75px at 70% 30%, #3d7040 0%, transparent 65%);
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .hero-canopy iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-width: 177.78vh;
+    min-height: 100vh;
+    transform: translate(-50%, -50%);
+    border: 0;
   }
 
   /* Ocean shimmer at bottom */
   .hero-ocean {
     position: absolute;
     bottom: 0; left: 0; right: 0;
+    z-index: 1;
     height: 45%;
     background: linear-gradient(180deg,
       transparent 0%,
@@ -137,6 +145,7 @@
     position: absolute;
     top: 22%;
     left: 50%;
+    z-index: 1;
     transform: translateX(-50%);
     width: 180px;
     height: 180px;
@@ -153,17 +162,6 @@
   @keyframes pulse-sun {
     0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
     50% { transform: translateX(-50%) scale(1.06); opacity: 1; }
-  }
-
-  /* Silhouette of the yoga shala / pagoda form */
-  .hero-shala {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 320px;
-    height: 260px;
-    opacity: 0.18;
   }
 
   .hero-content {
@@ -324,10 +322,14 @@
   .about-visual {
     position: relative;
   }
-  /* Illustrated pagoda / shala shape */
-  .shala-illustration {
+  .about-photo {
+    display: block;
     width: 100%;
     max-width: 440px;
+    height: auto;
+    aspect-ratio: 440 / 360;
+    object-fit: cover;
+    border: 1px solid rgba(200, 168, 75, 0.2);
   }
   .about-pull {
     font-family: var(--serif);
@@ -434,6 +436,15 @@
     font-size: 1.25rem;
     font-weight: 300;
     color: var(--white);
+  }
+
+  .shala-photo {
+    display: block;
+    width: 100%;
+    max-width: 461px;
+    height: auto;
+    aspect-ratio: 461 / 309;
+    object-fit: cover;
   }
 
   .shala-description {
@@ -985,6 +996,7 @@
   /* ── RESPONSIVE ── */
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
+    .nav-logo-banner { height: 40px; }
     section { padding: 72px 24px; }
     .stats-strip { padding: 24px; gap: 0; }
     .stat { padding: 0 24px; }
@@ -1022,22 +1034,13 @@
   .nav-logo-link {
     display: flex;
     align-items: center;
-    gap: 12px;
     text-decoration: none;
   }
-  .nav-logo-mark {
-    height: 38px;
-    width: 38px;
+  .nav-logo-banner {
+    height: 55px;
+    width: auto;
+    display: block;
     flex-shrink: 0;
-    border-radius: 50%;
-  }
-  .nav-logo-text {
-    font-family: var(--serif);
-    font-size: 1.05rem;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    color: var(--mist);
-    text-transform: uppercase;
   }
 
   /* ── BOOK A CALL BUTTON (reusable) ── */
@@ -1249,8 +1252,7 @@
 <!-- NAV -->
 <nav>
   <a href="#" class="nav-logo-link">
-    <img src="images/logo.svg" alt="Ocean Forest Ecolodge logo" class="nav-logo-mark">
-    <span class="nav-logo-text">Ocean Forest Ecolodge</span>
+    <img src="images/ocean-forest-ecolodge-logo.png" alt="Ocean Forest Ecolodge — Ecolodge · Retreat · Costa Rica" class="nav-logo-banner">
   </a>
   <button class="btn-book-call" id="nav-book-btn">Book a Call</button>
 </nav>
@@ -1258,23 +1260,17 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div class="hero-canopy"></div>
+  <div class="hero-canopy">
+    <iframe
+      src="https://www.youtube.com/embed/AjqtTXfJbeg?autoplay=1&mute=1&start=2&loop=1&playlist=AjqtTXfJbeg&controls=0&rel=0&modestbranding=1&playsinline=1"
+      title="Ocean Forest Ecolodge"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+  </div>
   <div class="hero-ocean"></div>
   <div class="hero-sun"></div>
-
-  <!-- Pagoda silhouette SVG -->
-  <svg class="hero-shala" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M160 20 L280 90 L270 90 L270 100 L290 100 L290 110 L30 110 L30 100 L50 100 L50 90 L40 90 Z" fill="white" opacity="0.8"/>
-    <path d="M160 50 L240 100 L230 100 L230 108 L240 108 L240 115 L80 115 L80 108 L90 108 L90 100 L80 100 Z" fill="white" opacity="0.6"/>
-    <path d="M160 80 L210 110 L210 115 L110 115 L110 110 Z" fill="white" opacity="0.5"/>
-    <rect x="60" y="110" width="200" height="80" fill="white" opacity="0.15"/>
-    <rect x="80" y="110" width="20" height="80" fill="white" opacity="0.3"/>
-    <rect x="140" y="110" width="20" height="80" fill="white" opacity="0.3"/>
-    <rect x="220" y="110" width="20" height="80" fill="white" opacity="0.3"/>
-    <rect x="60" y="190" width="200" height="10" fill="white" opacity="0.3"/>
-    <rect x="130" y="140" width="60" height="50" fill="white" opacity="0.25"/>
-    <path d="M110 190 Q160 180 210 190" stroke="white" stroke-width="1" opacity="0.3" fill="none"/>
-  </svg>
 
   <div class="hero-content">
     <p class="hero-eyebrow">Osa Peninsula · Costa Rica · Since 2000</p>
@@ -1327,69 +1323,14 @@
         <blockquote class="about-pull">"We've devoted much of our income to rainforest and oceanic wildlife conservation. When you bring your group here, that's part of what they're supporting too."</blockquote>
       </div>
       <div class="about-visual reveal">
-        <!-- Illustrated lodge from above -->
-        <svg class="shala-illustration" viewBox="0 0 440 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Sky / ocean gradient background -->
-          <rect width="440" height="360" fill="url(#sky-grad)"/>
-          <defs>
-            <linearGradient id="sky-grad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#163a45"/>
-              <stop offset="40%" stop-color="#1e4a3a"/>
-              <stop offset="70%" stop-color="#2d5a30"/>
-              <stop offset="100%" stop-color="#1a3d20"/>
-            </linearGradient>
-            <linearGradient id="ocean-grad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#1a5068" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#0d2535" stop-opacity="0.9"/>
-            </linearGradient>
-          </defs>
-
-          <!-- Ocean strip at top -->
-          <rect x="0" y="0" width="440" height="80" fill="url(#ocean-grad)"/>
-
-          <!-- Beach line -->
-          <path d="M0 80 Q110 72 220 78 Q330 84 440 76 L440 95 Q330 102 220 97 Q110 93 0 98 Z" fill="#c8a84b" opacity="0.3"/>
-
-          <!-- Forest canopy blobs -->
-          <ellipse cx="60" cy="180" rx="55" ry="42" fill="#2d5a30" opacity="0.9"/>
-          <ellipse cx="110" cy="195" rx="48" ry="38" fill="#3d6b3d" opacity="0.8"/>
-          <ellipse cx="360" cy="175" rx="55" ry="44" fill="#2d5a30" opacity="0.9"/>
-          <ellipse cx="310" cy="192" rx="50" ry="38" fill="#3d6b3d" opacity="0.8"/>
-          <ellipse cx="40" cy="250" rx="40" ry="32" fill="#2a5228" opacity="0.7"/>
-          <ellipse cx="400" cy="248" rx="42" ry="33" fill="#2a5228" opacity="0.7"/>
-
-          <!-- Main shala pagoda structure -->
-          <!-- Base platform -->
-          <rect x="155" y="195" width="130" height="85" fill="#5a3820" opacity="0.9"/>
-          <!-- Roof layers -->
-          <path d="M220 120 L310 175 L295 175 L295 185 L315 185 L315 195 L125 195 L125 185 L145 185 L145 175 L130 175 Z" fill="#7a4a28" opacity="0.95"/>
-          <path d="M220 145 L285 182 L278 182 L278 190 L285 190 L285 197 L155 197 L155 190 L162 190 L162 182 L155 182 Z" fill="#6a3e22" opacity="0.9"/>
-          <path d="M220 165 L260 192 L258 197 L182 197 L180 192 Z" fill="#5a3418" opacity="0.85"/>
-          <!-- Columns -->
-          <rect x="165" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
-          <rect x="205" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
-          <rect x="227" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
-          <rect x="267" y="195" width="8" height="85" fill="#4a2e14" opacity="0.8"/>
-          <!-- Floor levels glow -->
-          <rect x="163" y="195" width="114" height="5" fill="#c8a84b" opacity="0.3"/>
-          <rect x="163" y="245" width="114" height="3" fill="#c8a84b" opacity="0.2"/>
-
-          <!-- Garden paths -->
-          <path d="M220 280 Q200 295 180 320 Q200 315 220 310 Q240 315 260 320 Q240 295 220 280 Z" fill="#4a7a3a" opacity="0.5"/>
-
-          <!-- Sun -->
-          <circle cx="220" cy="40" r="22" fill="#c8a84b" opacity="0.7"/>
-          <circle cx="220" cy="40" r="14" fill="#e8c060" opacity="0.8"/>
-
-          <!-- Birds dots -->
-          <circle cx="170" cy="55" r="2" fill="white" opacity="0.5"/>
-          <circle cx="178" cy="50" r="2" fill="white" opacity="0.5"/>
-          <circle cx="260" cy="60" r="2" fill="white" opacity="0.4"/>
-          <circle cx="268" cy="55" r="2" fill="white" opacity="0.4"/>
-
-          <!-- Frame -->
-          <rect x="1" y="1" width="438" height="358" fill="none" stroke="#c8a84b" stroke-width="1" opacity="0.2"/>
-        </svg>
+        <img
+          src="images/about-visual.jpg"
+          alt="Ocean Forest Ecolodge beachfront sanctuary"
+          class="about-photo"
+          width="440"
+          height="360"
+          loading="lazy"
+        >
       </div>
     </div>
   </div>
@@ -1458,56 +1399,14 @@
         </div>
       </div>
       <div>
-        <!-- Shala interior illustration -->
-        <svg viewBox="0 0 380 300" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width: 380px;">
-          <defs>
-            <linearGradient id="floor-grad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#8B5E3C"/>
-              <stop offset="100%" stop-color="#5a3820"/>
-            </linearGradient>
-            <linearGradient id="ceiling-grad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#3d2510"/>
-              <stop offset="100%" stop-color="#5a3820"/>
-            </linearGradient>
-          </defs>
-          <!-- Background - jungle outside -->
-          <rect width="380" height="300" fill="#1a3520"/>
-          <!-- Jungle elements through openings -->
-          <ellipse cx="60" cy="180" rx="45" ry="55" fill="#2d5a30" opacity="0.8"/>
-          <ellipse cx="320" cy="175" rx="45" ry="55" fill="#2d5a30" opacity="0.8"/>
-          <rect x="140" y="80" width="100" height="140" fill="#163a20" opacity="0.6"/>
-          <!-- Ceiling rafters -->
-          <path d="M0 0 L190 60 L380 0 L380 20 L190 80 L0 20 Z" fill="url(#ceiling-grad)" opacity="0.95"/>
-          <!-- Cross beams -->
-          <line x1="0" y1="30" x2="380" y2="30" stroke="#4a2e14" stroke-width="6" opacity="0.7"/>
-          <line x1="0" y1="55" x2="380" y2="55" stroke="#4a2e14" stroke-width="4" opacity="0.5"/>
-          <!-- Floor perspective -->
-          <path d="M0 220 L190 180 L380 220 L380 300 L0 300 Z" fill="url(#floor-grad)"/>
-          <!-- Floor grain lines -->
-          <line x1="0" y1="240" x2="380" y2="240" stroke="#7a4e30" stroke-width="1" opacity="0.4"/>
-          <line x1="0" y1="260" x2="380" y2="260" stroke="#7a4e30" stroke-width="1" opacity="0.4"/>
-          <line x1="0" y1="280" x2="380" y2="280" stroke="#7a4e30" stroke-width="1" opacity="0.3"/>
-          <!-- Columns -->
-          <rect x="30" y="50" width="14" height="230" fill="#4a2e14" opacity="0.9"/>
-          <rect x="90" y="65" width="12" height="215" fill="#4a2e14" opacity="0.8"/>
-          <rect x="278" y="65" width="12" height="215" fill="#4a2e14" opacity="0.8"/>
-          <rect x="336" y="50" width="14" height="230" fill="#4a2e14" opacity="0.9"/>
-          <!-- Light shafts from openings -->
-          <path d="M140 30 L240 30 L260 180 L120 180 Z" fill="white" opacity="0.04"/>
-          <!-- Yoga mat suggestion -->
-          <rect x="145" y="182" width="90" height="35" rx="2" fill="#6b5a8e" opacity="0.6"/>
-          <rect x="170" y="185" width="40" height="29" fill="#8a75aa" opacity="0.3"/>
-          <!-- People silhouettes practicing -->
-          <ellipse cx="175" cy="170" rx="8" ry="10" fill="#2a1a0a" opacity="0.7"/>
-          <path d="M167 180 Q175 200 183 180" fill="#2a1a0a" opacity="0.6"/>
-          <ellipse cx="220" cy="168" rx="8" ry="10" fill="#2a1a0a" opacity="0.7"/>
-          <path d="M212 178 Q220 198 228 178" fill="#2a1a0a" opacity="0.6"/>
-          <!-- Warm light glow from above -->
-          <ellipse cx="190" cy="40" rx="80" ry="30" fill="#c8a84b" opacity="0.15"/>
-          <!-- Hammock suggestion on right -->
-          <path d="M295 140 Q315 155 295 168" stroke="#8a6a4a" stroke-width="3" fill="none" opacity="0.7"/>
-          <path d="M295 140 Q325 152 295 168 Q310 148 295 140 Z" fill="#8a6a4a" opacity="0.4"/>
-        </svg>
+        <img
+          src="images/shala-feature.jpg"
+          alt="The Yoga Shala — three-level pagoda at Ocean Forest Ecolodge"
+          class="shala-photo"
+          width="461"
+          height="309"
+          loading="lazy"
+        >
       </div>
     </div>
 
