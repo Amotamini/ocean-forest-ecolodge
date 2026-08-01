@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean Forest Ecolodge — Retreat Host Kit</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Georgia', serif; background: #0a0a0a; color: #f5f0e8; overflow: hidden; height: 100vh; }
+  .presentation { width: 100vw; height: 100vh; position: relative; }
+  .slide { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; text-align: center; transition: opacity 0.5s ease; }
+  .slide.active { display: flex; }
+
+  /* Color schemes */
+  .slide-dark { background: linear-gradient(135deg, #0d1f0f 0%, #1a3a1f 50%, #0d1f0f 100%); }
+  .slide-forest { background: linear-gradient(135deg, #0f2a0f 0%, #1e4a20 60%, #0a1a0a 100%); }
+  .slide-ocean { background: linear-gradient(135deg, #071a2e 0%, #0e3a5a 50%, #071a2e 100%); }
+  .slide-warm { background: linear-gradient(135deg, #1a1208 0%, #2e2010 50%, #1a1208 100%); }
+  .slide-light { background: linear-gradient(135deg, #f5f0e8 0%, #ede5d0 100%); color: #1a1a1a; }
+  .slide-split { background: linear-gradient(135deg, #0d1f0f 0%, #071a2e 100%); }
+
+  /* Typography */
+  .eyebrow { font-family: 'Helvetica Neue', sans-serif; font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #8fbc5a; margin-bottom: 20px; font-weight: 300; }
+  .eyebrow-gold { color: #c9a84c; }
+  .eyebrow-light { color: #6a9a8a; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 400; line-height: 1.15; color: #f5f0e8; margin-bottom: 24px; }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 400; line-height: 1.2; color: #f5f0e8; margin-bottom: 20px; }
+  h3 { font-size: clamp(1rem, 2vw, 1.4rem); font-weight: 400; color: #c9a84c; margin-bottom: 12px; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 1px; }
+  .subtitle { font-size: clamp(1rem, 2vw, 1.3rem); color: #b8c9a8; line-height: 1.7; max-width: 700px; font-weight: 300; }
+  .subtitle-dark { color: #555; }
+  .accent { color: #8fbc5a; }
+  .accent-gold { color: #c9a84c; }
+  .italic { font-style: italic; }
+
+  /* Divider */
+  .divider { width: 60px; height: 1px; background: #8fbc5a; margin: 24px auto; }
+  .divider-gold { background: #c9a84c; }
+
+  /* Cards grid */
+  .cards { display: grid; gap: 20px; width: 100%; max-width: 1000px; margin-top: 20px; }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .cards-2 { grid-template-columns: repeat(2, 1fr); }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(143,188,90,0.2); border-radius: 12px; padding: 28px 22px; text-align: left; }
+  .card-gold { border-color: rgba(201,168,76,0.3); }
+  .card h4 { font-size: 0.95rem; color: #8fbc5a; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; font-weight: 500; }
+  .card h4.gold { color: #c9a84c; }
+  .card p { font-size: 0.9rem; color: #c8d5b8; line-height: 1.6; font-family: 'Helvetica Neue', sans-serif; }
+  .card .big { font-size: 2rem; color: #8fbc5a; font-weight: 700; margin-bottom: 6px; font-family: 'Helvetica Neue', sans-serif; }
+  .card .big.gold { color: #c9a84c; }
+
+  /* List */
+  .list { list-style: none; text-align: left; max-width: 680px; width: 100%; }
+  .list li { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.95rem; color: #c8d5b8; font-family: 'Helvetica Neue', sans-serif; display: flex; align-items: flex-start; gap: 12px; line-height: 1.5; }
+  .list li::before { content: '✦'; color: #8fbc5a; font-size: 0.7rem; margin-top: 4px; flex-shrink: 0; }
+
+  /* Quote */
+  .quote { font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-style: italic; color: #f5f0e8; line-height: 1.6; max-width: 750px; position: relative; padding: 0 40px; }
+  .quote::before { content: '\201C'; font-size: 5rem; color: #8fbc5a; position: absolute; left: 0; top: -20px; line-height: 1; }
+  .quote-author { font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; letter-spacing: 2px; color: #8fbc5a; margin-top: 16px; text-transform: uppercase; }
+
+  /* Highlight box */
+  .highlight { background: rgba(143,188,90,0.1); border-left: 3px solid #8fbc5a; padding: 20px 28px; border-radius: 0 8px 8px 0; max-width: 700px; text-align: left; margin-top: 16px; }
+  .highlight p { font-size: 0.95rem; color: #c8d5b8; line-height: 1.7; font-family: 'Helvetica Neue', sans-serif; }
+  .highlight-gold { border-left-color: #c9a84c; background: rgba(201,168,76,0.08); }
+
+  /* Tag */
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+  .tag { background: rgba(143,188,90,0.12); border: 1px solid rgba(143,188,90,0.3); padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-family: 'Helvetica Neue', sans-serif; letter-spacing: 1px; color: #8fbc5a; text-transform: uppercase; }
+
+  /* Timeline */
+  .timeline { display: flex; flex-direction: column; gap: 14px; max-width: 650px; width: 100%; text-align: left; }
+  .timeline-item { display: flex; gap: 20px; align-items: flex-start; }
+  .timeline-time { font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; color: #c9a84c; letter-spacing: 1px; min-width: 80px; margin-top: 2px; font-weight: 600; }
+  .timeline-text { font-size: 0.9rem; color: #c8d5b8; font-family: 'Helvetica Neue', sans-serif; line-height: 1.5; border-left: 1px solid rgba(143,188,90,0.2); padding-left: 16px; }
+
+  /* Navigation */
+  .nav { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 20px; z-index: 100; background: rgba(0,0,0,0.5); padding: 10px 24px; border-radius: 30px; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.08); }
+  .nav button { background: none; border: 1px solid rgba(143,188,90,0.4); color: #8fbc5a; padding: 8px 22px; border-radius: 20px; cursor: pointer; font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; letter-spacing: 1px; transition: all 0.2s; text-transform: uppercase; }
+  .nav button:hover { background: rgba(143,188,90,0.15); }
+  .nav .counter { font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; color: #6a8a6a; letter-spacing: 2px; min-width: 50px; text-align: center; }
+
+  /* Logo area */
+  .logo { font-family: 'Helvetica Neue', sans-serif; font-size: 0.85rem; letter-spacing: 5px; text-transform: uppercase; color: rgba(143,188,90,0.5); position: absolute; top: 28px; left: 50%; transform: translateX(-50%); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .slide { padding: 50px 30px; }
+    .cards-3, .cards-4 { grid-template-columns: 1fr 1fr; }
+    .cards-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 500px) {
+    .cards-3, .cards-4 { grid-template-columns: 1fr; }
+  }
+
+  /* Profit box */
+  .profit-box { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.3); border-radius: 16px; padding: 28px 36px; max-width: 600px; width: 100%; margin-top: 16px; }
+  .profit-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-family: 'Helvetica Neue', sans-serif; font-size: 0.9rem; color: #c8d5b8; }
+  .profit-row:last-child { border-bottom: none; color: #c9a84c; font-weight: 700; font-size: 1.1rem; }
+  .profit-label { color: #8a9a8a; }
+
+  /* CTA button */
+  .cta-btn { display: inline-block; background: linear-gradient(135deg, #8fbc5a, #6a9a3a); color: #0a1a0a; padding: 16px 40px; border-radius: 30px; font-family: 'Helvetica Neue', sans-serif; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 600; cursor: pointer; border: none; margin-top: 20px; transition: all 0.3s; }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(143,188,90,0.3); }
+  .cta-btn-gold { background: linear-gradient(135deg, #c9a84c, #a08030); color: #0a0a0a; }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 900px; width: 100%; }
+  .faq-item { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 18px 20px; text-align: left; border: 1px solid rgba(255,255,255,0.06); }
+  .faq-q { font-family: 'Helvetica Neue', sans-serif; font-size: 0.8rem; color: #8fbc5a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; font-weight: 600; }
+  .faq-a { font-size: 0.85rem; color: #b0c0a0; font-family: 'Helvetica Neue', sans-serif; line-height: 1.5; }
+
+  @media(max-width:650px){ .faq { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="presentation">
+
+  <!-- SLIDE 1: COVER -->
+  <div class="slide slide-dark active" id="slide-1">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Retreat Host Kit · Osa Peninsula, Costa Rica</div>
+    <h1>Your Retreat.<br><span class="accent">A Jungle You'll Never Forget.</span></h1>
+    <div class="divider"></div>
+    <p class="subtitle">Everything a yoga teacher or retreat facilitator needs<br>to run a fully supported, profitable, and transformative experience.</p>
+    <div class="tags" style="margin-top:30px;">
+      <span class="tag">Yoga</span>
+      <span class="tag">Wellness</span>
+      <span class="tag">Nature</span>
+      <span class="tag">Private Groups</span>
+      <span class="tag">Corcovado</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: EMOTIONAL HOOK -->
+  <div class="slide slide-forest" id="slide-2">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">For Yoga Teachers & Retreat Facilitators</div>
+    <h2>What if your next retreat<br>became <span class="accent">the one they talk about for years?</span></h2>
+    <div class="divider"></div>
+    <p class="subtitle">Not another beach resort with a yoga mat in the corner.<br>A real jungle. An ocean. Total silence. No distractions. Just transformation.</p>
+    <div class="highlight" style="margin-top:28px;">
+      <p>At Ocean Forest Ecolodge, your participants don't just attend a retreat — they enter a world where nature becomes the most powerful co-facilitator you've ever had.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: THE PLACE -->
+  <div class="slide slide-ocean" id="slide-3">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow eyebrow-light">Where We Are</div>
+    <h2>The <span class="accent">Osa Peninsula</span><br>One of the Last Wild Places on Earth</h2>
+    <div class="divider"></div>
+    <div class="cards cards-3" style="max-width:900px;">
+      <div class="card">
+        <h4>Location</h4>
+        <p>Pacific coast of Costa Rica, adjacent to Corcovado National Park — home to 2.5% of global biodiversity.</p>
+      </div>
+      <div class="card">
+        <h4>How to Arrive</h4>
+        <p>Domestic flight to Puerto Jiménez (45 min from San José) + scenic transfer. Part of the adventure.</p>
+      </div>
+      <div class="card">
+        <h4>The Setting</h4>
+        <p>Primary rainforest, private beach, mangroves, and the Pacific Ocean — all within steps of the lodge.</p>
+      </div>
+    </div>
+    <div class="highlight" style="margin-top:20px;">
+      <p><strong style="color:#8fbc5a;">The remoteness is not a barrier — it is the product.</strong> Participants arrive disconnected from their routine and fully available for transformation.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: THE ARRIVAL EXPERIENCE -->
+  <div class="slide slide-dark" id="slide-4">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">The Guest Experience Begins Before the First Class</div>
+    <h2>The <span class="accent">Arrival</span> Is Already Part of the Retreat</h2>
+    <div class="divider"></div>
+    <p class="subtitle">Gliding through mangroves by boat. Howler monkeys in the canopy. The Pacific at dusk.</p>
+    <div class="cards cards-2" style="margin-top:24px; max-width:780px;">
+      <div class="card">
+        <h4>Sensory Immersion</h4>
+        <p>From the moment they board the transfer, guests leave their everyday world behind. The journey is part of the transformation.</p>
+      </div>
+      <div class="card">
+        <h4>Zero Distractions</h4>
+        <p>No city noise. No shopping malls. No algorithms. Just nature, breath, and your teaching — exactly as it should be.</p>
+      </div>
+    </div>
+    <div class="quote" style="margin-top:28px; font-size:1.1rem;">
+      "The retreat started the moment we got on the boat. By the time we arrived, people were already different."
+      <div class="quote-author">— Retreat Host, 2024</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: WHY OFE -->
+  <div class="slide slide-forest" id="slide-5">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Why Ocean Forest and Not Somewhere Else</div>
+    <h2>5 Reasons Teachers Choose Us<br><span class="accent">Again and Again</span></h2>
+    <div class="divider"></div>
+    <ul class="list" style="max-width:700px;">
+      <li>Exclusive-use bookings available — the entire lodge is yours, your group, your rhythm</li>
+      <li>A dedicated team handles logistics so you can focus 100% on your teaching</li>
+      <li>Primary rainforest + ocean = an environment that does half your facilitation work</li>
+      <li>All-inclusive model: accommodation, meals, and activities in a single package</li>
+      <li>One of the most biodiverse ecosystems on Earth — wildlife encounters every single day</li>
+    </ul>
+  </div>
+
+  <!-- SLIDE 6: DHARMA HALL -->
+  <div class="slide slide-dark" id="slide-6">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Your Practice Space</div>
+    <h2>The <span class="accent">Dharma Hall</span><br>Built for Deep Practice</h2>
+    <div class="divider"></div>
+    <div class="cards cards-3" style="max-width:950px;">
+      <div class="card card-gold">
+        <h4 class="gold">Space</h4>
+        <p>Open-air pavilion surrounded by forest. Natural ventilation. The sounds of the jungle as your soundtrack.</p>
+      </div>
+      <div class="card card-gold">
+        <h4 class="gold">Capacity</h4>
+        <p>Up to <strong style="color:#c9a84c;">20–25 mats</strong> comfortably. Ideal for intimate and mid-size groups.</p>
+      </div>
+      <div class="card card-gold">
+        <h4 class="gold">Equipment</h4>
+        <p>Yoga mats, blocks, straps, bolsters, and a professional sound system available on-site.</p>
+      </div>
+    </div>
+    <div class="highlight highlight-gold" style="margin-top:22px;">
+      <p>The hall is reserved exclusively for your group throughout the retreat. No shared spaces, no interruptions, no compromises.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: ACCOMMODATIONS -->
+  <div class="slide slide-warm" id="slide-7">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Where Your Guests Rest</div>
+    <h2>Accommodations<br><span class="accent">Designed for Rest & Renewal</span></h2>
+    <div class="divider"></div>
+    <div class="cards cards-3" style="max-width:950px;">
+      <div class="card">
+        <h4>Forest Bungalows</h4>
+        <p>Private cabins nestled among the trees. En-suite bathrooms, natural materials, and the forest as your view.</p>
+      </div>
+      <div class="card">
+        <h4>Ocean View Rooms</h4>
+        <p>Wake up to the sound of the Pacific. Panoramic views, morning light, and total tranquility.</p>
+      </div>
+      <div class="card">
+        <h4>Shared Lodge</h4>
+        <p>Community-style accommodation — ideal for groups seeking togetherness and a more accessible price point.</p>
+      </div>
+    </div>
+    <div class="cards cards-2" style="max-width:700px; margin-top:16px;">
+      <div class="card" style="text-align:center;">
+        <div class="big">~30</div>
+        <p>Maximum guest capacity</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="big">100%</div>
+        <p>Exclusive-use available for your group</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: CUISINE -->
+  <div class="slide slide-forest" id="slide-8">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Nourishment</div>
+    <h2>Food That Feeds the Practice.<br><span class="accent">Three Times a Day.</span></h2>
+    <div class="divider"></div>
+    <p class="subtitle">Seasonal fruits, organic herbs, medicinal teas, and local ingredients — every meal crafted to sustain deep practice and restore energy.</p>
+    <div class="cards cards-3" style="margin-top:24px; max-width:850px;">
+      <div class="card">
+        <h4>Farm-to-Table</h4>
+        <p>Local producers and the lodge garden supply ingredients at peak freshness. Zero industrial food.</p>
+      </div>
+      <div class="card">
+        <h4>Dietary Needs</h4>
+        <p>Vegetarian, vegan, and allergen-conscious menus available upon request, coordinated with you in advance.</p>
+      </div>
+      <div class="card">
+        <h4>Ritual Meals</h4>
+        <p>Thick tropical juices, herbal teas, and medicinal plants served daily. Eating here is part of the healing.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: ACTIVITIES -->
+  <div class="slide slide-ocean" id="slide-9">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Beyond the Mat</div>
+    <h2>Nature Activities That<br><span class="accent">Deepen the Experience</span></h2>
+    <div class="divider"></div>
+    <p class="subtitle">Complement your sessions with optional activities that connect participants even further to themselves and the natural world.</p>
+    <div class="cards cards-4" style="margin-top:22px; max-width:960px;">
+      <div class="card">
+        <h4>Jungle Hikes</h4>
+        <p>Guided trails into primary forest with wildlife spotting. Scarlet macaws, tapirs, monkeys.</p>
+      </div>
+      <div class="card">
+        <h4>Ocean Swims</h4>
+        <p>Private beach access. Sunrise and sunset ceremonies by the Pacific.</p>
+      </div>
+      <div class="card">
+        <h4>Mangrove Tours</h4>
+        <p>Kayak or boat through the mangroves at golden hour. Silence, birds, reflections.</p>
+      </div>
+      <div class="card">
+        <h4>Corcovado Day Trip</h4>
+        <p>Guided expedition into one of the most biologically intense parks on the planet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: SUPPORT TEAM -->
+  <div class="slide slide-dark" id="slide-10">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">You Are Not Alone</div>
+    <h2>Your Dedicated Team.<br><span class="accent">From Planning to Last Day.</span></h2>
+    <div class="divider"></div>
+    <ul class="list" style="max-width:700px;">
+      <li><strong>Retreat Coordinator:</strong> one dedicated point of contact from first inquiry to post-retreat follow-up</li>
+      <li><strong>Pre-departure planning:</strong> we help you build schedules, confirm logistics, and prepare your group</li>
+      <li><strong>On-site support:</strong> our team handles meals, transfers, activities, and any unexpected situations</li>
+      <li><strong>Marketing materials:</strong> we provide photos, descriptions, and content to help you sell your retreat</li>
+      <li><strong>Complete freedom for the teacher:</strong> you focus on transformation — we handle everything else</li>
+    </ul>
+  </div>
+
+  <!-- SLIDE 11: PROFITABILITY MODEL -->
+  <div class="slide slide-warm" id="slide-11">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow eyebrow-gold">Business Model for the Teacher</div>
+    <h2>Your Retreat. <span class="accent-gold">Your Income.</span><br>Here's How It Works.</h2>
+    <div class="divider divider-gold"></div>
+    <p class="subtitle" style="color:#b8a888; max-width:650px;">Simple model: you sell spots at your price. You keep the difference above our per-person base rate.</p>
+    <div class="profit-box" style="margin-top:20px;">
+      <div class="profit-row"><span class="profit-label">Participants (example)</span><span>12 people</span></div>
+      <div class="profit-row"><span class="profit-label">Your retail price per person</span><span>$2,500 USD</span></div>
+      <div class="profit-row"><span class="profit-label">OFE base rate per person (all-inclusive)</span><span>$1,500 USD</span></div>
+      <div class="profit-row"><span>Your profit margin</span><span>$12,000 USD</span></div>
+    </div>
+    <p style="font-size:0.78rem; color:#6a8a6a; margin-top:12px; font-family:'Helvetica Neue',sans-serif;">*Figures are illustrative. Final rates depend on season and group size. Contact us for a custom quote.</p>
+  </div>
+
+  <!-- SLIDE 12: SEASONS & AVAILABILITY -->
+  <div class="slide slide-forest" id="slide-12">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">When to Come</div>
+    <h2>Seasons & <span class="accent">Retreat Windows</span></h2>
+    <div class="divider"></div>
+    <div class="cards cards-2" style="max-width:800px;">
+      <div class="card">
+        <h4>✦ Dry Season (High)</h4>
+        <p><strong style="color:#c9a84c;">December – April</strong><br>Sunny days, optimal trekking conditions, peak wildlife activity. Most in-demand dates — book early.</p>
+      </div>
+      <div class="card">
+        <h4>✦ Green Season (Low)</h4>
+        <p><strong style="color:#8fbc5a;">May – November</strong><br>Lush jungle, fewer visitors, more intimate atmosphere. Perfect for deeply immersive groups.</p>
+      </div>
+    </div>
+    <div class="highlight" style="margin-top:22px;">
+      <p><strong style="color:#8fbc5a;">Minimum recommended stay:</strong> 5 nights / 6 days for a meaningful retreat arc.<br>
+      <strong style="color:#8fbc5a;">Ideal format:</strong> 7–10 nights for full transformation and nature immersion.</p>
+    </div>
+    <p style="font-size:0.85rem; color:#8a9a8a; margin-top:14px; font-family:'Helvetica Neue',sans-serif;">Exclusive-use bookings require minimum advance reservation — contact us to check availability.</p>
+  </div>
+
+  <!-- SLIDE 13: A TYPICAL DAY -->
+  <div class="slide slide-dark" id="slide-13">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Sample Daily Flow</div>
+    <h2>A Day at <span class="accent">Ocean Forest</span></h2>
+    <div class="divider"></div>
+    <div class="timeline">
+      <div class="timeline-item"><span class="timeline-time">6:00 AM</span><div class="timeline-text">Sunrise meditation on the beach or forest walk to greet the day</div></div>
+      <div class="timeline-item"><span class="timeline-time">7:30 AM</span><div class="timeline-text">Morning yoga session in the Dharma Hall · 90 minutes</div></div>
+      <div class="timeline-item"><span class="timeline-time">9:30 AM</span><div class="timeline-text">Breakfast: fresh tropical fruits, herbal teas, organic local produce</div></div>
+      <div class="timeline-item"><span class="timeline-time">11:00 AM</span><div class="timeline-text">Free time, jungle hike, ocean swim, or workshop with the teacher</div></div>
+      <div class="timeline-item"><span class="timeline-time">1:30 PM</span><div class="timeline-text">Lunch: farm-to-table meal, rest, integration time</div></div>
+      <div class="timeline-item"><span class="timeline-time">4:30 PM</span><div class="timeline-text">Evening yoga or restorative practice · sunset ceremony</div></div>
+      <div class="timeline-item"><span class="timeline-time">7:00 PM</span><div class="timeline-text">Dinner · sharing circle · stargazing in primary forest</div></div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: FAQ -->
+  <div class="slide slide-split" id="slide-14">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Frequently Asked Questions</div>
+    <h2 style="font-size:1.8rem;">Everything You Need to Know<br><span class="accent">Before You Decide</span></h2>
+    <div class="divider" style="margin:16px auto;"></div>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">Is Wi-Fi available?</div>
+        <div class="faq-a">Basic connectivity available for emergencies. We intentionally limit it — digital detox is part of the transformation.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is the minimum group size?</div>
+        <div class="faq-a">We work with groups from 8 to 30 participants. Smaller groups may apply for partial-use arrangements.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do I manage payments from participants?</div>
+        <div class="faq-a">Yes. You invoice your participants directly. We invoice you separately for the lodge package.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if a participant needs to leave early?</div>
+        <div class="faq-a">Our team coordinates transfers to the airstrip or port. We handle it so you don't have to.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I customize the schedule?</div>
+        <div class="faq-a">100%. The schedule is yours. We adapt meals, activities, and logistics to your flow.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is the cancellation policy?</div>
+        <div class="faq-a">Flexible terms for advance bookings. Full details provided in your personalized proposal.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is it suitable for beginners?</div>
+        <div class="faq-a">Absolutely. The environment works for all levels — the jungle doesn't judge. Your group, your practice.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do you provide marketing content?</div>
+        <div class="faq-a">Yes. We supply high-quality photos, video clips, and property descriptions to help you sell your retreat.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: SOCIAL PROOF -->
+  <div class="slide slide-dark" id="slide-15">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">What Teachers Say</div>
+    <h2>Those Who Came<br><span class="accent">Came Back.</span></h2>
+    <div class="divider"></div>
+    <div class="cards cards-2" style="max-width:800px; margin-top:10px;">
+      <div class="card" style="text-align:left;">
+        <p class="italic" style="color:#c8d5b8; font-size:0.92rem; line-height:1.7;">"I've hosted retreats in Bali, Portugal, and Mexico. Nothing compares to what the Osa Peninsula does to a group. By day three, people were crying — the good kind."</p>
+        <p style="margin-top:12px; font-size:0.78rem; color:#8fbc5a; font-family:'Helvetica Neue',sans-serif; letter-spacing:1px; text-transform:uppercase;">— Yoga Teacher, USA · 2024</p>
+      </div>
+      <div class="card" style="text-align:left;">
+        <p class="italic" style="color:#c8d5b8; font-size:0.92rem; line-height:1.7;">"The team at Ocean Forest removed every logistical obstacle. I arrived as a teacher and left as a participant too. Totally surrendered to the experience."</p>
+        <p style="margin-top:12px; font-size:0.78rem; color:#8fbc5a; font-family:'Helvetica Neue',sans-serif; letter-spacing:1px; text-transform:uppercase;">— Retreat Facilitator, Germany · 2023</p>
+      </div>
+    </div>
+    <div class="cards cards-3" style="max-width:750px; margin-top:16px;">
+      <div class="card" style="text-align:center; padding:20px;">
+        <div class="big" style="font-size:1.6rem;">★ 4.9</div>
+        <p>Average guest rating</p>
+      </div>
+      <div class="card" style="text-align:center; padding:20px;">
+        <div class="big" style="font-size:1.6rem;">80%</div>
+        <p>Teachers who return for a second retreat</p>
+      </div>
+      <div class="card" style="text-align:center; padding:20px;">
+        <div class="big" style="font-size:1.6rem;">15+</div>
+        <p>Retreats hosted in the last 3 years</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: CTA -->
+  <div class="slide slide-forest" id="slide-16">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow eyebrow-gold">Ready to Start?</div>
+    <h2>Let's Design<br><span class="accent-gold">Your Retreat Together.</span></h2>
+    <div class="divider divider-gold"></div>
+    <p class="subtitle">No commitment required. A 30-minute conversation is all it takes to find out if Ocean Forest is right for you and your group.</p>
+    <div class="cards cards-3" style="max-width:750px; margin-top:22px;">
+      <div class="card card-gold" style="text-align:center;">
+        <h4 class="gold">① Contact Us</h4>
+        <p>WhatsApp or email. We reply within 24 hours.</p>
+      </div>
+      <div class="card card-gold" style="text-align:center;">
+        <h4 class="gold">② Custom Proposal</h4>
+        <p>We send a tailored quote with dates, capacity, and pricing for your group.</p>
+      </div>
+      <div class="card card-gold" style="text-align:center;">
+        <h4 class="gold">③ Reserve Your Dates</h4>
+        <p>A deposit secures your exclusive window. Then we get to work together.</p>
+      </div>
+    </div>
+    <button class="cta-btn cta-btn-gold" style="margin-top:28px;">📲 Write to Us on WhatsApp</button>
+    <p style="margin-top:14px; font-size:0.82rem; color:#8a9a7a; font-family:'Helvetica Neue',sans-serif;">retreat@oceanforestecolodge.com  ·  +506 XXXX XXXX</p>
+  </div>
+
+  <!-- SLIDE 17: CLOSING -->
+  <div class="slide slide-dark" id="slide-17">
+    <div class="logo">Ocean Forest Ecolodge</div>
+    <div class="eyebrow">Osa Peninsula · Costa Rica</div>
+    <h1 style="font-size:clamp(1.8rem,4vw,3rem);">The jungle is ready.<br><span class="accent">Are you?</span></h1>
+    <div class="divider"></div>
+    <p class="subtitle" style="font-style:italic; font-size:1rem;">Ocean Forest Ecolodge · Exclusive Retreats · Corcovado, Costa Rica</p>
+    <div style="margin-top:36px; display:flex; gap:40px; justify-content:center; align-items:center;">
+      <div style="text-align:center;">
+        <div style="font-family:'Helvetica Neue',sans-serif; font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; color:#6a8a6a; margin-bottom:6px;">Website</div>
+        <div style="font-size:0.9rem; color:#b8c9a8;">oceanforestecolodge.com</div>
+      </div>
+      <div style="width:1px; height:40px; background:rgba(255,255,255,0.1);"></div>
+      <div style="text-align:center;">
+        <div style="font-family:'Helvetica Neue',sans-serif; font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; color:#6a8a6a; margin-bottom:6px;">Instagram</div>
+        <div style="font-size:0.9rem; color:#b8c9a8;">@oceanforestecolodge</div>
+      </div>
+      <div style="width:1px; height:40px; background:rgba(255,255,255,0.1);"></div>
+      <div style="text-align:center;">
+        <div style="font-family:'Helvetica Neue',sans-serif; font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; color:#6a8a6a; margin-bottom:6px;">Email</div>
+        <div style="font-size:0.9rem; color:#b8c9a8;">retreat@oceanforestecolodge.com</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<nav class="nav">
+  <button onclick="changeSlide(-1)">← Prev</button>
+  <span class="counter" id="counter">1 / 17</span>
+  <button onclick="changeSlide(1)">Next →</button>
+</nav>
+
+<script>
+  let current = 1;
+  const total = 17;
+
+  function showSlide(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    current = Math.max(1, Math.min(n, total));
+    document.getElementById('slide-' + current).classList.add('active');
+    document.getElementById('counter').textContent = current + ' / ' + total;
+  }
+
+  function changeSlide(dir) {
+    showSlide(current + dir);
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') changeSlide(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') changeSlide(-1);
+  });
+
+  // Swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+  });
+</script>
+</body>
+</html>

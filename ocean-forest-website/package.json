@@ -1,0 +1,11 @@
+{
+  "name": "ocean-forest-website",
+  "private": true,
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "dev": "serve -p 8743 ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean Forest Ecolodge · Beachfront Rainforest Sanctuary, Osa Peninsula, Costa Rica</title>
+<meta name="description" content="A roadless beachfront ecolodge between Corcovado National Park and the Pacific. Ten rooms for nightly stays, and exclusive-use retreats for up to 32 guests. Osa Peninsula, Costa Rica, since 2000.">
+<link rel="canonical" href="https://www.oceanforest.org/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ocean Forest Ecolodge · Osa Peninsula, Costa Rica">
+<meta property="og:description" content="A roadless beachfront sanctuary between Corcovado National Park and the Pacific. Come to stay, or bring your retreat.">
+<meta property="og:image" content="https://www.oceanforest.org/images/mosaic-sunset.jpg">
+<meta property="og:url" content="https://www.oceanforest.org/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Resort",
+  "name": "Ocean Forest Ecolodge",
+  "description": "A beachfront rainforest ecolodge and retreat centre on a roadless beach south of Drake Bay, Osa Peninsula, Costa Rica.",
+  "url": "https://www.oceanforest.org/",
+  "email": "eli@oceanforest.org",
+  "telephone": "+506 8737 9416",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Playa Rincon de San Josecito, Drake Bay",
+    "addressRegion": "Puntarenas",
+    "addressCountry": "CR"
+  },
+  "geo": { "@type": "GeoCoordinates", "latitude": 8.6957, "longitude": -83.675 },
+  "numberOfRooms": 10,
+  "foundingDate": "2000"
+}
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal-deep:   #16707E;
+    --teal:        #2AADA8;
+    --teal-light:  #3DCFD0;
+
+    --ink:    #0e1310;
+    --ink-2:  #141a16;
+    --ink-3:  #1a221c;
+    --mist:   #e8ede4;
+    --white:  #fafaf8;
+    --dim:    rgba(232, 237, 228, 0.62);
+    --hairline: rgba(232, 237, 228, 0.14);
+
+    /* ── The .com gradient, now part of the palette ── */
+    --grad-1: #3C88A4;
+    --grad-2: #469B94;
+    --grad-3: #53A871;
+    --grad-4: #7DB359;
+    --grad-5: #A3C455;
+    --grad-6: #DFDF5B;
+    --gradient-ocean-lime: linear-gradient(90deg, var(--grad-1), var(--grad-3), var(--grad-6));
+
+    --serif:  'Cormorant Garamond', Georgia, serif;
+    --sans:   'DM Sans', system-ui, sans-serif;
+    --mono:   'Space Mono', monospace;
+
+    --gutter: 48px;
+    --nav-h:  76px;
+  }
+
+  /* ── LIGHT THEME ──────────────────────────────────────────────────────────
+     Same layout, same gradient. Only the variables move. Never a second
+     stylesheet.                                                             */
+  body.light {
+    --ink:    #f6f4ee;
+    --ink-2:  #ffffff;
+    --ink-3:  #efece2;
+    --mist:   #1a221c;
+    --white:  #0e1310;
+    --dim:    rgba(20, 26, 22, 0.64);
+    --hairline: rgba(14, 19, 16, 0.16);
+    --teal-light: #16707E;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+  body {
+    background: var(--ink);
+    color: var(--mist);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  a { color: inherit; }
+
+  .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ── SKIP LINK ── */
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 300;
+    background: var(--teal); color: #0b1210;
+    padding: 12px 20px; font-family: var(--mono); font-size: 0.75rem;
+  }
+  .skip:focus { left: 12px; top: 12px; }
+
+  /* ── HEADER / NAV ───────────────────────────────────────────────────────── */
+  .site-head {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--nav-h);
+    padding: 0 var(--gutter);
+    display: flex; align-items: center; gap: 26px;
+    background: rgba(14, 19, 16, 0.78);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--hairline);
+    transition: height 0.3s ease, background 0.3s ease;
+  }
+  body.light .site-head { background: rgba(246, 244, 238, 0.9); }
+  .site-head.scrolled { height: 56px; }
+  .site-head::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+    background: var(--gradient-ocean-lime); opacity: 0; transition: opacity 0.3s ease;
+  }
+  .site-head.scrolled::after { opacity: 1; }
+
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+  .nav-logo img { height: 34px; width: auto; max-width: 190px; object-fit: contain; display: block; transition: height 0.3s ease, max-width 0.3s ease; }
+  .site-head.scrolled .nav-logo img { height: 26px; }
+  .nav-logo span {
+    font-family: var(--serif); font-size: 1.05rem; font-weight: 300;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); white-space: nowrap;
+  }
+
+  .nav-menu { display: flex; align-items: center; gap: 22px; margin-left: auto; }
+  .nav-menu a {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim); text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s; white-space: nowrap;
+  }
+  .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--white); border-color: var(--teal); }
+
+  .nav-actions { display: flex; align-items: center; gap: 12px; margin-left: 20px; flex-shrink: 0; }
+
+  .theme-btn {
+    background: none; border: 1px solid var(--hairline); color: var(--mist);
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    font-size: 0.9rem; line-height: 1; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--teal); color: var(--white); }
+
+  .book-btn {
+    background: var(--gradient-ocean-lime); color: #0b1210 !important;
+    font-family: var(--mono); font-weight: 700; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 10px 20px; border-radius: 24px; text-decoration: none;
+    white-space: nowrap; border: 0; display: inline-block;
+  }
+  .book-btn:hover { filter: brightness(1.08); }
+
+  .burger {
+    display: none; background: none; border: 1px solid var(--hairline);
+    color: var(--mist); width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .burger svg { width: 16px; height: 16px; }
+
+  @media (max-width: 900px) {
+    :root { --gutter: 22px; }
+    .nav-logo span { display: none; }
+    .burger { display: flex; }
+    .nav-menu {
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 0;
+      background: var(--ink-2); border-bottom: 1px solid var(--hairline);
+      padding: 8px 22px 20px; margin: 0;
+      transform: translateY(-8px); opacity: 0; pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    .nav-menu.open { transform: none; opacity: 1; pointer-events: auto; }
+    .nav-menu a { width: 100%; padding: 15px 0; font-size: 0.8rem; border-bottom: 1px solid var(--hairline); }
+    .nav-actions { margin-left: auto; }
+  }
+  @media (max-width: 480px) {
+    /* Book now must stay visible at 375px, outside the hamburger. */
+    .site-head { gap: 10px; }
+    .nav-logo img { max-width: 104px; height: 30px; }
+    .site-head.scrolled .nav-logo img { height: 24px; }
+    .book-btn { padding: 9px 13px; font-size: 0.6rem; letter-spacing: 0.06em; }
+    .nav-actions { gap: 8px; margin-left: auto; }
+    .theme-btn, .burger { width: 31px; height: 31px; }
+  }
+
+  /* ── HERO ───────────────────────────────────────────────────────────────── */
+  .hero {
+    position: relative; min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 110px 0 48px; overflow: hidden;
+  }
+  .hero-video { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .hero-video iframe {
+    position: absolute; top: 50%; left: 50%;
+    width: 100vw; height: 56.25vw; min-width: 177.78vh; min-height: 100vh;
+    transform: translate(-50%, -50%); border: 0;
+  }
+  .hero-still { position: absolute; inset: 0; z-index: 0; background: url('images/mosaic-sunset.jpg') center/cover no-repeat; }
+  .hero-scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg,
+      rgba(14, 19, 16, 0.62) 0%, rgba(14, 19, 16, 0.28) 26%,
+      rgba(14, 24, 28, 0.55) 62%, rgba(9, 18, 22, 0.92) 100%);
+  }
+  .hero-inner { position: relative; z-index: 2; width: 100%; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--teal-light); margin-bottom: 20px; display: block;
+  }
+  .hero .eyebrow { color: #7fe3e4; }
+
+  h1 {
+    font-family: var(--serif); font-size: clamp(2.9rem, 6.4vw, 5.4rem);
+    font-weight: 300; line-height: 1.02; letter-spacing: -0.015em;
+    color: #fafaf8; max-width: 15ch;
+  }
+  h1 em { font-style: italic; color: #bfe6d8; }
+
+  .hero-sub {
+    font-size: 1.08rem; font-weight: 300; color: rgba(232, 237, 228, 0.8);
+    max-width: 52ch; margin: 22px 0 0; line-height: 1.7;
+  }
+
+  /* ── THE FORK ── */
+  .fork { position: relative; z-index: 2; margin-top: 44px; }
+  .fork-label {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: rgba(232, 237, 228, 0.62); margin-bottom: 16px;
+  }
+  .fork-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fork-extra {
+    display: inline-block; margin-top: 18px; font-family: var(--mono); font-size: 0.72rem;
+    letter-spacing: 0.04em; color: rgba(232, 237, 228, 0.62); text-decoration: none;
+    border-bottom: 1px solid rgba(232, 237, 228, 0.3); padding-bottom: 2px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .fork-extra:hover, .fork-extra:focus-visible { color: #7fe3e4; border-color: #7fe3e4; }
+
+  .path {
+    position: relative; text-decoration: none; overflow: hidden;
+    min-height: 168px; padding: 26px 28px;
+    border: 1px solid rgba(232, 237, 228, 0.22);
+    background: rgba(9, 18, 22, 0.42);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+    display: flex; flex-direction: column; justify-content: flex-end; border-radius: 6px;
+  }
+  .path::before {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background-size: cover; background-position: center; opacity: 0;
+    transition: opacity 0.45s ease, transform 6s ease; transform: scale(1.04);
+  }
+  .path::after {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(9,18,22,0.25) 0%, rgba(9,18,22,0.82) 100%);
+    opacity: 0; transition: opacity 0.45s ease;
+  }
+  .path-stay::before { background-image: url('images/room-ocean-view.jpg'); }
+  .path-lead::before { background-image: url('images/shala-feature.jpg'); }
+  .path:hover, .path:focus-visible { border-color: var(--teal); transform: translateY(-3px); background: rgba(9, 18, 22, 0.2); }
+  .path:hover::before, .path:focus-visible::before { opacity: 0.5; transform: scale(1); }
+  .path:hover::after, .path:focus-visible::after { opacity: 1; }
+  .path > * { position: relative; z-index: 2; }
+
+  .path-kicker {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: #7fe3e4; margin-bottom: 10px;
+  }
+  .path-title {
+    font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.35rem);
+    font-weight: 300; line-height: 1.1; color: #fafaf8; margin-bottom: 8px;
+  }
+  .path-desc { font-size: 0.92rem; font-weight: 300; color: rgba(232, 237, 228, 0.72); line-height: 1.6; max-width: 34ch; }
+  .path-arrow {
+    margin-top: 16px; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #e8ede4; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .path-arrow svg { width: 15px; height: 15px; transition: transform 0.25s ease; }
+  .path:hover .path-arrow svg { transform: translateX(5px); }
+  .path-remembered {
+    position: absolute; top: 0; left: 0; z-index: 3;
+    background: var(--gradient-ocean-lime); color: #0b1210;
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em;
+    text-transform: uppercase; padding: 5px 12px; font-weight: 700;
+  }
+
+  @media (max-width: 820px) {
+    .hero { padding-top: 96px; }
+    .fork-grid { grid-template-columns: 1fr; gap: 10px; }
+    .path { min-height: 0; padding: 20px 22px; }
+    .path-desc { display: none; }
+    .hero-sub { font-size: 1rem; margin-top: 16px; }
+    .fork { margin-top: 30px; }
+  }
+
+  /* ── SECTIONS ───────────────────────────────────────────────────────────── */
+  main { position: relative; z-index: 2; background: var(--ink); }
+  section { padding: 104px 0; }
+  @media (max-width: 720px) { section { padding: 72px 0; } }
+
+  .sec-head { margin-bottom: 8px; }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 300; line-height: 1.1;
+    font-size: clamp(2rem, 4.4vw, 3.2rem); color: var(--white);
+  }
+  .grad-text { background: var(--gradient-ocean-lime); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .grad-bar { height: 3px; width: 72px; background: var(--gradient-ocean-lime); border: 0; margin: 22px 0 26px; border-radius: 2px; }
+  .lead { max-width: 640px; color: var(--dim); font-size: 1.02rem; font-weight: 300; }
+
+  /* ── MEDIA PLACEHOLDERS ── */
+  .ph {
+    position: relative; width: 100%; height: 100%; min-height: 180px;
+    background: repeating-linear-gradient(45deg, rgba(42,173,168,0.06) 0 12px, rgba(42,173,168,0.11) 12px 24px);
+    border: 1px dashed rgba(42,173,168,0.55); border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 20px; text-align: center;
+  }
+  .ph-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); }
+  .ph-file  { font-family: var(--mono); font-size: 0.72rem; color: var(--mist); word-break: break-all; }
+  .ph-note  { font-family: var(--mono); font-size: 0.58rem; color: var(--dim); }
+  body.light .ph {
+    background: repeating-linear-gradient(45deg, rgba(22,112,126,0.06) 0 12px, rgba(22,112,126,0.12) 12px 24px);
+    border-color: rgba(22,112,126,0.5);
+  }
+  /* width:100% is required — with aspect-ratio set by JS, an element sized only
+     by min-height derives its WIDTH from that height and blows out the grid. */
+  [data-media] { width: 100%; }
+  [data-media] > img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 6px; }
+
+  /* ── ROOMS ── */
+  .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr)); gap: 22px; margin-top: 40px; }
+  .rooms-grid > * { min-width: 0; }
+  .room {
+    background: var(--ink-2); border: 1px solid var(--hairline); border-radius: 6px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .room-frame { min-height: 200px; }
+  .room-frame .ph { border-radius: 0; border-left: 0; border-right: 0; border-top: 0; }
+  .room-body { padding: 24px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .room h3 { font-family: var(--serif); font-size: 1.55rem; font-weight: 400; color: var(--white); }
+  .room-meta { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--teal-light); text-transform: uppercase; }
+  .room-tag { font-family: var(--serif); font-style: italic; font-size: 1.08rem; color: var(--mist); }
+  .room ul { list-style: none; margin: 4px 0 0; flex: 1; }
+  .room li { color: var(--dim); font-size: 0.88rem; font-weight: 300; padding-left: 18px; position: relative; margin-bottom: 6px; line-height: 1.6; }
+  .room li::before { content: ''; position: absolute; left: 0; top: 0.62em; width: 7px; height: 7px; border-radius: 50%; background: var(--gradient-ocean-lime); }
+
+  .cta {
+    align-self: flex-start; background: var(--gradient-ocean-lime); color: #0b1210;
+    font-weight: 700; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-family: var(--mono); padding: 12px 24px; border-radius: 24px; border: 0;
+    cursor: pointer; text-decoration: none; display: inline-block; margin-top: 6px;
+  }
+  .cta:hover { filter: brightness(1.08); }
+  .cta.ghost { background: none; border: 1px solid var(--hairline); color: var(--mist); font-weight: 400; }
+  .cta.ghost:hover { border-color: var(--teal); color: var(--white); }
+
+  .included {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px;
+  }
+  .included li {
+    list-style: none; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--dim); border: 1px solid var(--hairline);
+    padding: 8px 15px; border-radius: 20px;
+  }
+  .loc-note {
+    margin-top: 36px; max-width: 660px; color: var(--mist);
+    border-left: 2px solid var(--teal); padding-left: 18px;
+    font-style: italic; font-family: var(--serif); font-size: 1.1rem; line-height: 1.6;
+  }
+
+  /* ── FOOD ── */
+  .chips { display: flex; gap: 12px; flex-wrap: wrap; margin: 26px 0 8px; }
+  .chip {
+    display: flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(125, 179, 89, 0.45); color: #cfe3b8;
+    padding: 9px 18px; border-radius: 22px; font-size: 0.78rem;
+    letter-spacing: 0.08em; text-transform: uppercase; font-family: var(--mono);
+  }
+  .chip svg { width: 15px; height: 15px; flex-shrink: 0; }
+  body.light .chip { color: #3f6b2a; border-color: rgba(106, 154, 58, 0.5); }
+  .food-wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 44px; align-items: center; margin-top: 30px; }
+  .food-wrap > * { min-width: 0; }
+  .food-wrap .food-frame { min-height: 340px; }
+  .food-quote { font-family: var(--serif); font-size: 1.35rem; font-style: italic; line-height: 1.5; color: var(--mist); }
+  .food-wrap p + p { margin-top: 18px; }
+  .food-body { color: var(--dim); font-size: 0.95rem; font-weight: 300; line-height: 1.8; }
+  @media (max-width: 820px) { .food-wrap { grid-template-columns: minmax(0, 1fr); gap: 30px; } }
+
+  /* ── RETREAT PITCH ── */
+  .pitch {
+    background: linear-gradient(135deg, rgba(60,136,164,0.16), rgba(125,179,89,0.11));
+    border: 1px solid var(--hairline); border-radius: 8px;
+    padding: 64px 6vw; text-align: center;
+  }
+  .pitch h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1.15; max-width: 24ch; margin: 12px auto 16px; color: var(--white); }
+  .pitch p { color: var(--dim); max-width: 600px; margin: 0 auto 30px; font-weight: 300; }
+
+  /* ── TRUST ── */
+  .stats { display: flex; flex-wrap: wrap; border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; margin-top: 36px; }
+  .stat { flex: 1; min-width: 150px; padding: 30px 20px; text-align: center; border-right: 1px solid var(--hairline); }
+  .stat:last-child { border-right: 0; }
+  .stat b { display: block; font-family: var(--serif); font-size: 2.1rem; font-weight: 300; color: var(--white); line-height: 1.1; }
+  .stat span { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); }
+  @media (max-width: 720px) { .stat { min-width: 50%; flex: none; } }
+
+  .reviews { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 20px; margin-top: 32px; }
+  .review {
+    background: var(--ink-2); border: 1px dashed rgba(42,173,168,0.45); border-radius: 6px;
+    padding: 26px; color: var(--dim);
+  }
+  .review .stars { color: var(--grad-5); letter-spacing: 3px; margin-bottom: 12px; }
+  .review p { font-family: var(--mono); font-size: 0.74rem; line-height: 1.7; color: var(--mist); }
+  .review .who { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 14px; color: var(--dim); }
+
+  /* ── ABOUT ── */
+  .about-wrap { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+  .about-wrap > * { min-width: 0; }
+  .about-frame { min-height: 380px; }
+  .about-txt p { color: var(--dim); margin-bottom: 16px; font-size: 0.98rem; font-weight: 300; line-height: 1.85; }
+  .about-txt p.opening { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--mist); line-height: 1.55; }
+  @media (max-width: 820px) { .about-wrap { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
+
+  /* ── GALLERY ── */
+  .gal { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 36px; }
+  .gal > div { min-height: 160px; }
+  @media (max-width: 820px) { .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* ── FOOTER ── */
+  footer {
+    position: relative; border-top: 1px solid var(--hairline);
+    padding: 70px 0 60px; background: var(--ink-2);
+  }
+  .foot-bar { height: 4px; background: var(--gradient-ocean-lime); position: absolute; top: 0; left: 0; right: 0; }
+  .foot-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 44px; align-items: start; }
+  .foot-grid > div { min-width: 0; }
+  .foot-brand { font-family: var(--serif); font-size: 1.15rem; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); margin-bottom: 14px; }
+  .foot-grid > div > p { font-size: 0.9rem; font-weight: 300; color: var(--dim); max-width: 38ch; line-height: 1.75; }
+  .foot-grid h3 { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-light); font-weight: 400; margin-bottom: 16px; }
+  .foot-grid ul { list-style: none; }
+  .foot-grid li { margin-bottom: 10px; }
+  .foot-grid li a {
+    font-size: 0.9rem; font-weight: 300; color: var(--dim); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s;
+  }
+  .foot-grid li a:hover, .foot-grid li a:focus-visible { color: var(--white); border-color: var(--teal); }
+  .foot-bottom {
+    margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--hairline);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; color: var(--dim);
+  }
+  .foot-bottom a { color: var(--dim); text-decoration: none; border-bottom: 1px solid var(--hairline); }
+  .foot-bottom a:hover { color: var(--teal-light); border-color: var(--teal-light); }
+  @media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr; gap: 34px; } }
+  @media (max-width: 560px) { .foot-grid { grid-template-columns: 1fr; } }
+
+  /* ── MOTION ── */
+  .reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#rooms">Skip to the lodge</a>
+
+<header class="site-head" id="siteHead">
+  <a href="/" class="nav-logo">
+    <img src="images/ocean-forest-ecolodge-logo.png" alt="Ocean Forest Ecolodge">
+    <span>Ocean Forest</span>
+  </a>
+
+  <!-- Nav list is the client's chosen list. Food and Trust are deliberately omitted. -->
+  <nav class="nav-menu" id="navMenu" aria-label="Main">
+    <a href="#arriving">Arriving</a>
+    <a href="#rooms">Stay</a>
+    <a href="/retreats">Retreats</a>
+    <a href="#experiences">Experiences</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+  </nav>
+
+  <div class="nav-actions">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark" title="Light / dark">☾</button>
+    <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-still" aria-hidden="true"></div>
+  <div class="hero-video" aria-hidden="true">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/AjqtTXfJbeg?autoplay=1&mute=1&loop=1&playlist=AjqtTXfJbeg&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&start=2"
+      title="Ocean Forest Ecolodge from the air"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      referrerpolicy="strict-origin-when-cross-origin"
+      tabindex="-1"></iframe>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="wrap">
+      <p class="eyebrow">Osa Peninsula · Costa Rica · Since 2000</p>
+      <h1>The wild edge of <em>Costa Rica.</em></h1>
+      <p class="hero-sub">A beachfront sanctuary on the edge of one of the most thriving ecosystems on the planet. Pure nature connection.</p>
+    </div>
+
+    <div class="fork" id="fork">
+      <div class="wrap">
+        <p class="fork-label">What brings you here?</p>
+        <div class="fork-grid">
+
+          <!-- Straight to the booking engine. No intermediate page, no request form. -->
+          <a class="path path-stay" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" data-path="stay" rel="noopener">
+            <span class="path-kicker">Come as a guest</span>
+            <span class="path-title">I want to stay</span>
+            <span class="path-desc">Ten rooms in the jungle and on the beach. Three homecooked meals a day, from a few nights to a few weeks.</span>
+            <span class="path-arrow">See the lodge
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+          <a class="path path-lead" href="/retreats" data-path="retreat">
+            <span class="path-kicker">Bring your group</span>
+            <span class="path-title">I lead retreats</span>
+            <span class="path-desc">Exclusive use of a 46-foot beachfront shala and the whole property, for groups of 8 to 32.</span>
+            <span class="path-arrow">Host your retreat
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+
+        </div>
+
+        <a class="fork-extra" href="mailto:eli@oceanforest.org?subject=Monthly%20stay%20enquiry">
+          We also have special monthly stay options. Reach out to Eli directly
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══ ROOMS ══════════════════════════════════════════════════════════════
+       Copy: com-copy.md PAGE: /accommodations/ (verbatim, trimmed only).
+       Location note: org-copy.md PAGE: /setting/ (verbatim, 3 sentences).
+       No prices anywhere — the booking engine owns prices.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="rooms">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Accommodations</span>
+        <h2>Choose Your <span class="grad-text">Perfect Room</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Rainforest at your doorstep, the ocean just steps away. Drift to sleep with the rhythm of the Pacific and wake to a symphony of birdsong. At Ocean Forest Ecolodge, nature is your constant companion.</p>
+      </div>
+
+      <ul class="included reveal">
+        <li>Three meals a day</li>
+        <li>En-suite private bathrooms</li>
+        <li>Private balconies</li>
+        <li>Fresh linens and towels</li>
+        <li>Mosquito nets</li>
+      </ul>
+
+      <div class="rooms-grid">
+
+        <article class="room reveal">
+          <div class="room-frame" data-media="rooms/beach-bungalow-01.jpg" data-ratio="4/3" data-note="Beach Bungalows, the strongest shot"></div>
+          <div class="room-body">
+            <h3>Beach Bungalows</h3>
+            <div class="room-meta">Ideal for couples</div>
+            <p class="room-tag">Cozy Room with Ocean View</p>
+            <ul>
+              <li>1 comfortable double bed</li>
+              <li>Fully furnished, with relaxing hammocks</li>
+              <li>Spacious area: 260 ft² / 24 m²</li>
+              <li>Private bathroom with natural ventilation</li>
+              <li>Private balcony overlooking the ocean</li>
+              <li>Rustic, natural design surrounded by lush tropical vegetation</li>
+            </ul>
+            <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+          </div>
+        </article>
+
+        <article class="room reveal">
+          <div class="room-frame" data-media="rooms/jungle-suite-01.jpg" data-ratio="4/3" data-note="Jungle Suites, the strongest shot"></div>
+          <div class="room-body">
+            <h3>Jungle Suites</h3>
+            <div class="room-meta">Ideal for families of three</div>
+            <p class="room-tag">Spacious Bungalow Room with Nature Views</p>
+            <ul>
+              <li>1 comfortable double bed and 1 single bed</li>
+              <li>Fully furnished, with cozy hammocks for relaxation</li>
+              <li>430 ft² / 40 m² of spacious comfort</li>
+              <li>Private bathroom with hot water</li>
+              <li>Large balcony with a partial ocean view</li>
+              <li>Frequently visited by colorful birds and local wildlife</li>
+            </ul>
+            <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+          </div>
+        </article>
+
+        <article class="room reveal">
+          <div class="room-frame" data-media="rooms/family-bungalow-01.jpg" data-ratio="4/3" data-note="Family Bungalows, the strongest shot"></div>
+          <div class="room-body">
+            <h3>Family Bungalows</h3>
+            <div class="room-meta">Ideal for families up to 4 guests</div>
+            <p class="room-tag">Family Bungalow Surrounded by Nature</p>
+            <ul>
+              <li>1 double bed and 2 single beds — ideal for families or groups</li>
+              <li>Fully furnished, with inviting hammocks to unwind</li>
+              <li>Spacious 540 ft² / 45 m² layout for extra comfort</li>
+              <li>Private bathroom and cooling fans for a pleasant stay</li>
+              <li>Private terrace overlooking lush garden views</li>
+              <li>Often visited by colorful birds and local wildlife</li>
+            </ul>
+            <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+          </div>
+        </article>
+
+      </div>
+
+      <p class="loc-note reveal">Located plumb on a remote mile-long, coconut laden beach, the property is situated looking out over the sparkling Pacific Ocean and is surrounded by botanical gardens and rainforest. Ocean Forest Ecolodge is a nature lovers paradise situated along a people friendly wilderness beach just south of Drake Bay and within walking distance of Corcovado National Park. Our beach is a nesting site for three species of marine turtles.</p>
+    </div>
+  </section>
+
+  <!-- ══ FOOD ═══════════════════════════════════════════════════════════════
+       Copy: com-copy.md PAGE: /food-and-experiences/ + Eli's redline notes
+       #1 and #3 (her own rewrites — freshest voice).
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="food">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Wholesome Cuisine</span>
+        <h2>Nourishing <span class="grad-text">the Soul</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Farm-to-Table Cuisine in the Heart of the Jungle</p>
+      </div>
+
+      <!-- Four visual diet chips — badges, not a paragraph. -->
+      <div class="chips reveal">
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21c0-7 4-11 9-11 0 6-4 11-9 11z" stroke-linejoin="round"/><path d="M12 21c0-5-3-8-7-8 0 4 3 8 7 8z" stroke-linejoin="round"/></svg>
+          Vegetarian
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22V9" stroke-linecap="round"/><path d="M12 9C12 5 15 2 20 2c0 5-3 8-8 7z" stroke-linejoin="round"/><path d="M12 14c0-3-2-5-6-5 0 3 2 5 6 5z" stroke-linejoin="round"/></svg>
+          Vegan
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22V8" stroke-linecap="round"/><path d="M12 12c0-3 2-5 5-5 0 3-2 5-5 5zM12 17c0-3-2-5-5-5 0 3 2 5 5 5z" stroke-linejoin="round"/><path d="M4 20l16-16" stroke-linecap="round"/></svg>
+          Gluten-free
+        </span>
+        <span class="chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3v8a2 2 0 004 0V3M8 11v10" stroke-linecap="round"/><path d="M17 3c-1.5 2-2 4-2 6s.7 3 2 3 2-1 2-3-.5-4-2-6zM17 12v9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Omnivore
+        </span>
+      </div>
+
+      <div class="food-wrap">
+        <div class="reveal">
+          <p class="food-quote">Three meals a day, made from what the garden and the sea offer that morning. Fresh fruit juices, medicinal herbs, detox teas. Food that tastes like the place it came from.</p>
+          <p class="food-body">No menus. Every meal changes with the tides and the season. Local fishermen, the lodge garden, and the jungle itself supply the kitchen. Come hungry.</p>
+          <p class="food-body">Each dish is made with fresh, locally sourced ingredients — many harvested from our own tropical gardens at the peak of their flavor. Enjoy three balanced, wholesome meals a day in our open-air dining room, surrounded by rainforest, sea breezes, and the songs of macaws and toucans. Alongside every meal, we serve vibrant natural fruit juices, and throughout the day you can help yourself to filtered water, coffee, and a selection of teas.</p>
+          <p class="food-body">Every dish can be tailored to your needs. We carefully accommodate allergies and special diets, including gluten-free, vegetarian, and vegan options. Please share your dietary preferences at least 48 hours before arrival via the check-in form.</p>
+        </div>
+        <div class="food-frame" data-media="property/kitchen-table.jpg" data-ratio="4/3" data-note="Open-air dining room, long table"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ EXPERIENCES — shared tours block ═══════════════════════════════════ -->
+  <section id="experiences">
+    <div class="wrap">
+      <div data-shared="tours"></div>
+    </div>
+  </section>
+
+  <!-- ══ ARRIVING — shared logistics block ══════════════════════════════════ -->
+  <section id="arriving">
+    <div class="wrap">
+      <div data-shared="logistics"></div>
+    </div>
+  </section>
+
+  <!-- ══ RETREAT PITCH ══════════════════════════════════════════════════════
+       Copy: retreats.html hero / about section (client-approved codebase copy),
+       tightened.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="wrap">
+      <div class="pitch reveal" id="retreats-pitch">
+        <span class="eyebrow">Made for retreat leaders</span>
+        <h2>A beachfront sanctuary. <span class="grad-text">Built for practice.</span></h2>
+        <p>A beachfront jungle sanctuary built for retreat leaders who want their work to feel as alive as the landscape around it. Your program, your teaching, your students. That's all. We handle everything else: accommodation, three meals a day, space setup, local logistics, and any activities your group wants to add on.</p>
+        <a class="cta" href="/retreats" style="align-self:center">Host your retreat</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TRUST ══════════════════════════════════════════════════════════════
+       Stats are real facts only. Reviews launch as labelled placeholder slots:
+       no official Google Business listing for this lodge could be verifiably
+       retrieved on 2026-07-31 (search "Ocean Forest Ecolodge Drake Bay" returned
+       TripAdvisor pages only). Per spec, no review text is written here.
+       When real quotes arrive: replace the three slots below with the reviewer's
+       first name, the quote verbatim, and record the listing URL in this comment.
+       LISTING URL: (not yet retrieved)
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="trust">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Osa Peninsula · Costa Rica · Since 2000</span>
+        <h2>The lodge <span class="grad-text">in numbers</span></h2>
+        <hr class="grad-bar">
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat"><b>2000</b><span>Since</span></div>
+        <div class="stat"><b>10</b><span>Rooms</span></div>
+        <div class="stat"><b>32</b><span>Guests max</span></div>
+        <div class="stat"><b>46 ft</b><span>Three-level yoga shala</span></div>
+        <div class="stat"><b>6 km</b><span>From Corcovado</span></div>
+      </div>
+
+      <div class="reviews reveal">
+        <div class="review">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>waiting for: real Google review — Mehdi</p>
+          <div class="who">Reviewer first name · Google</div>
+        </div>
+        <div class="review">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>waiting for: real Google review — Mehdi</p>
+          <div class="who">Reviewer first name · Google</div>
+        </div>
+        <div class="review">
+          <div class="stars" aria-hidden="true">★★★★★</div>
+          <p>waiting for: real Google review — Mehdi</p>
+          <div class="who">Reviewer first name · Google</div>
+        </div>
+      </div>
+
+      <!-- Press mentions: ready and wired, hidden until real content exists.
+           Remove the hidden attribute and fill the list when a mention lands. -->
+      <div class="reviews" id="press" hidden>
+        <div class="review">
+          <p>waiting for: real press mention — Mehdi</p>
+          <div class="who">Publication · date</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══════════════════════════════════════════════════════════════
+       Assembled ONLY from org-copy.md /ecolodge/ + /setting/ and this
+       codebase's existing "We built this place slowly" letter (JSON-LD
+       foundingDate 2000). "Eleven rooms" corrected to ten per spec.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="about">
+    <div class="wrap">
+      <div class="about-wrap">
+        <div class="about-frame" data-media="property/shala-exterior.jpg" data-ratio="4/5" data-note="The Lapa Lapa Lodge, three storeys, from the beach"></div>
+        <div class="about-txt reveal">
+          <span class="eyebrow">A note from the lodge</span>
+          <h2 style="font-family:var(--serif);font-weight:300;font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.15;color:var(--white)">We built this place slowly, the way <span class="grad-text">the forest builds itself.</span></h2>
+          <hr class="grad-bar">
+          <p class="opening">A cabin first, then a path, then a garden, then a kitchen. Over many seasons it became a small community that learned how to live here without needing very much.</p>
+          <p>You will find ten rooms scattered into the trees, a three-storey wooden shala on the beach, and the people who make breakfast and walk the turtle patrols. Some of you come alone, to rest. Some of you arrive with thirty students and a programme to teach. All of you will leave with a memorable experience.</p>
+          <p>Ocean Forest Ecolodge Retreat is a rainforest and ocean discovery center and nature sanctuary located on a secluded mile-long beach south of Drake Bay, near Corcovado National Park on Costa Rica's Osa Peninsula. Situated on a 15-acre permaculture design plumb on the beach, the garden encompasses fruit and food orchards, ethnobotanical teas and aromatic herb gardens all that produce a seasonal cornucopia of delectable tropical foods, an abundance of aromatic herbs and marvelous medicinal plants.</p>
+          <p>An outstanding landmark of the Ecolodge is the Lapa Lapa Lodge, a magnificent three storied edifice resembling a pagoda. The building rises an impressive 14 meters or 46 feet above ground level and its tiered roof eaves invoke a sense of the spirit of humanity living in harmony with nature. Remarkably so, no living trees were cut for its edification as the entire building was constructed from sustainably sourced materials such as reclaimed hardwoods, old fallen timbers, bamboo and recycled products.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ GALLERY — exactly 8 slots ══════════════════════════════════════════ -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Gallery</span>
+        <h2>The place, <span class="grad-text">as it is</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <div class="gal reveal">
+        <div data-media="gallery-01.jpg" data-ratio="1/1" data-note="Gallery slot 1"></div>
+        <div data-media="gallery-02.jpg" data-ratio="1/1" data-note="Gallery slot 2"></div>
+        <div data-media="gallery-03.jpg" data-ratio="1/1" data-note="Gallery slot 3"></div>
+        <div data-media="gallery-04.jpg" data-ratio="1/1" data-note="Gallery slot 4"></div>
+        <div data-media="gallery-05.jpg" data-ratio="1/1" data-note="Gallery slot 5"></div>
+        <div data-media="gallery-06.jpg" data-ratio="1/1" data-note="Gallery slot 6"></div>
+        <div data-media="gallery-07.jpg" data-ratio="1/1" data-note="Gallery slot 7"></div>
+        <div data-media="gallery-08.jpg" data-ratio="1/1" data-note="Gallery slot 8"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-bar" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Ocean Forest Ecolodge</div>
+        <p>Playa Rincón de San Josecito, Drake Bay, Osa Peninsula, Costa Rica. An oceanfront rainforest sanctuary on a roadless beach south of Drake Bay.</p>
+      </div>
+      <!-- Footer menus mirror the nav exactly. -->
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="#arriving">Arriving</a></li>
+          <li><a href="#rooms">Stay</a></li>
+          <li><a href="/retreats">Retreats</a></li>
+          <li><a href="#experiences">Experiences</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>More</h3>
+        <ul>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Talk to us</h3>
+        <ul>
+          <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>
+          <li><a href="https://www.instagram.com/ocean_forest_ecolodge" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ocean Forest Ecolodge · Drake Bay, Osa Peninsula, Costa Rica</span>
+      <span>Crafted by <a href="https://pxnproductions.com" rel="noopener">PxN Productions</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── THEME ───────────────────────────────────────────────────────────────
+     Dark is the default. The choice lives in localStorage under `of-theme`
+     and is re-applied on load on this page and on /retreats.               */
+  var THEME_KEY = 'of-theme';
+  var store = null;
+  try { store = window.localStorage; } catch (e) { store = null; }
+
+  var themeBtn = document.getElementById('themeBtn');
+
+  function paintTheme(light) {
+    document.body.classList.toggle('light', light);
+    if (themeBtn) {
+      themeBtn.textContent = light ? '☀' : '☾';
+      themeBtn.setAttribute('aria-pressed', light ? 'true' : 'false');
+    }
+  }
+
+  var saved = null;
+  try { saved = store && store.getItem(THEME_KEY); } catch (e) {}
+  paintTheme(saved === 'light');
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var light = !document.body.classList.contains('light');
+      paintTheme(light);
+      if (store) { try { store.setItem(THEME_KEY, light ? 'light' : 'dark'); } catch (e) {} }
+    });
+  }
+
+  /* ── HEADER: pinned, shrinks on scroll ─────────────────────────────────── */
+  var head = document.getElementById('siteHead');
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      head.classList.toggle('scrolled', window.scrollY > 60);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── MOBILE MENU (Book now stays outside it, always visible) ───────────── */
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('navMenu');
+  if (burger && menu) {
+    burger.addEventListener('click', function () {
+      var open = menu.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        menu.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ── MEDIA PLACEHOLDERS ──────────────────────────────────────────────────
+     Any element with data-media points at a file in /media. If the file is
+     missing, a labelled frame appears showing exactly which filename to drop
+     in. Nothing else needs changing when the real assets arrive.           */
+  function placeholder(file, note) {
+    var d = document.createElement('div');
+    d.className = 'ph';
+    d.innerHTML =
+      '<span class="ph-label">Photo to come</span>' +
+      '<span class="ph-file">media/' + file + '</span>' +
+      (note ? '<span class="ph-note">' + note + '</span>' : '');
+    return d;
+  }
+
+  document.querySelectorAll('[data-media]').forEach(function (host) {
+    var file  = host.getAttribute('data-media');
+    var ratio = host.getAttribute('data-ratio') || '4/3';
+    var note  = host.getAttribute('data-note') || '';
+    host.style.aspectRatio = ratio.replace('/', ' / ');
+
+    var img = new Image();
+    img.onload = function () {
+      host.innerHTML = '';
+      img.alt = note || '';
+      host.appendChild(img);
+    };
+    img.onerror = function () {
+      host.innerHTML = '';
+      host.appendChild(placeholder(file, note));
+    };
+    img.src = 'media/' + file;
+  });
+
+  /* ── REVEAL ON SCROLL ──────────────────────────────────────────────────── */
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.reveal');
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ── REMEMBER WHICH PATH THEY CHOSE ────────────────────────────────────── */
+  var PATH_KEY = 'of-path';
+  document.querySelectorAll('.path').forEach(function (el) {
+    el.addEventListener('click', function () {
+      if (store) { try { store.setItem(PATH_KEY, el.dataset.path); } catch (e) {} }
+    });
+  });
+  if (store) {
+    var last = null;
+    try { last = store.getItem(PATH_KEY); } catch (e) {}
+    if (last) {
+      var prev = document.querySelector('.path[data-path="' + last + '"]');
+      if (prev) {
+        var tag = document.createElement('span');
+        tag.className = 'path-remembered';
+        tag.textContent = 'Where you left off';
+        prev.appendChild(tag);
+      }
+    }
+  }
+})();
+</script>
+
+<!-- Tours + Logistics, shared with /retreats. Edit shared-sections.js once. -->
+<script src="shared-sections.js"></script>
+
+<!-- AI concierge. Widget is self-contained; the brain is api/concierge.js. -->
+<script src="concierge.js"></script>
+
+<script defer src="https://redline-xi-ten.vercel.app/w.js" data-redline="ocean-forest"></script>
+</body>
+</html>

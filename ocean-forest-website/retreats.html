@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Host Your Retreat · Ocean Forest Ecolodge, Costa Rica</title>
+<meta name="description" content="Exclusive use of a beachfront ecolodge on the Osa Peninsula for retreat groups of up to 32. Ten rooms, three meals a day, a 46-foot three-level yoga shala, and a team that handles the logistics.">
+<link rel="canonical" href="https://www.oceanforest.org/retreats">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Host Your Retreat · Ocean Forest Ecolodge">
+<meta property="og:description" content="You bring your program. We handle everything else.">
+<meta property="og:url" content="https://www.oceanforest.org/retreats">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ── PALETTE ───────────────────────────────────────────────────────────────
+     Identical variable contract to index.html so the two pages skin together
+     and the shared blocks read the same names on both.                       */
+  :root {
+    --teal-deep:   #16707E;
+    --teal:        #2AADA8;
+    --teal-light:  #3DCFD0;
+
+    --ink:    #0e1310;
+    --ink-2:  #141a16;
+    --ink-3:  #1a221c;
+    --mist:   #e8ede4;
+    --white:  #fafaf8;
+    --dim:    rgba(232, 237, 228, 0.62);
+    --hairline: rgba(232, 237, 228, 0.14);
+
+    /* ── The .com gradient, part of the palette ── */
+    --grad-1: #3C88A4;
+    --grad-2: #469B94;
+    --grad-3: #53A871;
+    --grad-4: #7DB359;
+    --grad-5: #A3C455;
+    --grad-6: #DFDF5B;
+    --gradient-ocean-lime: linear-gradient(90deg, var(--grad-1), var(--grad-3), var(--grad-6));
+
+    --serif:  'Cormorant Garamond', Georgia, serif;
+    --sans:   'DM Sans', system-ui, sans-serif;
+    --mono:   'Space Mono', monospace;
+
+    --gutter: 48px;
+    --nav-h:  76px;
+  }
+
+  /* ── LIGHT THEME ──────────────────────────────────────────────────────────
+     Same layout, same gradient. Only the variables move. Never a second
+     stylesheet. Values match index.html exactly.                            */
+  body.light {
+    --ink:    #f6f4ee;
+    --ink-2:  #ffffff;
+    --ink-3:  #efece2;
+    --mist:   #1a221c;
+    --white:  #0e1310;
+    --dim:    rgba(20, 26, 22, 0.64);
+    --hairline: rgba(14, 19, 16, 0.16);
+    --teal-light: #16707E;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+  body {
+    background: var(--ink);
+    color: var(--mist);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  a { color: inherit; }
+
+  .wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ── SKIP LINK ── */
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 300;
+    background: var(--teal); color: #0b1210;
+    padding: 12px 20px; font-family: var(--mono); font-size: 0.75rem;
+  }
+  .skip:focus { left: 12px; top: 12px; }
+
+  /* ── HEADER / NAV — identical behaviour to the main page ─────────────────── */
+  .site-head {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--nav-h);
+    padding: 0 var(--gutter);
+    display: flex; align-items: center; gap: 26px;
+    background: rgba(14, 19, 16, 0.78);
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--hairline);
+    transition: height 0.3s ease, background 0.3s ease;
+  }
+  body.light .site-head { background: rgba(246, 244, 238, 0.9); }
+  .site-head.scrolled { height: 56px; }
+  .site-head::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+    background: var(--gradient-ocean-lime); opacity: 0; transition: opacity 0.3s ease;
+  }
+  .site-head.scrolled::after { opacity: 1; }
+
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+  .nav-logo img { height: 34px; width: auto; max-width: 190px; object-fit: contain; display: block; transition: height 0.3s ease, max-width 0.3s ease; }
+  .site-head.scrolled .nav-logo img { height: 26px; }
+  .nav-logo span {
+    font-family: var(--serif); font-size: 1.05rem; font-weight: 300;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); white-space: nowrap;
+  }
+
+  .nav-menu { display: flex; align-items: center; gap: 22px; margin-left: auto; }
+  .nav-menu a {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim); text-decoration: none;
+    border-bottom: 1px solid transparent; padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s; white-space: nowrap;
+  }
+  .nav-menu a:hover, .nav-menu a:focus-visible { color: var(--white); border-color: var(--teal); }
+
+  .nav-actions { display: flex; align-items: center; gap: 12px; margin-left: 20px; flex-shrink: 0; }
+
+  .theme-btn {
+    background: none; border: 1px solid var(--hairline); color: var(--mist);
+    width: 34px; height: 34px; border-radius: 50%; cursor: pointer;
+    font-size: 0.9rem; line-height: 1; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: border-color 0.2s, color 0.2s;
+  }
+  .theme-btn:hover { border-color: var(--teal); color: var(--white); }
+
+  .book-btn {
+    background: var(--gradient-ocean-lime); color: #0b1210 !important;
+    font-family: var(--mono); font-weight: 700; font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 10px 20px; border-radius: 24px; text-decoration: none;
+    white-space: nowrap; border: 0; display: inline-block;
+  }
+  .book-btn:hover { filter: brightness(1.08); }
+
+  .burger {
+    display: none; background: none; border: 1px solid var(--hairline);
+    color: var(--mist); width: 34px; height: 34px; border-radius: 50%;
+    cursor: pointer; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .burger svg { width: 16px; height: 16px; }
+
+  @media (max-width: 900px) {
+    :root { --gutter: 22px; }
+    .nav-logo span { display: none; }
+    .burger { display: flex; }
+    .nav-menu {
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 0;
+      background: var(--ink-2); border-bottom: 1px solid var(--hairline);
+      padding: 8px 22px 20px; margin: 0;
+      transform: translateY(-8px); opacity: 0; pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
+    }
+    .nav-menu.open { transform: none; opacity: 1; pointer-events: auto; }
+    .nav-menu a { width: 100%; padding: 15px 0; font-size: 0.8rem; border-bottom: 1px solid var(--hairline); }
+    .nav-actions { margin-left: auto; }
+  }
+  @media (max-width: 480px) {
+    /* The primary CTA must stay visible at 375px, outside the hamburger. */
+    .site-head { gap: 10px; }
+    .nav-logo img { max-width: 104px; height: 30px; }
+    .site-head.scrolled .nav-logo img { height: 24px; }
+    .book-btn { padding: 9px 13px; font-size: 0.6rem; letter-spacing: 0.06em; }
+    .nav-actions { gap: 8px; margin-left: auto; }
+    .theme-btn, .burger { width: 31px; height: 31px; }
+  }
+
+  /* ── HERO ────────────────────────────────────────────────────────────────
+     The spine, stated up front: everything goes smoothly if you choose us.
+     Deliberately does NOT retell the main page's positioning.               */
+  .r-hero {
+    position: relative;
+    min-height: 88svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 150px 0 70px;
+    overflow: hidden;
+  }
+  .r-hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(110% 80% at 20% 15%, rgba(125,179,89,.22), transparent 60%),
+      radial-gradient(90% 70% at 85% 90%, rgba(60,136,164,.25), transparent 60%),
+      linear-gradient(180deg, #121d14 0%, var(--ink) 100%);
+  }
+  body.light .r-hero-bg {
+    background:
+      radial-gradient(110% 80% at 20% 15%, rgba(163,196,85,.30), transparent 60%),
+      radial-gradient(90% 70% at 85% 90%, rgba(61,207,208,.22), transparent 60%),
+      linear-gradient(180deg, #eef2e4 0%, var(--ink) 100%);
+  }
+  .r-hero-video { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.3; }
+  .r-hero-video iframe {
+    position: absolute; top: 50%; left: 50%;
+    width: 100vw; height: 56.25vw; min-width: 177.78vh; min-height: 100vh;
+    transform: translate(-50%, -50%); border: 0;
+  }
+  body.light .r-hero-video { opacity: 0.16; }
+  .r-hero-scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(14,19,16,0.55) 0%, rgba(14,19,16,0.28) 45%, var(--ink) 100%);
+  }
+  body.light .r-hero-scrim {
+    background: linear-gradient(180deg, rgba(246,244,238,0.55) 0%, rgba(246,244,238,0.3) 45%, var(--ink) 100%);
+  }
+  .r-hero-inner { position: relative; z-index: 2; width: 100%; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--teal-light); margin-bottom: 20px; display: block;
+  }
+
+  h1 {
+    font-family: var(--serif); font-size: clamp(2.5rem, 5.8vw, 4.2rem);
+    font-weight: 300; line-height: 1.05; letter-spacing: -0.015em;
+    color: var(--white); max-width: 18ch;
+  }
+  h1 em { font-style: italic; color: var(--grad-5); }
+  body.light h1 em { color: #4e7c1f; }
+
+  .hero-sub {
+    font-size: 1.08rem; font-weight: 300; color: var(--dim);
+    max-width: 58ch; margin: 22px 0 0; line-height: 1.75;
+  }
+
+  /* ── STAT LINE — six in-page anchors, nothing leaves /retreats ─────────── */
+  .statline {
+    display: flex; flex-wrap: wrap; gap: 0;
+    border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden;
+    margin-top: 52px; background: rgba(255,255,255,0.02);
+  }
+  body.light .statline { background: rgba(255,255,255,0.5); }
+  .statline a {
+    flex: 1; min-width: 160px; text-align: center; padding: 22px 14px;
+    text-decoration: none; color: var(--mist);
+    border-right: 1px solid var(--hairline); transition: background 0.2s;
+  }
+  .statline a:last-child { border-right: 0; }
+  .statline a:hover, .statline a:focus-visible { background: rgba(42,173,168,.12); }
+  .statline b { display: block; font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: var(--white); line-height: 1.1; }
+  .statline span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+  @media (max-width: 720px) { .statline a { min-width: 50%; flex: none; } }
+
+  /* ── SECTIONS ───────────────────────────────────────────────────────────── */
+  main { position: relative; z-index: 2; background: var(--ink); }
+  section { padding: 104px 0; }
+  section.alt { background: var(--ink-2); }
+  @media (max-width: 720px) { section { padding: 72px 0; } }
+
+  .sec-head { margin-bottom: 8px; }
+  .sec-head h2 {
+    font-family: var(--serif); font-weight: 300; line-height: 1.1;
+    font-size: clamp(2rem, 4.4vw, 3.2rem); color: var(--white);
+  }
+  .grad-text { background: var(--gradient-ocean-lime); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .grad-bar { height: 3px; width: 72px; background: var(--gradient-ocean-lime); border: 0; margin: 22px 0 26px; border-radius: 2px; }
+  .lead { max-width: 660px; color: var(--dim); font-size: 1.02rem; font-weight: 300; }
+  .body-p { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.85; max-width: 62ch; }
+  .body-p + .body-p { margin-top: 16px; }
+
+  /* ── MEDIA PLACEHOLDERS — the codebase pattern ──────────────────────────── */
+  .ph {
+    position: relative; width: 100%; height: 100%; min-height: 180px;
+    background: repeating-linear-gradient(45deg, rgba(42,173,168,0.06) 0 12px, rgba(42,173,168,0.11) 12px 24px);
+    border: 1px dashed rgba(42,173,168,0.55); border-radius: 6px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 20px; text-align: center;
+  }
+  .ph-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); }
+  .ph-file  { font-family: var(--mono); font-size: 0.72rem; color: var(--mist); word-break: break-all; }
+  .ph-note  { font-family: var(--mono); font-size: 0.58rem; color: var(--dim); }
+  body.light .ph {
+    background: repeating-linear-gradient(45deg, rgba(22,112,126,0.06) 0 12px, rgba(22,112,126,0.12) 12px 24px);
+    border-color: rgba(22,112,126,0.5);
+  }
+  [data-media] { width: 100%; }
+  [data-media] > img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 6px; }
+
+  /* ── SHALA ──────────────────────────────────────────────────────────────── */
+  .shala-media { min-height: 420px; margin-top: 40px; }
+  .shala-media video { width: 100%; display: block; border-radius: 6px; }
+  .shala-grid {
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 48px; align-items: center; margin-top: 40px;
+  }
+  .shala-grid > * { min-width: 0; }
+  .shala-photo {
+    display: block; width: 100%; height: auto; aspect-ratio: 461 / 309;
+    object-fit: cover; border-radius: 6px; border: 1px solid var(--hairline);
+  }
+  .shala-pull {
+    font-family: var(--serif); font-size: clamp(1.35rem, 2.3vw, 1.9rem);
+    font-weight: 300; font-style: italic; line-height: 1.45; color: var(--mist);
+    border-left: 2px solid var(--teal); padding-left: 26px; margin-top: 32px;
+  }
+  .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 32px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
+  .spec { background: var(--ink-2); padding: 20px; }
+  section.alt .spec { background: var(--ink-3); }
+  .spec-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); display: block; margin-bottom: 6px; }
+  .spec-value { font-family: var(--serif); font-size: 1.25rem; font-weight: 300; color: var(--white); }
+  @media (max-width: 820px) { .shala-grid { grid-template-columns: minmax(0, 1fr); gap: 30px; } }
+
+  /* ── ACCOMMODATION ──────────────────────────────────────────────────────── */
+  .accom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 20px; margin-top: 40px; }
+  .accom-grid > * { min-width: 0; }
+  .accom-card {
+    background: var(--ink-2); border: 1px solid var(--hairline); border-radius: 6px;
+    padding: 30px 26px; display: flex; flex-direction: column; gap: 10px;
+  }
+  section.alt .accom-card { background: var(--ink-3); }
+  .accom-type { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-light); }
+  .accom-name { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--white); line-height: 1.2; }
+  .accom-rooms { font-family: var(--serif); font-style: italic; font-size: 1.02rem; color: var(--mist); }
+  .accom-desc { font-size: 0.92rem; color: var(--dim); font-weight: 300; line-height: 1.7; flex: 1; }
+  .accom-meta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .accom-tag {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--dim); border: 1px solid var(--hairline); padding: 6px 12px; border-radius: 18px;
+  }
+  .accom-total {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background: linear-gradient(135deg, rgba(60,136,164,0.16), rgba(125,179,89,0.13));
+  }
+  .accom-total b { display: block; font-family: var(--serif); font-size: 1.9rem; font-weight: 300; font-style: italic; color: var(--white); line-height: 1.25; }
+  .accom-total span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); display: block; margin-top: 10px; }
+
+  /* ── FOOD / FULL BOARD ──────────────────────────────────────────────────── */
+  .food-wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 44px; align-items: center; margin-top: 30px; }
+  .food-wrap > * { min-width: 0; }
+  .food-quote { font-family: var(--serif); font-size: 1.3rem; font-style: italic; line-height: 1.55; color: var(--mist); }
+  .food-photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; border: 1px solid var(--hairline); }
+  @media (max-width: 820px) { .food-wrap { grid-template-columns: minmax(0, 1fr); gap: 30px; } }
+
+  .included-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 1px; margin-top: 48px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
+  .include-item { background: var(--ink-2); padding: 30px 28px; display: flex; gap: 18px; align-items: flex-start; }
+  section.alt .include-item { background: var(--ink-3); }
+  .include-icon { width: 24px; height: 24px; flex-shrink: 0; line-height: 0; margin-top: 4px; color: var(--teal-light); }
+  .include-icon svg { width: 100%; height: 100%; display: block; }
+  .include-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--white); margin-bottom: 8px; }
+  .include-desc { font-size: 0.9rem; color: var(--dim); font-weight: 300; line-height: 1.7; }
+
+  .leader-banner {
+    grid-column: 1 / -1; background: var(--gradient-ocean-lime); color: #0b1210;
+    padding: 26px 32px; display: flex; align-items: center; gap: 18px;
+  }
+  .leader-banner-icon { width: 28px; height: 28px; flex-shrink: 0; line-height: 0; }
+  .leader-banner-icon svg { width: 100%; height: 100%; display: block; }
+  .leader-banner-text { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; font-style: italic; }
+  .leader-banner-sub { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.75; margin-top: 4px; }
+
+  /* ── SHARED BLOCK SECTIONS ──────────────────────────────────────────────── */
+  .loc-note {
+    margin-top: 34px; max-width: 660px; color: var(--mist);
+    border-left: 2px solid var(--teal); padding-left: 18px;
+    font-style: italic; font-family: var(--serif); font-size: 1.08rem; line-height: 1.6;
+  }
+
+  /* ── CALCULATOR ─────────────────────────────────────────────────────────── */
+  .pricing-intro { max-width: 640px; color: var(--dim); font-size: 1.02rem; font-weight: 300; margin-bottom: 44px; }
+  .calc-wrap { border: 1px solid var(--hairline); border-radius: 8px; overflow: hidden; background: var(--ink-2); }
+  section.alt .calc-wrap { background: var(--ink-3); }
+  .calc-inputs {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 26px; padding: 32px; border-bottom: 1px solid var(--hairline);
+  }
+  .calc-field label {
+    display: block; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal-light); margin-bottom: 8px;
+  }
+  .calc-field input[type="number"] {
+    width: 100%; border: 1px solid var(--hairline); background: var(--ink);
+    font-family: var(--mono); font-size: 1rem; color: var(--white);
+    padding: 12px 14px; border-radius: 6px; transition: border-color 0.2s;
+  }
+  .calc-field input:focus { outline: none; border-color: var(--teal); }
+  .calc-hint { display: block; font-size: 0.76rem; color: var(--dim); margin-top: 6px; }
+
+  .calc-season-toggle { display: flex; border: 1px solid var(--hairline); border-radius: 22px; overflow: hidden; width: fit-content; }
+  .calc-season-btn {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em; border: 0; padding: 11px 18px;
+    cursor: pointer; background: none; color: var(--dim); transition: background 0.15s, color 0.15s;
+  }
+  .calc-season-btn.active { background: var(--gradient-ocean-lime); color: #0b1210; font-weight: 700; }
+
+  .calc-warning {
+    background: rgba(192, 80, 58, 0.14); border-left: 2px solid #c0503a; padding: 14px 18px;
+    font-size: 0.88rem; color: var(--mist); margin: 0 32px; margin-top: 24px; border-radius: 0 6px 6px 0;
+  }
+  .calc-freeleader {
+    background: rgba(125, 179, 89, 0.14); border-left: 2px solid var(--grad-5); padding: 14px 18px;
+    font-size: 0.88rem; color: var(--mist); margin: 0 32px; margin-top: 24px; border-radius: 0 6px 6px 0;
+  }
+
+  .calc-numbers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline); border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); margin-top: 24px; }
+  .calc-num-cell { background: var(--ink-2); padding: 26px 24px; }
+  section.alt .calc-num-cell { background: var(--ink-3); }
+  .calc-num-cell .cn-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+  .calc-num-cell .cn-value { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--white); line-height: 1; }
+  .calc-num-cell .cn-value.accent { background: var(--gradient-ocean-lime); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .calc-num-cell .cn-sub { font-size: 0.76rem; color: var(--dim); margin-top: 6px; }
+
+  .calc-rooms { padding: 32px 32px 0; }
+  .calc-rooms h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 300; color: var(--white); margin-bottom: 16px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .calc-rooms h3 .cr-count { font-family: var(--mono); font-size: 0.72rem; font-weight: 400; color: var(--dim); }
+  .calc-rooms h3 .cr-count.warn { color: #e08a76; }
+  .calc-room-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
+  .calc-room-card { background: var(--ink); padding: 18px 20px; position: relative; }
+  .calc-room-card .cr-name { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: var(--white); margin-bottom: 2px; }
+  .calc-room-card .cr-loc { font-size: 0.76rem; color: var(--dim); margin-bottom: 8px; }
+  .calc-room-card .cr-detail { font-size: 0.8rem; color: var(--mist); }
+  .calc-room-card .cr-total { font-family: var(--serif); font-size: 1.3rem; color: var(--teal-light); margin-top: 8px; }
+  .calc-room-card .cr-rate-detail { color: var(--dim) !important; font-size: 0.72rem; }
+  .calc-room-card .cr-badge {
+    display: inline-block; font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.08em;
+    text-transform: uppercase; border: 1px solid var(--hairline); color: var(--dim); padding: 4px 10px; border-radius: 14px; margin-top: 8px;
+  }
+  .cr-remove {
+    position: absolute; top: 14px; right: 14px; width: 22px; height: 22px;
+    border: 1px solid var(--hairline); background: none; color: var(--dim); border-radius: 50%;
+    font-size: 13px; line-height: 1; cursor: pointer; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .cr-remove:hover { color: #e08a76; border-color: #e08a76; }
+  .cr-slider-row { margin-top: 12px; }
+  .cr-slider { width: 100%; accent-color: var(--teal); cursor: pointer; display: block; }
+  .cr-slider-val { display: block; font-family: var(--mono); font-size: 0.7rem; color: var(--dim); margin-top: 5px; }
+
+  .calc-add-room { display: flex; gap: 12px; align-items: center; margin: 18px 32px 0; flex-wrap: wrap; }
+  .calc-add-room label { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); }
+  .calc-add-room select {
+    border: 1px solid var(--hairline); background: var(--ink); font-family: var(--sans); font-size: 0.86rem;
+    color: var(--white); padding: 9px 12px; border-radius: 6px;
+  }
+  .calc-add-room select:focus { outline: none; border-color: var(--teal); }
+  .calc-note { margin: 12px 32px 0; font-size: 0.82rem; color: var(--dim); }
+  .calc-note[hidden] { display: none; }
+
+  .payment-plan { padding: 40px 32px 0; }
+  .payment-plan-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: var(--white); margin-bottom: 24px; }
+  .payment-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
+  .payment-step { background: var(--ink); padding: 26px; }
+  .payment-pct { font-family: var(--serif); font-size: 2.6rem; font-weight: 300; color: var(--white); line-height: 1; margin-bottom: 10px; }
+  .payment-when { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 8px; display: block; }
+  .payment-desc { font-size: 0.86rem; color: var(--dim); line-height: 1.6; }
+
+  .calc-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 32px; }
+  .calc-btn-primary, .calc-btn-secondary {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 13px 24px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 9px;
+    border-radius: 24px; transition: filter 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .calc-btn-primary { background: var(--gradient-ocean-lime); color: #0b1210; font-weight: 700; }
+  .calc-btn-primary:hover { filter: brightness(1.08); }
+  .calc-btn-secondary { background: none; color: var(--mist); border: 1px solid var(--hairline); padding: 9px 18px; font-size: 0.66rem; }
+  .calc-btn-secondary:hover { border-color: var(--teal); color: var(--white); }
+
+  .calc-disclaimer { padding: 0 32px 32px; font-size: 0.8rem; color: var(--dim); line-height: 1.7; }
+  .calc-disclaimer a { color: var(--teal-light); text-decoration: none; border-bottom: 1px solid var(--teal-light); }
+
+  .pricing-note {
+    margin-top: 28px; padding: 22px 26px; border: 1px solid var(--hairline); border-radius: 6px;
+    font-size: 0.9rem; color: var(--dim); line-height: 1.7;
+  }
+  .pricing-note strong { font-weight: 500; color: var(--mist); }
+
+  @media (max-width: 820px) { .calc-numbers { grid-template-columns: repeat(2, 1fr); } .payment-steps { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .calc-numbers { grid-template-columns: 1fr; } .calc-inputs { padding: 22px; } .calc-rooms, .payment-plan, .calc-actions { padding-left: 22px; padding-right: 22px; } .calc-disclaimer { padding-left: 22px; padding-right: 22px; } .calc-add-room, .calc-note, .calc-warning, .calc-freeleader { margin-left: 22px; margin-right: 22px; } }
+
+  /* ── PRINT / PDF EXPORT ── */
+  #calcPrintBlock { display: none; }
+  @media print {
+    body * { visibility: hidden; }
+    #calcPrintBlock, #calcPrintBlock * { visibility: visible; }
+    #calcPrintBlock {
+      display: block; position: absolute; top: 0; left: 0; width: 100%;
+      padding: 32px; font-family: var(--sans); color: #1a1a18; background: #fff;
+    }
+    .cp-title { font-family: var(--serif); font-size: 1.9rem; font-weight: 400; margin-bottom: 2px; }
+    .cp-sub { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: #666; margin-bottom: 28px; }
+    .cp-section { margin-bottom: 24px; page-break-inside: avoid; }
+    .cp-section h3 { font-family: var(--serif); font-size: 1.15rem; font-weight: 400; color: #1C6638; border-bottom: 1px solid #ccc; padding-bottom: 6px; margin-bottom: 10px; }
+    .cp-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+    .cp-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .cp-table th, .cp-table td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd; }
+    .cp-table th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: #777; }
+    .cp-footer { margin-top: 28px; font-size: 11px; color: #777; line-height: 1.6; border-top: 1px solid #ccc; padding-top: 12px; }
+  }
+
+  /* ── KIT ────────────────────────────────────────────────────────────────── */
+  .kit-box {
+    background: linear-gradient(135deg, rgba(60,136,164,0.16), rgba(125,179,89,0.11));
+    border: 1px solid var(--hairline); border-radius: 8px;
+    padding: 56px 6vw; text-align: center;
+  }
+  .kit-box h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.8rem, 3.6vw, 2.6rem); line-height: 1.15; color: var(--white); margin: 10px auto 14px; max-width: 22ch; }
+  .kit-box p { color: var(--dim); max-width: 560px; margin: 0 auto 30px; font-weight: 300; }
+
+  /* ── CTA BUTTONS ────────────────────────────────────────────────────────── */
+  .cta {
+    background: var(--gradient-ocean-lime); color: #0b1210;
+    font-weight: 700; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-family: var(--mono); padding: 15px 30px; border-radius: 26px; border: 0;
+    cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .cta:hover { filter: brightness(1.08); }
+  .cta.ghost { background: none; border: 1px solid var(--hairline); color: var(--mist); font-weight: 400; }
+  .cta.ghost:hover { border-color: var(--teal); color: var(--white); }
+  .cta svg { flex-shrink: 0; }
+
+  /* ── INQUIRE ────────────────────────────────────────────────────────────── */
+  .fit-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 52px; align-items: start; margin-top: 40px; }
+  .fit-grid > * { min-width: 0; }
+  .fit-list { list-style: none; }
+  .fit-list li {
+    padding: 17px 0; border-bottom: 1px solid var(--hairline);
+    font-size: 0.98rem; color: var(--mist); font-weight: 300;
+    display: flex; gap: 15px; align-items: flex-start; line-height: 1.65;
+  }
+  .fit-list li::before { content: '→'; font-family: var(--mono); color: var(--teal-light); flex-shrink: 0; margin-top: 2px; }
+  .side-box { background: var(--ink-2); border: 1px solid var(--hairline); border-radius: 6px; padding: 28px; }
+  section.alt .side-box { background: var(--ink-3); }
+  .side-box + .side-box { margin-top: 20px; }
+  .side-title { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 12px; }
+  .side-box p { font-size: 0.92rem; color: var(--dim); font-weight: 300; line-height: 1.75; }
+  @media (max-width: 900px) { .fit-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; } }
+
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 56px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: 6px; overflow: hidden; }
+  .process-step { background: var(--ink-2); padding: 32px 26px; }
+  section.alt .process-step { background: var(--ink-3); }
+  .step-num { font-family: var(--serif); font-size: 3rem; font-weight: 300; color: var(--teal-light); opacity: 0.45; line-height: 1; margin-bottom: 12px; }
+  .step-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--white); margin-bottom: 10px; }
+  .step-desc { font-size: 0.88rem; color: var(--dim); font-weight: 300; line-height: 1.7; }
+  @media (max-width: 900px) { .process-steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 520px) { .process-steps { grid-template-columns: 1fr; } }
+
+  .close-box { text-align: center; margin-top: 64px; }
+  .close-box h3 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.9rem, 4vw, 2.8rem); line-height: 1.15; color: var(--white); margin-bottom: 14px; }
+  .close-box p { color: var(--dim); max-width: 520px; margin: 0 auto 32px; font-weight: 300; }
+  /* Two equal buttons — WhatsApp and email are the primary conversion. */
+  .close-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .close-actions .cta { flex: 0 1 260px; justify-content: center; padding: 19px 30px; font-size: 0.78rem; }
+
+  /* ── FOOTER ─────────────────────────────────────────────────────────────── */
+  footer { position: relative; border-top: 1px solid var(--hairline); padding: 70px 0 60px; background: var(--ink-2); }
+  .foot-bar { height: 4px; background: var(--gradient-ocean-lime); position: absolute; top: 0; left: 0; right: 0; }
+  .foot-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr)); gap: 44px; align-items: start; }
+  .foot-grid > div { min-width: 0; }
+  .foot-brand { font-family: var(--serif); font-size: 1.15rem; font-weight: 300; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white); margin-bottom: 14px; }
+  .foot-grid > div > p { font-size: 0.9rem; font-weight: 300; color: var(--dim); max-width: 38ch; line-height: 1.75; }
+  .foot-grid h3 { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-light); font-weight: 400; margin-bottom: 16px; }
+  .foot-grid ul { list-style: none; }
+  .foot-grid li { margin-bottom: 10px; }
+  .foot-grid li a { font-size: 0.9rem; font-weight: 300; color: var(--dim); text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.2s, border-color 0.2s; }
+  .foot-grid li a:hover, .foot-grid li a:focus-visible { color: var(--white); border-color: var(--teal); }
+  .foot-bottom {
+    margin-top: 52px; padding-top: 22px; border-top: 1px solid var(--hairline);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; color: var(--dim);
+  }
+  .foot-bottom a { color: var(--dim); text-decoration: none; border-bottom: 1px solid var(--hairline); }
+  .foot-bottom a:hover { color: var(--teal-light); border-color: var(--teal-light); }
+  @media (max-width: 900px) { .foot-grid { grid-template-columns: 1fr 1fr; gap: 34px; } }
+  @media (max-width: 560px) { .foot-grid { grid-template-columns: 1fr; } }
+
+  /* ── SHARED-BLOCK RHYTHM ────────────────────────────────────────────────── */
+  .sh .sh-head { margin-bottom: 0; }
+
+  /* ── MOTION ─────────────────────────────────────────────────────────────── */
+  .reveal {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#shala">Skip to the shala</a>
+
+<!-- ══ HEADER — same component and behaviour as the main page ═══════════════
+     Links are in PAGE order (spec §3). "Book a stay" is the one link off this
+     page; the primary button targets #inquire, not the room engine.
+══════════════════════════════════════════════════════════════════════════ -->
+<header class="site-head" id="siteHead">
+  <a href="/" class="nav-logo">
+    <img src="images/ocean-forest-ecolodge-logo.png" alt="Ocean Forest Ecolodge">
+    <span>Ocean Forest</span>
+  </a>
+
+  <nav class="nav-menu" id="navMenu" aria-label="Main">
+    <a href="#shala">Shala</a>
+    <a href="#accommodation">Rooms</a>
+    <a href="#food">Food</a>
+    <a href="#experiences">Tours</a>
+    <a href="#arriving">Arriving</a>
+    <a href="#calculator">Pricing</a>
+    <a href="/">Book a stay</a>
+  </nav>
+
+  <div class="nav-actions">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark" title="Light / dark">☾</button>
+    <a class="book-btn" href="#inquire">Talk to Eli</a>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- ══ HERO ════════════════════════════════════════════════════════════════
+     The spine, per spec §2: everything goes smoothly if you choose us.
+     No retelling of the main page's positioning.
+     Sub-line: tightened from this page's existing "What you bring" copy.
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="r-hero">
+  <div class="r-hero-bg" aria-hidden="true"></div>
+  <div class="r-hero-video" aria-hidden="true">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/AjqtTXfJbeg?autoplay=1&mute=1&loop=1&playlist=AjqtTXfJbeg&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&start=2"
+      title="Ocean Forest Ecolodge from the air"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      referrerpolicy="strict-origin-when-cross-origin"
+      tabindex="-1"></iframe>
+  </div>
+  <div class="r-hero-scrim" aria-hidden="true"></div>
+
+  <div class="r-hero-inner">
+    <div class="wrap">
+      <p class="eyebrow">Made for retreat leaders</p>
+      <h1>Everything goes smoothly <em>if you choose us.</em></h1>
+      <p class="hero-sub">You bring your program, your teaching, your students. That's all. We handle everything else: accommodation, three meals a day, space setup, local logistics, and any activities your group wants to add on.</p>
+
+      <!-- Six anchors. Every one of them stays on this page. -->
+      <nav class="statline" aria-label="What's covered">
+        <a href="#accommodation"><b>32</b><span>Accommodation for</span></a>
+        <a href="#food"><b>3</b><span>Meals a day</span></a>
+        <a href="#experiences"><b>9</b><span>Tours</span></a>
+        <a href="#arriving"><b>3</b><span>Ways in — logistics</span></a>
+        <a href="#shala"><b>46 ft</b><span>Yoga shala</span></a>
+        <a href="#calculator"><b>$</b><span>Pricing</span></a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ══ 1 · SHALA — the premium thing, first ═════════════════════════════════
+       Copy: this page's existing section.about ("A beachfront sanctuary. Built
+       for practice." + both paragraphs + the conservation pull quote) and the
+       existing #spaces shala-feature block. Nothing new.
+       Media: labelled placeholder until Ryan's 360° video lands.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="shala">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The premium thing</span>
+        <h2>A beachfront sanctuary. <span class="grad-text">Built for practice.</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">A 46-foot, three-level pagoda built entirely from reclaimed local hardwoods. It sits right on the beach. You practice to the sound of the ocean. The jungle starts where the property ends.</p>
+      </div>
+
+      <!-- Waiting for: media/video/shala-360.mp4 — Ryan.
+           The frame below is replaced automatically the moment that file
+           exists in /media. No code change needed. -->
+      <div class="shala-media reveal" id="shalaMedia" data-video="video/shala-360.mp4">
+        <div class="ph" style="min-height:420px">
+          <span class="ph-label">Video to come</span>
+          <span class="ph-file">media/video/shala-360.mp4</span>
+          <span class="ph-note">waiting for: shala-360.mp4 — Ryan · full 360° tour of the three floors</span>
+        </div>
+      </div>
+
+      <div class="shala-grid">
+        <div class="reveal">
+          <p class="body-p">The ground floor, what we call the Dharma Hall, is 1,614 square feet of tiled space, always cool even in peak heat. Good for workshops, gatherings, and ceremony. The second floor is what teachers remember: smooth polished hardwood, full of light, fully equipped with props. It has its own name here: "foot candy."</p>
+          <p class="body-p">The entire 3-level pagoda is yours for the duration of your retreat. No other groups sharing the space. Full yoga props included.</p>
+          <p class="body-p">In 2000 we transformed an old horse pasture into a yoga shala, right on the beach. What started as a single structure became something larger, a fully self-contained ecolodge surrounded by ethnobotanical gardens, permaculture grounds, and one of the most biodiverse forest corridors on the planet.</p>
+          <p class="body-p">We've spent over two decades refining what it means to host a retreat well. That means trained staff who stay out of your way until you need them, delicious food made by local chefs with ingredients sourced within an hour of the lodge, and a physical space that does real work on your students before class even starts.</p>
+          <blockquote class="shala-pull">"We've devoted much of our income to rainforest and oceanic wildlife conservation. When you bring your group here, that's part of what they're supporting too."</blockquote>
+        </div>
+        <div class="reveal">
+          <img src="images/shala-feature.jpg" alt="The Yoga Shala, a three-level pagoda at Ocean Forest Ecolodge" class="shala-photo" width="461" height="309" loading="lazy">
+          <div class="specs">
+            <div class="spec"><span class="spec-label">Height</span><span class="spec-value">46 feet / 3 levels</span></div>
+            <div class="spec"><span class="spec-label">Dharma Hall</span><span class="spec-value">1,614 sq ft</span></div>
+            <div class="spec"><span class="spec-label">Floor</span><span class="spec-value">Hardwood, polished</span></div>
+            <div class="spec"><span class="spec-label">Equipment</span><span class="spec-value">Full props included</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 2 · ACCOMMODATION ════════════════════════════════════════════════════
+       Copy: this page's existing accommodation cards, verbatim.
+       Counts: TEN rooms + 32 guests are the client-corrected finals from
+       specs/of-main-page.md §2 and override the old "11 units" tile. The
+       per-category room names come from this file's own CALC_ROOMS data
+       (10 guest rooms + Lapa Lapa East/West reserved for facilitators).
+       In-page only — no link to the main page's rooms.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="accommodation" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Accommodation</span>
+        <h2>Accommodation for <span class="grad-text">up to 32 guests</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Ten rooms, and flexible allocation based on group size and preferences. Lapa Lapa is reserved for retreat facilitators.</p>
+      </div>
+
+      <div class="accom-grid">
+        <div class="accom-card reveal">
+          <span class="accom-type">Beachfront</span>
+          <div class="accom-name">Beach Bungalows</div>
+          <p class="accom-rooms">Coco Solo · Palmiche · Naranjo</p>
+          <p class="accom-desc">Right on the shore. Private en suite, double bed, balcony with hammock and chairs looking straight out at the Pacific. Wake up, step outside, hear the ocean.</p>
+          <div class="accom-meta">
+            <span class="accom-tag">3 rooms</span>
+            <span class="accom-tag">2–3 guests each</span>
+            <span class="accom-tag">Ocean view</span>
+          </div>
+        </div>
+
+        <div class="accom-card reveal">
+          <span class="accom-type">Forest</span>
+          <div class="accom-name">Jungle Suites</div>
+          <p class="accom-rooms">Solo Bueno North &amp; South · White Hawk Top &amp; Bottom</p>
+          <p class="accom-desc">Spacious rooms opening onto private balconies with forest views and partial ocean glimpses. Hammocks, writing desks, hardwood floors. The jungle is close enough to hear.</p>
+          <div class="accom-meta">
+            <span class="accom-tag">4 rooms</span>
+            <span class="accom-tag">2–4 guests each</span>
+            <span class="accom-tag">Forest view</span>
+          </div>
+        </div>
+
+        <div class="accom-card reveal">
+          <span class="accom-type">Gardens &amp; stream</span>
+          <div class="accom-name">Cachimbo Rooms</div>
+          <p class="accom-rooms">Cachimbo Top · Cachimbo Bottom</p>
+          <p class="accom-desc">Private bathroom. Good for small groups, families, or participants who want to share costs without sharing a wall with strangers.</p>
+          <div class="accom-meta">
+            <span class="accom-tag">2 rooms</span>
+            <span class="accom-tag">3–4 guests each</span>
+            <span class="accom-tag">Gardens &amp; stream</span>
+          </div>
+        </div>
+
+        <div class="accom-card reveal">
+          <span class="accom-type">Solo / Couple</span>
+          <div class="accom-name">Garden Bungalow</div>
+          <p class="accom-rooms">Mango</p>
+          <p class="accom-desc">Simple and quiet, tucked into the gardens. Ideal for a solo traveler or a couple who wants their own space. Unpretentious, comfortable, surrounded by green.</p>
+          <div class="accom-meta">
+            <span class="accom-tag">1 room</span>
+            <span class="accom-tag">1–2 guests</span>
+            <span class="accom-tag">Garden setting</span>
+          </div>
+        </div>
+
+        <div class="accom-card reveal">
+          <span class="accom-type">For the facilitators</span>
+          <div class="accom-name">Lapa Lapa Rooms</div>
+          <p class="accom-rooms">Lapa Lapa East · Lapa Lapa West</p>
+          <p class="accom-desc">Two connected rooms adjacent to the main yoga shala, reserved for retreat facilitators. Close enough to the practice space to arrive and leave with nothing in between.</p>
+          <div class="accom-meta">
+            <span class="accom-tag">2 rooms</span>
+            <span class="accom-tag">Up to 5 people</span>
+            <span class="accom-tag">Next to shala</span>
+          </div>
+        </div>
+
+        <div class="accom-card accom-total reveal">
+          <div>
+            <b>Ten rooms,<br>32 guests</b>
+            <span>Flexible room allocation based on your group's needs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3 · FOOD / FULL BOARD ════════════════════════════════════════════════
+       Copy: this page's existing "Everything covered. Nothing to manage."
+       package section, tightened. The meals copy leads; the rest of the
+       package follows as the same six client-approved items.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="food">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Retreat package · full board</span>
+        <h2>Everything covered. <span class="grad-text">Nothing to manage.</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Every retreat package includes the following. You bring your program. We handle the rest.</p>
+      </div>
+
+      <div class="food-wrap">
+        <div class="reveal">
+          <p class="food-quote">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service all day long.</p>
+          <p class="body-p" style="margin-top:18px">Ingredients sourced within an hour of the lodge. Dietary preferences accommodated.</p>
+        </div>
+        <div class="reveal">
+          <img src="images/lodge-breakfast.jpg" alt="Breakfast served at Ocean Forest Ecolodge" class="food-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="included-grid">
+        <div class="include-item reveal">
+          <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18v-6a2 2 0 0 1 2-2h13a4 4 0 0 1 4 4v4"/><path d="M2 14h20"/><path d="M2 18h20"/><circle cx="7" cy="10" r="2.2"/></svg></span>
+          <div>
+            <div class="include-title">Full Accommodation</div>
+            <p class="include-desc">All rooms for your group for the full duration of the retreat. Flexible allocation based on group size and preferences. Minimum 3 nights, up to 10.</p>
+          </div>
+        </div>
+        <div class="include-item reveal">
+          <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a2.5 2.5 0 0 0 5 0V3"/><path d="M6.5 3v18"/><path d="M17.5 21V3a4 4 0 0 0-2.5 3.7v5.3h4"/></svg></span>
+          <div>
+            <div class="include-title">3 Meals Daily + Beverages</div>
+            <p class="include-desc">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service all day long. Dietary preferences accommodated.</p>
+          </div>
+        </div>
+        <div class="include-item reveal">
+          <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.6" r="2.1"/><path d="M12 8v5"/><path d="M12 13c-3 0-6 1.6-6 4.2 0 1.6 2.7 2.8 6 2.8s6-1.2 6-2.8c0-2.6-3-4.2-6-4.2z"/><path d="M12 10.5 8 13"/><path d="m12 10.5 4 2.5"/></svg></span>
+          <div>
+            <div class="include-title">Exclusive Yoga Shala Use</div>
+            <p class="include-desc">The entire 3-level pagoda is yours for the duration of your retreat. No other groups sharing the space. Full yoga props included.</p>
+          </div>
+        </div>
+        <div class="include-item reveal">
+          <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-6 8-9 16-9 0 8-3.5 13-9 13z"/><path d="M4 21c2-6 6-9 11-11"/></svg></span>
+          <div>
+            <div class="include-title">Guided Río Claro Tour</div>
+            <p class="include-desc">A complimentary guided excursion to Río Claro, one of the Osa's best-kept secrets, for your whole group. A river walk through primary jungle that reliably becomes the trip's most talked-about afternoon.</p>
+          </div>
+        </div>
+        <div class="include-item reveal">
+          <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg></span>
+          <div>
+            <div class="include-title">Travel Logistics Support</div>
+            <p class="include-desc">We help coordinate your group's local round-trip travel. Getting a group of any size to a remote jungle lodge without stress requires experience. We have it.</p>
+          </div>
+        </div>
+        <div class="include-item reveal">
+          <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"/><circle cx="9" cy="7" r="3.2"/><path d="M22 20v-1.5a4 4 0 0 0-3-3.87"/><path d="M16.5 4.2a3.2 3.2 0 0 1 0 6"/></svg></span>
+          <div>
+            <div class="include-title">On-Site Staff Throughout</div>
+            <p class="include-desc">Our trained team stays on-property for the duration of your retreat, available to help with setup, transitions, and anything unexpected that comes up.</p>
+          </div>
+        </div>
+
+        <div class="leader-banner reveal">
+          <span class="leader-banner-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4 10.5 13.5"/><path d="m17.5 6.5 2 2"/><path d="m13.5 10.5 2 2"/><circle cx="7" cy="17" r="4"/></svg></span>
+          <div>
+            <p class="leader-banner-text">The group leader stays complimentary.</p>
+            <p class="leader-banner-sub">For groups of 10+ guests + 1 facilitator. Your stay is on us.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 4 · EXPERIENCES — shared tours block ═════════════════════════════════
+       Identical mount to index.html. Edit shared-sections.js once, both change.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="experiences" class="alt">
+    <div class="wrap">
+      <div data-shared="tours"></div>
+    </div>
+  </section>
+
+  <!-- ══ 5 · ARRIVING — shared logistics block ════════════════════════════════
+       Identical mount to index.html. The old standalone `location` section is
+       gone; one line of location context is all this page needs (spec §3).
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="arriving">
+    <div class="wrap">
+      <div data-shared="logistics"></div>
+      <p class="loc-note reveal">Playa Rincón de San Josecito · Osa Peninsula · Costa Rica. 6 kilometers from the entrance to Corcovado National Park. Private, pristine, and right at the edge of the property.</p>
+    </div>
+  </section>
+
+  <!-- ══ 6 · PRICING — the calculator, fully embedded ═════════════════════════
+       Same room data and math as the standalone calculator tool. Nothing here
+       calls out to another site; everything runs in the page.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="calculator" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Pricing</span>
+        <h2>Run your own <span class="grad-text">numbers.</span></h2>
+        <hr class="grad-bar">
+        <p class="pricing-intro">Tell us your group size, your dates, and what you plan to charge. See exactly what the stay costs, what you'd make, and how the payments break down, before you ever pick up the phone.</p>
+      </div>
+
+      <div class="calc-wrap reveal">
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <label for="calcGuests">Number of guests</label>
+            <input type="number" id="calcGuests" value="12" min="1" max="32">
+            <span class="calc-hint">Not counting the facilitator</span>
+          </div>
+          <div class="calc-field">
+            <label for="calcNights">Number of nights</label>
+            <input type="number" id="calcNights" value="5" min="1" max="21">
+          </div>
+          <div class="calc-field">
+            <label>Season</label>
+            <div class="calc-season-toggle">
+              <button type="button" class="calc-season-btn active" id="calcBtnHigh">High season</button>
+              <button type="button" class="calc-season-btn" id="calcBtnGreen">Green season</button>
+            </div>
+            <span class="calc-hint" id="calcSeasonHint">Dec · Jan · Feb · Mar · Apr</span>
+          </div>
+          <div class="calc-field">
+            <label for="calcCharge">Your price per guest</label>
+            <input type="number" id="calcCharge" value="2500" min="0">
+            <span class="calc-hint">What you charge each participant, total for the stay</span>
+          </div>
+        </div>
+
+        <div id="calcWarnings"></div>
+        <div class="calc-numbers" id="calcNumbers"></div>
+        <div class="calc-rooms" id="calcRooms"></div>
+
+        <div class="calc-add-room">
+          <label for="calcAddRoomSelect">Add another room</label>
+          <select id="calcAddRoomSelect">
+            <option value="">Choose a room to add</option>
+          </select>
+          <button type="button" class="calc-btn-secondary" id="calcResetBtn">Reset to suggested rooms</button>
+        </div>
+        <p class="calc-note" id="calcAddNote" hidden role="status"></p>
+
+        <div class="payment-plan" id="calcPaymentPlan">
+          <h3 class="payment-plan-title">Payment schedule to Ocean Forest</h3>
+          <div class="payment-steps" id="calcPaymentSteps"></div>
+        </div>
+
+        <div class="calc-actions">
+          <button type="button" class="calc-btn-primary" id="calcPdfBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h2"/></svg>
+            Export as PDF
+          </button>
+          <span class="calc-hint">Opens your browser's print dialog, choose "Save as PDF" as the destination.</span>
+        </div>
+
+        <p class="calc-disclaimer">These numbers are here to help you plan, not a confirmed quote. Room allocation is suggested automatically and availability isn't checked here. Drag a room's slider and the rest rebalance automatically, so the total always matches the guest count above. <a href="#inquire">Talk to Eli</a> to lock in real dates and pricing.</p>
+      </div>
+
+      <div id="calcPrintBlock" aria-hidden="true"></div>
+
+      <div class="pricing-note reveal">
+        <strong>Group leader complimentary stay:</strong> When your group reaches 10 guests + 1 facilitator, the retreat leader's accommodation is included at no charge. We can provide a full breakdown by room type for your specific group size, just ask.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7 · THE HOST KIT — secondary CTA ═════════════════════════════════════
+       /retreat-host-kit is a browsable slide page, not a file download.
+       Its contents, testimonials and stats are never repeated on this page.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="kit">
+    <div class="wrap">
+      <div class="kit-box reveal">
+        <span class="eyebrow">One document</span>
+        <h2>Want everything in <span class="grad-text">one document?</span></h2>
+        <p>You bring your program. We handle the rest.</p>
+        <a class="cta ghost" href="/retreat-host-kit" target="_blank" rel="noopener">Get the Retreat Host Kit
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 8 · INQUIRE — WhatsApp + email, the primary conversion ═══════════════
+       Copy: this page's existing "Is Ocean Forest right for your group?" list,
+       the "Worth knowing" / "What you bring" notes, and the four existing
+       process steps. The Google-Calendar discovery-call modal is gone: it was
+       never configured (BOOKING_URL was empty) and only ever rendered a
+       "connect your calendar" placeholder.
+  ══════════════════════════════════════════════════════════════════════════ -->
+  <section id="inquire" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Before you write</span>
+        <h2>Is Ocean Forest <span class="grad-text">right for your group?</span></h2>
+        <hr class="grad-bar">
+      </div>
+
+      <div class="fit-grid">
+        <ul class="fit-list reveal">
+          <li>You want your students fully immersed in nature, with no city distractions, no competing noise</li>
+          <li>You're looking for a venue that handles logistics so you can focus entirely on teaching</li>
+          <li>Your group is between 8 and 32 people</li>
+          <li>You want 3 to 10 days of dedicated retreat time</li>
+          <li>Yoga, movement, dance, ceremony, workshops, or any combination. You bring the program, we provide the space</li>
+          <li>You value sustainability, since our income goes directly back into rainforest conservation</li>
+          <li>Your participants are ready for an experience that genuinely changes them</li>
+        </ul>
+        <div class="reveal">
+          <div class="side-box">
+            <p class="side-title">Worth knowing</p>
+            <p>We're remote by design. A 50-minute flight from San José, or a day's travel by road and boat. That remoteness is exactly what makes transformation possible here. But it does require participants who are comfortable with a real journey to get here. If your group needs easy accessibility or urban amenities nearby, we're probably not the right fit.</p>
+          </div>
+          <div class="side-box">
+            <p class="side-title">What you bring</p>
+            <p>Your program, your teaching, your students. That's all. We handle everything else: accommodation, three meals a day, space setup, local logistics, and any activities your group wants to add on.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-num">1</div>
+          <div class="step-title">Reach out</div>
+          <p class="step-desc">Send a WhatsApp message or email with your group size, preferred dates, and retreat type. We respond quickly and without a sales script.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">2</div>
+          <div class="step-title">Quick call</div>
+          <p class="step-desc">A short conversation to match your program to the space, discuss room allocation, and answer any logistics questions. We've answered them all before.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">3</div>
+          <div class="step-title">Book &amp; deposit</div>
+          <p class="step-desc">25% deposit secures your dates. We handle travel coordination and setup from there. You focus on building your program.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-num">4</div>
+          <div class="step-title">Arrive &amp; teach</div>
+          <p class="step-desc">Your group arrives, the shala is ready, the food is on, and the staff is there. Your only job is to do what you do best.</p>
+        </div>
+      </div>
+
+      <div class="close-box reveal">
+        <h3>Let's talk about <span class="grad-text">your retreat.</span></h3>
+        <p>Tell us your vision, dates, and group size. No sales pressure. We've hosted hundreds of retreats.</p>
+        <div class="close-actions">
+          <a class="cta" href="https://wa.me/50687379416" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            WhatsApp Eli
+          </a>
+          <a class="cta ghost" href="mailto:eli@oceanforest.org">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email Eli
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-bar" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Ocean Forest Ecolodge</div>
+        <p>Playa Rincón de San Josecito, Drake Bay, Osa Peninsula, Costa Rica. An oceanfront rainforest sanctuary on a roadless beach south of Drake Bay.</p>
+      </div>
+      <!-- Footer menus mirror the nav exactly. -->
+      <div>
+        <h3>This page</h3>
+        <ul>
+          <li><a href="#shala">Shala</a></li>
+          <li><a href="#accommodation">Rooms</a></li>
+          <li><a href="#food">Food</a></li>
+          <li><a href="#experiences">Tours</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>More</h3>
+        <ul>
+          <li><a href="#arriving">Arriving</a></li>
+          <li><a href="#calculator">Pricing</a></li>
+          <li><a href="/retreat-host-kit" target="_blank" rel="noopener">Retreat Host Kit</a></li>
+          <li><a href="/">Book a stay</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Talk to us</h3>
+        <ul>
+          <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>
+          <li><a href="https://www.instagram.com/ocean_forest_ecolodge" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ocean Forest Ecolodge · Drake Bay, Osa Peninsula, Costa Rica</span>
+      <span>Crafted by <a href="https://pxnproductions.com" rel="noopener">PxN Productions</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── THEME ───────────────────────────────────────────────────────────────
+     Same contract as the main page: dark is the default, the choice lives in
+     localStorage under `of-theme`, and it is re-applied on load so it carries
+     between / and /retreats.                                                */
+  var THEME_KEY = 'of-theme';
+  var store = null;
+  try { store = window.localStorage; } catch (e) { store = null; }
+
+  var themeBtn = document.getElementById('themeBtn');
+
+  function paintTheme(light) {
+    document.body.classList.toggle('light', light);
+    if (themeBtn) {
+      themeBtn.textContent = light ? '☀' : '☾';
+      themeBtn.setAttribute('aria-pressed', light ? 'true' : 'false');
+    }
+  }
+
+  var saved = null;
+  try { saved = store && store.getItem(THEME_KEY); } catch (e) {}
+  paintTheme(saved === 'light');
+
+  if (themeBtn) {
+    themeBtn.addEventListener('click', function () {
+      var light = !document.body.classList.contains('light');
+      paintTheme(light);
+      if (store) { try { store.setItem(THEME_KEY, light ? 'light' : 'dark'); } catch (e) {} }
+    });
+  }
+
+  /* ── HEADER: pinned, shrinks on scroll ─────────────────────────────────── */
+  var head = document.getElementById('siteHead');
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      head.classList.toggle('scrolled', window.scrollY > 60);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── MOBILE MENU (the primary CTA stays outside it, always visible) ────── */
+  var burger = document.getElementById('burger');
+  var menu = document.getElementById('navMenu');
+  if (burger && menu) {
+    burger.addEventListener('click', function () {
+      var open = menu.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        menu.classList.remove('open');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ── MEDIA PLACEHOLDERS ──────────────────────────────────────────────────
+     Same pattern as the main page. Any element with data-media points at a
+     file in /media; if it is missing, a labelled frame names the exact file
+     to drop in.                                                            */
+  function placeholder(file, note) {
+    var d = document.createElement('div');
+    d.className = 'ph';
+    d.innerHTML =
+      '<span class="ph-label">Photo to come</span>' +
+      '<span class="ph-file">media/' + file + '</span>' +
+      (note ? '<span class="ph-note">' + note + '</span>' : '');
+    return d;
+  }
+
+  document.querySelectorAll('[data-media]').forEach(function (host) {
+    var file  = host.getAttribute('data-media');
+    var ratio = host.getAttribute('data-ratio') || '4/3';
+    var note  = host.getAttribute('data-note') || '';
+    host.style.aspectRatio = ratio.replace('/', ' / ');
+
+    var img = new Image();
+    img.onload = function () {
+      host.innerHTML = '';
+      img.alt = note || '';
+      host.appendChild(img);
+    };
+    img.onerror = function () {
+      host.innerHTML = '';
+      host.appendChild(placeholder(file, note));
+    };
+    img.src = 'media/' + file;
+  });
+
+  /* ── SHALA VIDEO ─────────────────────────────────────────────────────────
+     The labelled placeholder is in the HTML, so it renders with or without
+     JS. This swaps in the real video the moment the file exists.           */
+  var shalaHost = document.querySelector('[data-video]');
+  if (shalaHost) {
+    var src = 'media/' + shalaHost.getAttribute('data-video');
+    var probe = document.createElement('video');
+    probe.muted = true; probe.playsInline = true; probe.controls = true;
+    probe.preload = 'metadata';
+    probe.addEventListener('loadedmetadata', function () {
+      shalaHost.innerHTML = '';
+      probe.setAttribute('title', 'Full 360° tour of the three-level yoga shala');
+      shalaHost.appendChild(probe);
+    });
+    probe.src = src;
+  }
+
+  /* ── REVEAL ON SCROLL ──────────────────────────────────────────────────── */
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('.reveal');
+
+  if (reduced || !('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+
+<script>
+/* ============================================================================
+   RETREAT CALCULATOR — fully embedded, nothing calls out to another site.
+   ----------------------------------------------------------------------------
+   Same room data and math as the standalone retreat calculator tool. The room
+   database itself is intentionally NOT shown as an editable public table (the
+   standalone tool exposes raw per-room wholesale cost, which is fine for Eli's
+   internal use but not for a public marketing page); only the guest-facing
+   inputs and computed results are shown.
+
+   Design note on when the room selection resets vs. persists:
+   - Changing GUEST COUNT re-runs the automatic allocation from scratch,
+     because a different group size genuinely needs different capacity.
+   - Changing NIGHTS or SEASON keeps whichever rooms are currently selected
+     (including any manual slider/add/remove edits) and just recomputes the
+     dollar figures, since the same group doesn't need different rooms just
+     because the trip got longer or moved to a cheaper season.
+   - Dragging a room's slider, adding a room, or removing a room never
+     touches the other rooms, so a leader who's tuned the plan by hand
+     doesn't lose that work from an unrelated change.
+   ========================================================================== */
+
+var CALC_ROOMS = [
+  { name: 'Coco Solo',          location: 'Beach Bungalow · Garden-facing', beds: '1 Double + 1 Single',  maxGuests: 3, high: 1250, green: 1100 },
+  { name: 'Palmiche',           location: 'Beach Bungalow · Ocean view',    beds: '1 Double',              maxGuests: 2, high: 1250, green: 1100 },
+  { name: 'Naranjo',            location: 'Beach Bungalow · Ocean view',    beds: '1 Double',              maxGuests: 2, high: 1250, green: 1100 },
+  { name: 'Mango',              location: 'Garden Bungalow',                beds: '1 Double',              maxGuests: 2, high: 1100, green: 1050 },
+  { name: 'Solo Bueno North',   location: 'Jungle Suite',                   beds: '1 Double + 1 Single',   maxGuests: 3, high: 1200, green: 1100 },
+  { name: 'Solo Bueno South',   location: 'Jungle Suite',                   beds: '1 Double + 1 Single',   maxGuests: 3, high: 1200, green: 1100 },
+  { name: 'White Hawk Top',     location: 'Jungle Suite',                   beds: '1 Double + 1 Single',   maxGuests: 3, high: 1250, green: 1150 },
+  { name: 'White Hawk Bottom',  location: 'Jungle Suite',                   beds: '1 Double + 2 Singles',  maxGuests: 4, high: 1150, green: 1000 },
+  { name: 'Cachimbo Top',       location: 'Gardens & stream',               beds: '1 Double + 2 Singles',  maxGuests: 4, high: 1150, green: 1100 },
+  { name: 'Cachimbo Bottom',    location: 'Gardens & stream',               beds: '1 Double + 1 Single',   maxGuests: 3, high: 1000, green: 900 },
+  { name: 'Lapa Lapa West',     location: 'Adjacent to shala, shared bath, for facilitators', beds: '1 Double + 1 Single', maxGuests: 3, high: 1000, green: 900 },
+  { name: 'Lapa Lapa East',     location: 'Adjacent to shala, shared bath, for facilitators', beds: '2 Singles',           maxGuests: 2, high: 1000, green: 900 }
+];
+
+(function () {
+  'use strict';
+
+  var els = {
+    guests: document.getElementById('calcGuests'),
+    nights: document.getElementById('calcNights'),
+    charge: document.getElementById('calcCharge'),
+    btnHigh: document.getElementById('calcBtnHigh'),
+    btnGreen: document.getElementById('calcBtnGreen'),
+    seasonHint: document.getElementById('calcSeasonHint'),
+    warnings: document.getElementById('calcWarnings'),
+    numbers: document.getElementById('calcNumbers'),
+    rooms: document.getElementById('calcRooms'),
+    paymentSteps: document.getElementById('calcPaymentSteps'),
+    addSelect: document.getElementById('calcAddRoomSelect'),
+    addNote: document.getElementById('calcAddNote'),
+    resetBtn: document.getElementById('calcResetBtn'),
+    pdfBtn: document.getElementById('calcPdfBtn'),
+    printBlock: document.getElementById('calcPrintBlock')
+  };
+  if (!els.guests) return; // section not on this page
+
+  var season = 'high';
+  var calcSelectedRooms = [];
+  var DEPOSIT_PCT = 25, MID_PCT = 50, FINAL_PCT = 25, FREE_LEADER_MIN = 10;
+
+  function fmt(n) { return '$' + Math.round(n).toLocaleString('en-US'); }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function note(msg) {
+    if (!els.addNote) return;
+    els.addNote.textContent = msg || '';
+    els.addNote.hidden = !msg;
+  }
+  function getInputs() {
+    return {
+      numGuests: parseInt(els.guests.value, 10) || 0,
+      numNights: parseInt(els.nights.value, 10) || 0,
+      chargePerPerson: parseFloat(els.charge.value) || 0
+    };
+  }
+  function roomRate(r) { return (season === 'high' ? r.high : r.green) / 7; }
+
+  // ── AUTOMATIC ALLOCATION (guest-count driven) ──────────────────────────
+  function allocateRooms(numGuests) {
+    var sorted = CALC_ROOMS.map(function (r, i) { return Object.assign({}, r, { idx: i }); })
+      .sort(function (a, b) { return b.maxGuests - a.maxGuests || roomRate(a) - roomRate(b); });
+
+    var remaining = numGuests;
+    var selected = [];
+
+    sorted.forEach(function (r) {
+      if (remaining <= 0) return;
+      if (r.maxGuests <= remaining) {
+        selected.push(Object.assign({}, r, { assignedGuests: r.maxGuests }));
+        remaining -= r.maxGuests;
+      }
+    });
+
+    if (remaining > 0) {
+      var fits = sorted.filter(function (r) { return r.maxGuests >= remaining && !selected.some(function (s) { return s.idx === r.idx; }); });
+      if (fits.length) {
+        var pick = fits[fits.length - 1];
+        selected.push(Object.assign({}, pick, { assignedGuests: remaining }));
+        remaining = 0;
+      } else {
+        var fallback = sorted.find(function (r) { return !selected.some(function (s) { return s.idx === r.idx; }); });
+        if (fallback) {
+          var take = Math.min(remaining, fallback.maxGuests);
+          selected.push(Object.assign({}, fallback, { assignedGuests: take }));
+          remaining -= take;
+        }
+      }
+    }
+
+    return selected;
+  }
+
+  function runAllocation() {
+    var inputs = getInputs();
+    note('');
+    if (!inputs.numGuests || !inputs.numNights) {
+      calcSelectedRooms = [];
+      els.warnings.innerHTML = '';
+      els.numbers.innerHTML = '';
+      els.rooms.innerHTML = '';
+      els.paymentSteps.innerHTML = '';
+      return;
+    }
+    calcSelectedRooms = allocateRooms(inputs.numGuests);
+    renderRoomsGrid();
+    updateTotalsAndSummaryOnly();
+  }
+
+  // ── TOTALS (live, from whatever is currently in calcSelectedRooms) ────
+  function calcTotals(inputs) {
+    var totalLodgeCost = 0, placedGuests = 0;
+    calcSelectedRooms.forEach(function (r) {
+      totalLodgeCost += roomRate(r) * inputs.numNights * r.assignedGuests;
+      placedGuests += r.assignedGuests;
+    });
+    var totalRevenue = inputs.chargePerPerson * inputs.numGuests;
+    var profit = totalRevenue - totalLodgeCost;
+    return {
+      totalLodgeCost: totalLodgeCost,
+      totalRevenue: totalRevenue,
+      profit: profit,
+      profitPerGuest: inputs.numGuests > 0 ? profit / inputs.numGuests : 0,
+      breakEven: inputs.numGuests > 0 ? totalLodgeCost / inputs.numGuests : 0,
+      placedGuests: placedGuests
+    };
+  }
+
+  function renderWarnings(numGuests) {
+    var html = '';
+    if (numGuests > 32) {
+      html += '<div class="calc-warning">32 guests is the property maximum. Adjust your group size to see accurate numbers.</div>';
+    }
+    if (numGuests >= FREE_LEADER_MIN) {
+      html += '<div class="calc-freeleader">Group leader stays free. Your group of ' + numGuests + ' meets the minimum of ' + FREE_LEADER_MIN + ' guests.</div>';
+    }
+    els.warnings.innerHTML = html;
+  }
+
+  function renderNumbers(inputs, totals) {
+    els.numbers.innerHTML =
+      '<div class="calc-num-cell"><div class="cn-label">Cost to lodge</div><div class="cn-value">' + fmt(totals.totalLodgeCost) + '</div><div class="cn-sub">' + fmt(inputs.numGuests ? totals.totalLodgeCost / inputs.numGuests : 0) + ' per guest</div></div>' +
+      '<div class="calc-num-cell"><div class="cn-label">Your total revenue</div><div class="cn-value">' + fmt(totals.totalRevenue) + '</div><div class="cn-sub">' + fmt(inputs.chargePerPerson) + ' × ' + inputs.numGuests + ' guests</div></div>' +
+      '<div class="calc-num-cell"><div class="cn-label">Your profit</div><div class="cn-value accent">' + fmt(totals.profit) + '</div><div class="cn-sub">' + fmt(totals.profitPerGuest) + ' per guest</div></div>' +
+      '<div class="calc-num-cell"><div class="cn-label">Break-even per guest</div><div class="cn-value">' + fmt(totals.breakEven) + '</div><div class="cn-sub">minimum to cover lodge cost</div></div>';
+  }
+
+  function renderPaymentSteps(totalLodgeCost) {
+    var deposit = totalLodgeCost * DEPOSIT_PCT / 100;
+    var mid = totalLodgeCost * MID_PCT / 100;
+    var final = totalLodgeCost * FINAL_PCT / 100;
+    els.paymentSteps.innerHTML =
+      '<div class="payment-step"><div class="payment-pct">' + DEPOSIT_PCT + '%</div><span class="payment-when">To secure your dates</span><p class="payment-desc">' + fmt(deposit) + ', due now to hold your dates.</p></div>' +
+      '<div class="payment-step"><div class="payment-pct">' + MID_PCT + '%</div><span class="payment-when">2 months before arrival</span><p class="payment-desc">' + fmt(mid) + ', the midpoint payment.</p></div>' +
+      '<div class="payment-step"><div class="payment-pct">' + FINAL_PCT + '%</div><span class="payment-when">1 month before arrival</span><p class="payment-desc">' + fmt(final) + ', the final balance.</p></div>';
+  }
+
+  function updateRoomCountText(numGuests, placedGuests) {
+    var el = document.getElementById('calcRoomCount');
+    if (!el) return;
+    var mismatch = placedGuests !== numGuests;
+    el.className = 'cr-count' + (mismatch ? ' warn' : '');
+    el.textContent = '· ' + calcSelectedRooms.length + ' room' + (calcSelectedRooms.length === 1 ? '' : 's') + ', ' + placedGuests + ' of ' + numGuests + ' guests placed';
+  }
+
+  function updateTotalsAndSummaryOnly() {
+    var inputs = getInputs();
+    if (!inputs.numGuests || !inputs.numNights) return;
+    var totals = calcTotals(inputs);
+    renderWarnings(inputs.numGuests);
+    renderNumbers(inputs, totals);
+    renderPaymentSteps(totals.totalLodgeCost);
+    updateRoomCountText(inputs.numGuests, totals.placedGuests);
+  }
+
+  // ── ROOM CARDS (sliders let the leader override the suggestion) ───────
+  function renderRoomsGrid() {
+    var inputs = getInputs();
+    var html = '<h3>Room allocation <span class="cr-count" id="calcRoomCount"></span></h3><div class="calc-room-grid">';
+    calcSelectedRooms.forEach(function (r, idx) {
+      var nightRate = roomRate(r);
+      var roomTotal = nightRate * inputs.numNights * r.assignedGuests;
+      var isLeaderRoom = /facilitator/i.test(r.location);
+      html +=
+        '<div class="calc-room-card" data-room-idx="' + idx + '">' +
+          '<button type="button" class="cr-remove" data-idx="' + idx + '" aria-label="Remove ' + esc(r.name) + '">&times;</button>' +
+          '<div class="cr-name">' + esc(r.name) + '</div>' +
+          '<div class="cr-loc">' + esc(r.location) + '</div>' +
+          '<div class="cr-detail">' + esc(r.beds) + '</div>' +
+          '<div class="cr-slider-row">' +
+            '<input type="range" class="cr-slider" min="1" max="' + r.maxGuests + '" value="' + r.assignedGuests + '" data-idx="' + idx + '" aria-label="Guests in ' + esc(r.name) + '">' +
+            '<span class="cr-slider-val">' + r.assignedGuests + ' of ' + r.maxGuests + ' guests</span>' +
+          '</div>' +
+          '<div class="cr-total">' + fmt(roomTotal) + ' total</div>' +
+          '<div class="cr-detail cr-rate-detail">' + fmt(nightRate) + '/night × ' + inputs.numNights + ' nights × ' + r.assignedGuests + ' guests</div>' +
+          (isLeaderRoom ? '<span class="cr-badge">Facilitator room</span>' : '') +
+        '</div>';
+    });
+    html += '</div>';
+    els.rooms.innerHTML = html;
+
+    if (els.addSelect) {
+      var selectedNames = calcSelectedRooms.map(function (r) { return r.name; });
+      var options = '<option value="">Choose a room to add</option>';
+      CALC_ROOMS.forEach(function (r, i) {
+        if (selectedNames.indexOf(r.name) === -1) {
+          options += '<option value="' + i + '">' + esc(r.name) + ', up to ' + r.maxGuests + ' guests, ' + fmt(roomRate(r)) + '/night</option>';
+        }
+      });
+      els.addSelect.innerHTML = options;
+    }
+  }
+
+  function updateRoomCardTotal(idx) {
+    var card = els.rooms.querySelector('.calc-room-card[data-room-idx="' + idx + '"]');
+    if (!card) return;
+    var r = calcSelectedRooms[idx];
+    var inputs = getInputs();
+    var nightRate = roomRate(r);
+    var roomTotal = nightRate * inputs.numNights * r.assignedGuests;
+    var slider = card.querySelector('.cr-slider');
+    var valEl = card.querySelector('.cr-slider-val');
+    var totalEl = card.querySelector('.cr-total');
+    var detailEl = card.querySelector('.cr-rate-detail');
+    if (slider && parseInt(slider.value, 10) !== r.assignedGuests) slider.value = r.assignedGuests;
+    if (valEl) valEl.textContent = r.assignedGuests + ' of ' + r.maxGuests + ' guests';
+    if (totalEl) totalEl.textContent = fmt(roomTotal) + ' total';
+    if (detailEl) detailEl.textContent = fmt(nightRate) + '/night × ' + inputs.numNights + ' nights × ' + r.assignedGuests + ' guests';
+  }
+
+  /* ── GUEST CONSERVATION ───────────────────────────────────────────────
+     The total across every selected room must always equal the guest
+     count set above, never more, never less. These two helpers move
+     guests between rooms (or add a room when nothing has spare capacity)
+     so every slider, add, and remove action keeps that total exact. */
+
+  // Take `n` guests from other selected rooms (never below 1 each), taking
+  // from whichever room currently holds the most so no room gets hollowed
+  // out first. Returns how many were actually available to take.
+  function pullGuestsFromOthers(n, excludeIdx) {
+    var pulled = 0;
+    while (pulled < n) {
+      var bestIdx = -1, bestVal = 1;
+      calcSelectedRooms.forEach(function (r, i) {
+        if (i === excludeIdx) return;
+        if (r.assignedGuests > bestVal) { bestVal = r.assignedGuests; bestIdx = i; }
+      });
+      if (bestIdx === -1) break;
+      calcSelectedRooms[bestIdx].assignedGuests -= 1;
+      pulled++;
+    }
+    return pulled;
+  }
+
+  // Place `n` freed guests into other rooms with spare capacity. If every
+  // selected room is full, add a new room automatically (a room that fits
+  // the remainder exactly if one exists, otherwise the largest one free)
+  // to hold the rest, rather than losing track of a guest.
+  function placeGuestsIntoOthers(n, excludeIdx) {
+    var remaining = n;
+    while (remaining > 0) {
+      var idx = calcSelectedRooms.findIndex(function (r, i) { return i !== excludeIdx && r.assignedGuests < r.maxGuests; });
+      if (idx === -1) break;
+      calcSelectedRooms[idx].assignedGuests += 1;
+      remaining--;
+    }
+    while (remaining > 0) {
+      var unused = CALC_ROOMS.filter(function (r) { return !calcSelectedRooms.some(function (s) { return s.name === r.name; }); });
+      if (!unused.length) break;
+      var exact = unused.find(function (r) { return r.maxGuests === remaining; });
+      var pick = exact || unused.sort(function (a, b) { return b.maxGuests - a.maxGuests; })[0];
+      var take = Math.min(pick.maxGuests, remaining);
+      calcSelectedRooms.push(Object.assign({}, pick, { assignedGuests: take }));
+      remaining -= take;
+    }
+    return n - remaining;
+  }
+
+  // Event delegation on the room grid: handles every slider and remove
+  // button, including ones added later, without rebinding per card.
+  els.rooms.addEventListener('input', function (e) {
+    if (!e.target.classList.contains('cr-slider')) return;
+    var idx = parseInt(e.target.dataset.idx, 10);
+    var room = calcSelectedRooms[idx];
+    var oldVal = room.assignedGuests;
+    // Clamp defensively: the slider's own min/max already prevent this in a
+    // real drag, but never trust a value that didn't come through that path.
+    var newVal = Math.min(room.maxGuests, Math.max(1, parseInt(e.target.value, 10)));
+    var delta = newVal - oldVal;
+    var roomCountBefore = calcSelectedRooms.length;
+
+    if (delta > 0) {
+      var pulled = pullGuestsFromOthers(delta, idx);
+      room.assignedGuests = oldVal + pulled;
+    } else if (delta < 0) {
+      room.assignedGuests = newVal;
+      placeGuestsIntoOthers(-delta, idx);
+    }
+
+    if (calcSelectedRooms.length !== roomCountBefore) {
+      // A new room had to be added to hold freed guests, needs a fresh card.
+      renderRoomsGrid();
+    } else {
+      if (parseInt(e.target.value, 10) !== room.assignedGuests) e.target.value = room.assignedGuests;
+      calcSelectedRooms.forEach(function (r, i) { updateRoomCardTotal(i); });
+    }
+    updateTotalsAndSummaryOnly();
+  });
+
+  els.rooms.addEventListener('click', function (e) {
+    var btn = e.target.closest('.cr-remove');
+    if (!btn) return;
+    var idx = parseInt(btn.dataset.idx, 10);
+    var freed = calcSelectedRooms[idx].assignedGuests;
+    calcSelectedRooms.splice(idx, 1);
+    placeGuestsIntoOthers(freed, -1);
+    note('');
+    renderRoomsGrid();
+    updateTotalsAndSummaryOnly();
+  });
+
+  if (els.addSelect) {
+    els.addSelect.addEventListener('change', function () {
+      var i = parseInt(els.addSelect.value, 10);
+      if (isNaN(i)) return;
+      var room = CALC_ROOMS[i];
+      var pulled = pullGuestsFromOthers(1, -1);
+      els.addSelect.value = '';
+      // Inline message, never a browser dialog.
+      if (pulled < 1) {
+        note('Every room already has someone in it and none can spare a guest. Move a slider down first if you want to split the group into another room.');
+        return;
+      }
+      note('');
+      calcSelectedRooms.push(Object.assign({}, room, { assignedGuests: pulled }));
+      renderRoomsGrid();
+      updateTotalsAndSummaryOnly();
+    });
+  }
+
+  if (els.resetBtn) els.resetBtn.addEventListener('click', runAllocation);
+
+  // ── SEASON / NIGHTS / GUESTS / CHARGE WIRING ───────────────────────────
+  function setSeason(s) {
+    season = s;
+    els.btnHigh.classList.toggle('active', s === 'high');
+    els.btnGreen.classList.toggle('active', s === 'green');
+    els.seasonHint.textContent = s === 'high' ? 'Dec · Jan · Feb · Mar · Apr' : 'May · Jun · Jul · Aug · Nov';
+    if (calcSelectedRooms.length) { renderRoomsGrid(); updateTotalsAndSummaryOnly(); }
+    else { runAllocation(); }
+  }
+
+  els.btnHigh.addEventListener('click', function () { setSeason('high'); });
+  els.btnGreen.addEventListener('click', function () { setSeason('green'); });
+  els.guests.addEventListener('input', runAllocation);
+  els.nights.addEventListener('input', function () {
+    if (calcSelectedRooms.length) { renderRoomsGrid(); updateTotalsAndSummaryOnly(); }
+    else { runAllocation(); }
+  });
+  els.charge.addEventListener('input', updateTotalsAndSummaryOnly);
+
+  // ── PDF EXPORT (browser print, "Save as PDF") ──────────────────────────
+  function buildPrintBlock() {
+    if (!els.printBlock) return;
+    var inputs = getInputs();
+    var totals = calcTotals(inputs);
+    var seasonLabel = season === 'high' ? 'High season' : 'Green season';
+    var dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    var roomRows = calcSelectedRooms.map(function (r) {
+      var roomTotal = roomRate(r) * inputs.numNights * r.assignedGuests;
+      return '<tr><td>' + esc(r.name) + '</td><td>' + esc(r.location) + '</td><td>' + r.assignedGuests + ' of ' + r.maxGuests + '</td><td>' + fmt(roomTotal) + '</td></tr>';
+    }).join('');
+
+    var deposit = totals.totalLodgeCost * DEPOSIT_PCT / 100;
+    var mid = totals.totalLodgeCost * MID_PCT / 100;
+    var final = totals.totalLodgeCost * FINAL_PCT / 100;
+
+    els.printBlock.innerHTML =
+      '<div class="cp-title">Ocean Forest Ecolodge, Retreat Plan</div>' +
+      '<div class="cp-sub">Generated ' + dateStr + ' · ' + inputs.numGuests + ' guests · ' + inputs.numNights + ' nights · ' + seasonLabel + '</div>' +
+      '<div class="cp-section"><h3>The numbers</h3>' +
+        '<div class="cp-row"><span>Cost to lodge</span><span>' + fmt(totals.totalLodgeCost) + '</span></div>' +
+        '<div class="cp-row"><span>Your price per guest</span><span>' + fmt(inputs.chargePerPerson) + '</span></div>' +
+        '<div class="cp-row"><span>Your total revenue</span><span>' + fmt(totals.totalRevenue) + '</span></div>' +
+        '<div class="cp-row"><span>Your profit</span><span>' + fmt(totals.profit) + ' (' + fmt(totals.profitPerGuest) + ' per guest)</span></div>' +
+        '<div class="cp-row"><span>Break-even per guest</span><span>' + fmt(totals.breakEven) + '</span></div>' +
+      '</div>' +
+      '<div class="cp-section"><h3>Room allocation</h3>' +
+        '<table class="cp-table"><thead><tr><th>Room</th><th>Location</th><th>Guests</th><th>Total</th></tr></thead><tbody>' + roomRows + '</tbody></table>' +
+      '</div>' +
+      '<div class="cp-section"><h3>Payment schedule to Ocean Forest</h3>' +
+        '<div class="cp-row"><span>Deposit (' + DEPOSIT_PCT + '%), due now</span><span>' + fmt(deposit) + '</span></div>' +
+        '<div class="cp-row"><span>Mid payment (' + MID_PCT + '%), 2 months before</span><span>' + fmt(mid) + '</span></div>' +
+        '<div class="cp-row"><span>Final balance (' + FINAL_PCT + '%), 1 month before</span><span>' + fmt(final) + '</span></div>' +
+      '</div>' +
+      '<div class="cp-footer">Estimate to help you plan, not a confirmed quote. Availability is not checked here.<br>Ocean Forest Ecolodge · Drake Bay, Osa Peninsula, Costa Rica · eli@oceanforest.org · +506 8737 9416</div>';
+  }
+
+  if (els.pdfBtn) {
+    els.pdfBtn.addEventListener('click', function () {
+      buildPrintBlock();
+      window.print();
+    });
+  }
+
+  runAllocation();
+})();
+</script>
+
+<!-- Tours + Logistics, shared with /. Edit shared-sections.js once. -->
+<script src="shared-sections.js"></script>
+
+<!-- AI concierge. Widget is self-contained; the brain is api/concierge.js. -->
+<script src="concierge.js"></script>
+
+<script defer src="https://redline-xi-ten.vercel.app/w.js" data-redline="ocean-forest"></script>
+</body>
+</html>

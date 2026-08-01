@@ -1,8 +1,25 @@
-.vercel
-.netlify
-node_modules/
+# secrets and machine noise
+.DS_Store
+.env
+.env*
 .env.local
 .env*.local
-.DS_Store
+.vercel
+.netlify
 .cursor/
-Main Website restyled/Ocean forest/
+.claude/
+node_modules/
+
+# separate projects living in this folder, each with its own repo and Vercel project
+Living bridges foundation/
+Rainforest Medicine Gatherings/
+
+# dead copy, removed by of-client-folder-cleanup.md
+Main Website restyled/
+
+# research library, not website source (212 MB)
+knowledge/
+
+# scratch
+_to_delete/
+_vercel-bundles/
