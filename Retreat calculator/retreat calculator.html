@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean Forest — Retreat Calculator</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a18;
+    --ink-mid: #4a4a42;
+    --ink-light: #8a8a7e;
+    --bone: #f7f4ee;
+    --cream: #ede9e0;
+    --sage: #7a8c72;
+    --sage-light: #eaf0e6;
+    --rust: #8b4a2e;
+    --rust-light: #f5ede8;
+    --gold: #b8962e;
+    --gold-light: #f9f3e2;
+    --border: #d9d5ca;
+    --white: #ffffff;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bone);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    background: var(--ink);
+    color: var(--bone);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .site-header h1 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: 2.2rem;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+  .site-header .sub {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-top: 0.4rem;
+  }
+  .site-header .tagline {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1rem;
+    color: #a0a090;
+    text-align: right;
+    max-width: 260px;
+    line-height: 1.5;
+  }
+
+  /* ─── LAYOUT ─── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 2rem 4rem; }
+
+  section.block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    margin-top: 2rem;
+    overflow: hidden;
+  }
+
+  .block-header {
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .block-header h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    letter-spacing: 0.02em;
+  }
+  .block-header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+  .block-body { padding: 1.5rem; }
+
+  /* ─── DB TABLE ─── */
+  .db-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .db-table th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0.75rem;
+    white-space: nowrap;
+  }
+  .db-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #f0ece4; vertical-align: middle; }
+  .db-table tr:last-child td { border-bottom: none; }
+  .db-table tr:hover td { background: #faf8f4; }
+  .db-table input[type="text"],
+  .db-table input[type="number"] {
+    width: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 13.5px;
+    color: var(--ink);
+    padding: 3px 6px;
+    border-radius: 2px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .db-table input:focus {
+    outline: none;
+    border-color: var(--sage);
+    background: var(--sage-light);
+  }
+  .db-table input[type="number"] { text-align: right; }
+  .db-table .room-name-cell { font-weight: 500; min-width: 140px; }
+  .db-table .location-cell { color: var(--ink-mid); font-size: 12px; }
+
+  .toggle-btn {
+    font-family: var(--font-body);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--ink-mid);
+    padding: 5px 14px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .toggle-btn:hover { background: var(--cream); border-color: var(--ink-light); }
+  .toggle-btn.active { background: var(--ink); color: var(--bone); border-color: var(--ink); }
+
+  .db-note {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── SEASON TOGGLE ─── */
+  .season-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .season-btn {
+    font-family: var(--font-body);
+    font-size: 13px;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    background: var(--white);
+    color: var(--ink-mid);
+    transition: all 0.15s;
+  }
+  .season-btn + .season-btn { border-left: 1px solid var(--border); }
+  .season-btn.active-high { background: var(--rust); color: var(--white); }
+  .season-btn.active-green { background: var(--sage); color: var(--white); }
+
+  /* ─── CALCULATOR INPUTS ─── */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .field label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 0.4rem;
+  }
+  .field input[type="number"],
+  .field select {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    padding: 10px 14px;
+    border-radius: 2px;
+    appearance: none;
+    transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--sage); }
+  .field .hint { font-size: 12px; color: var(--ink-light); margin-top: 0.35rem; }
+
+  /* read-only policy fields */
+  .locked-input {
+    width: 100%;
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    border-radius: 2px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: var(--cream);
+    color: var(--ink-mid);
+    cursor: default;
+  }
+  .locked-input:focus { outline: none; }
+
+  /* ─── RESULTS ─── */
+  .results-wrapper {
+    margin-top: 2rem;
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+  }
+  .results-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 1.5rem;
+  }
+
+  /* Big numbers row */
+  .big-numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .big-num-cell {
+    background: var(--white);
+    padding: 1.25rem 1.5rem;
+  }
+  .big-num-cell .label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+  }
+  .big-num-cell .value {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .big-num-cell .value.positive { color: var(--sage); }
+  .big-num-cell .value.cost { color: var(--rust); }
+  .big-num-cell .sub-value {
+    font-size: 12px;
+    color: var(--ink-light);
+    margin-top: 0.35rem;
+  }
+
+  /* Room allocation */
+  .room-alloc {
+    margin-bottom: 2rem;
+  }
+  .room-alloc h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--ink-mid);
+  }
+  .room-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+  }
+  .room-card {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.9rem 1rem;
+    background: var(--white);
+    transition: border-color 0.15s;
+  }
+  .room-card.selected {
+    border-color: var(--sage);
+    background: var(--sage-light);
+  }
+  .room-card.over-capacity {
+    border-color: var(--rust);
+    background: var(--rust-light);
+    opacity: 0.7;
+  }
+  .room-card .rc-name { font-weight: 500; font-size: 14px; margin-bottom: 2px; }
+  .room-card .rc-location { font-size: 12px; color: var(--ink-light); margin-bottom: 6px; }
+  .room-card .rc-detail { font-size: 12px; color: var(--ink-mid); }
+  .room-card .rc-price { font-family: var(--font-display); font-size: 1.25rem; color: var(--sage); margin-top: 6px; }
+  .room-card .rc-badge {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 1px;
+    margin-top: 6px;
+  }
+  .rc-badge.included { background: var(--sage-light); color: var(--sage); }
+  .rc-badge.optional { background: var(--gold-light); color: var(--gold); }
+
+  /* Payment plan */
+  .payment-plan {
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .payment-plan h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.1rem;
+    padding: 0.9rem 1.25rem;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-mid);
+  }
+  .payment-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem 1.25rem;
+    border-bottom: 1px solid #f0ece4;
+    font-size: 14px;
+  }
+  .payment-row:last-child { border-bottom: none; }
+  .payment-row .pr-label { color: var(--ink-mid); }
+  .payment-row .pr-pct {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-light);
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+  }
+  .payment-row .pr-amount {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+
+  /* Profit breakdown */
+  .profit-block {
+    background: var(--sage-light);
+    border: 1px solid #c4d8bc;
+    border-radius: 2px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .profit-block h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--sage);
+    margin-bottom: 0.75rem;
+  }
+  .profit-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    padding: 4px 0;
+    color: var(--ink-mid);
+  }
+  .profit-row.total {
+    border-top: 1px solid #c4d8bc;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 15px;
+  }
+
+  /* empty state */
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--ink-light);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+
+  /* warning */
+  .warning-box {
+    background: var(--rust-light);
+    border: 1px solid #e0c4b8;
+    border-radius: 2px;
+    padding: 0.85rem 1.25rem;
+    font-size: 13px;
+    color: var(--rust);
+    margin-bottom: 1rem;
+  }
+
+  /* free leader badge */
+  .free-leader {
+    background: var(--gold-light);
+    border: 1px solid #e8d49a;
+    border-radius: 2px;
+    padding: 0.85rem 1.25rem;
+    font-size: 13px;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  /* footer */
+  .page-footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 12px;
+    color: var(--ink-light);
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 640px) {
+    .site-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1.5rem; }
+    .site-header .tagline { text-align: left; }
+    .page { padding: 0 1rem 3rem; }
+    .block-body { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div>
+    <div class="sub">Ocean Forest Ecolodge · Osa Peninsula</div>
+    <h1>Retreat Calculator</h1>
+  </div>
+  <div class="tagline">Run your numbers before you pick up the phone.</div>
+</header>
+
+<div class="page">
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1 — DATABASE
+  ═══════════════════════════════════════ -->
+  <section class="block" id="db-section">
+    <div class="block-header">
+      <div>
+        <div class="eyebrow">Ocean Forest Rates</div>
+        <h2>Room Database</h2>
+      </div>
+    </div>
+    <div class="block-body">
+      <div style="overflow-x:auto;">
+        <table class="db-table" id="dbTable">
+          <thead>
+            <tr>
+              <th>Room name</th>
+              <th>Location / notes</th>
+              <th>Beds</th>
+              <th style="text-align:right">Max guests</th>
+              <th style="text-align:right">High season (7n)</th>
+              <th style="text-align:right">Green season (7n)</th>
+              <th style="text-align:right">$/night high</th>
+              <th style="text-align:right">$/night green</th>
+            </tr>
+          </thead>
+          <tbody id="dbBody"></tbody>
+        </table>
+      </div>
+      <div class="db-note">
+        Prices above are <strong>per person for a 7-night stay</strong>. The calculator derives per-night rates from these. Edit any cell to update pricing — changes apply live to the calculator below.
+      </div>
+    </div>
+  </section>
+
+  <!-- Season config -->
+  <section class="block">
+    <div class="block-header">
+      <div>
+        <div class="eyebrow">Booking Terms</div>
+        <h2>Season & Policy Settings</h2>
+      </div>
+    </div>
+    <div class="block-body">
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1.5rem;">
+        <div class="field">
+          <label>High season months</label>
+          <input type="text" id="highSeasonMonths" value="December, January, February, March, April" readonly class="locked-input">
+        </div>
+        <div class="field">
+          <label>Green season months</label>
+          <input type="text" id="greenSeasonMonths" value="May, June, July, August, November" readonly class="locked-input">
+        </div>
+        <div class="field">
+          <label>Deposit % (to secure dates)</label>
+          <input type="number" id="depositPct" value="25" min="0" max="100" readonly class="locked-input">
+          <div class="hint">Currently 25%</div>
+        </div>
+        <div class="field">
+          <label>Mid-payment % (2 months before)</label>
+          <input type="number" id="midPct" value="50" min="0" max="100" readonly class="locked-input">
+        </div>
+        <div class="field">
+          <label>Final balance % (1 month before)</label>
+          <input type="number" id="finalPct" value="25" min="0" max="100" readonly class="locked-input">
+        </div>
+        <div class="field">
+          <label>Free leader at min guests</label>
+          <input type="number" id="freeLeaderMin" value="10" min="1" readonly class="locked-input">
+          <div class="hint">Leader stays free when group reaches this size</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2 — CALCULATOR
+  ═══════════════════════════════════════ -->
+  <section class="block">
+    <div class="block-header">
+      <div>
+        <div class="eyebrow">Retreat Leader Tool</div>
+        <h2>Plan your retreat</h2>
+      </div>
+    </div>
+    <div class="block-body">
+
+      <!-- Inputs -->
+      <div class="calc-grid">
+        <div class="field">
+          <label>Number of guests</label>
+          <input type="number" id="numGuests" value="12" min="1" max="32" oninput="calculate()">
+          <div class="hint">Not counting the facilitator</div>
+        </div>
+        <div class="field">
+          <label>Number of nights</label>
+          <input type="number" id="numNights" value="5" min="1" max="21" oninput="calculate()">
+        </div>
+        <div class="field">
+          <label>Season</label>
+          <div class="season-toggle">
+            <button class="season-btn active-high" id="btnHigh" onclick="setSeason('high')">High season</button>
+            <button class="season-btn" id="btnGreen" onclick="setSeason('green')">Green season</button>
+          </div>
+          <div class="hint" id="seasonHint">Dec · Jan · Feb · Mar · Apr</div>
+        </div>
+        <div class="field">
+          <label>Your retreat price per guest</label>
+          <input type="number" id="chargePerPerson" value="2500" min="0" oninput="calculate()">
+          <div class="hint">What you charge each participant (total for the stay)</div>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="results-wrapper" id="resultsWrapper">
+        <div class="empty-state" id="emptyState" style="display:none;">Enter your group size and nights above to see the numbers.</div>
+        <div id="resultsContent"></div>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<div class="page-footer">San Josecito Beach, Drake Bay, Osa Peninsula. Costa Rica</div>
+
+<script>
+// ─── DEFAULT ROOM DATA ───────────────────────────────────────────────
+const DEFAULT_ROOMS = [
+  { name:"Coco Solo", location:"Beach Bungalow · Garden-facing", beds:"1 Double + 1 Single", maxGuests:3, highSeason7n:1250, greenSeason7n:1100 },
+  { name:"Palmiche",  location:"Beach Bungalow · Ocean view",    beds:"1 Double",           maxGuests:2, highSeason7n:1250, greenSeason7n:1100 },
+  { name:"Naranjo",   location:"Beach Bungalow · Ocean view",    beds:"1 Double",           maxGuests:2, highSeason7n:1250, greenSeason7n:1100 },
+  { name:"Mango",     location:"Garden Bungalow",                beds:"1 Double",           maxGuests:2, highSeason7n:1100, greenSeason7n:1050 },
+  { name:"Solo Bueno North", location:"Jungle Suite",            beds:"1 Double + 1 Single",maxGuests:3, highSeason7n:1200, greenSeason7n:1100 },
+  { name:"Solo Bueno South", location:"Jungle Suite",            beds:"1 Double + 1 Single",maxGuests:3, highSeason7n:1200, greenSeason7n:1100 },
+  { name:"White Hawk Top",   location:"Jungle Suite",            beds:"1 Double + 1 Single",maxGuests:3, highSeason7n:1250, greenSeason7n:1150 },
+  { name:"White Hawk Bottom",location:"Jungle Suite",            beds:"1 Double + 2 Singles",maxGuests:4,highSeason7n:1150, greenSeason7n:1000 },
+  { name:"Cachimbo Top",     location:"Gardens & stream",        beds:"1 Double + 2 Singles",maxGuests:4,highSeason7n:1150, greenSeason7n:1100 },
+  { name:"Cachimbo Bottom",  location:"Gardens & stream",        beds:"1 Double + 1 Single",maxGuests:3, highSeason7n:1000, greenSeason7n:900  },
+  { name:"Lapa Lapa West",   location:"Adjacent to shala · shared bath · for facilitators", beds:"1 Double + 1 Single", maxGuests:3, highSeason7n:1000, greenSeason7n:900 },
+  { name:"Lapa Lapa East",   location:"Adjacent to shala · shared bath · for facilitators", beds:"2 Singles",           maxGuests:2, highSeason7n:1000, greenSeason7n:900 },
+];
+
+let rooms = JSON.parse(JSON.stringify(DEFAULT_ROOMS));
+let season = 'high';
+let editMode = false;
+
+// ─── DB RENDER ───────────────────────────────────────────────────────
+function renderDB() {
+  const tbody = document.getElementById('dbBody');
+  tbody.innerHTML = '';
+  rooms.forEach((r, i) => {
+    const nightHigh  = +(r.highSeason7n  / 7).toFixed(0);
+    const nightGreen = +(r.greenSeason7n / 7).toFixed(0);
+    const tr = document.createElement('tr');
+    if (editMode) {
+      tr.innerHTML = `
+        <td class="room-name-cell"><input type="text" value="${r.name}" oninput="updateRoom(${i},'name',this.value)"></td>
+        <td class="location-cell"><input type="text" value="${r.location}" oninput="updateRoom(${i},'location',this.value)"></td>
+        <td><input type="text" value="${r.beds}" oninput="updateRoom(${i},'beds',this.value)"></td>
+        <td><input type="number" value="${r.maxGuests}" min="1" max="10" oninput="updateRoom(${i},'maxGuests',+this.value)"></td>
+        <td><input type="number" value="${r.highSeason7n}" min="0" oninput="updateRoom(${i},'highSeason7n',+this.value)"></td>
+        <td><input type="number" value="${r.greenSeason7n}" min="0" oninput="updateRoom(${i},'greenSeason7n',+this.value)"></td>
+        <td style="text-align:right;color:var(--ink-light)">$${nightHigh}</td>
+        <td style="text-align:right;color:var(--ink-light)">$${nightGreen}</td>
+      `;
+    } else {
+      tr.innerHTML = `
+        <td class="room-name-cell">${r.name}</td>
+        <td class="location-cell">${r.location}</td>
+        <td>${r.beds}</td>
+        <td style="text-align:right">${r.maxGuests}</td>
+        <td style="text-align:right">$${r.highSeason7n.toLocaleString()}</td>
+        <td style="text-align:right">$${r.greenSeason7n.toLocaleString()}</td>
+        <td style="text-align:right;color:var(--ink-light)">$${nightHigh}</td>
+        <td style="text-align:right;color:var(--ink-light)">$${nightGreen}</td>
+      `;
+    }
+    tbody.appendChild(tr);
+  });
+  calculate();
+}
+
+function updateRoom(i, key, val) {
+  rooms[i][key] = val;
+  // refresh derived night columns without re-rendering whole table
+  calculate();
+}
+
+function toggleEdit() {
+  editMode = !editMode;
+  const btn = document.getElementById('editBtn');
+  btn.textContent = editMode ? 'Done editing' : 'Edit prices';
+  btn.classList.toggle('active', editMode);
+  renderDB();
+}
+
+function resetDB() {
+  if (confirm('Reset all room prices to defaults?')) {
+    rooms = JSON.parse(JSON.stringify(DEFAULT_ROOMS));
+    renderDB();
+  }
+}
+
+// ─── SEASON ──────────────────────────────────────────────────────────
+function setSeason(s) {
+  season = s;
+  document.getElementById('btnHigh').classList.toggle('active-high', s==='high');
+  document.getElementById('btnGreen').classList.toggle('active-green', s==='green');
+  document.getElementById('btnHigh').classList.toggle('active-high', s==='high');
+  document.getElementById('seasonHint').textContent = s === 'high'
+    ? 'Dec · Jan · Feb · Mar · Apr'
+    : 'May · Jun · Jul · Aug · Nov';
+  calculate();
+}
+
+// ─── ALLOCATION LOGIC ────────────────────────────────────────────────
+// Greedy: fill largest rooms first (best per-person value for retreat leaders)
+function allocateRooms(numGuests, season) {
+  // sort by capacity desc, then by cost per person asc (best deal first)
+  const priceKey = season === 'high' ? 'highSeason7n' : 'greenSeason7n';
+  const sorted = rooms
+    .map((r,i) => ({...r, idx:i}))
+    .sort((a,b) => b.maxGuests - a.maxGuests || a[priceKey] - b[priceKey]);
+
+  let remaining = numGuests;
+  const selected = [];
+  const pool = [...sorted];
+
+  // First pass: fill greedily without going over
+  for (const r of pool) {
+    if (remaining <= 0) break;
+    if (r.maxGuests <= remaining) {
+      selected.push({...r, assignedGuests: r.maxGuests});
+      remaining -= r.maxGuests;
+    }
+  }
+
+  // Second pass: if still guests remaining, add the smallest room that fits them
+  if (remaining > 0) {
+    const fits = pool.filter(r => r.maxGuests >= remaining && !selected.find(s=>s.idx===r.idx));
+    if (fits.length) {
+      const pick = fits[fits.length-1]; // smallest that fits
+      selected.push({...pick, assignedGuests: remaining});
+      remaining = 0;
+    } else if (pool.length) {
+      // just add largest available
+      const fallback = pool.find(r => !selected.find(s=>s.idx===r.idx));
+      if (fallback) {
+        selected.push({...fallback, assignedGuests: Math.min(remaining, fallback.maxGuests)});
+        remaining -= fallback.assignedGuests;
+      }
+    }
+  }
+
+  return { selected, leftover: remaining };
+}
+
+// ─── CALCULATE ───────────────────────────────────────────────────────
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+
+function calculate() {
+  const numGuests = parseInt(document.getElementById('numGuests').value) || 0;
+  const numNights = parseInt(document.getElementById('numNights').value) || 0;
+  const chargePerPerson = parseFloat(document.getElementById('chargePerPerson').value) || 0;
+  const depositPct = parseFloat(document.getElementById('depositPct').value) || 25;
+  const midPct = parseFloat(document.getElementById('midPct').value) || 50;
+  const finalPct = parseFloat(document.getElementById('finalPct').value) || 25;
+  const freeLeaderMin = parseInt(document.getElementById('freeLeaderMin').value) || 10;
+
+  const priceKey = season === 'high' ? 'highSeason7n' : 'greenSeason7n';
+
+  if (!numGuests || !numNights) {
+    document.getElementById('resultsContent').innerHTML = '<div class="empty-state">Enter your group size and nights above.</div>';
+    return;
+  }
+
+  const { selected, leftover } = allocateRooms(numGuests, season);
+
+  // Calculate total cost to lodge
+  let totalLodgeCost = 0;
+  selected.forEach(r => {
+    const nightRate = r[priceKey] / 7;
+    totalLodgeCost += nightRate * numNights * r.assignedGuests;
+  });
+
+  const totalRevenue = chargePerPerson * numGuests;
+  const profit = totalRevenue - totalLodgeCost;
+  const profitPerPerson = numGuests > 0 ? profit / numGuests : 0;
+  const breakEvenPerPerson = numGuests > 0 ? totalLodgeCost / numGuests : 0;
+  const freeLeader = numGuests >= freeLeaderMin;
+
+  const deposit = totalLodgeCost * depositPct / 100;
+  const mid = totalLodgeCost * midPct / 100;
+  const final = totalLodgeCost * finalPct / 100;
+
+  let html = '';
+
+  // Warnings
+  if (leftover > 0) {
+    html += `<div class="warning-box">⚠ Not enough room capacity for all guests. ${leftover} guest(s) can't be accommodated with current rooms — you may need to add a room or reduce group size.</div>`;
+  }
+  if (numGuests > 32) {
+    html += `<div class="warning-box">⚠ Maximum capacity is 32 guests. Please adjust your group size.</div>`;
+  }
+
+  // Free leader
+  if (freeLeader) {
+    html += `<div class="free-leader">✓ Group leader stays free — your group of ${numGuests} meets the minimum of ${freeLeaderMin} guests.</div>`;
+  }
+
+  // Big numbers
+  html += `
+    <p class="results-eyebrow">Your retreat at a glance · ${numGuests} guests · ${numNights} nights · ${season === 'high' ? 'High season' : 'Green season'}</p>
+    <div class="big-numbers">
+      <div class="big-num-cell">
+        <div class="label">Total cost to lodge</div>
+        <div class="value cost">${fmt(totalLodgeCost)}</div>
+        <div class="sub-value">${fmt(totalLodgeCost / numGuests)} per guest</div>
+      </div>
+      <div class="big-num-cell">
+        <div class="label">Your total revenue</div>
+        <div class="value">${fmt(totalRevenue)}</div>
+        <div class="sub-value">${fmt(chargePerPerson)} × ${numGuests} guests</div>
+      </div>
+      <div class="big-num-cell">
+        <div class="label">Your profit</div>
+        <div class="value ${profit >= 0 ? 'positive' : 'cost'}">${fmt(profit)}</div>
+        <div class="sub-value">${fmt(profitPerPerson)} per guest</div>
+      </div>
+      <div class="big-num-cell">
+        <div class="label">Break-even price/guest</div>
+        <div class="value">${fmt(breakEvenPerPerson)}</div>
+        <div class="sub-value">minimum to cover lodge costs</div>
+      </div>
+    </div>
+  `;
+
+  // Room allocation
+  html += `
+    <div class="room-alloc">
+      <h3>Suggested room allocation (${selected.length} rooms · ${numGuests - leftover} guests placed)</h3>
+      <div class="room-list">
+  `;
+  selected.forEach(r => {
+    const nightRate = r[priceKey] / 7;
+    const roomTotal = nightRate * numNights * r.assignedGuests;
+    const isLeaderRoom = r.location && r.location.toLowerCase().includes('facilitator');
+    html += `
+      <div class="room-card selected">
+        <div class="rc-name">${r.name}</div>
+        <div class="rc-location">${r.location}</div>
+        <div class="rc-detail">${r.beds} · ${r.assignedGuests} of ${r.maxGuests} guests</div>
+        <div class="rc-price">${fmt(roomTotal)} total</div>
+        <div class="rc-detail" style="color:var(--ink-light); font-size:11px;">${fmt(nightRate)}/night × ${numNights} nights × ${r.assignedGuests} guests</div>
+        ${isLeaderRoom ? '<span class="rc-badge optional">Facilitator room</span>' : ''}
+      </div>
+    `;
+  });
+  html += `</div></div>`;
+
+  // Payment plan
+  html += `
+    <div class="payment-plan">
+      <h3>Payment schedule to Ocean Forest</h3>
+      <div class="payment-row">
+        <div><span class="pr-label">Deposit — due now to secure your dates</span><span class="pr-pct">${depositPct}%</span></div>
+        <div class="pr-amount">${fmt(deposit)}</div>
+      </div>
+      <div class="payment-row">
+        <div><span class="pr-label">Mid payment — due 2 months before arrival</span><span class="pr-pct">${midPct}%</span></div>
+        <div class="pr-amount">${fmt(mid)}</div>
+      </div>
+      <div class="payment-row">
+        <div><span class="pr-label">Final balance — due 1 month before arrival</span><span class="pr-pct">${finalPct}%</span></div>
+        <div class="pr-amount">${fmt(final)}</div>
+      </div>
+    </div>
+  `;
+
+  // Profit breakdown
+  if (chargePerPerson > 0) {
+    html += `
+      <div class="profit-block">
+        <h3>Your income breakdown</h3>
+        <div class="profit-row"><span>Total revenue from guests</span><span>${fmt(totalRevenue)}</span></div>
+        <div class="profit-row"><span>Lodge cost (all rooms · ${numNights} nights)</span><span>− ${fmt(totalLodgeCost)}</span></div>
+        <div class="profit-row total"><span>Your take-home (before your own costs)</span><span>${fmt(profit)}</span></div>
+        <div class="profit-row" style="font-size:13px; color:var(--sage); margin-top:4px;"><span>That's ${fmt(profitPerPerson)} per guest · ${totalRevenue > 0 ? Math.round(profit/totalRevenue*100) : 0}% margin</span><span></span></div>
+      </div>
+    `;
+  }
+
+  document.getElementById('resultsContent').innerHTML = html;
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────
+renderDB();
+</script>
+
+</body>
+</html>
