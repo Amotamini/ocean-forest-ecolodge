@@ -48,7 +48,6 @@ git push origin main
 DEPLOYING.md   IDEAS.md
 NEEDED-FROM-ELI.md   ocean-forest-redline-backup-2026-07-29.md
 design-preview.html   color-palette.css   feedback-tool.js
-ocean-forest-retreat-leaders.html
 Living bridges foundation/
 Rainforest Medicine Gatherings/
 Retreat calculator/
@@ -61,7 +60,7 @@ ocean-forest-website/
 ## 4. Acceptance checks
 
 1. Each of these prints "No such file or directory": `Main Website restyled`, `Landing Page retreat leaders`, `_to_delete`, `_vercel-bundles`, `vercel.json`, `netlify.toml`, `.vercelignore`, `DEPLOY-TO-VERCEL.md` — all relative to `~/Work/PxN/Clients/Ocean Forest Ecolodge`.
-2. `ls -a "$HOME/Work/PxN/Clients/Ocean Forest Ecolodge"` matches the expected list above, with no extra entries other than `.`, `..`, `.DS_Store`, `.git` and `.cursor` — the last is editor configuration, already git-ignored, and deliberately kept.
+2. `ls -a "$HOME/Work/PxN/Clients/Ocean Forest Ecolodge"` matches the expected list above, with no extra entries other than `.`, `..`, `.DS_Store`, `.git`, `.cursor` and `.claude` — the last two are editor/tool configuration, already git-ignored, and deliberately kept.
 3. `du -sh "$HOME/Work/PxN/Clients/Ocean Forest Ecolodge"` reports 445 MB or less (was 543 MB).
 4. `grep -rl "The wild edge of" "$HOME/Work" --include=*.html` prints exactly two files: `ocean-forest-website/index.html` and `design-preview.html`, both inside the Ocean Forest client folder.
 5. `git -C "$HOME/Work/PxN/Clients/Ocean Forest Ecolodge" status --porcelain` prints nothing.
