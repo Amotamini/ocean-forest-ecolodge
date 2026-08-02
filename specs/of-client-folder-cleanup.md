@@ -1,4 +1,4 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-02
 
 # Ocean Forest — Client Folder Cleanup
 
