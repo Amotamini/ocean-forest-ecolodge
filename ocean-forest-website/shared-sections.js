@@ -166,6 +166,7 @@
   var LOGISTICS = [
     {
       n: '01',
+      icon: 'boat',
       title: 'By boat',
       season: 'All seasons',
       seasonKind: 'all',
@@ -179,6 +180,7 @@
     },
     {
       n: '02',
+      icon: 'car',
       title: 'By car',
       season: 'Dry season only · Dec–Apr',
       seasonKind: 'dry',
@@ -192,6 +194,7 @@
     },
     {
       n: '03',
+      icon: 'air',
       title: 'By air',
       season: 'All seasons',
       seasonKind: 'all',
@@ -234,6 +237,9 @@
     '.sh-ph-note{font-family:var(--sh-mono);font-size:.58rem;color:var(--sh-dim)}',
 
     /* tabs */
+    '.sh-tabs-wrap{display:flex;justify-content:center}',
+    '.sh-ic{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;border:1px solid var(--sh-line);color:var(--sh-teal-light);margin-right:2px}',
+    '.sh-ic svg{width:20px;height:20px}',
     '.sh-tabs{display:inline-flex;border:1px solid var(--sh-line);border-radius:26px;overflow:hidden;margin:8px 0 28px}',
     '.sh-tabs button{border:0;background:none;color:var(--sh-dim);font-family:var(--sh-mono);font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;cursor:pointer}',
     '.sh-tabs button.on{background:var(--sh-grad);color:#0b1210;font-weight:700}',
@@ -332,10 +338,12 @@
     mount.classList.add('sh', 'sh-tours');
     mount.innerHTML =
       /* Heading — org-copy.md /activities/ H1; eyebrow per Eli's redline notes #14/#21 */
-      headHTML('Activities', 'Rainforest and Ocean Discovery', 'Tours and Adventures') +
-      '<div class="sh-tabs" role="tablist">' +
-        '<button type="button" role="tab" data-world="ocean" class="on" aria-selected="true">Ocean Discovery</button>' +
-        '<button type="button" role="tab" data-world="forest" aria-selected="false">Rainforest Discovery</button>' +
+      headHTML('Activities', 'Tours and', 'Adventures') +
+      '<div class="sh-tabs-wrap">' +
+        '<div class="sh-tabs" role="tablist">' +
+          '<button type="button" role="tab" data-world="forest" class="on" aria-selected="true">Rainforest Discovery</button>' +
+          '<button type="button" role="tab" data-world="ocean" aria-selected="false">Ocean Discovery</button>' +
+        '</div>' +
       '</div>' +
       '<div class="sh-pills" role="tablist"></div>' +
       '<div class="sh-stage">' +
@@ -349,7 +357,7 @@
     var dots   = mount.querySelector('.sh-dots');
     var info   = mount.querySelector('.sh-info');
 
-    var world = 'ocean';
+    var world = 'forest';
     var idx = 0;
     var shot = 0;
 
@@ -423,6 +431,25 @@
 
   /* ── LOGISTICS BLOCK ────────────────────────────────────────────────────── */
 
+  /* Arrival-method icons — Eli note 37. Same 1.5 stroke language as the rest
+     of the site, sized by CSS so they inherit the accordion's colour. */
+  var ARRIVAL_ICONS = {
+    boat: '<path d="M3 18h18l-2.2 3H5.2L3 18z" stroke-linejoin="round"/>' +
+          '<path d="M5 18l1.4-6.2h11.2L19 18" stroke-linejoin="round"/>' +
+          '<path d="M12 11.8V3l6 4.4-6 1.6" stroke-linejoin="round"/>',
+    car:  '<path d="M3 16v-3.2L5.3 7h13.4L21 12.8V16" stroke-linejoin="round"/>' +
+          '<path d="M3 16h18v2.4h-3V16M6 18.4V16H3" stroke-linejoin="round"/>' +
+          '<path d="M5.6 12.6h12.8" stroke-linecap="round"/>' +
+          '<circle cx="7.4" cy="16" r="1.5"/><circle cx="16.6" cy="16" r="1.5"/>',
+    air:  '<path d="M2.5 13.6l19-6.6-2.2 5.2-8.6 2.4-3 5.2-1.9.6.6-4.2-3.9-2.6z" stroke-linejoin="round"/>'
+  };
+
+  function arrivalIcon(key) {
+    if (!ARRIVAL_ICONS[key]) { return ''; }
+    return '<span class="sh-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+           'stroke-width="1.5" aria-hidden="true">' + ARRIVAL_ICONS[key] + '</svg></span>';
+  }
+
   function buildLogistics(mount) {
     mount.classList.add('sh', 'sh-logistics');
 
@@ -437,6 +464,7 @@
         '<div class="sh-acc-item">' +
           '<button class="sh-acc-head" type="button" aria-expanded="false">' +
             '<span class="sh-n">' + row.n + '</span>' +
+            arrivalIcon(row.icon) +
             '<h3>' + esc(row.title) + '</h3>' +
             (row.recommended ? '<span class="sh-reco">Our recommendation</span>' : '') +
             '<span class="sh-season' + (row.seasonKind === 'dry' ? ' dry' : '') + '">' + esc(row.season) + '</span>' +

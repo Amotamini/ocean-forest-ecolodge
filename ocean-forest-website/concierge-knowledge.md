@@ -4,6 +4,10 @@ Every fact below is taken from `source-copy/org-copy.md`, `source-copy/com-copy.
 Contracts of `specs/of-main-page.md` / `specs/of-concierge.md`. Spec Contracts win on any conflict.
 Nothing here is invented. Do not add anything that is not written here.
 
+Last reconciled against the live site on **2026-08-03**, after the client feedback round.
+This file has a mirror at `api/concierge-knowledge.md`. The API resolves the repo-root copy
+first, but **both must be kept identical** or they will silently drift.
+
 ---
 
 ## THE LODGE
@@ -12,7 +16,7 @@ Ocean Forest Ecolodge is a rainforest and ocean discovery center and nature sanc
 Playa Rincón de San Josecito, a secluded mile-long beach just south of Drake Bay, on the
 Osa Peninsula, Costa Rica. It borders the north side of Corcovado National Park — about
 6 km away. It sits on a 15-acre permaculture property right on the beach, with fruit and
-food orchards, ethnobotanical tea and aromatic herb gardens. Founded in 2000.
+food orchards, ethnobotanical tea and aromatic herb gardens. Founded in 2003.
 
 There is no road along this beach. The last stretch of every arrival is a walk along the sand.
 
@@ -47,8 +51,12 @@ included**.
 Ten rooms near the beach. All rooms have en-suite private bathrooms and private balconies with
 views of the ocean, the rainforest or the ethnobotanical gardens.
 
-Included with a stay: breakfast served fresh each morning, queen-size double bed, fresh linens
-and towels, mosquito nets, hand soap. Three meals a day are included.
+Included with a stay, exactly as published on the website: **three meals a day · en-suite
+private bathrooms · private balconies · fresh linens and towels · mosquito nets.**
+
+Careful: the older list mentioning a queen-size bed, hand soap, and "breakfast served fresh
+each morning" was replaced on 2026-08-03. Do not state a bed size — the room bullets say
+"1 double bed", never "queen".
 
 **Three room types:**
 
@@ -59,30 +67,40 @@ and towels, mosquito nets, hand soap. Three meals a day are included.
 
 2. **Jungle Suites** — ideal for families of three. Spacious bungalow room with nature views.
    1 comfortable double bed and 1 single bed. Fully furnished, with cozy hammocks. 430 ft² /
-   40 m². Private bathroom with hot water. Large balcony with a partial ocean view. Part of a
-   charming bungalow house, frequently visited by colorful birds and local wildlife.
+   40 m². Hardwood floors. Private bathroom with hot water. Large balcony with a partial ocean
+   view. Part of a charming bungalow house, frequently visited by colorful birds and local
+   wildlife.
 
 3. **Family Bungalows** — ideal for families up to 4 guests. 1 double bed and 2 single beds.
-   Fully furnished, with inviting hammocks. 540 ft² / 45 m². Private bathroom and cooling
+   Fully furnished, with inviting hammocks. 540 ft² / 50 m². Private bathroom and cooling
    fans. Private terrace overlooking lush garden views. Often visited by colorful birds and
    local wildlife.
 
 Careful: a feature listed under one room type is known only for that room type. Cooling fans
-are listed for Family Bungalows only; hot water is listed for Jungle Suites only. Do not assume
+are listed for Family Bungalows only; hot water and hardwood floors are listed for Jungle
+Suites only. Do not assume
 a feature applies to the other rooms — if you are asked, say you do not have that detail.
 
-**Nightly prices are NOT in this knowledge base.** The booking engine owns rates and
-availability: https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3
+**Indicative nightly rates** — as published on the website since 2026-08-03:
+Beach Bungalows from $120, Jungle Suites from $140, Family Bungalows from $150.
+Always describe these as starting rates. The booking engine remains the authority for
+live rates, seasonal pricing and availability, and you must send guests there to confirm
+a price or book: https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3
 
 ---
 
 ## FOOD
 
-Farm-to-table cuisine. Ingredients are fresh and locally sourced, many harvested from the
-lodge's own tropical gardens. Three balanced, wholesome meals a day are served in the open-air
-dining room, surrounded by rainforest, sea breezes and the songs of macaws and toucans.
-Natural fruit juices come with every meal; filtered water, coffee and a selection of teas are
-available through the day. Fish is sustainably caught and local only.
+Farm-to-table cuisine. Three meals a day, made from what the garden and the sea offer that
+morning. Fresh fruit juices, medicinal herbs, detox teas. No menus — every meal changes with
+the tides and the season. Local fishermen, the lodge garden and the jungle itself supply the
+kitchen. Fish is sustainably caught and local only.
+
+Careful: the website no longer advertises an open-air dining room or all-day self-serve
+filtered water, coffee and tea to nightly guests. That copy was removed on 2026-08-03. All-day
+coffee and tea service is currently offered **only as part of a retreat package** (/retreats).
+Do not promise it to an independent guest. If asked about drinks outside mealtimes, say fresh
+juices come with meals and hand the question to the lodge.
 
 Four diet options:
 - **Vegetarian** — legumes, seeds, fresh vegetables, whole grains and tropical fruits;
@@ -96,8 +114,8 @@ Four diet options:
 
 Allergies and special diets are carefully accommodated. Because the lodge is remote and menus
 are seasonally driven, guests should share dietary preferences **at least 48 hours before
-arrival** via the check-in form. Last-minute special requests may need up to one week's notice
-and depend on availability.
+arrival**. Last-minute special requests may need up to one week's notice and depend on
+availability. (The website states the 48-hour window only; it no longer names a check-in form.)
 
 ---
 
@@ -105,6 +123,12 @@ and depend on availability.
 
 Prices marked below are add-on prices per the spec Contracts. Where no price is given, no price
 is known — say so and hand off, never guess.
+
+Careful: **tour prices below are published nowhere on the website.** This file is their only
+source. Quote them as indicative and always confirm with the lodge.
+
+When volunteering options unprompted, lead with **Rainforest Discovery**, then Ocean Discovery
+— that is the order the website now presents them in (Rainforest is the default tab).
 
 ### Ocean Discovery
 
@@ -293,13 +317,63 @@ https://wa.me/50687379416. Never attach a percentage to a date the policy does n
 ## THE SHALA AND RETREATS
 
 The Lapa Lapa Lodge is a three-level pagoda at the centre of the property, rising 46 ft / 14 m:
-the Dharma Hall on the ground floor (1,600 ft² of cool tiled space for gatherings, workshops
+the Dharma Hall on the ground floor (1,614 ft² / 150 m² of cool tiled space for gatherings, workshops
 and ceremonies), the hardwood Yoga Shala above it — the "foot candy" floor, fully equipped with
 props — and an observatory cupola on top with panoramic views and ocean breezes. The lodge
 hosts up to 32 guests in bungalows and suites with private baths, with dedicated facilitator
 rooms beside the shala, three meals a day, and an on-site team that handles planning,
-transport, scheduling and daily logistics. Retreat-leader enquiries belong on the /retreats
-page and with Eli on WhatsApp.
+transport, scheduling and daily logistics.
+
+**Retreat terms as published on /retreats:**
+- Group size 8 to 32 guests.
+- Retreats run 3 to 10 days; minimum 3 nights.
+- A 25% deposit secures the dates.
+- At 10 or more guests, the group leader stays complimentary, plus one facilitator.
+- Every package includes a complimentary guided Río Claro tour.
+- /retreats carries a pricing calculator, and a Retreat Host Kit lives at /retreat-host-kit.
+
+**Named accommodation used for retreat groups** (these names appear on /retreats only; the
+three public room types above are what nightly guests book):
+Beach Bungalows — Coco Solo, Palmiche, Naranjo · Jungle Suites — Solo Bueno North & South,
+White Hawk Top & Bottom · Cachimbo Rooms · Garden Bungalow (Mango) · Lapa Lapa East & West.
+Careful: "White Hawk" is a room name here. It is also the name of a nature trail elsewhere in
+this file — ask which the guest means rather than guessing.
+
+Retreat-leader enquiries belong on the /retreats page and with Eli on WhatsApp.
+
+---
+
+## GUEST REVIEWS
+
+Three five-star Google reviews are published on the homepage. You may quote these verbatim and
+attribute them. Do not invent, paraphrase or add others.
+
+- **Sarah M · Google** — "My favorite place in Costa Rica. We saw more wildlife during our
+  hikes at Ocean Forest than we did during our trip to Corcovado itself."
+- **Jeffrey · Google** — "Mind blowing — being this deep in the jungle, so far from anything
+  and anyone. The yoga shala is amazing. The people are wonderful."
+- **Micaela · Germany · Google** — "A wonderful lodge right on the ocean, surrounded by
+  magnificent jungle. Monkeys, toucans, parrots — and an endless, empty beach." (Submitted in
+  German, published in English translation.)
+
+---
+
+## THE PROPERTY MAP AND THE BLOG
+
+- A hand-drawn map of the grounds is published on the homepage, under the room cards. It shows
+  the beach bungalows on the sand, the jungle suites in the trees, and the shala at the centre.
+  Point guests to the homepage for it.
+- **/blog — "From the lodge"** exists and is linked from the footer of every page. It has **no
+  posts yet**. If a guest asks, say the journal is being started and there is nothing published
+  there yet. Never claim a post exists.
+
+---
+
+## SIZE OF THE PROPERTY
+
+The property is **6 hectares — about 15 acres** — of jungle and beachfront. Both figures are
+published: "6 ha" as a headline statistic, "15-acre permaculture property" in the About text.
+Either unit may be given.
 
 ---
 
@@ -307,5 +381,11 @@ page and with Eli on WhatsApp.
 
 - WhatsApp: +506 8737 9416 — https://wa.me/50687379416
 - Email: eli@oceanforest.org
+- Instagram: https://www.instagram.com/ocean_forest_ecolodge
 - Location: Playa Rincón de San Josecito, Drake Bay, Provincia de Puntarenas, Costa Rica
+- Directions / map pin (published in the site footer as "How to get there"):
+  https://www.google.com/maps/dir/?api=1&destination=8.6957%2C-83.675
+- **Monthly and long stays** — the homepage invites these directly: "Staying longer? Ask us
+  about monthly rates." Send the guest to eli@oceanforest.org with the subject "Monthly stay
+  enquiry". Do not quote a monthly rate; none is published.
 - Rooms and rates: https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3
