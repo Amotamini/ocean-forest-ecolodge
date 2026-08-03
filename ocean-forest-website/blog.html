@@ -60,10 +60,12 @@
     backdrop-filter:blur(14px); border-bottom:1px solid var(--hairline);
   }
   body.light header { background:rgba(246,244,238,0.86); }
-  .brand {
-    font-family:var(--serif); font-size:1.05rem; font-weight:300; letter-spacing:0.14em;
-    text-transform:uppercase; color:var(--white); text-decoration:none;
-  }
+  .brand { display:flex; align-items:center; text-decoration:none; }
+  .brand img { height:54px; width:auto; max-width:240px; object-fit:contain; display:block; }
+  .brand .logo-light { display:none; }
+  body.light .brand .logo-dark  { display:none; }
+  body.light .brand .logo-light { display:block; }
+  @media (max-width:720px) { .brand img { height:38px; max-width:168px; } }
   .nav-menu { display:flex; gap:30px; }
   .nav-menu a {
     font-family:var(--mono); font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase;
@@ -157,7 +159,10 @@
 <body>
 
 <header>
-  <a class="brand" href="/">Ocean Forest</a>
+  <a class="brand" href="/">
+    <img class="logo-dark" src="images/logo-white.png" alt="Ocean Forest Ecolodge">
+    <img class="logo-light" src="images/logo-color.png" alt="" aria-hidden="true">
+  </a>
   <nav class="nav-menu" aria-label="Main">
     <a href="/#arriving">Arriving</a>
     <a href="/#rooms">Stay</a>
@@ -237,7 +242,7 @@
         </ul>
       </div>
       <div>
-        <h3>Talk to us</h3>
+        <h3>Book your stay</h3>
         <ul>
           <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
           <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>

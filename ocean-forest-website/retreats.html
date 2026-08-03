@@ -111,13 +111,19 @@
   }
   .site-head.scrolled::after { opacity: 1; }
 
-  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
-  .nav-logo img { height: 34px; width: auto; max-width: 190px; object-fit: contain; display: block; transition: height 0.3s ease, max-width 0.3s ease; }
-  .site-head.scrolled .nav-logo img { height: 26px; }
-  .nav-logo span {
-    font-family: var(--serif); font-size: 1.05rem; font-weight: 300;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); white-space: nowrap;
+  /* Logo — Eli note 61: wordmark removed, logo enlarged, and the supplied brand
+     files wired in. Two files by necessity: the colour version carries dark brown
+     "ECOLODGE · COSTA RICA" type that disappears on the dark site, and the white
+     version disappears on the light one. CSS swaps them with the theme. */
+  .nav-logo { display: flex; align-items: center; text-decoration: none; min-width: 0; }
+  .nav-logo img {
+    height: 54px; width: auto; max-width: 240px; object-fit: contain; display: block;
+    transition: height 0.3s ease, max-width 0.3s ease;
   }
+  .site-head.scrolled .nav-logo img { height: 40px; }
+  .nav-logo .logo-light { display: none; }
+  body.light .nav-logo .logo-dark  { display: none; }
+  body.light .nav-logo .logo-light { display: block; }
 
   .nav-menu { display: flex; align-items: center; gap: 22px; margin-left: auto; }
   .nav-menu a {
@@ -156,7 +162,6 @@
 
   @media (max-width: 900px) {
     :root { --gutter: 22px; }
-    .nav-logo span { display: none; }
     .burger { display: flex; }
     .nav-menu {
       position: fixed; top: var(--nav-h); left: 0; right: 0;
@@ -174,8 +179,8 @@
   @media (max-width: 480px) {
     /* The primary CTA must stay visible at 375px, outside the hamburger. */
     .site-head { gap: 10px; }
-    .nav-logo img { max-width: 104px; height: 30px; }
-    .site-head.scrolled .nav-logo img { height: 24px; }
+    .nav-logo img { max-width: 168px; height: 38px; }
+    .site-head.scrolled .nav-logo img { height: 30px; }
     .book-btn { padding: 9px 13px; font-size: 0.6rem; letter-spacing: 0.06em; }
     .nav-actions { gap: 8px; margin-left: auto; }
     .theme-btn, .burger { width: 31px; height: 31px; }
@@ -608,8 +613,8 @@
 ══════════════════════════════════════════════════════════════════════════ -->
 <header class="site-head" id="siteHead">
   <a href="/" class="nav-logo">
-    <img src="images/ocean-forest-ecolodge-logo.png" alt="Ocean Forest Ecolodge">
-    <span>Ocean Forest</span>
+    <img class="logo-dark" src="images/logo-white.png" alt="Ocean Forest Ecolodge">
+    <img class="logo-light" src="images/logo-color.png" alt="" aria-hidden="true">
   </a>
 
   <nav class="nav-menu" id="navMenu" aria-label="Main">
@@ -1103,7 +1108,7 @@
         </ul>
       </div>
       <div>
-        <h3>Talk to us</h3>
+        <h3>Book your stay</h3>
         <ul>
           <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
           <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>

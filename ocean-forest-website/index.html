@@ -130,13 +130,19 @@
   }
   .site-head.scrolled::after { opacity: 1; }
 
-  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
-  .nav-logo img { height: 34px; width: auto; max-width: 190px; object-fit: contain; display: block; transition: height 0.3s ease, max-width 0.3s ease; }
-  .site-head.scrolled .nav-logo img { height: 26px; }
-  .nav-logo span {
-    font-family: var(--serif); font-size: 1.05rem; font-weight: 300;
-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); white-space: nowrap;
+  /* Logo — Eli note 61: wordmark removed, logo enlarged, and the supplied brand
+     files wired in. Two files by necessity: the colour version carries dark brown
+     "ECOLODGE · COSTA RICA" type that vanishes on the dark site, and the white
+     version vanishes on the light one. CSS swaps them with the theme. */
+  .nav-logo { display: flex; align-items: center; text-decoration: none; min-width: 0; }
+  .nav-logo img {
+    height: 54px; width: auto; max-width: 240px; object-fit: contain; display: block;
+    transition: height 0.3s ease, max-width 0.3s ease;
   }
+  .site-head.scrolled .nav-logo img { height: 40px; }
+  .nav-logo .logo-light { display: none; }
+  body.light .nav-logo .logo-dark  { display: none; }
+  body.light .nav-logo .logo-light { display: block; }
 
   .nav-menu { display: flex; align-items: center; gap: 22px; margin-left: auto; }
   .nav-menu a {
@@ -175,7 +181,6 @@
 
   @media (max-width: 900px) {
     :root { --gutter: 22px; }
-    .nav-logo span { display: none; }
     .burger { display: flex; }
     .nav-menu {
       position: fixed; top: var(--nav-h); left: 0; right: 0;
@@ -192,8 +197,8 @@
   @media (max-width: 480px) {
     /* Book now must stay visible at 375px, outside the hamburger. */
     .site-head { gap: 10px; }
-    .nav-logo img { max-width: 104px; height: 30px; }
-    .site-head.scrolled .nav-logo img { height: 24px; }
+    .nav-logo img { max-width: 168px; height: 38px; }
+    .site-head.scrolled .nav-logo img { height: 30px; }
     .book-btn { padding: 9px 13px; font-size: 0.6rem; letter-spacing: 0.06em; }
     .nav-actions { gap: 8px; margin-left: auto; }
     .theme-btn, .burger { width: 31px; height: 31px; }
@@ -282,6 +287,12 @@
   .path-kicker {
     font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
     text-transform: uppercase; color: #7fe3e4; margin-bottom: 10px;
+  }
+  /* Eli's replacement kicker (note 53) is a full sentence. Tiny tracked-out caps
+     are unreadable at that length, so this variant keeps the mono voice and the
+     colour but drops the uppercase and the wide tracking. */
+  .path-kicker-long {
+    text-transform: none; letter-spacing: 0.02em; font-size: 0.74rem; line-height: 1.5;
   }
   .path-title {
     font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.35rem);
@@ -528,8 +539,8 @@
 
 <header class="site-head" id="siteHead">
   <a href="/" class="nav-logo">
-    <img src="images/ocean-forest-ecolodge-logo.png" alt="Ocean Forest Ecolodge">
-    <span>Ocean Forest</span>
+    <img class="logo-dark" src="images/logo-white.png" alt="Ocean Forest Ecolodge">
+    <img class="logo-light" src="images/logo-color.png" alt="" aria-hidden="true">
   </a>
 
   <!-- Nav list is the client's chosen list. Food and Trust are deliberately omitted. -->
@@ -572,15 +583,15 @@
 
     <div class="fork" id="fork">
       <div class="wrap">
-        <p class="fork-label">What brings you here?</p>
+        <p class="fork-label">Why Ocean Forest Ecolodge?</p>
         <div class="fork-grid">
 
           <!-- Straight to the booking engine. No intermediate page, no request form. -->
           <a class="path path-stay" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" data-path="stay" rel="noopener">
-            <span class="path-kicker">Come as a guest</span>
+            <span class="path-kicker path-kicker-long">For couples, families, and solo travelers ready for the real Costa Rica.</span>
             <span class="path-title">I want to stay</span>
-            <span class="path-desc">Ten rooms in the jungle and on the beach. Three homecooked meals a day, from a few nights to a few weeks.</span>
-            <span class="path-arrow">See the lodge
+            <span class="path-desc">10 rooms surrounded by lush rainforest, wildlife, ocean, and three meals a day made from scratch.</span>
+            <span class="path-arrow">Plan your stay
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </a>
@@ -677,13 +688,9 @@
 
       <p class="loc-note reveal">Located plumb on a remote mile-long, coconut laden beach, the property is situated looking out over the sparkling Pacific Ocean and is surrounded by botanical gardens and rainforest. Ocean Forest Ecolodge is a nature lovers paradise situated along a people friendly wilderness beach just south of Drake Bay and within walking distance of Corcovado National Park. Our beach is a nesting site for three species of marine turtles.</p>
 
-      <!-- Hand-drawn property map — sourced from oceanforestecolodge.com/accommodations (note 38 / Mehdi 2026-08-03). -->
-      <figure class="propmap reveal">
-        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
-        <figcaption>The grounds, drawn by hand — beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
-      </figure>
-
-      <!-- Amenities, with icons, below the room grid — Eli notes 6 / 14 / 19. -->
+      <!-- Amenities, with icons, below the room grid — Eli notes 6 / 14 / 19.
+           Order here is Eli's: the room chart, then what's included, then the map
+           (her /stay note 43). -->
       <div class="amen-head reveal"><span class="eyebrow">What’s included with your stay</span></div>
       <ul class="included reveal">
         <li>
@@ -707,6 +714,13 @@
           <span class="am-tx">Mosquito nets</span>
         </li>
       </ul>
+
+      <!-- Hand-drawn property map — from oceanforestecolodge.com/accommodations.
+           Sits last, after "what's included", per Eli note 43. -->
+      <figure class="propmap reveal">
+        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
+        <figcaption>The grounds, drawn by hand — beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -907,7 +921,7 @@
         </ul>
       </div>
       <div>
-        <h3>Talk to us</h3>
+        <h3>Book your stay</h3>
         <ul>
           <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
           <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>
