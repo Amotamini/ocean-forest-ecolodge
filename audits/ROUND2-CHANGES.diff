@@ -1,0 +1,102 @@
+diff --git a/ocean-forest-website/blog.html b/ocean-forest-website/blog.html
+index c0e0735..f6ee7c7 100644
+--- a/ocean-forest-website/blog.html
++++ b/ocean-forest-website/blog.html
+@@ -239,3 +239,3 @@
+       <div>
+-        <h3>Talk to us</h3>
++        <h3>Book your stay</h3>
+         <ul>
+diff --git a/ocean-forest-website/index.html b/ocean-forest-website/index.html
+index a53093c..a57011e 100644
+--- a/ocean-forest-website/index.html
++++ b/ocean-forest-website/index.html
+@@ -133,8 +133,6 @@
+   .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; min-width: 0; }
+-  .nav-logo img { height: 34px; width: auto; max-width: 190px; object-fit: contain; display: block; transition: height 0.3s ease, max-width 0.3s ease; }
+-  .site-head.scrolled .nav-logo img { height: 26px; }
+-  .nav-logo span {
+-    font-family: var(--serif); font-size: 1.05rem; font-weight: 300;
+-    letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); white-space: nowrap;
+-  }
++  /* Logo enlarged and the wordmark removed — Eli note 61. The image already
++     carries the words "Ocean Forest Ecolodge", so the span was saying it twice. */
++  .nav-logo img { height: 52px; width: auto; max-width: 260px; object-fit: contain; display: block; transition: height 0.3s ease, max-width 0.3s ease; }
++  .site-head.scrolled .nav-logo img { height: 38px; }
+ 
+@@ -177,3 +175,2 @@
+     :root { --gutter: 22px; }
+-    .nav-logo span { display: none; }
+     .burger { display: flex; }
+@@ -194,4 +191,4 @@
+     .site-head { gap: 10px; }
+-    .nav-logo img { max-width: 104px; height: 30px; }
+-    .site-head.scrolled .nav-logo img { height: 24px; }
++    .nav-logo img { max-width: 150px; height: 40px; }
++    .site-head.scrolled .nav-logo img { height: 30px; }
+     .book-btn { padding: 9px 13px; font-size: 0.6rem; letter-spacing: 0.06em; }
+@@ -285,2 +282,8 @@
+   }
++  /* Eli's replacement kicker (note 53) is a full sentence. Tiny tracked-out caps
++     are unreadable at that length, so this variant keeps the mono voice and the
++     colour but drops the uppercase and the wide tracking. */
++  .path-kicker-long {
++    text-transform: none; letter-spacing: 0.02em; font-size: 0.74rem; line-height: 1.5;
++  }
+   .path-title {
+@@ -531,3 +534,2 @@
+     <img src="images/ocean-forest-ecolodge-logo.png" alt="Ocean Forest Ecolodge">
+-    <span>Ocean Forest</span>
+   </a>
+@@ -574,3 +576,3 @@
+       <div class="wrap">
+-        <p class="fork-label">What brings you here?</p>
++        <p class="fork-label">Why Ocean Forest Ecolodge?</p>
+         <div class="fork-grid">
+@@ -579,6 +581,6 @@
+           <a class="path path-stay" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" data-path="stay" rel="noopener">
+-            <span class="path-kicker">Come as a guest</span>
++            <span class="path-kicker path-kicker-long">For couples, families, and solo travelers ready for the real Costa Rica.</span>
+             <span class="path-title">I want to stay</span>
+-            <span class="path-desc">Ten rooms in the jungle and on the beach. Three homecooked meals a day, from a few nights to a few weeks.</span>
+-            <span class="path-arrow">See the lodge
++            <span class="path-desc">10 rooms surrounded by lush rainforest, Wildlife, ocean, and three meals a day made from scratch.</span>
++            <span class="path-arrow">Plan your stay
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+@@ -679,9 +681,5 @@
+ 
+-      <!-- Hand-drawn property map — sourced from oceanforestecolodge.com/accommodations (note 38 / Mehdi 2026-08-03). -->
+-      <figure class="propmap reveal">
+-        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
+-        <figcaption>The grounds, drawn by hand — beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
+-      </figure>
+-
+-      <!-- Amenities, with icons, below the room grid — Eli notes 6 / 14 / 19. -->
++      <!-- Amenities, with icons, below the room grid — Eli notes 6 / 14 / 19.
++           Order here is Eli's: the room chart, then what's included, then the map
++           (her /stay note 43). -->
+       <div class="amen-head reveal"><span class="eyebrow">What’s included with your stay</span></div>
+@@ -709,2 +707,9 @@
+       </ul>
++
++      <!-- Hand-drawn property map — from oceanforestecolodge.com/accommodations.
++           Sits last, after "what's included", per Eli note 43. -->
++      <figure class="propmap reveal">
++        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
++        <figcaption>The grounds, drawn by hand — beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
++      </figure>
+     </div>
+@@ -909,3 +914,3 @@
+       <div>
+-        <h3>Talk to us</h3>
++        <h3>Book your stay</h3>
+         <ul>
+diff --git a/ocean-forest-website/retreats.html b/ocean-forest-website/retreats.html
+index f5c8f0f..2f29cef 100644
+--- a/ocean-forest-website/retreats.html
++++ b/ocean-forest-website/retreats.html
+@@ -1105,3 +1105,3 @@
+       <div>
+-        <h3>Talk to us</h3>
++        <h3>Book your stay</h3>
+         <ul>

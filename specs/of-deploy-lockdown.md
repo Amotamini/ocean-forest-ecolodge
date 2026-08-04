@@ -1,4 +1,6 @@
 STATUS: SHIPPED 2026-08-01
+<!-- link-check: historical — this spec deletes ~/Work/PxN/Workshop/ocean-forest-ecolodge
+     outright. That path is gone because the spec worked; the record of it is the point. -->
 
 # Ocean Forest — Deploy Lockdown
 
