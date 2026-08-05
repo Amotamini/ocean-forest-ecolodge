@@ -1,4 +1,12 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-05
+
+All 8 acceptance checks passed, verified in a browser on 2026-08-05. One deliberate reconciliation:
+Section 3 says the room tags, nature note, map caption and food copy are lifted verbatim, but those
+source strings carry em dashes that acceptance check 8 (and the house no-dash rule) forbids. The
+wording is kept identical; only each em dash is swapped for house-style punctuation (a comma in the
+Beach and Family tags, a period in the nature note, a colon in the map caption and the food diet
+line). Room photographs remain the launch blocker per parking line 6; the page renders their
+labelled placeholders and takes the real files with no code change.
 
 # A2 — Lodging
 
@@ -43,7 +51,7 @@ Each card's "Book now" CTA points at the same booking URL used everywhere else: 
 Same five labels as `index.html` lines 696–716, in the same order: Three meals a day, En-suite private bathrooms, Private balconies, Fresh linens and towels, Mosquito nets. Each slot is a `data-media` frame (`lodging/amenity-<slug>.jpg`, `data-ratio="1/1"`) using the placeholder pattern, not the existing inline SVG icon markup.
 
 ### Property map
-- `data-media="property/property-map.webp"` — the file already exists at `ocean-forest-website/media/property/property-map.webp` and can be reused directly (path becomes `../media/property/property-map.webp` from inside `v2/`).
+- `data-media="property/property-map.webp"` — the file already exists at `ocean-forest-website/media/property/property-map.webp` and can be reused directly (the shell's media loader climbs one level from `v2/`, so `property/property-map.webp` resolves to that same file).
 - Caption, verbatim from `index.html` line 722: `The grounds, drawn by hand — beach bungalows on the sand, jungle suites in the trees, the shala at the center.`
 - Do not attempt to redraw, relabel, or fix the compass rose. That is a separate asset job per brief §5.
 

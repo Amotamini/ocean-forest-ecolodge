@@ -9,7 +9,107 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shell.css">
 <style>
-  /* Lodging — page-specific rules go here. Empty until this page's own build spec. */
+  /* Lodging — page-specific rules, per specs/of-v2-lodging.md. */
+
+  /* ── ACCOMMODATIONS LINE (directly under the hero) ── */
+  .lo-accom {
+    font-family: var(--serif); font-weight: 300; font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    line-height: 1.5; color: var(--white); max-width: 30ch; margin: 0;
+  }
+
+  /* ── NATURE NOTE — calm info block, deliberately not a warning callout ── */
+  .lo-nature {
+    max-width: 760px; margin-top: 34px; border: 1px solid var(--hairline);
+    border-radius: 8px; padding: 26px 30px; background: var(--ink-2);
+  }
+  .lo-nature p { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.75; margin: 0; }
+  .lo-nature strong { color: var(--white); font-weight: 500; }
+
+  /* ── ROOM CATEGORIES — expand in place ── */
+  .lo-rooms { border-top: 1px solid var(--hairline); margin-top: 12px; }
+  .lo-room { border-bottom: 1px solid var(--hairline); }
+  .lo-room-frame { max-width: 100%; }
+  .lo-room-frame [data-media] { border-radius: 6px; }
+  .lo-room-head {
+    width: 100%; background: none; border: 0; color: var(--mist); cursor: pointer;
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    text-align: left; padding: 26px 4px;
+  }
+  .lo-room-head h3 { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; color: var(--white); margin: 0; }
+  .lo-room-meta {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal-light); flex: 1; min-width: 160px;
+  }
+  .lo-room-price-head { font-family: var(--serif); font-size: 1.15rem; color: var(--white); font-weight: 400; white-space: nowrap; }
+  .lo-room-price-head b { font-weight: 600; }
+  .lo-room-arrow { transition: transform 0.25s; color: var(--dim); flex-shrink: 0; align-self: center; }
+  .lo-room.open .lo-room-arrow { transform: rotate(90deg); }
+  .lo-room-detail { display: none; padding: 0 4px 34px; }
+  .lo-room.open .lo-room-detail { display: block; }
+  .lo-room-inner { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+  @media (max-width: 820px) { .lo-room-inner { grid-template-columns: 1fr; gap: 24px; } }
+  .lo-room-tag { font-family: var(--serif); font-style: italic; font-size: 1.2rem; color: var(--mist); line-height: 1.6; margin: 0 0 20px; }
+  .lo-room-detail ul { list-style: none; margin: 0 0 24px; }
+  .lo-room-detail li {
+    position: relative; padding: 8px 0 8px 22px; font-size: 0.95rem; color: var(--dim); font-weight: 300;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .lo-room-detail li:last-child { border-bottom: 0; }
+  .lo-room-detail li::before { content: ''; position: absolute; left: 0; top: 16px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .lo-room-price { font-size: 1.05rem; color: var(--white); font-weight: 300; margin: 0 0 18px; }
+  .lo-room-price b { font-weight: 600; }
+
+  /* ── AMENITY ROW — five photographs, not icons ── */
+  .lo-amen { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; margin-top: 34px; }
+  @media (max-width: 900px) { .lo-amen { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .lo-amen { grid-template-columns: 1fr; } }
+  .lo-amen-item { min-width: 0; }
+  .lo-amen-label {
+    margin-top: 12px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--mist); text-align: center; line-height: 1.5;
+  }
+
+  /* ── PROPERTY MAP ── */
+  .lo-map { max-width: 760px; margin-top: 8px; }
+  .lo-map figcaption {
+    margin-top: 18px; max-width: 640px; color: var(--dim); font-size: 0.92rem;
+    font-weight: 300; font-style: italic; line-height: 1.7;
+  }
+
+  /* ── FOOD ── */
+  .lo-chips { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 40px; }
+  .lo-chip {
+    display: inline-flex; align-items: center; gap: 9px; padding: 9px 18px; border-radius: 22px;
+    border: 1px solid var(--hairline); font-family: var(--mono); font-size: 0.66rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist);
+  }
+  .lo-chip svg { width: 17px; height: 17px; color: var(--teal-light); }
+  .lo-food-wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; align-items: start; }
+  @media (max-width: 820px) { .lo-food-wrap { grid-template-columns: 1fr; gap: 28px; } }
+  .lo-food-quote { font-family: var(--serif); font-style: italic; font-size: 1.35rem; color: var(--white); line-height: 1.55; margin: 0 0 20px; }
+  .lo-food-body { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.8; margin: 0 0 16px; }
+  .lo-food-body:last-child { margin-bottom: 0; }
+
+  /* ── RATES + POLICIES (foot) ── */
+  .lo-rates { border-top: 1px solid var(--hairline); padding-top: 34px; margin-top: 8px; }
+  .lo-rate-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+  @media (max-width: 720px) { .lo-rate-grid { grid-template-columns: 1fr; } }
+  .lo-rate {
+    border: 1px solid var(--hairline); border-radius: 8px; padding: 22px 24px; background: var(--ink-2);
+  }
+  .lo-rate .lo-rate-room { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 8px; }
+  .lo-rate .lo-rate-price { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; color: var(--white); }
+  .lo-rate .lo-rate-price b { font-weight: 600; }
+  .lo-rate .lo-rate-unit { font-size: 0.82rem; color: var(--dim); font-weight: 300; }
+  .lo-policies { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 28px; }
+  .lo-policy {
+    display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-light); text-decoration: none;
+    border: 1px solid var(--hairline); border-radius: 24px; padding: 11px 20px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .lo-policy:hover { color: var(--white); border-color: var(--teal); }
+  .lo-policy svg { width: 15px; height: 15px; }
 </style>
 </head>
 <body>
@@ -42,16 +142,251 @@
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="wrap">
-      <p class="eyebrow">[eyebrow]</p>
-      <h1>[headline]</h1>
-      <p class="hero-sub">[sub-line]</p>
+      <p class="eyebrow">Accommodations</p>
+      <h1>Ten Rooms, One Remote Mile of Beach</h1>
+      <p class="hero-sub">Rustic, private, and steps from the Pacific. Choose the room that fits how you travel.</p>
     </div>
   </div>
 </div>
 
 <main id="main">
 
-  <!-- Page content for Lodging goes here — see this page's own build spec. -->
+  <!-- Accommodations line + nature note, near the top, above the room cards -->
+  <section id="intro">
+    <div class="wrap">
+      <p class="lo-accom reveal">Located plumb in a remote mile of coconut-laddered beach, the property is situated looking out over the sparkling Pacific Ocean and is surrounded by botanical gardens and rainforest.</p>
+      <div class="lo-nature reveal">
+        <p>This is one of the most thriving ecosystems on the planet. Rooms are bugproof, but life gets in. That is the place working exactly as it should. Expect to meet insects. It is part of being here, not a defect in your room.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three room categories, expand in place -->
+  <section id="rooms">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The Rooms</span>
+        <h2>Choose Your <span class="grad-text">Perfect Room</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">The rainforest at your doorstep, the Pacific steps away. Drift to sleep with the ocean. Wake up to birdsong, monkeys, and morning light through the canopy.</p>
+      </div>
+
+      <div class="lo-rooms reveal" id="loRooms">
+
+        <article class="lo-room" data-room="beach">
+          <button class="lo-room-head" type="button" aria-expanded="false">
+            <h3>Beach Bungalows</h3>
+            <span class="lo-room-meta">Ideal for couples</span>
+            <span class="lo-room-price-head">From <b>$120</b> / night</span>
+            <span class="lo-room-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="lo-room-detail">
+            <div class="lo-room-inner">
+              <div class="lo-room-frame">
+                <div data-media="lodging/beach-bungalow-01.jpg" data-ratio="4/3" data-note="Beach Bungalows, the strongest shot"></div>
+              </div>
+              <div>
+                <p class="lo-room-tag">Steps from the Pacific. Fall asleep to the ocean breeze, wake up to blue water and monkeys playing in the trees, all from your own balcony. A double bed, a hammock, and the jungle right outside your window.</p>
+                <ul>
+                  <li>1 double bed</li>
+                  <li>Private balcony overlooking the ocean</li>
+                  <li>En-suite bathroom with natural ventilation</li>
+                  <li>Rustic open design · 260 ft² / 24 m²</li>
+                </ul>
+                <p class="lo-room-price">From <b>$120</b> per night</p>
+                <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="lo-room" data-room="jungle">
+          <button class="lo-room-head" type="button" aria-expanded="false">
+            <h3>Jungle Suites</h3>
+            <span class="lo-room-meta">Ideal for families of three</span>
+            <span class="lo-room-price-head">From <b>$140</b> / night</span>
+            <span class="lo-room-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="lo-room-detail">
+            <div class="lo-room-inner">
+              <div class="lo-room-frame">
+                <div data-media="lodging/jungle-suite-01.jpg" data-ratio="4/3" data-note="Jungle Suites, the strongest shot"></div>
+              </div>
+              <div>
+                <p class="lo-room-tag">Forest views, partial ocean glimpses, and space to breathe. The monkeys visit. The birds arrive early. You won&rsquo;t mind.</p>
+                <ul>
+                  <li>1 double bed + 1 single bed</li>
+                  <li>Large balcony with partial ocean view</li>
+                  <li>Hardwood floors · 430 ft² / 40 m²</li>
+                  <li>En-suite bathroom with hot water</li>
+                </ul>
+                <p class="lo-room-price">From <b>$140</b> per night</p>
+                <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="lo-room" data-room="family">
+          <button class="lo-room-head" type="button" aria-expanded="false">
+            <h3>Family Bungalows</h3>
+            <span class="lo-room-meta">Ideal for families up to 4 guests</span>
+            <span class="lo-room-price-head">From <b>$150</b> / night</span>
+            <span class="lo-room-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="lo-room-detail">
+            <div class="lo-room-inner">
+              <div class="lo-room-frame">
+                <div data-media="lodging/family-bungalow-01.jpg" data-ratio="4/3" data-note="Family Bungalows, the strongest shot"></div>
+              </div>
+              <div>
+                <p class="lo-room-tag">Room for everyone, and space to spread out. A double bed, two singles, a terrace, and the kind of quiet that makes families remember why they travel together.</p>
+                <ul>
+                  <li>1 double + 2 single beds</li>
+                  <li>Private terrace overlooking garden</li>
+                  <li>Generous layout · 540 ft² / 50 m²</li>
+                  <li>En-suite bathroom with fans</li>
+                </ul>
+                <p class="lo-room-price">From <b>$150</b> per night</p>
+                <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Amenity row — five photographs, not icons -->
+  <section id="included">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">What is included with your stay</span>
+        <h2>Included in <span class="grad-text">Every Room</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <div class="lo-amen reveal">
+        <div class="lo-amen-item">
+          <div data-media="lodging/amenity-three-meals.jpg" data-ratio="1/1" data-note="Three meals a day"></div>
+          <p class="lo-amen-label">Three meals a day</p>
+        </div>
+        <div class="lo-amen-item">
+          <div data-media="lodging/amenity-ensuite-bathrooms.jpg" data-ratio="1/1" data-note="En-suite private bathrooms"></div>
+          <p class="lo-amen-label">En-suite private bathrooms</p>
+        </div>
+        <div class="lo-amen-item">
+          <div data-media="lodging/amenity-private-balconies.jpg" data-ratio="1/1" data-note="Private balconies"></div>
+          <p class="lo-amen-label">Private balconies</p>
+        </div>
+        <div class="lo-amen-item">
+          <div data-media="lodging/amenity-fresh-linens.jpg" data-ratio="1/1" data-note="Fresh linens and towels"></div>
+          <p class="lo-amen-label">Fresh linens and towels</p>
+        </div>
+        <div class="lo-amen-item">
+          <div data-media="lodging/amenity-mosquito-nets.jpg" data-ratio="1/1" data-note="Mosquito nets"></div>
+          <p class="lo-amen-label">Mosquito nets</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hand-drawn property map — real file, reused directly -->
+  <section id="property">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The Grounds</span>
+        <h2>The Property, <span class="grad-text">by Hand</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <figure class="lo-map reveal">
+        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
+        <figcaption>The grounds, drawn by hand: beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- Food — no menu, ever -->
+  <section id="food">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Wholesome Cuisine</span>
+        <h2>Nourishing <span class="grad-text">the Soul</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Farm-to-Table · Jungle Kitchen · Every Day Different</p>
+      </div>
+
+      <div class="lo-chips reveal">
+        <span class="lo-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21c0-7 4-11 9-11 0 6-4 11-9 11z" stroke-linejoin="round"/><path d="M12 21c0-5-3-8-7-8 0 4 3 8 7 8z" stroke-linejoin="round"/></svg>
+          Vegetarian
+        </span>
+        <span class="lo-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22V9" stroke-linecap="round"/><path d="M12 9C12 5 15 2 20 2c0 5-3 8-8 7z" stroke-linejoin="round"/><path d="M12 14c0-3-2-5-6-5 0 3 2 5 6 5z" stroke-linejoin="round"/></svg>
+          Vegan
+        </span>
+        <span class="lo-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22V8" stroke-linecap="round"/><path d="M12 12c0-3 2-5 5-5 0 3-2 5-5 5zM12 17c0-3-2-5-5-5 0 3 2 5 5 5z" stroke-linejoin="round"/><path d="M4 20l16-16" stroke-linecap="round"/></svg>
+          Gluten-free
+        </span>
+        <span class="lo-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3v8a2 2 0 004 0V3M8 11v10" stroke-linecap="round"/><path d="M17 3c-1.5 2-2 4-2 6s.7 3 2 3 2-1 2-3-.5-4-2-6zM17 12v9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Omnivore
+        </span>
+      </div>
+
+      <div class="lo-food-wrap">
+        <div class="reveal">
+          <p class="lo-food-quote">Three meals a day, made from what the garden and the sea offer that morning. Fresh fruit juices, medicinal herbs, detox teas. Food that tastes like the place it came from.</p>
+          <p class="lo-food-body">No menus. Every meal changes with the tides and the season. Local fishermen, the lodge garden, and the jungle itself supply the kitchen. Come hungry.</p>
+          <p class="lo-food-body">Every dish can be tailored to your needs. We accommodate allergies and special diets: gluten-free, vegetarian, and vegan. Share your preferences at least 48 hours before arrival.</p>
+        </div>
+        <div class="lo-room-frame reveal">
+          <div data-media="property/kitchen-table.jpg" data-ratio="4/3" data-note="Open-air dining room, long table"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rates, hold harmless, cancellation — at the foot, beside the room prices -->
+  <section id="rates">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Rates and Policies</span>
+        <h2>What It <span class="grad-text">Costs</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <div class="lo-rates reveal">
+        <div class="lo-rate-grid">
+          <div class="lo-rate">
+            <div class="lo-rate-room">Beach Bungalows</div>
+            <div class="lo-rate-price">From <b>$120</b></div>
+            <div class="lo-rate-unit">per night</div>
+          </div>
+          <div class="lo-rate">
+            <div class="lo-rate-room">Jungle Suites</div>
+            <div class="lo-rate-price">From <b>$140</b></div>
+            <div class="lo-rate-unit">per night</div>
+          </div>
+          <div class="lo-rate">
+            <div class="lo-rate-room">Family Bungalows</div>
+            <div class="lo-rate-price">From <b>$150</b></div>
+            <div class="lo-rate-unit">per night</div>
+          </div>
+        </div>
+        <div class="lo-policies">
+          <a class="lo-policy" href="https://www.oceanforest.org/hold-harmless/" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke-linejoin="round"/></svg>
+            Hold Harmless Agreement
+          </a>
+          <a class="lo-policy" href="https://www.oceanforest.org/cancellation/" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2v4M16 2v4M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z" stroke-linejoin="round"/></svg>
+            Cancellation Policy
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section id="gallery">
     <div class="wrap">
@@ -112,5 +447,25 @@
 </footer>
 
 <script src="shell.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── ROOM CARDS — expand in place ────────────────────────────────────────
+     Each room's full description, bullets, price and Book now button live in
+     a collapsed panel that opens under its header. Nothing links out to a
+     separate page. */
+  var rooms = document.getElementById('loRooms');
+  if (rooms) {
+    rooms.querySelectorAll('.lo-room-head').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var room = btn.parentElement;
+        var open = room.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>
