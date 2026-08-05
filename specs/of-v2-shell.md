@@ -1,4 +1,10 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-05
+
+All 8 acceptance checks passed, verified in a browser by the build thread on 2026-08-05.
+Two fixes were needed beyond a literal lift and both are correct: a 1.5s timeout fallback on the
+hero video, because a <video> element's error event does not reliably fire for a missing file; and
+the `.foot-map` CSS rule, which sits outside the line range this spec quoted and without which the
+map link renders unstyled.
 
 # A0 — Shell
 

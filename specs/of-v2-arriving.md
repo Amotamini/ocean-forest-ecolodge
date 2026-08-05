@@ -1,4 +1,10 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-05
+
+All 8 acceptance checks passed, verified in a browser by the build thread on 2026-08-05. The map
+stays hidden until a route is picked, which was the one trap named in advance. Two items remain
+structurally blocked on Eli and are marked in the page rather than guessed: the Group Travel CTA
+copy, and the Helpful Contacts numbers, which render with an (unconfirmed) marker until she
+confirms each one is still live.
 
 # A1 — Arriving
 
