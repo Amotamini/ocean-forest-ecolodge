@@ -1,4 +1,14 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-05
+
+All 8 acceptance checks passed, verified in a browser by the build thread on 2026-08-05.
+One reconciliation was needed where the spec conflicts with itself: the source copy quoted in
+Section 3 carries em dashes, en dashes and non-breaking hyphens, but check 8 forbids em/en dashes
+on this page (the V2 house rule). Words are reproduced verbatim; only dash characters were
+normalized (em/en dash to a comma or period, non-breaking hyphen to a plain hyphen). This also
+removed the em dash from the shared tours photo-placeholder caption ("Name - photo 1 of 4"),
+a one-character fix in shared-sections.js that improves index.html and retreats.html identically.
+White Hawk and Rio Claro both carry the White Hawk body (org-copy line 337), identical to each
+other per check 5, reproducing the source-site duplication rather than fixing it.
 
 # A3 — Experiences
 

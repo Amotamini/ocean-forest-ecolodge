@@ -9,7 +9,57 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="shell.css">
 <style>
-  /* Experiences — page-specific rules go here. Empty until this page's own build spec. */
+  /* Experiences — page-specific rules, per specs/of-v2-experiences.md.
+     The Rainforest / Ocean Discovery tabs are the shared component (.sh-*,
+     from ../shared-sections.js). Everything below is the page's own copy:
+     the section-break line and the eight-bar Complementary Activities pattern.
+     Prefix ea- so nothing collides with the shared sh- classes. */
+
+  /* ── SECTION-BREAK LINE ─────────────────────────────────────────────────
+     "Where the silence of the jungle speaks loudest" — kept from .com,
+     placed between the tabs and Complementary Activities. */
+  .ea-break { text-align: center; }
+  .ea-break-line {
+    font-family: var(--serif); font-style: italic; font-weight: 300;
+    font-size: clamp(1.6rem, 3.6vw, 2.6rem); color: var(--white);
+    margin: 0 auto; max-width: 20ch; line-height: 1.2;
+  }
+  .ea-break-sub {
+    color: var(--dim); font-weight: 300; font-size: 1rem;
+    max-width: 48ch; margin: 20px auto 0; line-height: 1.7;
+  }
+
+  /* ── COMPLEMENTARY ACTIVITIES — eight expandable bars ──────────────────
+     Same accordion language as the shared tours/arrival accordions, opening
+     in place. No booking link on any bar; the open state carries the plain
+     "book on arrival" note instead. */
+  .ea-bars {
+    border-top: 1px solid var(--hairline); margin-top: 34px; max-width: 840px;
+  }
+  .ea-bar { border-bottom: 1px solid var(--hairline); }
+  .ea-bar-head {
+    width: 100%; background: none; border: 0; color: var(--mist);
+    display: flex; align-items: center; gap: 16px; padding: 24px 4px;
+    cursor: pointer; text-align: left;
+  }
+  .ea-bar-name {
+    font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
+    flex: 1; margin: 0; color: var(--white);
+  }
+  .ea-arrow {
+    transition: transform 0.25s; color: var(--dim); flex-shrink: 0; font-size: 1.3rem;
+  }
+  .ea-bar[data-open="true"] .ea-arrow { transform: rotate(90deg); }
+  .ea-bar-body {
+    display: none; padding: 0 4px 26px; color: var(--dim); font-size: 0.94rem;
+    max-width: 740px; font-weight: 300; line-height: 1.8;
+  }
+  .ea-bar[data-open="true"] .ea-bar-body { display: block; }
+  .ea-bar-body p { margin: 0 0 14px; }
+  .ea-bar-note {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
+    color: var(--teal-light); margin: 0;
+  }
 </style>
 </head>
 <body>
@@ -42,16 +92,138 @@
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="wrap">
-      <p class="eyebrow">[eyebrow]</p>
-      <h1>[headline]</h1>
-      <p class="hero-sub">[sub-line]</p>
+      <p class="eyebrow">Tours &amp; Adventures</p>
+      <h1>Where the Silence of the Jungle Speaks Loudest</h1>
+      <p class="hero-sub">Rainforest trails, ocean crossings, and everything in between. Every tour departs from the lodge.</p>
     </div>
   </div>
 </div>
 
 <main id="main">
 
-  <!-- Page content for Experiences goes here — see this page's own build spec. -->
+  <!-- Rainforest Discovery + Ocean Discovery — the shared tabs component.
+       Same mount as index.html; White Hawk and Rio Claro now live in
+       TOURS.forest in ../shared-sections.js. -->
+  <section id="tours">
+    <div class="wrap">
+      <div data-shared="tours"></div>
+    </div>
+  </section>
+
+  <!-- Section-break line, kept from .com, between the tabs and Complementary Activities -->
+  <section id="break">
+    <div class="wrap">
+      <div class="ea-break reveal">
+        <p class="ea-break-line">Where the silence of the jungle speaks loudest</p>
+        <p class="ea-break-sub">The mystery of the jungle awaits you. Check availability and reserve your place on this intimate expedition.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complementary Activities — eight expandable bars, book on arrival -->
+  <section id="complementary">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Complementary Activities</span>
+        <h2>Activities that <span class="grad-text">awaken the wild soul</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <p class="lead reveal">Immerse yourself in the Osa Peninsula, the most biodiverse place on Earth. From the ancient wisdom of the Botanical Garden to the nighttime magic of our Night Tour, every experience is a portal to pure nature. Discover hidden waterfalls, ride horses along pristine beaches, and witness the mesmerizing flight of bats.</p>
+      <p class="lead reveal" style="margin-top: 14px;">Your epic adventure in the heart of Costa Rica begins here.</p>
+
+      <div class="ea-bars reveal">
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Botanical Garden</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Discover our Ethnobotanical Walk, a self-guided journey through Ocean Forest Ecolodge's living classroom of permaculture and rainforest wisdom. Wander lush gardens brimming with rare ancestral plants, learning their medicinal, edible, and sacred uses through captivating stories, myths, and hands-on tasting and preparation. Engage your senses as you smell, touch, and sip herbal infusions, exploring a vibrant collection that also nourishes our kitchen. Reconnect with the profound healing wisdom of the jungle and let nature be your ultimate teacher.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Bat Cave</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Set out from Ocean Forest Ecolodge on a coastal walk to our “Bat Cave”, where, at dusk, thousands of bats stream into the sky, a mesmerizing natural spectacle. Wander past tide pools and coral reefs at low tide, with sweeping views of the rainforest-cloaked peninsula and Caño Island shimmering offshore. Return along the beach as the sun sets and ocean breezes wash over you. Simple, wild, unforgettable. Add the Bat Cave walk to your must-do Osa adventures.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">River Walk</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Follow a wild, breathtaking coastline from Ocean Forest Ecolodge to Río Claro, a jade-green river bordered by towering trees and a pristine beach just 45 minutes away. Pause at the dramatic Blow Hole, then swim in crystal pools, unwind on golden sand, or float in the river's fresh, clear water. Join a gentle canoe or boat ride to explore the jungle-lined river, spot birds and monkeys, and discover hidden waterfalls, perfect for photos and a picnic. Ideal for families with children, Río Claro is pure paradise and an unmissable day adventure.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Drake Bay Walking</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Embark on a breathtaking 3-hour coastal walk from Ocean Forest Ecolodge to the charming town of Drake Bay, an unforgettable journey through rainforest-cloaked cliffs, hidden coves, and more than ten pristine beaches along the South Pacific coast. Stop for a refreshing swim in Río Claro or a rest under palm shade before reaching Drake Bay, where local cafés, shops, and friendly smiles await. Enjoy lunch and a tropical fruit juice, then return by 4x4 taxi or by boat along the scenic shoreline. A true adventure for nature lovers, this is the most beautiful way to experience the wild soul of the Osa Peninsula.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Horse Riding</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Saddle up for our Half-Day Horseback Adventure, an unforgettable way to experience the wild beauty surrounding Corcovado National Park. Guided by expert local horsemen and matched with well-trained horses, riders of all levels follow scenic coastal trails, venture along Río Claro's jungle paths, and traverse countryside vistas with chances to spot birds, monkeys, and lush rainforest life. Pause for a refreshing swim in a crystal-clear river before a picturesque return to the lodge.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Night Tour</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Step into the rainforest after dark on our Night Tour, an enchanting two-hour adventure where the jungle comes alive. Follow our naturalist guide along the beach, then slip beneath the canopy to seek glass frogs, colorful tree frogs, curious reptiles, and nocturnal insects as the forest sings around you. Guided, safe, and unforgettable, this immersive experience reveals Corcovado's magic in a whole new light. Book your Night Tour with Ocean Forest Ecolodge and meet the jungle at its most mysterious.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Sierpe Mangrove Tour</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Discover the hidden paradise of the Sierpe River mangroves, Central America's largest and most pristine mangrove system, with our trusted local tour operators. This 3-hour guided boat excursion takes you through a breathtaking ecosystem teeming with wildlife. Spot three species of monkeys, sloths, crocodiles, caimans, and over 150 bird species, including scarlet macaws. Our expert bilingual guides know every secret spot, ensuring incredible viewing and photo opportunities from our comfortable, shaded vessel. Ideal for all ages, this tour offers a serene yet exhilarating look into one of Costa Rica's most vital and beautiful natural wonders, a must-do experience from Ocean Forest Ecolodge.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+        <div class="ea-bar" data-open="false">
+          <button class="ea-bar-head" type="button" aria-expanded="false">
+            <span class="ea-bar-name">Waterfall Hiking</span>
+            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
+          </button>
+          <div class="ea-bar-body">
+            <p>Discover two hidden gems, Goddess Jacuzzi and Cocoterra Waterfall, on a guided rainforest adventure from Ocean Forest Ecolodge. Travel by 4x4 to the trailhead, then hike through towering primary forest to crystal pools and cascading falls perfect for a refreshing swim; at Río Claro's headwaters, natural “jacuzzis” bubble over smooth rock, and adventurous guests can leap into deep swimming holes. Each waterfall is a separate day trip; our team provides round-trip transport arrangements and a picnic by the pools. Ask our staff for details and let us plan your unforgettable waterfall escape.</p>
+            <p class="ea-bar-note">Book this one with us when you arrive.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <section id="gallery">
     <div class="wrap">
@@ -112,5 +284,23 @@
 </footer>
 
 <script src="shell.js"></script>
+<script src="shared-sections.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── COMPLEMENTARY ACTIVITIES — expandable bars ─────────────────────────
+     Each bar opens in place. Many may be open at once (the spec leaves
+     exclusivity to the implementer; it only requires "opens in place"). */
+  document.querySelectorAll('.ea-bar-head').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var bar = btn.parentElement;
+      var open = bar.getAttribute('data-open') === 'true';
+      bar.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+})();
+</script>
 </body>
 </html>
