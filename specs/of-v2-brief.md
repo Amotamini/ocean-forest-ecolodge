@@ -295,3 +295,23 @@ open from the Finder and look at.** No deploy, no dev server, no localhost requi
 the work. This is a hard requirement on every A spec's build prompt, not a nicety.
 
 The pattern already exists in this repo: `design-preview.html`.
+
+---
+
+## 13. What each spec is most likely to get wrong
+
+The thread that wrote the six specs on 2026-08-04 named the single riskiest thing in each one.
+Recorded here because it lived only in a terminal, and because every item is a thing a builder
+would get wrong by being sensible rather than by being careless.
+
+| Spec | The trap |
+|---|---|
+| `of-v2-shell.md` | The hero-slot fallback chain, mp4 then jpg then placeholder, has no precedent in this codebase. Easy to under-build into a plain image swap and quietly lose the video path, which is the whole reason the slot exists. |
+| `of-v2-arriving.md` | "No map until a route is picked" is the one genuinely novel piece of interaction in the project. Easy to fall back to showing all the maps at once, which is exactly the behaviour section 4 exists to stop. |
+| `of-v2-lodging.md` | `property-map.webp` is a **real asset, not a placeholder.** A builder pattern-matching on "everything here is a placeholder" will wrap it in the missing-photo frame. |
+| `of-v2-experiences.md` | The White Hawk / Rio Claro duplicated copy is to be **reproduced, not fixed.** A careful builder's instinct is to tidy it. The spec forbids that. |
+| `of-v2-retreats.md` | **It was written without reading `retreats.html`.** That file was left out of the spec thread's reading list by mistake, not on purpose. The contract may be thinner than the page needs. Amend this spec before building A4. |
+| `of-v2-about.md` | The founding year conflicts between sources, 2003 against 2002. The spec says use 2003 and flag it rather than silently choosing. Easy to skip under time pressure. Eli settles it. |
+
+The `of-v2-retreats.md` gap is the only one that is a real defect rather than a warning. A4 is last
+in the build order, so there is time, but it must not be built from that spec as written.
