@@ -1,4 +1,12 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-05
+
+All 8 acceptance checks passed, verified in a browser by the build thread on 2026-08-05.
+Founding-year conflict flagged, not resolved (see the build report and Decisions above): the
+page uses 2003, the source material also implies a 2002 opening via an "18 years ago" line in a
+2020-dated post. Two link forms differ from the literal Contract wording and were reconciled to
+the shell's established, Finder-working convention rather than deploy-time routes: the Tours FAQ
+links to `experiences.html` (spec said `/experiences`), and the Jonathon and Blog links point to
+`../blog.html`, matching every other v2 page's footer (spec said `/blog`).
 
 # A5 — About
 
