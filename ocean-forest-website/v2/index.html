@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ocean Forest Ecolodge · Beachfront rainforest lodge on the Osa Peninsula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  /* Home (index.html) — page-specific rules only, per specs/of-v2-home.md §3.
+     shell.css already provides the palette, header/nav, hero slot, .eyebrow, h1,
+     .hero-sub, sections, .sec-head, .grad-text/.grad-bar, .lead, .ph/[data-media],
+     .cta, .gal, footer, .reveal and focus/hidden. Everything below is the home's
+     own teaser furniture: the "Watch the full film" control, the path boxes, the
+     room-card grid with its hover-swap/expand, the three visual blocks, the
+     reviews slot, and the newsletter field. */
+
+  /* section.alt is not defined in shell.css; the sibling pages add this one
+     rule for alternating backgrounds. Matched here. */
+  section.alt { background: var(--ink-2); }
+
+  /* ── HERO: "Watch the full film" control ─────────────────────────────────
+     A real, keyboard-reachable link that opens the full film on YouTube in a
+     new tab. It is NOT the autoplaying background itself, so it can be tabbed
+     to. The 30-second cut plays muted-loop behind it (shell.js hero slot). */
+  .hm-film {
+    display: inline-flex; align-items: center; gap: 11px; margin-top: 26px;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--white); text-decoration: none;
+    border: 1px solid rgba(232, 237, 228, 0.4); border-radius: 26px;
+    padding: 12px 22px; transition: border-color 0.2s, background 0.2s;
+    background: rgba(14, 19, 16, 0.28);
+  }
+  .hm-film:hover, .hm-film:focus-visible { border-color: var(--teal); background: rgba(14, 19, 16, 0.5); }
+  .hm-film svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+  /* ── PATH BOXES — "I want to stay" / "I want to lead a retreat" ─────────── */
+  .hm-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  @media (max-width: 720px) { .hm-paths { grid-template-columns: 1fr; } }
+  .hm-path {
+    display: block; text-decoration: none; border: 1px solid var(--hairline);
+    border-radius: 10px; padding: 34px 32px; background: var(--ink-2);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .hm-path:hover, .hm-path:focus-visible { border-color: var(--teal); transform: translateY(-3px); }
+  .hm-path .hm-path-eyebrow {
+    font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--teal-light); display: block; margin-bottom: 14px;
+  }
+  .hm-path h3 { font-family: var(--serif); font-weight: 300; font-size: 1.9rem; color: var(--white); line-height: 1.15; margin: 0 0 12px; }
+  .hm-path p { color: var(--dim); font-size: 0.98rem; font-weight: 300; margin: 0; }
+  .hm-path .hm-path-go {
+    display: inline-block; margin-top: 20px; font-family: var(--mono);
+    font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white);
+  }
+  .hm-path .hm-path-go::after { content: ' \203A'; }
+
+  /* ── ROOM CARDS — photo-led, hover swaps the photo and expands the detail ─ */
+  .hm-rooms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 8px; }
+  @media (max-width: 900px) { .hm-rooms { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } }
+  .hm-room {
+    display: block; text-decoration: none; border: 1px solid var(--hairline);
+    border-radius: 10px; overflow: hidden; background: var(--ink-2);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .hm-room:hover, .hm-room:focus-visible { border-color: var(--teal); transform: translateY(-3px); }
+  /* Two stacked shots; the second fades in on hover/focus. Missing files show
+     the shell's labelled placeholder in each host, exactly as on Lodging. */
+  .hm-room-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--ink-3); }
+  .hm-shot { position: absolute; inset: 0; transition: opacity 0.4s ease; }
+  .hm-shot-b { opacity: 0; }
+  .hm-room.is-open .hm-shot-b { opacity: 1; }
+  .hm-shot .ph { border-radius: 0; }
+  .hm-room-body { padding: 22px 22px 24px; }
+  .hm-room-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .hm-room-top h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; color: var(--white); margin: 0; }
+  .hm-room-price { font-family: var(--serif); font-size: 1.02rem; color: var(--white); white-space: nowrap; }
+  .hm-room-price b { font-weight: 600; }
+  .hm-room-meta {
+    display: block; margin-top: 8px; font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light);
+  }
+  /* The short detail expands in place on hover/focus. */
+  .hm-room-detail {
+    color: var(--dim); font-size: 0.92rem; font-weight: 300; line-height: 1.7;
+    max-height: 0; opacity: 0; overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    margin-top: 0;
+  }
+  .hm-room.is-open .hm-room-detail { max-height: 160px; opacity: 1; margin-top: 14px; }
+  .hm-room-more {
+    display: inline-block; margin-top: 16px; font-family: var(--mono);
+    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white);
+  }
+  .hm-room-more::after { content: ' \203A'; }
+
+  /* ── THREE VISUAL BLOCKS — Food, Tours, Retreats ─────────────────────────
+     Photo-led, one paragraph, alternating the photo side. */
+  .hm-block { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .hm-block + .hm-block { margin-top: 60px; }
+  @media (max-width: 820px) { .hm-block { grid-template-columns: 1fr; gap: 26px; } }
+  .hm-block.flip .hm-block-media { order: 2; }
+  @media (max-width: 820px) { .hm-block.flip .hm-block-media { order: 0; } }
+  .hm-block-media [data-media] { border-radius: 8px; }
+  .hm-block-body h3 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.8rem, 3.4vw, 2.5rem); color: var(--white); line-height: 1.12; margin: 0 0 8px; }
+  .hm-block-quote { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--white); line-height: 1.5; margin: 0 0 18px; }
+  .hm-block-body p.hm-block-copy { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.8; margin: 0 0 22px; }
+
+  /* ── REVIEWS — honest labelled slot, no invented quotes ─────────────────── */
+  .hm-reviews-slot {
+    border: 1px dashed rgba(42, 173, 168, 0.55); border-radius: 10px;
+    background: repeating-linear-gradient(45deg, rgba(42,173,168,0.05) 0 12px, rgba(42,173,168,0.09) 12px 24px);
+    padding: 54px 32px; text-align: center; margin-top: 8px;
+  }
+  body.light .hm-reviews-slot {
+    border-color: rgba(22, 112, 126, 0.5);
+    background: repeating-linear-gradient(45deg, rgba(22,112,126,0.05) 0 12px, rgba(22,112,126,0.1) 12px 24px);
+  }
+  .hm-reviews-label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); }
+  .hm-reviews-note { margin-top: 12px; color: var(--dim); font-size: 0.94rem; font-weight: 300; max-width: 44ch; margin-left: auto; margin-right: auto; }
+
+  /* ── NEWSLETTER — real field + button, submission target not yet wired ──── */
+  .hm-news { max-width: 640px; }
+  .hm-news p.hm-news-line { color: var(--dim); font-size: 1rem; font-weight: 300; margin: 0 0 22px; }
+  .hm-news-form { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hm-news-input {
+    flex: 1; min-width: 220px; background: var(--ink-2); border: 1px solid var(--hairline);
+    border-radius: 26px; padding: 13px 22px; color: var(--mist);
+    font-family: var(--sans); font-size: 0.95rem;
+  }
+  .hm-news-input::placeholder { color: var(--dim); }
+  .hm-news-input:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-color: var(--teal); }
+  .hm-news-btn {
+    background: var(--gradient-ocean-lime); color: #0b1210; border: 0; cursor: pointer;
+    font-family: var(--mono); font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 13px 26px; border-radius: 26px;
+  }
+  .hm-news-btn:hover { filter: brightness(1.08); }
+  .hm-news-msg { margin-top: 14px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--teal-light); }
+  .hm-news-msg[hidden] { display: none; }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to the lodge</a>
+
+<header class="site-head" id="siteHead">
+  <a href="index.html" class="nav-logo">
+    <img class="logo-dark" src="../images/logo-white.png" alt="Ocean Forest Ecolodge">
+    <img class="logo-light" src="../images/logo-color.png" alt="" aria-hidden="true">
+  </a>
+  <nav class="nav-menu" id="navMenu" aria-label="Main">
+    <a href="arriving.html">Arriving</a>
+    <a href="lodging.html">Lodging</a>
+    <a href="experiences.html">Experiences</a>
+    <a href="retreats.html">Retreats</a>
+    <a href="about.html">About</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark" title="Light / dark">☾</button>
+    <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="hero" id="hero">
+  <div class="hero-media" data-hero-slug="home"></div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="wrap">
+      <p class="eyebrow">Ocean Forest Ecolodge</p>
+      <h1>Your beachfront ecolodge at the edge of Corcovado National Park.</h1>
+      <p class="hero-sub">The most biodiverse place on Earth. No roads. No crowds. Just jungle.</p>
+      <!-- Watch the full film: the YouTube URL is a content slot (of-v2-home.md §6,
+           Ryan / Eli). Replace VIDEO_ID_TO_COME with the real full-film link. The
+           control below already works as a keyboard-reachable new-tab link. -->
+      <a class="hm-film" href="https://www.youtube.com/watch?v=VIDEO_ID_TO_COME" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke-linejoin="round"/></svg>
+        Watch the full film
+      </a>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ══ PATH BOXES — two doors, less text than V1 ═══════════════════════════ -->
+  <section id="paths">
+    <div class="wrap">
+      <div class="hm-paths reveal">
+        <a class="hm-path" href="lodging.html">
+          <span class="hm-path-eyebrow">I want to stay</span>
+          <h3>Ten rooms on a remote mile of beach.</h3>
+          <p>Choose how you travel. Beach bungalows, jungle suites, and family bungalows, all steps from the Pacific.</p>
+          <span class="hm-path-go">See the rooms</span>
+        </a>
+        <a class="hm-path" href="retreats.html">
+          <span class="hm-path-eyebrow">I want to lead a retreat</span>
+          <h3>You bring your program. We handle everything else.</h3>
+          <p>Exclusive use for groups up to 32, a beachfront yoga shala, and a team that runs the logistics.</p>
+          <span class="hm-path-go">Plan a retreat</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THREE ROOM CARDS — Lodging's categories, order, names, prices ═══════
+       Photo-led. Hover (or focus) swaps to a second shot and expands a short
+       detail. The whole card links to lodging.html for the full room. Photos
+       are [data-media] hosts; missing files show the labelled placeholder. -->
+  <section id="rooms" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The Rooms</span>
+        <h2>Ten rooms, <span class="grad-text">one remote mile of beach</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Three ways to stay, all rustic and private, all steps from the Pacific. Hover a room to look closer, then open Lodging for the full story.</p>
+      </div>
+
+      <div class="hm-rooms reveal">
+
+        <a class="hm-room" href="lodging.html" data-room="beach">
+          <div class="hm-room-media">
+            <div class="hm-shot hm-shot-a" data-media="lodging/beach-bungalow-01.jpg" data-ratio="4/3" data-note="Beach Bungalows"></div>
+            <div class="hm-shot hm-shot-b" data-media="lodging/beach-bungalow-02.jpg" data-ratio="4/3" data-note="Beach Bungalows, second shot"></div>
+          </div>
+          <div class="hm-room-body">
+            <div class="hm-room-top">
+              <h3>Beach Bungalows</h3>
+              <span class="hm-room-price">From <b>$120</b> / night</span>
+            </div>
+            <span class="hm-room-meta">Ideal for couples</span>
+            <p class="hm-room-detail">Steps from the Pacific. A double bed, a hammock, and the jungle right outside your window.</p>
+            <span class="hm-room-more">View room</span>
+          </div>
+        </a>
+
+        <a class="hm-room" href="lodging.html" data-room="jungle">
+          <div class="hm-room-media">
+            <div class="hm-shot hm-shot-a" data-media="lodging/jungle-suite-01.jpg" data-ratio="4/3" data-note="Jungle Suites"></div>
+            <div class="hm-shot hm-shot-b" data-media="lodging/jungle-suite-02.jpg" data-ratio="4/3" data-note="Jungle Suites, second shot"></div>
+          </div>
+          <div class="hm-room-body">
+            <div class="hm-room-top">
+              <h3>Jungle Suites</h3>
+              <span class="hm-room-price">From <b>$140</b> / night</span>
+            </div>
+            <span class="hm-room-meta">Ideal for families of three</span>
+            <p class="hm-room-detail">Forest views, partial ocean glimpses, and space to breathe. The monkeys visit, the birds arrive early.</p>
+            <span class="hm-room-more">View room</span>
+          </div>
+        </a>
+
+        <a class="hm-room" href="lodging.html" data-room="family">
+          <div class="hm-room-media">
+            <div class="hm-shot hm-shot-a" data-media="lodging/family-bungalow-01.jpg" data-ratio="4/3" data-note="Family Bungalows"></div>
+            <div class="hm-shot hm-shot-b" data-media="lodging/family-bungalow-02.jpg" data-ratio="4/3" data-note="Family Bungalows, second shot"></div>
+          </div>
+          <div class="hm-room-body">
+            <div class="hm-room-top">
+              <h3>Family Bungalows</h3>
+              <span class="hm-room-price">From <b>$150</b> / night</span>
+            </div>
+            <span class="hm-room-meta">Ideal for families up to 4 guests</span>
+            <p class="hm-room-detail">A double bed, two singles, a terrace, and room for everyone to spread out.</p>
+            <span class="hm-room-more">View room</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ THREE VISUAL BLOCKS — Food, Tours, Retreats ════════════════════════
+       Each is a one-paragraph tease shortened from its page and links to it. -->
+  <section id="teasers">
+    <div class="wrap">
+
+      <!-- Food → lodging.html#food -->
+      <div class="hm-block reveal">
+        <div class="hm-block-media">
+          <div data-media="property/kitchen-table.jpg" data-ratio="4/3" data-note="Open-air dining room, long table"></div>
+        </div>
+        <div class="hm-block-body">
+          <span class="eyebrow">Wholesome Cuisine</span>
+          <h3>Nourishing the soul</h3>
+          <p class="hm-block-copy">Three meals a day, made from what the garden and the sea offer that morning. No menus, every meal changes with the tides and the season. Allergies and special diets are accommodated with 48 hours&rsquo; notice.</p>
+          <a class="cta ghost" href="lodging.html#food">See the food</a>
+        </div>
+      </div>
+
+      <!-- Tours → experiences.html -->
+      <div class="hm-block flip reveal">
+        <div class="hm-block-media">
+          <div data-media="experiences/tours-teaser.jpg" data-ratio="4/3" data-note="Rainforest and ocean tours"></div>
+        </div>
+        <div class="hm-block-body">
+          <span class="eyebrow">Tours and Adventures</span>
+          <p class="hm-block-quote">Where the silence of the jungle speaks loudest.</p>
+          <p class="hm-block-copy">Rainforest Discovery, Ocean Discovery, and eight complementary activities, from waterfall hikes to the Sierpe mangroves. Every tour departs from the lodge.</p>
+          <a class="cta ghost" href="experiences.html">See the tours</a>
+        </div>
+      </div>
+
+      <!-- Retreats → retreats.html -->
+      <div class="hm-block reveal">
+        <div class="hm-block-media">
+          <div data-media="retreats/retreat-teaser.jpg" data-ratio="4/3" data-note="Beachfront yoga shala"></div>
+        </div>
+        <div class="hm-block-body">
+          <span class="eyebrow">Retreats</span>
+          <h3>Everything covered. Nothing to manage.</h3>
+          <p class="hm-block-copy">Exclusive use for groups up to 32, a 46-foot three-level yoga shala on the beach, and three meals a day. You bring your program, we handle the rest.</p>
+          <a class="cta ghost" href="retreats.html">Lead a retreat</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ REVIEWS — honest "to come" slot, no invented quotes ═════════════════ -->
+  <section id="reviews" class="alt">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Guests</span>
+        <h2>What guests <span class="grad-text">say</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <div class="hm-reviews-slot reveal">
+        <p class="hm-reviews-label">Guest reviews to come</p>
+        <p class="hm-reviews-note">Testimonials from Eli will land here. Nothing is quoted until it is real.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ NEWSLETTER — real field, submission target not yet wired ════════════ -->
+  <section id="newsletter">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Stay in touch</span>
+        <h2>News from <span class="grad-text">the lodge</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <div class="hm-news reveal">
+        <p class="hm-news-line">A few times a year, when there is something worth telling. No noise.</p>
+        <!-- TODO: newsletter submission target is undecided (of-v2-home.md §6).
+             The form is intentionally NOT wired to any endpoint. The inline
+             script below blocks submission so nobody is silently subscribed. -->
+        <form class="hm-news-form" id="hmNews" action="#newsletter-endpoint-TODO" method="post" novalidate>
+          <label class="skip" for="hmNewsEmail">Email address</label>
+          <input class="hm-news-input" id="hmNewsEmail" type="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <button class="hm-news-btn" type="submit">Sign up</button>
+        </form>
+        <p class="hm-news-msg" id="hmNewsMsg" role="status" hidden>Signup is not connected yet. Nobody was subscribed. This form is a placeholder awaiting its mailing-list endpoint.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ GALLERY — A0 section, offset 20 (a slice none of the five pages show) ═ -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Gallery</span>
+        <h2>The place, <span class="grad-text">as it is</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <div class="gal reveal" data-gallery-offset="20"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-bar" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Ocean Forest Ecolodge</div>
+        <p>Playa Rincón de San Josecito · Drake Bay · Osa Peninsula · Costa Rica<br>Six kilometers from Corcovado National Park</p>
+        <a class="foot-map" href="https://www.google.com/maps/dir/?api=1&amp;destination=8.6957%2C-83.675" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>
+          How to get there
+        </a>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="arriving.html">Arriving</a></li>
+          <li><a href="lodging.html">Lodging</a></li>
+          <li><a href="experiences.html">Experiences</a></li>
+          <li><a href="retreats.html">Retreats</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Blog</h3>
+        <ul>
+          <li><a href="../blog.html">From the lodge</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Book your stay</h3>
+        <ul>
+          <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>
+          <li><a href="https://www.instagram.com/ocean_forest_ecolodge" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ocean Forest Ecolodge · Drake Bay, Osa Peninsula, Costa Rica</span>
+      <span>Crafted by <a href="https://pxnproductions.com" rel="noopener">PxN Productions</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="shell.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── ROOM CARDS — hover-swap the photo and expand the detail in place ─────
+     The visual state is one class, .is-open, toggled on pointer and focus.
+     CSS does the actual swap and expand; this only decides when. Pointer
+     covers mouse hover; focusin/focusout covers keyboard so a tabbed-to card
+     opens too. The card itself is a link to lodging.html, unchanged. */
+  var cards = document.querySelectorAll('.hm-room');
+  cards.forEach(function (card) {
+    function open()  { card.classList.add('is-open'); }
+    function close() { card.classList.remove('is-open'); }
+    card.addEventListener('mouseenter', open);
+    card.addEventListener('mouseleave', close);
+    card.addEventListener('focusin', open);
+    card.addEventListener('focusout', close);
+  });
+
+  /* ── NEWSLETTER — inert on purpose ────────────────────────────────────────
+     No endpoint is decided yet (of-v2-home.md §6). Block the submit so the
+     field never silently pretends to subscribe anyone, and say so plainly. */
+  var form = document.getElementById('hmNews');
+  var msg  = document.getElementById('hmNewsMsg');
+  if (form && msg) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      msg.hidden = false;
+    });
+  }
+})();
+</script>
+</body>
+</html>

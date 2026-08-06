@@ -1,4 +1,11 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-06
+
+Built as `ocean-forest-website/v2/index.html`. All 8 acceptance checks pass, verified on
+2026-08-06: DOM, copy and paths checked programmatically in a browser against the five source pages.
+No tease disagreed with its page, so no home-to-page fixes were needed. Every teasable string
+(room names, prices and meta, the food framing, the tour groups, the two retreats lines) was lifted
+from the built pages, not re-authored. V1's `ocean-forest-website/index.html` is untouched (last
+modified 2026-08-03) and nothing above `v2/` was created, edited or moved.
 
 # A6 — Home
 
