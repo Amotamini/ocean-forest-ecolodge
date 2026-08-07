@@ -214,6 +214,15 @@ h1 em { font-style: italic; color: #bfe6d8; }
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .hero-media .ph { position: absolute; inset: 0; border-radius: 0; min-height: 100%; }
+.hero-media iframe {
+  position: absolute; top: 50%; left: 50%; border: 0; pointer-events: none;
+  width: 100vw; height: 56.25vw; min-width: 177.78vh; min-height: 100vh;
+  transform: translate(-50%, -50%);
+}
+.hero-media-still {
+  position: absolute; inset: 0;
+  background: url('../media/hero/hero-wide.jpg') center/cover no-repeat;
+}
 
 /* ── SECTIONS ───────────────────────────────────────────────────────────── */
 main { position: relative; z-index: 2; background: var(--ink); }

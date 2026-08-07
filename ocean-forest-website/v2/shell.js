@@ -7,12 +7,12 @@
    ========================================================================== */
 
 var GALLERY = [
-  'gallery-01.jpg', 'gallery-02.jpg', 'gallery-03.jpg', 'gallery-04.jpg',
-  'gallery-05.jpg', 'gallery-06.jpg', 'gallery-07.jpg', 'gallery-08.jpg',
-  'gallery-09.jpg', 'gallery-10.jpg', 'gallery-11.jpg', 'gallery-12.jpg',
-  'gallery-13.jpg', 'gallery-14.jpg', 'gallery-15.jpg', 'gallery-16.jpg',
-  'gallery-17.jpg', 'gallery-18.jpg', 'gallery-19.jpg', 'gallery-20.jpg',
-  'gallery-21.jpg', 'gallery-22.jpg', 'gallery-23.jpg', 'gallery-24.jpg'
+  'gallery/gallery-01.jpg', 'gallery/gallery-02.jpg', 'gallery/gallery-03.jpg', 'gallery/gallery-04.jpg',
+  'gallery/gallery-05.jpg', 'gallery/gallery-06.jpg', 'gallery/gallery-07.jpg', 'gallery/gallery-08.jpg',
+  'gallery/gallery-09.webp', 'gallery/gallery-10.webp', 'gallery/gallery-11.webp', 'gallery/gallery-12.webp',
+  'gallery/gallery-13.webp', 'gallery/gallery-14.webp', 'gallery/gallery-15.webp', 'gallery/gallery-16.webp',
+  'gallery/gallery-17.webp', 'gallery/gallery-18.webp', 'gallery/gallery-19.webp', 'gallery/gallery-20.webp',
+  'gallery/gallery-21.webp', 'gallery/gallery-22.webp'
 ];
 
 (function () {
@@ -111,61 +111,36 @@ var GALLERY = [
     img.src = '../media/' + file;
   });
 
-  /* ── HERO SLOT LOADER ────────────────────────────────────────────────────
-     Tries a video, then a still, then falls back to the standard placeholder,
-     full-bleed, inside the .hero-media host.                               */
+  /* ── HERO VIDEO ──────────────────────────────────────────────────────────
+     Same YouTube embed V1 uses, on all six pages, until Ryan's per-page cuts
+     exist. One constant here is the seam: a page gets its own cut by adding
+     one entry to HERO_OVERRIDES, nothing else changes.                      */
+  var HERO_YOUTUBE_ID = 'AjqtTXfJbeg';
+  var HERO_OVERRIDES = {}; // slug -> youtube id, filled in as Ryan delivers per-page cuts
+
   var heroMedia = document.querySelector('.hero-media');
   if (heroMedia) {
     var slug = heroMedia.getAttribute('data-hero-slug');
-    var videoSrc = '../media/hero/' + slug + '.mp4';
-    var stillSrc = '../media/hero/' + slug + '.jpg';
+    var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function showHeroPlaceholder() {
-      heroMedia.innerHTML = '';
-      var d = document.createElement('div');
-      d.className = 'ph';
-      d.innerHTML =
-        '<span class="ph-label">Hero video or still to come</span>' +
-        '<span class="ph-file">media/hero/' + slug + '.mp4 or .jpg</span>';
-      heroMedia.appendChild(d);
+    if (reducedMotion) {
+      var still = document.createElement('div');
+      still.className = 'hero-media-still';
+      heroMedia.appendChild(still);
+    } else {
+      var youtubeId = HERO_OVERRIDES[slug] || HERO_YOUTUBE_ID;
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + youtubeId +
+        '?autoplay=1&mute=1&loop=1&playlist=' + youtubeId +
+        '&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&disablekb=1&fs=0&start=2';
+      iframe.title = 'Ocean Forest Ecolodge from the air';
+      iframe.loading = 'lazy';
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture');
+      iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+      iframe.tabIndex = -1;
+      heroMedia.appendChild(iframe);
     }
-
-    function tryStill() {
-      var img = new Image();
-      img.onload = function () {
-        heroMedia.innerHTML = '';
-        img.alt = '';
-        heroMedia.appendChild(img);
-      };
-      img.onerror = showHeroPlaceholder;
-      img.src = stillSrc;
-    }
-
-    (function tryVideo() {
-      /* A <video> probe rather than an XHR HEAD request — this has to work
-         opened straight from Finder over file://, where XHR to local files
-         is blocked by CORS. A video element's error event is the right
-         signal, but some servers return a 404 body that never triggers it
-         (readyState stays HAVE_NOTHING with no error), so a short timeout
-         is the fallback that guarantees the placeholder still appears. */
-      var video = document.createElement('video');
-      video.autoplay = true; video.muted = true; video.loop = true; video.playsInline = true;
-      var settled = false;
-      function fallToStill() {
-        if (settled) return;
-        settled = true;
-        tryStill();
-      }
-      video.addEventListener('error', fallToStill);
-      video.addEventListener('loadeddata', function () {
-        if (settled) return;
-        settled = true;
-        heroMedia.innerHTML = '';
-        heroMedia.appendChild(video);
-      });
-      video.src = videoSrc;
-      setTimeout(fallToStill, 1500);
-    })();
   }
 
   /* ── GALLERY ROTATION ────────────────────────────────────────────────────
@@ -178,7 +153,7 @@ var GALLERY = [
     for (var i = 0; i < 8; i++) {
       var file = GALLERY[(offset + i) % GALLERY.length];
       var slot = document.createElement('div');
-      slot.setAttribute('data-media', 'gallery/' + file);
+      slot.setAttribute('data-media', file);
       slot.setAttribute('data-ratio', '1/1');
       slot.setAttribute('data-note', 'Gallery slot ' + (i + 1));
       galHost.appendChild(slot);
