@@ -52,7 +52,17 @@ pays for a page load to read a paragraph.
 - **Every page opens with a hero slot** that accepts a video or a still. It is built empty and takes Ryan's footage whenever it exists, with no code change. Same labelled-placeholder pattern the codebase already uses.
 - **Gallery sits at the foot of every page**, and rotates.
 - **`stay.html`, `gateway.html` and `retreat-host-kit.html` are not part of V2.** The first two are meta-refresh redirect stubs; the third is a standalone slide deck.
-- **Nothing private goes inside `ocean-forest-website/`.** Everything in that folder becomes a public web address. This brief, the specs and the source copy live one level up, which is why they are here.
+- **Nothing private goes inside `ocean-forest-website/`.** Everything in that folder becomes a public web address. This brief, the specs and the source copy live one level up, which is why they are here. This includes photo originals and staging folders: they go in `photo-originals/` at the repo root, never under `ocean-forest-website/`.
+
+### Standing rules, learned the hard way
+
+Each of these was a real fault that reached the live site or nearly did. They are written here
+because a fix that lives only in a file is a fix the next build thread will quietly undo.
+
+- **`v2/index.html` must use root-absolute paths for every local reference:** `/v2/shell.css`, `/v2/shell.js`, `/v2/lodging.html`, `/images/logo-white.png`. Never relative. `vercel.json` sets `trailingSlash: false`, so the home is served at `/v2` with no slash, and a browser then resolves `shell.css` to `/shell.css`, which does not exist. **The page renders with no stylesheet at all and looks like a 1996 document.** Every other page escapes this by accident because its URL genuinely sits inside `/v2/`. This has now been broken twice: fixed in commit `230189f`, silently reverted by commit `79d9c6f`, fixed again 2026-08-07.
+- **V2 never shares a file with V1.** Anything under `ocean-forest-website/` above the `v2/` folder is live and frozen. V2 has its own `shared-sections.js` for exactly this reason. A V2 build once edited the shared copy and would have changed the live V1 site on the next push.
+- **`media/` is shared by V1 and V2 and is additive only.** Add files. Never rename, move or delete one already there.
+- **Test the deployed URL, not the local file.** All three faults above passed every check a build thread ran, because opening a file from disk resolves relative paths correctly and never touches Vercel's URL rules. The failure only exists on the deployed site.
 
 ---
 
