@@ -41,8 +41,33 @@
 
   /* ── TOURS ──────────────────────────────────────────────────────────────
      5 Ocean Discovery + 6 Rainforest Discovery, in the spec's order.
-     `slug` drives the placeholder filenames: media/tours/<slug>-01.jpg …-04.jpg
+
+     PHOTOGRAPHS (of-v2-revisions.md C16). The slider used to assume four
+     photographs per tour and render four labelled placeholders whether or
+     not the files existed, so every tour showed an empty frame. It is now
+     driven by TOUR_PHOTOS below: the real files the client's own site has,
+     one entry per tour. A tour with one photograph shows one photograph and
+     no dots. Nothing is padded out with a lookalike to fill a frame; a tour
+     with no entry here falls back to the labelled placeholder, which is the
+     honest state, not a bug.
+
+     Every file below was pulled from oceanforestecolodge.com by
+     fetch-v2-experiences-images.sh and is that tour's own named photograph.
      ---------------------------------------------------------------------- */
+
+  var TOUR_PHOTOS = {
+    'cano-island':               ['experiences/tour-cano-island-01.webp'],
+    'scuba-diving-cano-island':  ['experiences/tour-scuba-diving-cano-island-01.webp'],
+    'snorkeling-cano-island':    ['experiences/tour-snorkeling-cano-island-01.webp'],
+    'dolphin-whale-encounters':  ['experiences/tour-dolphin-whale-encounters-01.webp'],
+    'surf-tour-rio-claro':       ['experiences/tour-surf-tour-rio-claro-01.webp'],
+    'corcovado-national-park':   ['experiences/tour-corcovado-national-park-01.webp'],
+    'corcovado-sirena':          ['experiences/tour-corcovado-sirena-01.webp'],
+    'corcovado-san-pedrillo':    ['experiences/tour-corcovado-san-pedrillo-01.webp'],
+    'goddess-jacuzzi':           ['experiences/tour-goddess-jacuzzi-01.webp'],
+    'white-hawk-nature-trail':   ['experiences/tour-white-hawk-nature-trail-01.webp'],
+    'rio-claro':                 ['experiences/tour-rio-claro-01.webp']
+  };
 
   var TOURS = {
     ocean: [
@@ -398,19 +423,34 @@
     function renderStage() {
       var t = TOURS[world][idx];
 
-      /* one big photo + a per-tour photo slider (placeholders until photos exist) */
-      var file = 'tours/' + t.slug + '-0' + (shot + 1) + '.jpg';
-      slider.innerHTML = phHTML(file, t.name + ' · photo ' + (shot + 1) + ' of 4', '340px');
+      /* One big photo, and dots only when this tour actually has more than
+         one. Photographs come from TOUR_PHOTOS; a tour with none keeps the
+         labelled placeholder naming the file it is waiting for. */
+      var photos = TOUR_PHOTOS[t.slug] || [];
+      if (shot >= photos.length) shot = 0;
+
+      if (photos.length) {
+        var img = new Image();
+        img.src = '/media/' + photos[shot];
+        img.alt = t.name + (photos.length > 1 ? ' · photo ' + (shot + 1) + ' of ' + photos.length : '');
+        img.style.cssText = 'width:100%;min-height:340px;max-height:520px;object-fit:cover;display:block;border-radius:6px';
+        slider.innerHTML = '';
+        slider.appendChild(img);
+      } else {
+        slider.innerHTML = phHTML('tours/' + t.slug + '-01.jpg', t.name + ' · no photograph on the client sites yet', '340px');
+      }
 
       dots.innerHTML = '';
-      for (var i = 0; i < 4; i++) {
-        var d = document.createElement('i');
-        if (i === shot) d.className = 'on';
-        (function (n) {
-          d.style.cursor = 'pointer';
-          d.addEventListener('click', function () { shot = n; renderStage(); });
-        })(i);
-        dots.appendChild(d);
+      if (photos.length > 1) {
+        for (var i = 0; i < photos.length; i++) {
+          var d = document.createElement('i');
+          if (i === shot) d.className = 'on';
+          (function (n) {
+            d.style.cursor = 'pointer';
+            d.addEventListener('click', function () { shot = n; renderStage(); });
+          })(i);
+          dots.appendChild(d);
+        }
       }
 
       var html = '<h3>' + esc(t.name) + '</h3>';

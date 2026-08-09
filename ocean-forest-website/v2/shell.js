@@ -19,33 +19,11 @@ var GALLERY = [
   'use strict';
 
   /* ── THEME ───────────────────────────────────────────────────────────────
-     Same of-theme localStorage key as V1. V2 flips the default to light:
-     anyone who already chose dark keeps dark, everyone else starts light.  */
-  var THEME_KEY = 'of-theme';
-  var store = null;
-  try { store = window.localStorage; } catch (e) { store = null; }
-
-  var themeBtn = document.getElementById('themeBtn');
-
-  function paintTheme(light) {
-    document.body.classList.toggle('light', light);
-    if (themeBtn) {
-      themeBtn.textContent = light ? '☀' : '☾';
-      themeBtn.setAttribute('aria-pressed', light ? 'true' : 'false');
-    }
-  }
-
-  var saved = null;
-  try { saved = store && store.getItem(THEME_KEY); } catch (e) {}
-  paintTheme(saved !== 'dark');
-
-  if (themeBtn) {
-    themeBtn.addEventListener('click', function () {
-      var light = !document.body.classList.contains('light');
-      paintTheme(light);
-      if (store) { try { store.setItem(THEME_KEY, light ? 'light' : 'dark'); } catch (e) {} }
-    });
-  }
+     D7: light is now the only theme. The toggle, the of-theme storage key and
+     the paint handler are all gone. Every page carries class="light" on
+     <body> in its own markup, so the colours are right before any script
+     runs and there is no flash of the wrong palette. Nothing is read from
+     storage, so a stale value left there by the old toggle has no effect. */
 
   /* ── HEADER: pinned, shrinks on scroll ─────────────────────────────────── */
   var head = document.getElementById('siteHead');
@@ -108,7 +86,7 @@ var GALLERY = [
       host.innerHTML = '';
       host.appendChild(placeholder(file, note));
     };
-    img.src = '../media/' + file;
+    img.src = '/media/' + file;
   });
 
   /* ── HERO VIDEO ──────────────────────────────────────────────────────────
@@ -121,9 +99,17 @@ var GALLERY = [
   var heroMedia = document.querySelector('.hero-media');
   if (heroMedia) {
     var slug = heroMedia.getAttribute('data-hero-slug');
+    var heroImage = heroMedia.getAttribute('data-hero-image');
     var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reducedMotion) {
+    if (heroImage) {
+      /* This page pins its hero to a still photograph rather than the shared
+         video (of-v2-revisions.md C5). One attribute, no other change. */
+      var photo = document.createElement('div');
+      photo.className = 'hero-media-photo';
+      photo.style.backgroundImage = "url('/media/" + heroImage + "')";
+      heroMedia.appendChild(photo);
+    } else if (reducedMotion) {
       var still = document.createElement('div');
       still.className = 'hero-media-still';
       heroMedia.appendChild(still);
@@ -174,7 +160,7 @@ var GALLERY = [
         host.innerHTML = '';
         host.appendChild(placeholder(file, note));
       };
-      img.src = '../media/' + file;
+      img.src = '/media/' + file;
     });
   }
 

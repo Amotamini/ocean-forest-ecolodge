@@ -30,11 +30,57 @@
   }
 
   /* ── COMPLEMENTARY ACTIVITIES — eight expandable bars ──────────────────
-     Same accordion language as the shared tours/arrival accordions, opening
-     in place. No booking link on any bar; the open state carries the plain
-     "book on arrival" note instead. */
+     C17: the pattern is the accordion from oceanforestecolodge.com's
+     /experiences-tours/ page. A vertical stack of full-width bars, each
+     showing only the activity name; click one and it expands in place to
+     reveal its description; click another and the first collapses; click an
+     open bar and it closes. One open at a time, never two, none open on
+     load. The photograph is NOT in the panel; see D4 below.
+     The pattern only: the green-to-blue gradient belongs to the old site.
+     This uses V2's teal and V2's radius system.
+     Built with <button aria-expanded> and a panel rather than <details>,
+     because one-open-at-a-time needs the state managed. */
+  /* ── D4: TWO COLUMNS ────────────────────────────────────────────────────
+     The reference on oceanforestecolodge.com/experiences-tours/ is a pair of
+     columns of roughly equal width. Left: the stack of bars. Right: ONE
+     large photograph at roughly the height of the section, which lives
+     OUTSIDE the accordion and never moves. Selecting a different activity
+     swaps what that frame contains; it does not put a photograph inside the
+     panel. That distinction is the whole change.
+     The frame is sticky so it stays beside whichever bar is being read as
+     the stack grows and shrinks. Below 860px the two columns stack, the
+     photograph goes above the bars, and it still swaps on selection. It
+     never moves inside a panel at any width. */
+  .ea-layout {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 44px; align-items: stretch; margin-top: 34px;
+  }
+  .ea-layout > * { min-width: 0; }
+  .ea-stage { position: relative; }
+  .ea-stage-inner {
+    position: sticky; top: calc(var(--nav-h) + 22px);
+    height: min(72vh, 640px); border-radius: 6px; overflow: hidden;
+  }
+  .ea-stage-inner > * {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+  }
+  .ea-stage-inner img { object-fit: cover; display: block; }
+  /* The cross-fade. Every layer starts transparent and is brought up on the
+     next frame; the outgoing one is removed when its transition ends.
+     Suppressed wholesale under prefers-reduced-motion below. */
+  .ea-shot { opacity: 0; transition: opacity 0.42s ease; }
+  .ea-shot.in { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .ea-shot { transition: none; }
+  }
+  @media (max-width: 860px) {
+    .ea-layout { grid-template-columns: 1fr; gap: 26px; }
+    .ea-stage { order: -1; }
+    .ea-stage-inner { position: static; height: 46vh; }
+  }
+
   .ea-bars {
-    border-top: 1px solid var(--hairline); margin-top: 34px; max-width: 840px;
+    border-top: 1px solid var(--hairline);
   }
   .ea-bar { border-bottom: 1px solid var(--hairline); }
   .ea-bar-head {
@@ -52,7 +98,7 @@
   .ea-bar[data-open="true"] .ea-arrow { transform: rotate(90deg); }
   .ea-bar-body {
     display: none; padding: 0 4px 26px; color: var(--dim); font-size: 0.94rem;
-    max-width: 740px; font-weight: 300; line-height: 1.8;
+    font-weight: 300; line-height: 1.8;
   }
   .ea-bar[data-open="true"] .ea-bar-body { display: block; }
   .ea-bar-body p { margin: 0 0 14px; }
@@ -60,9 +106,12 @@
     font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
     color: var(--teal-light); margin: 0;
   }
+  /* D4: .ea-bar-inner and .ea-bar-shot are gone. They put the photograph
+     inside the expanding panel, which is what this change corrects. The
+     photograph now lives in .ea-stage, outside the accordion entirely. */
 </style>
 </head>
-<body>
+<body class="light">
 
 <a class="skip" href="#main">Skip to the lodge</a>
 
@@ -79,7 +128,6 @@
     <a href="about.html">About</a>
   </nav>
   <div class="nav-actions">
-    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch between light and dark" title="Light / dark">☾</button>
     <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
     <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
@@ -131,9 +179,10 @@
       <p class="lead reveal">Immerse yourself in the Osa Peninsula, the most biodiverse place on Earth. From the ancient wisdom of the Botanical Garden to the nighttime magic of our Night Tour, every experience is a portal to pure nature. Discover hidden waterfalls, ride horses along pristine beaches, and witness the mesmerizing flight of bats.</p>
       <p class="lead reveal" style="margin-top: 14px;">Your epic adventure in the heart of Costa Rica begins here.</p>
 
-      <div class="ea-bars reveal">
+      <div class="ea-layout reveal">
+        <div class="ea-bars" id="eaBars">
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-botanical-garden-01.jpg" data-photo-note="The ethnobotanical garden at Ocean Forest Ecolodge">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Botanical Garden</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -144,7 +193,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-bat-cave-01.jpg" data-photo-note="The Bat Cave walk. Neither of the client sites has a photograph of this one">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Bat Cave</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -155,7 +204,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-river-walk-01.webp" data-photo-note="Rio Claro, where the River Walk ends">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">River Walk</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -166,7 +215,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-drake-bay-walking-01.jpg" data-photo-note="The coastal walk to Drake Bay. Neither of the client sites has a photograph of this one">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Drake Bay Walking</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -177,7 +226,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-horse-riding-01.webp" data-photo-note="Horseback riding near Corcovado">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Horse Riding</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -188,7 +237,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-night-tour-01.webp" data-photo-note="The rainforest after dark on the Night Tour">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Night Tour</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -199,7 +248,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-sierpe-mangrove-tour-01.jpg" data-photo-note="The Sierpe River mangroves">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Sierpe Mangrove Tour</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -210,7 +259,7 @@
           </div>
         </div>
 
-        <div class="ea-bar" data-open="false">
+        <div class="ea-bar" data-open="false" data-photo="experiences/activity-waterfall-hiking-01.webp" data-photo-note="Goddess Jacuzzi, one of the two falls on the waterfall hike">
           <button class="ea-bar-head" type="button" aria-expanded="false">
             <span class="ea-bar-name">Waterfall Hiking</span>
             <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
@@ -221,6 +270,14 @@
           </div>
         </div>
 
+        </div>
+
+        <!-- D4: the fixed photo frame. Outside the accordion, one per
+             section, never inside a panel. shell.js does not touch it;
+             the script at the foot of this page fills and swaps it. -->
+        <div class="ea-stage">
+          <div class="ea-stage-inner" id="eaStage" aria-live="polite"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -289,17 +346,99 @@
 (function () {
   'use strict';
 
-  /* ── COMPLEMENTARY ACTIVITIES — expandable bars ─────────────────────────
-     Each bar opens in place. Many may be open at once (the spec leaves
-     exclusivity to the implementer; it only requires "opens in place"). */
-  document.querySelectorAll('.ea-bar-head').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var bar = btn.parentElement;
-      var open = bar.getAttribute('data-open') === 'true';
-      bar.setAttribute('data-open', open ? 'false' : 'true');
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  /* ── COMPLEMENTARY ACTIVITIES (D4) ───────────────────────────────────────
+     Two columns. The bars are on the left; the photograph is a FIXED FRAME
+     on the right whose contents change. It is not part of any panel, at any
+     window width, and this script is the only thing that writes into it.
+
+     Behaviour, matching oceanforestecolodge.com/experiences-tours/:
+       - nothing open on load, and the frame shows the FIRST activity,
+       - clicking a closed bar opens it, closes whichever was open, and
+         swaps the frame to that activity's photograph,
+       - clicking the open bar closes it; the frame keeps showing that
+         activity rather than going blank.
+     One open at a time, never two. That exclusivity is why the state is
+     managed here rather than with <details>. */
+  var bars  = Array.prototype.slice.call(document.querySelectorAll('.ea-bar'));
+  var stage = document.getElementById('eaStage');
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var showing = null;
+
+  function setOpen(bar, open) {
+    bar.setAttribute('data-open', open ? 'true' : 'false');
+    var head = bar.querySelector('.ea-bar-head');
+    if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  /* Bat Cave and Drake Bay Walking have no photograph published on either
+     client site. Those two get the site's labelled placeholder naming the
+     file the frame wants. No other activity's photograph is substituted. */
+  function placeholder(file, note) {
+    var d = document.createElement('div');
+    d.className = 'ph';
+    d.innerHTML =
+      '<span class="ph-label">Photo to come</span>' +
+      '<span class="ph-file">media/' + file + '</span>' +
+      (note ? '<span class="ph-note">' + note + '</span>' : '');
+    return d;
+  }
+
+  function mount(layer) {
+    var old = Array.prototype.slice.call(stage.children);
+    stage.appendChild(layer);
+    function retire() {
+      old.forEach(function (el) { if (el.parentNode === stage) stage.removeChild(el); });
+    }
+    if (reduced) { layer.classList.add('in'); retire(); return; }
+    /* Force a reflow so the transition has a start value to move from. Using
+       requestAnimationFrame here would look identical on screen but never
+       fire in a background tab, leaving the frame blank until it is looked
+       at and stacking up layers that are never cleared. */
+    void layer.offsetWidth;
+    layer.classList.add('in');
+    window.setTimeout(retire, 460);
+  }
+
+  function swap(bar) {
+    if (!stage) return;
+    var file = bar.getAttribute('data-photo');
+    var note = bar.getAttribute('data-photo-note') || '';
+    if (!file || file === showing) return;
+    showing = file;
+
+    var layer = document.createElement('div');
+    layer.className = 'ea-shot';
+
+    var img = new Image();
+    img.onload = function () {
+      if (showing !== file) return;
+      img.alt = note;
+      layer.appendChild(img);
+      mount(layer);
+    };
+    img.onerror = function () {
+      if (showing !== file) return;
+      layer.appendChild(placeholder(file, note));
+      mount(layer);
+    };
+    img.src = '/media/' + file;
+  }
+
+  bars.forEach(function (bar) {
+    setOpen(bar, false);
+    var head = bar.querySelector('.ea-bar-head');
+    if (!head) return;
+    head.addEventListener('click', function () {
+      var wasOpen = bar.getAttribute('data-open') === 'true';
+      bars.forEach(function (other) { setOpen(other, false); });
+      if (!wasOpen) setOpen(bar, true);
+      /* The frame follows the selection either way: closing a bar leaves its
+         photograph up rather than emptying the column. */
+      swap(bar);
     });
   });
+
+  if (bars.length) swap(bars[0]);
 })();
 </script>
 </body>
