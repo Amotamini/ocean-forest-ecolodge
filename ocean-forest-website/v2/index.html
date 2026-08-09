@@ -31,10 +31,17 @@
   .hm-film {
     display: inline-flex; align-items: center; gap: 9px; margin-top: 20px;
     font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--white); text-decoration: none;
+    text-transform: uppercase; text-decoration: none;
     border: 1px solid rgba(232, 237, 228, 0.4); border-radius: 22px;
     padding: 8px 16px; transition: border-color 0.2s, background 0.2s;
     background: rgba(14, 19, 16, 0.28);
+    /* Literal light value, NOT var(--white). This control sits on the hero,
+       over dark video, so it always needs light text. body.light flips
+       --white to #0e1310 (near black), which made this button invisible in
+       the light theme, which is now the only theme. Every other element on
+       the hero already uses literal light values for exactly this reason:
+       .path-title #fafaf8, .path-arrow #e8ede4, .path-kicker #7fe3e4. */
+    color: #e8ede4;
   }
   .hm-film:hover, .hm-film:focus-visible { border-color: var(--teal); background: rgba(14, 19, 16, 0.5); }
   .hm-film svg { width: 15px; height: 15px; flex-shrink: 0; }
@@ -161,7 +168,10 @@
   <div class="hero-inner">
     <div class="wrap">
       <p class="eyebrow">Drake Bay · Osa Peninsula · Costa Rica · Since 2003</p>
-      <h1>Your beachfront ecolodge at the edge of Corcovado National Park.</h1>
+      <!-- "beachfront" and "Corcovado" carry the ocean-lime gradient, the same
+           .grad-text used on every section heading. Two highlights, not more:
+           the two words that say where this is and what it is. -->
+      <h1>Your <span class="grad-text">beachfront</span> ecolodge at the edge of <span class="grad-text">Corcovado</span> National Park.</h1>
       <p class="hero-sub">The most biodiverse place on Earth. No roads. No crowds. Just jungle.</p>
       <!-- Watch the full film: the YouTube URL is a content slot (of-v2-home.md §6,
            Ryan / Eli). Replace VIDEO_ID_TO_COME with the real full-film link. The
@@ -172,34 +182,53 @@
       </a>
     </div>
 
+    <!-- FORK COPY RESTORED 2026-08-09 evening, Mehdi's call, to match the
+         screenshot he supplied. This is V1's wording, not the summarised V2
+         rewrite: the long qualifying kicker, "I want to stay" as the title,
+         and the arrows that say what happens next. The .fork-label above the
+         boxes comes back with it - it was dropped in the revisions build on
+         the grounds that the kickers made it redundant, and that was wrong. -->
     <div class="fork" id="fork">
       <div class="wrap">
+        <p class="fork-label">Why Ocean Forest Ecolodge?</p>
         <div class="fork-grid">
 
-          <!-- V2 has a Lodging page, so this box goes there and says "See the
-               rooms". V1 went straight to the booking engine. -->
+          <!-- V2 has a Lodging page, so this box goes there. V1 went straight
+               to the booking engine. -->
           <a class="path path-stay" href="/v2/lodging.html" data-path="stay">
-            <span class="path-kicker">I want to stay</span>
-            <span class="path-title">Ten rooms on a remote mile of beach.</span>
-            <span class="path-desc">Choose how you travel. Beach bungalows, jungle suites, and family bungalows, all steps from the Pacific.</span>
-            <span class="path-arrow">See the rooms
+            <span class="path-kicker path-kicker-long">For couples, families, and solo travelers ready for the real Costa Rica.</span>
+            <span class="path-title">I want to stay</span>
+            <span class="path-desc">10 rooms surrounded by lush rainforest, wildlife, ocean, and three meals a day made from scratch.</span>
+            <span class="path-arrow">Plan your stay
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </a>
 
           <a class="path path-lead" href="/v2/retreats.html" data-path="retreat">
-            <span class="path-kicker">I want to lead a retreat</span>
-            <span class="path-title">You bring your program. We handle everything else.</span>
-            <span class="path-desc">Exclusive use for groups up to 32, a beachfront yoga shala, and a team that runs the logistics.</span>
-            <span class="path-arrow">Plan a retreat
+            <span class="path-kicker">Bring your group</span>
+            <span class="path-title">I want to lead the retreat they'll never forget.</span>
+            <!-- V1 wrote "You teach - we handle the rest" with an em dash. The
+                 house rule is no em or en dashes in UI copy we write, and a
+                 full sweep removed every one from v2/ earlier today, so this
+                 is a comma. Same sentence, same rhythm. -->
+            <span class="path-desc">A 46-foot beachfront shala. Up to 32 guests. You teach, we handle the rest.</span>
+            <span class="path-arrow">Host your retreat
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </a>
 
         </div>
 
+        <!-- The monthly-rates line is a full-width bar under the boxes now,
+             per the screenshot, not the small underlined link it was. Three
+             parts: the hook, the sentence, the arrow. The screenshot reads
+             "for tyour workaway" - typo corrected to "your" here. -->
         <a class="fork-extra" href="mailto:eli@oceanforest.org?subject=Monthly%20stay%20enquiry">
-          Staying longer? Ask us about monthly rates.
+          <span class="fx-hook">Staying longer?</span>
+          <span class="fx-body">The perfect place for your workaway. Ask us about monthly rates.</span>
+          <span class="fx-arrow">Plan your extended stay
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
         </a>
       </div>
     </div>
@@ -219,7 +248,7 @@
   <section id="rooms" class="alt">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">The Rooms</span>
+        <span class="eyebrow">Lodging</span>
         <h2>Ten rooms, <span class="grad-text">one remote mile of beach</span></h2>
         <hr class="grad-bar">
         <p class="lead">Three ways to stay, all rustic and private, all steps from the Pacific. Hover a room to look closer, then open Lodging for the full story.</p>

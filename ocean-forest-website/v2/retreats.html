@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="/v2/shell.css">
 <style>
   /* ── RETREATS — page-specific rules only. ─────────────────────────────────
      shell.css already provides the palette, body.light, base reset, .wrap,
@@ -47,7 +47,25 @@
     border-right: 1px solid var(--hairline); transition: background 0.2s;
   }
   .statline a:last-child { border-right: 0; }
-  .statline a:hover, .statline a:focus-visible { background: rgba(42,173,168,.12); }
+  /* Hover, 2026-08-09: the ocean-lime gradient washes in behind the cell and
+     the cell lifts. The gradient sits on a ::before at opacity 0 rather than
+     being a background that fades, because a background-image cannot be
+     transitioned - that is what made the old flat teal wash feel abrupt. */
+  .statline a { position: relative; overflow: hidden; isolation: isolate; transition: transform 0.28s ease; }
+  .statline a::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background: var(--gradient-ocean-lime);
+    opacity: 0; transition: opacity 0.32s ease;
+  }
+  .statline a:hover, .statline a:focus-visible { transform: translateY(-3px); }
+  .statline a:hover::before, .statline a:focus-visible::before { opacity: 0.22; }
+  .statline a b, .statline a span { transition: color 0.28s ease; }
+  .statline a:hover b { color: var(--white); }
+  .statline a:hover span { color: var(--mist); }
+  @media (prefers-reduced-motion: reduce) {
+    .statline a, .statline a::before { transition: none; }
+    .statline a:hover, .statline a:focus-visible { transform: none; }
+  }
   .statline b { display: block; font-family: var(--serif); font-size: 1.6rem; font-weight: 300; color: var(--white); line-height: 1.1; }
   .statline span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
   @media (max-width: 720px) { .statline a { min-width: 50%; flex: none; } }
@@ -119,6 +137,65 @@
   .accom-card[data-bg] .accom-tag   { color: #dfe6dc; border-color: rgba(250, 250, 248, 0.34); }
 
   .accom-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); gap: 20px; margin-top: 40px; }
+  /* Three fixed columns, matching the Lodging page rather than reflowing. */
+  .accom-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 980px) { .accom-grid-3 { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; } }
+  /* The cards are buttons now: they open the gallery. Reset the UA styling. */
+  .accom-card { text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .accom-card[data-bg] { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .accom-card[data-bg]:hover, .accom-card[data-bg]:focus-visible { transform: translateY(-3px); }
+  .accom-card[data-bg]:hover::before { opacity: 0.68; }
+  .accom-open {
+    margin-top: 14px; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: #7fe3e4; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .accom-open::after { content: '→'; transition: transform 0.25s ease; }
+  .accom-card:hover .accom-open::after { transform: translateX(4px); }
+  .accom-note {
+    margin-top: 26px; max-width: 82ch; color: var(--dim);
+    font-size: 0.94rem; font-weight: 300; line-height: 1.8;
+  }
+  .accom-note b { color: var(--mist); font-weight: 500; }
+  @media (prefers-reduced-motion: reduce) {
+    .accom-card[data-bg], .accom-open::after { transition: none; }
+    .accom-card[data-bg]:hover, .accom-card[data-bg]:focus-visible { transform: none; }
+  }
+
+  /* ── LIGHTBOX — same component as the Lodging page ─────────────────────── */
+  .lb[hidden] { display: none; }
+  .lb {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(6, 10, 9, 0.94);
+    display: flex; align-items: center; justify-content: center;
+    padding: 64px 76px;
+  }
+  @media (max-width: 720px) { .lb { padding: 56px 12px; } }
+  .lb-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; display: block; }
+  .lb-btn {
+    position: absolute; width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
+    border: 1px solid rgba(250, 250, 248, 0.32); background: rgba(8, 14, 12, 0.6);
+    color: #fafaf8; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .lb-btn:hover, .lb-btn:focus-visible { background: rgba(8, 14, 12, 0.9); border-color: var(--teal); }
+  .lb-btn svg { width: 22px; height: 22px; }
+  .lb-prev { left: 18px; top: 50%; transform: translateY(-50%); }
+  .lb-next { right: 18px; top: 50%; transform: translateY(-50%); }
+  .lb-close { right: 18px; top: 18px; }
+  @media (max-width: 720px) {
+    .lb-btn { width: 38px; height: 38px; }
+    .lb-prev { left: 6px; } .lb-next { right: 6px; }
+  }
+  .lb-count {
+    position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(250, 250, 248, 0.72);
+  }
+  .lb-title {
+    position: absolute; left: 24px; top: 26px;
+    font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: #fafaf8;
+  }
+  @media (max-width: 720px) { .lb-title { font-size: 1rem; left: 14px; top: 18px; } }
   .accom-grid > * { min-width: 0; }
   .accom-card {
     background: var(--ink-2); border: 1px solid var(--hairline); border-radius: 6px;
@@ -153,8 +230,31 @@
   section.alt .include-item { background: var(--ink-3); }
   .include-icon { width: 24px; height: 24px; flex-shrink: 0; line-height: 0; margin-top: 4px; color: var(--teal-light); }
   .include-icon svg { width: 100%; height: 100%; display: block; }
-  .include-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--white); margin-bottom: 8px; }
+  .include-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--white); margin-bottom: 0; transition: color 0.25s ease; }
   .include-desc { font-size: 0.9rem; color: var(--dim); font-weight: 300; line-height: 1.7; }
+
+  /* HOVER REVEAL, 2026-08-09. Only the six titles show; the description
+     opens underneath on hover. grid-template-rows 0fr -> 1fr is what makes
+     this animate: max-height cannot transition to a content-dependent
+     height without guessing a number that will be wrong for the longest
+     card. Guarded by (hover: hover) so a touch device, which has no hover
+     and would otherwise never see the text at all, gets it all open. */
+  @media (hover: hover) {
+    .include-item { transition: background 0.28s ease, transform 0.28s ease; }
+    .include-reveal { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.34s ease; }
+    .include-reveal > div { overflow: hidden; }
+    .include-desc { opacity: 0; transition: opacity 0.28s ease; }
+    .include-item:hover, .include-item:focus-within { transform: translateY(-3px); }
+    .include-item:hover .include-reveal,
+    .include-item:focus-within .include-reveal { grid-template-rows: 1fr; }
+    .include-item:hover .include-desc,
+    .include-item:focus-within .include-desc { opacity: 1; margin-top: 8px; }
+    .include-item:hover .include-title { color: var(--teal-light); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .include-item, .include-reveal, .include-desc { transition: none; }
+    .include-item:hover, .include-item:focus-within { transform: none; }
+  }
 
   .leader-banner {
     grid-column: 1 / -1; background: var(--gradient-ocean-lime); color: #0b1210;
@@ -354,16 +454,16 @@
 <a class="skip" href="#main">Skip to the lodge</a>
 
 <header class="site-head" id="siteHead">
-  <a href="index.html" class="nav-logo">
-    <img class="logo-dark" src="../images/logo-white.png" alt="Ocean Forest Ecolodge">
-    <img class="logo-light" src="../images/logo-color.png" alt="" aria-hidden="true">
+  <a href="/v2/index.html" class="nav-logo">
+    <img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">
+    <img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">
   </a>
   <nav class="nav-menu" id="navMenu" aria-label="Main">
-    <a href="arriving.html">Arriving</a>
-    <a href="lodging.html">Lodging</a>
-    <a href="experiences.html">Experiences</a>
-    <a href="retreats.html" class="current" aria-current="page">Retreats</a>
-    <a href="about.html">About</a>
+    <a href="/v2/arriving.html">Arriving</a>
+    <a href="/v2/lodging.html">Lodging</a>
+    <a href="/v2/experiences.html">Experiences</a>
+    <a href="/v2/retreats.html" class="current" aria-current="page">Retreats</a>
+    <a href="/v2/about.html">About</a>
   </nav>
   <div class="nav-actions">
     <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
@@ -439,15 +539,37 @@
           <p class="body-p">The entire 3-level pagoda is yours for the duration of your retreat. No other groups sharing the space. Full yoga props included.</p>
           <p class="body-p">In 2003 we transformed an old horse pasture into a yoga shala, right on the beach. What started as a single structure became something larger, a fully self-contained ecolodge surrounded by ethnobotanical gardens, permaculture grounds, and one of the most biodiverse forest corridors on the planet.</p>
           <p class="body-p">We've spent over two decades refining what it means to host a retreat well. That means trained staff who stay out of your way until you need them, delicious food made by local chefs with ingredients sourced within an hour of the lodge, and a physical space that does real work on your students before class even starts.</p>
-          <blockquote class="shala-pull">"We've devoted much of our income to rainforest and oceanic wildlife conservation. When you bring your group here, that's part of what they're supporting too."</blockquote>
+          <!-- The conservation pull-quote that sat here moved 2026-08-09 into
+               its own photograph band above Accommodation, below. -->
         </div>
         <div class="reveal">
-          <img src="../images/shala-feature.jpg" alt="The Yoga Shala, a three-level pagoda at Ocean Forest Ecolodge" class="shala-photo" width="461" height="309" loading="lazy">
-          <div class="specs">
-            <div class="spec"><span class="spec-label">Height</span><span class="spec-value">46 feet / 3 levels</span></div>
-            <div class="spec"><span class="spec-label">Dharma Hall</span><span class="spec-value">1,614 sq ft</span></div>
-            <div class="spec"><span class="spec-label">Floor</span><span class="spec-value">Hardwood, polished</span></div>
-            <div class="spec"><span class="spec-label">Equipment</span><span class="spec-value">Full props included</span></div>
+          <img src="/images/shala-feature.jpg" alt="The Yoga Shala, a three-level pagoda at Ocean Forest Ecolodge" class="shala-photo" width="461" height="309" loading="lazy">
+          <!-- The four-cell spec box that sat under this photograph (Height,
+               Dharma Hall, Floor, Equipment) was REMOVED 2026-08-09, Mehdi's
+               call. Every one of those figures is already in the prose to the
+               left, so the box was repeating the page back at itself. -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONSERVATION ════════════════════════════════════════════════════════
+       Added 2026-08-09, Mehdi's call. The conservation line used to be a
+       pull-quote buried in the shala copy; it is the most persuasive sentence
+       on this page for a facilitator choosing between venues, so it now gets
+       a full-viewport photograph band of its own, immediately before the
+       rooms. Same .media-band .media-fade treatment as Arriving, Lodging and
+       Experiences: 16/9, text laid over the photograph. -->
+  <section id="conservation">
+    <div class="wrap">
+      <div class="media-band media-fade reveal">
+        <div class="media-shot">
+          <div data-media="gallery/gallery-12.webp" data-ratio="16/9" data-note="Rainforest and coastline at Ocean Forest Ecolodge"></div>
+        </div>
+        <div class="media-over">
+          <div class="wrap">
+            <span class="eyebrow">Conservation</span>
+            <h2 style="font-family:var(--serif);font-weight:300;line-height:1.15;font-size:clamp(1.6rem,3.2vw,2.4rem);max-width:24ch">"We've devoted much of our income to rainforest and oceanic wildlife conservation. When you bring your group here, that's part of what they're <span class="grad-text">supporting too.</span>"</h2>
           </div>
         </div>
       </div>
@@ -461,11 +583,24 @@
         <span class="eyebrow">Accommodation</span>
         <h2>Accommodation for <span class="grad-text">up to 32 guests</span></h2>
         <hr class="grad-bar">
-        <p class="lead">Ten rooms, and flexible allocation based on group size and preferences. Lapa Lapa is reserved for retreat facilitators.</p>
+        <p class="lead">Ten rooms, and flexible allocation based on group size and preferences.</p>
       </div>
 
-      <div class="accom-grid">
-        <div class="accom-card reveal" data-bg style="background-image:url('/media/lodging/beach-bungalow-01.jpg')">
+      <!-- Three cards, 2026-08-09, Mehdi's call: the same three categories the
+           Lodging page uses, in the same order, rather than the five this
+           page carried. Each is a button that opens that category's own
+           gallery full screen. The photograph is the card's background, which
+           is what gives this section its colour.
+
+           The named rooms that had their own cards - Cachimbo Top and Bottom,
+           Mango, Lapa Lapa East and West - are NOT deleted copy. They are
+           folded into the line under the grid, so a facilitator counting beds
+           still finds all ten rooms named on the page. -->
+      <div class="accom-grid accom-grid-3">
+        <button class="accom-card reveal" type="button" data-bg
+                data-gallery="lodging/beach-bungalow-01.jpg,lodging/beach-bungalow-02.webp,lodging/beach-bungalow-03.webp,lodging/beach-bungalow-04.webp"
+                data-gallery-note="Beach Bungalows"
+                style="background-image:url('/media/lodging/beach-bungalow-01.jpg')">
           <span class="accom-type">Beachfront</span>
           <div class="accom-name">Beach Bungalows</div>
           <p class="accom-rooms">Coco Solo · Palmiche · Naranjo</p>
@@ -475,9 +610,13 @@
             <span class="accom-tag">2-3 guests each</span>
             <span class="accom-tag">Ocean view</span>
           </div>
-        </div>
+          <span class="accom-open">View the photographs</span>
+        </button>
 
-        <div class="accom-card reveal" data-bg style="background-image:url('/media/lodging/jungle-suite-01.jpg')">
+        <button class="accom-card reveal" type="button" data-bg
+                data-gallery="lodging/jungle-suite-01.jpg,lodging/jungle-suite-02.webp,lodging/jungle-suite-03.webp,lodging/jungle-suite-04.webp"
+                data-gallery-note="Jungle Suites"
+                style="background-image:url('/media/lodging/jungle-suite-01.jpg')">
           <span class="accom-type">Forest</span>
           <div class="accom-name">Jungle Suites</div>
           <p class="accom-rooms">Solo Bueno North &amp; South · White Hawk Top &amp; Bottom</p>
@@ -487,51 +626,27 @@
             <span class="accom-tag">2-4 guests each</span>
             <span class="accom-tag">Forest view</span>
           </div>
-        </div>
+          <span class="accom-open">View the photographs</span>
+        </button>
 
-        <div class="accom-card reveal" data-bg style="background-image:url('/media/lodging/family-bungalow-01.jpg')">
+        <button class="accom-card reveal" type="button" data-bg
+                data-gallery="lodging/family-bungalow-01.jpg,lodging/family-bungalow-02.webp,lodging/family-bungalow-03.webp,lodging/family-bungalow-04.webp"
+                data-gallery-note="Family Bungalows"
+                style="background-image:url('/media/lodging/family-bungalow-01.jpg')">
           <span class="accom-type">Gardens &amp; stream</span>
-          <div class="accom-name">Cachimbo Rooms</div>
-          <p class="accom-rooms">Cachimbo Top · Cachimbo Bottom</p>
-          <p class="accom-desc">Private bathroom. Good for small groups, families, or participants who want to share costs without sharing a wall with strangers.</p>
+          <div class="accom-name">Family Bungalows</div>
+          <p class="accom-rooms">Cachimbo Top &amp; Bottom · Mango · Lapa Lapa East &amp; West</p>
+          <p class="accom-desc">Private bathrooms, gardens and the stream. Good for small groups, families, or participants who want to share costs without sharing a wall with strangers.</p>
           <div class="accom-meta">
-            <span class="accom-tag">2 rooms</span>
-            <span class="accom-tag">3-4 guests each</span>
+            <span class="accom-tag">5 rooms</span>
+            <span class="accom-tag">1-5 guests each</span>
             <span class="accom-tag">Gardens &amp; stream</span>
           </div>
-        </div>
-
-        <div class="accom-card reveal" data-bg style="background-image:url('/media/lodging/family-bungalow-02.webp')">
-          <span class="accom-type">Solo / Couple</span>
-          <div class="accom-name">Garden Bungalow</div>
-          <p class="accom-rooms">Mango</p>
-          <p class="accom-desc">Simple and quiet, tucked into the gardens. Ideal for a solo traveler or a couple who wants their own space. Unpretentious, comfortable, surrounded by green.</p>
-          <div class="accom-meta">
-            <span class="accom-tag">1 room</span>
-            <span class="accom-tag">1-2 guests</span>
-            <span class="accom-tag">Garden setting</span>
-          </div>
-        </div>
-
-        <div class="accom-card reveal" data-bg style="background-image:url('/media/property/shala-exterior.jpg')">
-          <span class="accom-type">For the facilitators</span>
-          <div class="accom-name">Lapa Lapa Rooms</div>
-          <p class="accom-rooms">Lapa Lapa East · Lapa Lapa West</p>
-          <p class="accom-desc">Two connected rooms adjacent to the main yoga shala, reserved for retreat facilitators. Close enough to the practice space to arrive and leave with nothing in between.</p>
-          <div class="accom-meta">
-            <span class="accom-tag">2 rooms</span>
-            <span class="accom-tag">Up to 5 people</span>
-            <span class="accom-tag">Next to shala</span>
-          </div>
-        </div>
-
-        <div class="accom-card accom-total reveal">
-          <div>
-            <b>Ten rooms,<br>32 guests</b>
-            <span>Flexible room allocation based on your group's needs</span>
-          </div>
-        </div>
+          <span class="accom-open">View the photographs</span>
+        </button>
       </div>
+
+      <p class="accom-note reveal">Ten rooms in all, and allocation is flexible: <b>Coco Solo, Palmiche</b> and <b>Naranjo</b> on the beach; <b>Solo Bueno North</b> and <b>South</b> and <b>White Hawk Top</b> and <b>Bottom</b> in the trees; <b>Cachimbo Top</b> and <b>Bottom</b> and <b>Mango</b> in the gardens; and <b>Lapa Lapa East</b> and <b>West</b> beside the shala, open to any guest. Up to 32 people, arranged to suit your group.</p>
     </div>
   </section>
 
@@ -545,13 +660,18 @@
         <p class="lead">Every retreat package includes the following. You bring your program. We handle the rest.</p>
       </div>
 
-      <div class="food-wrap">
-        <div class="reveal">
+      <!-- Same treatment as the food section on Lodging, 2026-08-09: the
+           photograph runs off the right edge of the viewport and dissolves
+           where it meets the text, rather than sitting in a box beside it.
+           .media-bleed must be a direct child of .wrap for its
+           calc(50% - 50vw) to reach the viewport edge, which it is. -->
+      <div class="media-bleed media-fade flip reveal">
+        <div>
           <p class="food-quote">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service all day long.</p>
           <p class="body-p" style="margin-top:18px">Ingredients sourced within an hour of the lodge. Dietary preferences accommodated.</p>
         </div>
-        <div class="reveal">
-          <img src="../images/lodge-breakfast.jpg" alt="Breakfast served at Ocean Forest Ecolodge" class="food-photo" loading="lazy">
+        <div class="media-shot">
+          <img src="/images/lodge-breakfast.jpg" alt="Breakfast served at Ocean Forest Ecolodge" loading="lazy">
         </div>
       </div>
 
@@ -560,42 +680,42 @@
           <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18v-6a2 2 0 0 1 2-2h13a4 4 0 0 1 4 4v4"/><path d="M2 14h20"/><path d="M2 18h20"/><circle cx="7" cy="10" r="2.2"/></svg></span>
           <div>
             <div class="include-title">Full Accommodation</div>
-            <p class="include-desc">All rooms for your group for the full duration of the retreat. Flexible allocation based on group size and preferences. Minimum 3 nights, up to 10.</p>
+            <div class="include-reveal"><div><p class="include-desc">All rooms for your group for the full duration of the retreat. Flexible allocation based on group size and preferences. Minimum 3 nights, up to 10.</p></div></div>
           </div>
         </div>
         <div class="include-item reveal">
           <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a2.5 2.5 0 0 0 5 0V3"/><path d="M6.5 3v18"/><path d="M17.5 21V3a4 4 0 0 0-2.5 3.7v5.3h4"/></svg></span>
           <div>
             <div class="include-title">3 Meals Daily + Beverages</div>
-            <p class="include-desc">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service all day long. Dietary preferences accommodated.</p>
+            <div class="include-reveal"><div><p class="include-desc">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service all day long. Dietary preferences accommodated.</p></div></div>
           </div>
         </div>
         <div class="include-item reveal">
           <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.6" r="2.1"/><path d="M12 8v5"/><path d="M12 13c-3 0-6 1.6-6 4.2 0 1.6 2.7 2.8 6 2.8s6-1.2 6-2.8c0-2.6-3-4.2-6-4.2z"/><path d="M12 10.5 8 13"/><path d="m12 10.5 4 2.5"/></svg></span>
           <div>
             <div class="include-title">Exclusive Yoga Shala Use</div>
-            <p class="include-desc">The entire 3-level pagoda is yours for the duration of your retreat. No other groups sharing the space. Full yoga props included.</p>
+            <div class="include-reveal"><div><p class="include-desc">The entire 3-level pagoda is yours for the duration of your retreat. No other groups sharing the space. Full yoga props included.</p></div></div>
           </div>
         </div>
         <div class="include-item reveal">
           <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-6 8-9 16-9 0 8-3.5 13-9 13z"/><path d="M4 21c2-6 6-9 11-11"/></svg></span>
           <div>
             <div class="include-title">Guided Río Claro Tour</div>
-            <p class="include-desc">A complimentary guided excursion to Río Claro, one of the Osa's best-kept secrets, for your whole group. A river walk through primary jungle that reliably becomes the trip's most talked-about afternoon.</p>
+            <div class="include-reveal"><div><p class="include-desc">A complimentary guided excursion to Río Claro, one of the Osa's best-kept secrets, for your whole group. A river walk through primary jungle that reliably becomes the trip's most talked-about afternoon.</p></div></div>
           </div>
         </div>
         <div class="include-item reveal">
           <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z"/><path d="M9 3v15"/><path d="M15 6v15"/></svg></span>
           <div>
             <div class="include-title">Travel Logistics Support</div>
-            <p class="include-desc">We help coordinate your group's local round-trip travel. Getting a group of any size to a remote jungle lodge without stress requires experience. We have it.</p>
+            <div class="include-reveal"><div><p class="include-desc">We help coordinate your group's local round-trip travel. Getting a group of any size to a remote jungle lodge without stress requires experience. We have it.</p></div></div>
           </div>
         </div>
         <div class="include-item reveal">
           <span class="include-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20v-1.5a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V20"/><circle cx="9" cy="7" r="3.2"/><path d="M22 20v-1.5a4 4 0 0 0-3-3.87"/><path d="M16.5 4.2a3.2 3.2 0 0 1 0 6"/></svg></span>
           <div>
             <div class="include-title">On-Site Staff Throughout</div>
-            <p class="include-desc">Our trained team stays on-property for the duration of your retreat, available to help with setup, transitions, and anything unexpected that comes up.</p>
+            <div class="include-reveal"><div><p class="include-desc">Our trained team stays on-property for the duration of your retreat, available to help with setup, transitions, and anything unexpected that comes up.</p></div></div>
           </div>
         </div>
 
@@ -815,18 +935,18 @@
       <div>
         <h3>Explore</h3>
         <ul>
-          <li><a href="arriving.html">Arriving</a></li>
-          <li><a href="lodging.html">Lodging</a></li>
-          <li><a href="experiences.html">Experiences</a></li>
-          <li><a href="retreats.html">Retreats</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="/v2/arriving.html">Arriving</a></li>
+          <li><a href="/v2/lodging.html">Lodging</a></li>
+          <li><a href="/v2/experiences.html">Experiences</a></li>
+          <li><a href="/v2/retreats.html">Retreats</a></li>
+          <li><a href="/v2/about.html">About</a></li>
           <li><a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a></li>
         </ul>
       </div>
       <div>
         <h3>Blog</h3>
         <ul>
-          <li><a href="../blog.html">From the lodge</a></li>
+          <li><a href="/blog.html">From the lodge</a></li>
         </ul>
       </div>
       <div>
@@ -845,8 +965,90 @@
   </div>
 </footer>
 
-<script src="shell.js"></script>
-<script src="shared-sections.js"></script>
+<!-- Lightbox for the accommodation galleries. Inert until a card is clicked. -->
+<div class="lb" id="rtLightbox" role="dialog" aria-modal="true" aria-label="Room photographs" hidden>
+  <span class="lb-title" id="lbTitle"></span>
+  <img class="lb-img" id="lbImg" alt="">
+  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous photograph">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Next photograph">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+  </button>
+  <span class="lb-count" id="lbCount"></span>
+</div>
+
+<script>
+/* ── ACCOMMODATION LIGHTBOX ────────────────────────────────────────────────
+   Same component and same behaviour as the Lodging page: clicking a room
+   card opens that category's own photographs full screen. Arrows and the
+   left/right keys step through and wrap, Escape closes, clicking the
+   backdrop closes, and focus returns to the card that opened it. */
+(function () {
+  'use strict';
+
+  var lb      = document.getElementById('rtLightbox');
+  var lbImg   = document.getElementById('lbImg');
+  var lbCount = document.getElementById('lbCount');
+  var lbTitle = document.getElementById('lbTitle');
+  var lbPrev  = document.getElementById('lbPrev');
+  var lbNext  = document.getElementById('lbNext');
+  var lbClose = document.getElementById('lbClose');
+  if (!lb || !lbImg) return;
+
+  var files = [], label = '', at = 0, opener = null;
+
+  function paint() {
+    lbImg.src = '/media/' + files[at];
+    lbImg.alt = label + ', photograph ' + (at + 1) + ' of ' + files.length;
+    lbCount.textContent = (at + 1) + ' of ' + files.length;
+    lbTitle.textContent = label;
+    var many = files.length > 1;
+    lbPrev.hidden = !many;
+    lbNext.hidden = !many;
+  }
+  function step(d) { at = (at + d + files.length) % files.length; paint(); }
+  function open(f, l, o) {
+    files = f; label = l; at = 0; opener = o || null;
+    paint();
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lbClose.focus();
+  }
+  function shut() {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    lbImg.removeAttribute('src');
+    if (opener) { opener.focus(); opener = null; }
+  }
+
+  lbPrev.addEventListener('click', function () { step(-1); });
+  lbNext.addEventListener('click', function () { step(1); });
+  lbClose.addEventListener('click', shut);
+  /* Only the backdrop closes, never the photograph itself. */
+  lb.addEventListener('click', function (e) { if (e.target === lb) shut(); });
+
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') shut();
+    else if (e.key === 'ArrowLeft') step(-1);
+    else if (e.key === 'ArrowRight') step(1);
+  });
+
+  document.querySelectorAll('.accom-card[data-gallery]').forEach(function (card) {
+    var list = card.getAttribute('data-gallery').split(',').filter(Boolean);
+    var name = card.getAttribute('data-gallery-note') || '';
+    if (!list.length) return;
+    card.addEventListener('click', function () { open(list, name, card); });
+  });
+})();
+</script>
+
+<script src="/v2/shell.js"></script>
+<script src="/v2/shared-sections.js"></script>
 
 <!-- ══ SHALA VIDEO PROBE ═══════════════════════════════════════════════════
      shell.js owns theme, header, mobile menu, the [data-media] loader, the
@@ -908,8 +1110,8 @@ var CALC_ROOMS = [
   { name: 'White Hawk Bottom',  location: 'Jungle Suite',                   beds: '1 Double + 2 Singles',  maxGuests: 4, high: 1150, green: 1000 },
   { name: 'Cachimbo Top',       location: 'Gardens & stream',               beds: '1 Double + 2 Singles',  maxGuests: 4, high: 1150, green: 1100 },
   { name: 'Cachimbo Bottom',    location: 'Gardens & stream',               beds: '1 Double + 1 Single',   maxGuests: 3, high: 1000, green: 900 },
-  { name: 'Lapa Lapa West',     location: 'Adjacent to shala, shared bath, for facilitators', beds: '1 Double + 1 Single', maxGuests: 3, high: 1000, green: 900 },
-  { name: 'Lapa Lapa East',     location: 'Adjacent to shala, shared bath, for facilitators', beds: '2 Singles',           maxGuests: 2, high: 1000, green: 900 }
+  { name: 'Lapa Lapa West',     location: 'Adjacent to shala, shared bath', beds: '1 Double + 1 Single', maxGuests: 3, high: 1000, green: 900 },
+  { name: 'Lapa Lapa East',     location: 'Adjacent to shala, shared bath', beds: '2 Singles',           maxGuests: 2, high: 1000, green: 900 }
 ];
 
 (function () {

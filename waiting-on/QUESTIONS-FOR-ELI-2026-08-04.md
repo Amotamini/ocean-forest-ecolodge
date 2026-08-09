@@ -48,9 +48,13 @@ answered differently, or a place her own materials contradict each other.
   people to ford rivers?
 - Fly to Drake Bay: SANSA, book a month ahead, $60 per vehicle for the 4×4 transfer, about
   forty minutes. Correct?
+  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer D):** Correct. $60 is now published as
+    visible copy on the fly-to-Drake-Bay route card.
 - ⚠️ Same point I made about room rates on 3 August: once these prices are on the website,
   every change means asking us to edit the site. Do you want them published, or "from" prices,
   or no prices at all?
+  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer D):** Published, as straight prices, no
+    hedging. Boat from Sierpe ($30/$40) and the fly route's $60 transfer are both live.
 
 **The five blocks your own notes mark as missing**
 
@@ -91,10 +95,16 @@ answered differently, or a place her own materials contradict each other.
   22 guests. oceanforestecolodge.com says 10 rooms and 30 guests. The retreat page says 11
   units and 32 guests. Booking.com says 11. The retreat calculator says 12 units with two
   held back. Guests will notice this one on arrival.
+  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer A):** Eleven rooms, 32 guests maximum.
+    Fixed everywhere it was wrong (seven lines across four pages).
 - Are Lapa Lapa West and East bookable, or held for retreat facilitators?
+  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer B):** Bookable, not held back for
+    facilitators. Corrected on the Retreats page and in the retreat calculator.
 - ⚠️ Rates. On 3 August you gave "from $120, $140, $150" for the three room types, and I
   asked for an all-inclusive rate per room per season. Is the "from" price the final answer,
   or are we still getting the full table?
+  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer C):** $120 / $140 / $150 is final. No
+    per-room, per-season table is coming.
 - Is there a minimum stay for nightly guests?
 - ⚠️ Room photographs. Every room on the site is an empty placeholder box. This is the one
   thing stopping launch. When can we have them?
@@ -135,6 +145,8 @@ answered differently, or a place her own materials contradict each other.
 
 - ⚠️ Asked on 3 August, still open. Which address do you want people to land on —
   oceanforest.org, oceanforestecolodge.com, or something new?
+  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer F):** oceanforestecolodge.com. The
+    redirect list from the old oceanforest.org is still owed, not blocking today.
 - What happens to the other two? Redirect, or leave them running?
 - We need the list of every live page on the old site so we can point the old links at the
   new ones. Without it, every link out there and everything currently ranking in Google

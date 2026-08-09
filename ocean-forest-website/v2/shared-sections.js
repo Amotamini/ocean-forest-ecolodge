@@ -74,7 +74,7 @@
       {
         slug: 'cano-island',
         pill: 'Caño Island',
-        name: 'The Island – Caño Island',
+        name: 'The Island, Caño Island',
         meta: '40-minute boat ride',
         body: [
           'Caño Island can be seen right in front of Ocean Forest Ecolodge, from where it can be easily reached by a 40-minute boat ride. The Caño Island, known among the local indigenous Brunka people as “The Floating Butterfly,” is a mysterious and beautiful island that can be seen as if “floating” amidst the pristine royal blue sea directly before the lodge. The island was declared a marine reserve in 1976, it is 790 acres in size and protects an oceanic region spanning an area over 17,000 acres. The vivid blue waters surrounding the island are abundant with oceanic life.',
@@ -114,7 +114,7 @@
         lede: 'Get a unique, close up view of these most majestic giants of the sea.',
         meta: 'Departs at 8 AM · Includes lunch · returns between 1 and 2:30PM',
         body: [
-          'The waters of the Osa Peninsula are unique, being that two distinct populations of Humpback Whales arrive to breed and raise their calves. From July – Sept arrive the southern populations, they have white on the underside of their flippers and from October through December arrive the northern population of Humpback whales. The Costa Rican dome, a region located some distance from shore, has been mentioned by National Geographic magazine as one of the most important waters the world-over for whale populations of many species. Whale watching is seasonal, from July to December. Pseudo Orcas and Pilot Whales are full-time residents of these waters. Dolphins such as the Pacific spotted, bottlenose and spinners also call these waters home.'
+          'The waters of the Osa Peninsula are unique, being that two distinct populations of Humpback Whales arrive to breed and raise their calves. From July to September arrive the southern populations, they have white on the underside of their flippers and from October through December arrive the northern population of Humpback whales. The Costa Rican dome, a region located some distance from shore, has been mentioned by National Geographic magazine as one of the most important waters the world-over for whale populations of many species. Whale watching is seasonal, from July to December. Pseudo Orcas and Pilot Whales are full-time residents of these waters. Dolphins such as the Pacific spotted, bottlenose and spinners also call these waters home.'
         ],
         ctas: [ { label: 'Book this tour', href: TRIP.dolphin, kind: 'solid' } ]
       },
@@ -146,7 +146,7 @@
       {
         slug: 'corcovado-sirena',
         pill: 'Sirena Ranger Station',
-        name: 'Corcovado National Park – Sirena Ranger Station',
+        name: 'Corcovado National Park, Sirena Ranger Station',
         lede: 'Among the most remote and wildlife filled spots in Costa Rica, accessed only by boat.',
         meta: 'Departs at 6:30 AM back at the lodge by 3:30 PM · 50-minute boat ride, then an epic wildlife observing walk · For 8 or more our own specialized guides will lead the tour',
         body: [
@@ -158,7 +158,7 @@
       {
         slug: 'corcovado-san-pedrillo',
         pill: 'San Pedrillo',
-        name: 'Corcovado National Park – San Pedrillo',
+        name: 'Corcovado National Park, San Pedrillo',
         lede: 'Find here the tallest trees in the new world tropics reaching up over 190 feet!',
         meta: 'Departs at 6:30 AM back at the lodge by 3:30 PM · 20-minute boat ride, then rainforest walk · Walk distance: 5 - 10 km (3 to 6 miles)',
         body: [
@@ -227,7 +227,7 @@
       summary: 'Get to Sierpe: private taxi <b>$70</b> (~6 h from San José) or public bus <b>$20</b> (~7 h). Boat Sierpe → San Josecito beach: <b>$30</b> at 11:30 am or <b>$40</b> at 4:00 pm, about 1.5 hours. Then a 15-minute walk along the beach.',
       body: [
         'Arriving by boat is not only the most affordable and effortless way to reach us year-round, but it’s especially delightful during the green season (May to November). Simply sit back, relax, and let the stunning river and ocean scenery unfold as your journey becomes an unforgettable tour in itself.',
-        'Your adventure to Ocean Forest Ecolodge begins with a breathtaking 1.5-hour boat ride from Sierpe — an unforgettable wildlife tour through Central America’s largest mangrove forest. Glide along the tranquil Sierpe River, spot monkeys, caimans, crocodiles, vibrant birds, and more, before the river opens to the Pacific Ocean for a thrilling coastal ride to San Josecito Beach, one of the area’s most stunning shores.',
+        'Your adventure to Ocean Forest Ecolodge begins with a breathtaking 1.5-hour boat ride from Sierpe, an unforgettable wildlife tour through Central America’s largest mangrove forest. Glide along the tranquil Sierpe River, spot monkeys, caimans, crocodiles, vibrant birds, and more, before the river opens to the Pacific Ocean for a thrilling coastal ride to San Josecito Beach, one of the area’s most stunning shores.',
         'Arrive 30 minutes early to secure your spot. Pack light (a backpack with max 15 kg / 33 lbs), protect electronics in waterproof bags, and wear water sandals for the beach landing. Find Sierpe Dock next to Donde Jorge Restaurant, and always tell the boat operator to drop you at San Josecito Beach for Ocean Forest Ecolodge.'
       ]
     },
@@ -235,7 +235,7 @@
       n: '02',
       icon: 'car',
       title: 'By car',
-      season: 'Dry season only · Dec–Apr',
+      season: 'Dry season only · Dec to Apr',
       seasonKind: 'dry',
       recommended: false,
       summary: '<b>4×4 required</b>, two shallow river crossings. Park at San Josecito Rural School (secure), then the 15-minute beach walk.',
@@ -252,7 +252,7 @@
       season: 'All seasons',
       seasonKind: 'all',
       recommended: false,
-      summary: 'Fly San José → Drake Bay (~45 min), then a 4×4 taxi <b>$70</b> per vehicle, ~45 min.',
+      summary: 'Fly San José → Drake Bay (~45 min), then a 4×4 taxi <b>$60</b> per vehicle, ~45 min.',
       body: [
         'We recommend booking with SANSA Airline at least 1 month in advance. Our staff can help booking your flights, request help to eli@oceanforest.org',
         'Send us your itinerary so we can arrange your ground transfer. Drake Bay Airport is rural, and taxis are not readily available on site. Kindly confirm your taxi at least 48 hours before arrival. We will book a 4×4 taxi for you. Payment is made directly to the driver.',

@@ -1,12 +1,19 @@
 STATUS: SHIPPED 2026-08-05
 
 All 8 acceptance checks passed, verified in a browser by the build thread on 2026-08-05.
-Founding-year conflict flagged, not resolved (see the build report and Decisions above): the
-page uses 2003, the source material also implies a 2002 opening via an "18 years ago" line in a
-2020-dated post. Two link forms differ from the literal Contract wording and were reconciled to
+Founding-year conflict flagged at build time (the source material also implied a 2002 opening
+via an "18 years ago" line in a 2020-dated post), **resolved 2026-08-09: 2003 is correct** (Phase
+0 answer E). No page change was needed, since the page already used 2003. Two link forms differ
+from the literal Contract wording and were reconciled to
 the shell's established, Finder-working convention rather than deploy-time routes: the Tours FAQ
 links to `experiences.html` (spec said `/experiences`), and the Jonathon and Blog links point to
 `../blog.html`, matching every other v2 page's footer (spec said `/blog`).
+
+**REVISED 2026-08-09.** One correction landed after this spec shipped, recorded only in
+`of-v2-revisions.md` (C18): the first photograph after the hero gains the `.media-band .media-fade`
+treatment defined for the whole site, rather than sitting in the plain frame this spec originally
+described. Folded in below, plus the standing root-absolute asset-path rule. A rebuild from this
+document now reproduces the live page rather than reverting it.
 
 # A5 — About
 
@@ -21,7 +28,7 @@ Build the new page Eli asked for at the end of the meeting: a whole section that
 - The Arriving-specific FAQ (School vs. Beach, do I need a car, porter service) stays on Arriving (A1). This page's FAQ is the general, site-wide kind — booking, packing at a high level, tour booking, seasons — not arrival logistics.
 - "The story" section reuses the existing "We built this place slowly" copy already live in `index.html` (lines 858–863), verbatim — this is the strongest existing About-shaped copy in the codebase and the brief does not ask for it to be replaced.
 - "Jonathon" is a new subsection naming Jonathon Miller Weisberger, sourced from the blog byline attributions already visible in source-copy/org-copy.md (lines 110, 120) — those are the only facts about him captured in source copy. No biography exists beyond his name and that he writes the blog on biodiversity, ethnobotany, and rainforest medicine. Do not invent further biographical detail.
-- "History" reuses the founding fact already in the codebase's JSON-LD (`index.html` line 38, `foundingDate: 2003`) plus the "18th anniversary" post's founding-date confirmation (source-copy/com-copy.md line 963, "February 19th, 2020, was the inauguration... We received our first guests 18 years ago" — read against a 2020 post date, this backs into a 2002 opening, one year off the JSON-LD's 2003; do not silently pick one, flag the conflict in the build report and use 2003, since that is the figure already live and structured-data-linked across the current site).
+- "History" reuses the founding fact already in the codebase's JSON-LD (`index.html` line 38, `foundingDate: 2003`) plus the "18th anniversary" post's founding-date confirmation (source-copy/com-copy.md line 963, "February 19th, 2020, was the inauguration... We received our first guests 18 years ago" — read against a 2020 post date, this backs into a 2002 opening, one year off the JSON-LD's 2003; do not silently pick one, flag the conflict in the build report and use 2003, since that is the figure already live and structured-data-linked across the current site). (Resolved 2026-08-09: Mehdi confirmed 2003 is correct, Phase 0 answer E. The conflict is closed, not just deferred.)
 - "Projects" covers the ethnobotanical garden and permaculture design, sourced from `.org/ecolodge/` (source-copy/org-copy.md lines 598–648) and `.org/setting/` (lines 652–700) — the garden, the Turtle Island Labyrinth, and the towering rainforest trees content, condensed, not reproduced in full.
 - "The Blog" is a link out to `/blog`, matching the existing footer link in `index.html` line 920, not a reproduction of any blog post content on this page.
 - "Recommendations" and "Travel Tips" are ported from `.com/about-us/` (source-copy/com-copy.md lines 809–830), which is the only source that groups these under those exact headings. Where that page's content duplicates What to Pack (already fully covered on Arriving, A1), this page keeps only the higher-level Recommendations content (travel insurance, vaccination, passport/visa, ATMs/money) and does not repeat the packing list.
@@ -48,6 +55,12 @@ Build the new page Eli asked for at the end of the meeting: a whole section that
 
 ### The story — verbatim from `index.html` lines 858–863
 The full four-paragraph block, starting "A cabin first, then a path, then a garden, then a kitchen..." through "...bamboo and recycled products." Reuse the existing `.about-wrap` / `.about-txt` layout pattern from `index.html` lines 852–867 as the starting structure for this section.
+
+**The first photograph after the hero — `property/shala-exterior.jpg` — gets `.media-band .media-fade`**
+(added 2026-08-09, C18, treatment defined in `of-v2-revisions.md` §3.2): full viewport width, minimum
+70vh, with the section's heading and intro laid over it behind a scrim, fading at the edges rather than
+sitting in a plain rectangular frame. This supersedes any earlier plain `[data-media]`/`.ph` frame this
+spec described for that image.
 
 ### Jonathon — new subsection, facts-only
 > Jonathon Miller Weisberger writes from the lodge on biodiversity, ethnobotany, plant medicine, and the rainforest. His posts are collected on the blog.
@@ -84,8 +97,14 @@ Link "Arriving page" → `arriving.html`.
 
 ## 4. Acceptance checks
 
+**Run these over http, not from Finder** (A0 §4) — `python3 -m http.server 8080`, then
+`http://localhost:8080/v2/about.html`.
+
 1. All nine sections appear in the order listed above.
-2. The story section matches `index.html` lines 858–863 verbatim.
+2. The story section matches `index.html` lines 858–863 verbatim, and the `shala-exterior.jpg`
+   photograph beneath it is full viewport width, its heading laid over it, and fades at the edges
+   rather than sitting in a plain rectangular frame. *(Rewritten 2026-08-09 to add C18, which the
+   original check did not cover.)*
 3. The general FAQ has exactly six entries, in the order given, none of them the "How do I to get here?" duplicate.
 4. The "How do I book Rooms?" and "How do I book Tours?" FAQ entries have working links, not the source page's dead `[Link]` / `[Link to appropriate site here]` placeholders.
 5. Travel Tips on this page is a single pointer line to Arriving, not a second copy of the packing list.
@@ -113,14 +132,19 @@ ocean-forest-website/index.html and source-copy/com-copy.md / source-copy/org-co
 ranges given, and must match those sources exactly where marked verbatim. Where the spec says
 "condensed" or "new," write plainly from only the facts cited, and invent nothing.
 
-Build ocean-forest-website/v2/about.html: hero, the story (verbatim), Jonathon, History (2003,
-flag the source conflict in your report, do not resolve it in the copy), Projects, The Blog link,
-the six-entry general FAQ (with working links replacing the source page's two dead placeholders),
-Recommendations, Travel Tips (a single pointer line to Arriving, not a duplicate packing list), and
-the shell's gallery section at offset 12.
+Build ocean-forest-website/v2/about.html: hero, the story (verbatim) with its `property/
+shala-exterior.jpg` photograph in `.media-band .media-fade` (full viewport width, heading laid over
+it, fading at the edges), Jonathon, History (2003, flag the source conflict in your report, do not
+resolve it in the copy), Projects, The Blog link, the six-entry general FAQ (with working links
+replacing the source page's two dead placeholders), Recommendations, Travel Tips (a single pointer
+line to Arriving, not a duplicate packing list), and the shell's gallery section at offset 12.
 
-When done, open ocean-forest-website/v2/about.html directly from Finder in a browser (no server)
-and click through all six FAQ entries to confirm they expand and their links work. List the eight
-acceptance checks from the spec and state pass/fail for each, and separately report the founding-
-year conflict you found in the source material.
+Every local reference is root-absolute (/v2/shell.css, /media/property/...). Never a ../ climb.
+
+When done, serve the folder over http (python3 -m http.server 8080) and open
+http://localhost:8080/v2/about.html. Do NOT test by double-clicking the file — every local
+reference is root-absolute and will 404 over file://. Click through all six FAQ entries to confirm
+they expand and their links work. List the eight acceptance checks from the spec and state
+pass/fail for each, and separately report the founding-year conflict you found in the source
+material.
 ```

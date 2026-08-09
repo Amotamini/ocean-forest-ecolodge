@@ -1,4 +1,17 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-07
+
+Built and verified as commit `79d9c6f`.
+
+**REVISED 2026-08-09.** This build's own commit silently reverted the root-absolute asset-path rule
+(`of-v2-shell.md` §2) back to a `../` climb — the second of the three times that rule broke and was
+re-fixed on this project. It was corrected again in `cfe3f60`, after this spec's work landed, so the
+regression never reached this document until now. Nothing in this spec's own contracts was wrong;
+the root-absolute rule simply lives in `of-v2-shell.md`, not here, and a rebuild from this spec alone
+would not by itself reintroduce the bug. Recorded here only so the history is not a mystery to
+whoever reads it next. The gallery-list shrink to 22 real files (§2, this spec) and the restored
+hero video are both also now the standing description in `of-v2-shell.md` §3 — that document is
+authoritative for the shell-wide contract; this one remains authoritative for the asset-fetch job
+itself.
 
 # Ocean Forest V2 — fill the placeholders
 

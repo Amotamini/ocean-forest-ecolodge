@@ -1,10 +1,18 @@
 # What we need from Eli before this can go live
 
+**Dated 19 July 2026, and describes `stay.html`, which is V1.** V2 replaced the "Stay" page with
+`v2/lodging.html` and this document was never rewritten for it. Left as-is below rather than
+deleted, since some of its questions (rooms, rates) carried over and are now answered against V2.
+
 Six things block launch. Everything else is built.
 
 ---
 
 ## 1. All-inclusive room rates (blocking)
+
+✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer C):** Rates are final at $120 / $140 / $150 for
+beach bungalow, jungle suite and family bungalow. There is no separate per-room, per-season table
+coming. The table below, and the per-room-per-season ask, is superseded.
 
 The site prices rooms the same way Booking.com does: one all-inclusive rate per room per night, three meals and drinks folded in, nothing added at checkout. Confirmed via Booking.com's own listing, their rate is already full board (all three meals, plus tea, coffee and cacao all day), so this page now matches that structure exactly rather than itemizing a separate meal charge.
 
@@ -34,6 +42,10 @@ Where to change it: `stay.html`, the `ROOMS` array near the top of the script bl
 ---
 
 ## 2. How many rooms are there, actually (blocking)
+
+✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answers A and B):** Eleven rooms, 32 guests maximum.
+Lapa Lapa West and East are bookable, not held back for facilitators — the note below saying
+otherwise is superseded.
 
 Three sources, three answers.
 

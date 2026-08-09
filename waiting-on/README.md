@@ -8,7 +8,7 @@ the difference between "not built yet" and "built, waiting on someone".
 | `NEEDED-FROM-ELI.md` | Eli | Six things blocking launch. Everything else is built |
 | `QUESTIONS-FOR-ELI-2026-08-03.md` | Eli | Numbered questions, sent 2026-08-03 |
 | `MESSAGE-FOR-ELI-2026-08-03.md` | Eli | The message that carried them |
-| `NEEDED-FROM-JONATHON.md` | Jonathon | Numbered questions only he can answer |
+| `QUESTIONS-FOR-JONATHON-2026-08-09.md` | Jonathon | Numbered questions only he can answer. Supersedes the 3 August list, which he part-answered through Redline Queries on 7 August and which now sits in `../audits/questions-for-jonathon-2026-08-03-answered.md` |
 
 **When an answer comes back, move the file out of here** — into `../audits/` if it is now
 history, or fold it into the relevant spec. A file sitting in `waiting-on/` is a claim

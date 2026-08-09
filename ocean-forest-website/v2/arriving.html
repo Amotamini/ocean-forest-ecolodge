@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="shell.css">
+<link rel="stylesheet" href="/v2/shell.css">
 <style>
   /* Arriving — page-specific rules, per specs/of-v2-arriving.md. */
 
@@ -26,9 +26,11 @@
   /* ── ROUTE CARDS ── */
   .ar-routes { border-top: 1px solid var(--hairline); }
   .ar-route { border-bottom: 1px solid var(--hairline); padding: 26px 4px; }
+  /* No longer a button. It was a radio control until 2026-08-09; the cursor
+     and reset properties went with it, because nothing here is clickable. */
   .ar-route-head {
     display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    background: none; border: 0; width: 100%; text-align: left; cursor: pointer; padding: 0 0 14px;
+    width: 100%; padding: 0 0 14px;
   }
   .ar-route-head h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--white); flex: 1; margin: 0; }
   .ar-badge {
@@ -44,14 +46,7 @@
   .ar-season.dry { border-color: rgba(223,223,91,0.5); color: #e9e9a8; }
   body.light .ar-season { color: #3f6b2a; border-color: rgba(106,154,58,0.5); }
   body.light .ar-season.dry { color: #8a7a1a; border-color: rgba(180,160,40,0.55); }
-  .ar-pick {
-    width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--hairline); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .ar-pick::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--teal); opacity: 0; transition: opacity 0.2s; }
-  .ar-route.picked .ar-pick { border-color: var(--teal); }
-  .ar-route.picked .ar-pick::after { opacity: 1; }
-  .ar-route.picked .ar-route-head h3 { color: var(--teal-light); }
+  /* .ar-pick and .ar-route.picked rules deleted 2026-08-09 with the picker. */
 
   .ar-sentence {
     font-family: var(--serif); font-style: italic; font-size: 1.08rem; color: var(--mist);
@@ -60,19 +55,8 @@
   .ar-sentence strong { font-style: normal; color: var(--white); font-weight: 600; }
   .ar-summary { color: var(--dim); font-size: 0.92rem; font-weight: 300; max-width: 640px; margin: 0; line-height: 1.75; }
 
-  /* Hidden 2026-08-08, before the client review. The four route maps
-     (map-route-boat / bus / drive / fly) do not exist yet, so picking a route
-     revealed an empty labelled frame and a dead "Download arrival card"
-     button on the most important page of the site. The route cards already
-     carry the walk sentence, which was always the part that does the work.
-     Delete this one rule to bring the block back the day the maps land. */
-  .ar-picked-map { display: none !important; }
-
-  .ar-picked-map { margin-top: 40px; max-width: 760px; }
-  .ar-picked-map[hidden] { display: none; }
-  .ar-picked-map .ar-map-title { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px; }
-  .ar-pdf-btn { margin-top: 20px; }
-  .ar-pdf-btn[disabled] { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+  /* .ar-picked-map and .ar-pdf-btn rules deleted 2026-08-09 along with the
+     markup they styled. See the note in the Layer 2 section below. */
 
   /* ── TIMELINE (Departing) ── */
   .ar-depart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
@@ -131,16 +115,16 @@
 <a class="skip" href="#main">Skip to the lodge</a>
 
 <header class="site-head" id="siteHead">
-  <a href="index.html" class="nav-logo">
-    <img class="logo-dark" src="../images/logo-white.png" alt="Ocean Forest Ecolodge">
-    <img class="logo-light" src="../images/logo-color.png" alt="" aria-hidden="true">
+  <a href="/v2/index.html" class="nav-logo">
+    <img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">
+    <img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">
   </a>
   <nav class="nav-menu" id="navMenu" aria-label="Main">
-    <a href="arriving.html" class="current" aria-current="page">Arriving</a>
-    <a href="lodging.html">Lodging</a>
-    <a href="experiences.html">Experiences</a>
-    <a href="retreats.html">Retreats</a>
-    <a href="about.html">About</a>
+    <a href="/v2/arriving.html" class="current" aria-current="page">Arriving</a>
+    <a href="/v2/lodging.html">Lodging</a>
+    <a href="/v2/experiences.html">Experiences</a>
+    <a href="/v2/retreats.html">Retreats</a>
+    <a href="/v2/about.html">About</a>
   </nav>
   <div class="nav-actions">
     <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
@@ -152,7 +136,10 @@
 
 <div class="hero" id="hero">
   <!-- C5: this page's hero is the still band cut, not the shared video. -->
-  <div class="hero-media" data-hero-slug="arriving" data-hero-image="hero/hero-wide.jpg"></div>
+  <!-- Hero photograph changed 2026-08-09, Mehdi's call: the group walking the
+       sand, not the rock island. It is the photograph that shows what
+       arriving actually is, so it opens the page about arriving. -->
+  <div class="hero-media" data-hero-slug="arriving" data-hero-image="arriving/beach-walk.jpg"></div>
   <div class="hero-scrim" aria-hidden="true"></div>
   <div class="hero-inner">
     <div class="wrap">
@@ -195,75 +182,14 @@
     </div>
   </section>
 
-  <!-- Layer 2 — four route cards, picker, then the picked route's map -->
-  <section id="routes">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">How You Get Here</span>
-        <h2>Four Routes, <span class="grad-text">One Beach</span></h2>
-        <hr class="grad-bar">
-      </div>
-
-      <div class="ar-routes reveal" id="arRoutes" role="radiogroup" aria-label="Choose your route to Ocean Forest Ecolodge">
-
-        <div class="ar-route" data-route="boat">
-          <button class="ar-route-head" type="button" role="radio" aria-checked="false">
-            <span class="ar-pick" aria-hidden="true"></span>
-            <h3>Boat from Sierpe</h3>
-            <span class="ar-badge reco">Our recommendation</span>
-            <span class="ar-season">All year</span>
-          </button>
-          <p class="ar-sentence"><strong>Boat from Sierpe</strong> &rarr; you land at San Josecito <strong>Beach</strong> &rarr; walk <strong>SOUTH</strong> 20 minutes, ocean on your <strong>right</strong>.</p>
-          <p class="ar-summary">Donde Jorge Restaurant, Sierpe. Departs 11:30 AM ($30) or 4:00 PM ($40). Arrive 30 minutes early, 15 kg limit. 90 minutes through the mangroves and out to the Pacific. Lands at San Josecito Beach, walk south.</p>
-        </div>
-
-        <div class="ar-route" data-route="bus-boat">
-          <button class="ar-route-head" type="button" role="radio" aria-checked="false">
-            <span class="ar-pick" aria-hidden="true"></span>
-            <h3>Bus + Boat</h3>
-            <span class="ar-badge budget">Budget</span>
-            <span class="ar-season">All year</span>
-          </button>
-          <p class="ar-sentence"><strong>Boat from Sierpe</strong> &rarr; you land at San Josecito <strong>Beach</strong> &rarr; walk <strong>SOUTH</strong> 20 minutes, ocean on your <strong>right</strong>.</p>
-          <p class="ar-summary">Tracopa bus from San Jose. Get off at Palmar Norte. Taxi to Sierpe. Connect with the afternoon boat.</p>
-        </div>
-
-        <div class="ar-route" data-route="drive">
-          <button class="ar-route-head" type="button" role="radio" aria-checked="false">
-            <span class="ar-pick" aria-hidden="true"></span>
-            <h3>Drive to San Josecito</h3>
-            <span class="ar-season dry">Dry season only, December to April</span>
-          </button>
-          <p class="ar-sentence"><strong>Car, taxi or plane</strong> &rarr; you are dropped at San Josecito <strong>School</strong> &rarr; walk <strong>NORTH</strong> 20 minutes, ocean on your <strong>left</strong>.</p>
-          <p class="ar-summary">4x4 required, two river crossings. About 370 km from San Jose. Park at the rural school. Walk north.</p>
-        </div>
-
-        <div class="ar-route" data-route="fly">
-          <button class="ar-route-head" type="button" role="radio" aria-checked="false">
-            <span class="ar-pick" aria-hidden="true"></span>
-            <h3>Fly to Drake Bay</h3>
-            <span class="ar-season dry">Dry season only</span>
-          </button>
-          <p class="ar-sentence"><strong>Car, taxi or plane</strong> &rarr; you are dropped at San Josecito <strong>School</strong> &rarr; walk <strong>NORTH</strong> 20 minutes, ocean on your <strong>left</strong>.</p>
-          <p class="ar-summary">Sansa Airlines from San Jose, book a month ahead. 4x4 taxi transfer. Dropped at the school. Walk north.</p>
-        </div>
-
-      </div>
-
-      <div class="ar-picked-map reveal" id="pickedMap" hidden>
-        <p class="ar-map-title">Your route's map</p>
-        <div id="pickedMapMedia" data-ratio="4/3"></div>
-        <a class="cta ghost ar-pdf-btn" id="pdfBtn" href="#">Download arrival card</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Layer 3 — what happens when you land.
-       C7: keeps beach-walk.jpg and gains the .media-band .media-fade
-       treatment from shell.css §3.2. Full viewport width, text over the
-       photograph, no hard rectangle edge. Gallery_01, the group walking on
-       the sand, is the one photograph that makes the twenty minute walk look
-       easy, so it stays. -->
+  <!-- Landing — moved ABOVE the routes 2026-08-09, Mehdi's call. It used to
+       sit after the four route cards. It reads better first: every route ends
+       the same way, so the walk is the thing to establish before anyone picks
+       how they travel. beach-walk.jpg also opens the page as the hero, and
+       the repetition is deliberate - it is the one photograph that makes the
+       twenty minute walk look easy, which is this section's whole job.
+       Treatment is .media-band .media-fade: full viewport width, 16/9, text
+       laid over the photograph. -->
   <section id="layer3">
     <div class="wrap">
       <div class="media-band media-fade reveal">
@@ -279,6 +205,74 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Four route cards. Read-only: no picker, no map, no download. -->
+  <section id="routes">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">How You Get Here</span>
+        <h2>Four Routes, <span class="grad-text">One Beach</span></h2>
+        <hr class="grad-bar">
+      </div>
+
+      <!-- Read-only list, 2026-08-09, Mehdi's call. These four used to be
+           radio buttons: picking one revealed that route's map and a
+           "Download arrival card" button below the group. Both the maps and
+           the PDFs are gone, so the button had nothing left to open and the
+           radio circles invited a click that did nothing. The information is
+           all on the page already. Do not make these interactive again. -->
+      <div class="ar-routes reveal" id="arRoutes">
+
+        <div class="ar-route" data-route="boat">
+          <div class="ar-route-head">
+            <h3>Boat from Sierpe</h3>
+            <span class="ar-badge reco">Our recommendation</span>
+            <span class="ar-season">All year</span>
+          </div>
+          <p class="ar-sentence"><strong>Boat from Sierpe</strong> &rarr; you land at San Josecito <strong>Beach</strong> &rarr; walk <strong>SOUTH</strong> 20 minutes, ocean on your <strong>right</strong>.</p>
+          <p class="ar-summary">Donde Jorge Restaurant, Sierpe. Departs 11:30 AM ($30) or 4:00 PM ($40). Arrive 30 minutes early, 15 kg limit. 90 minutes through the mangroves and out to the Pacific. Lands at San Josecito Beach, walk south.</p>
+        </div>
+
+        <div class="ar-route" data-route="bus-boat">
+          <div class="ar-route-head">
+            <h3>Bus + Boat</h3>
+            <span class="ar-badge budget">Budget</span>
+            <span class="ar-season">All year</span>
+          </div>
+          <p class="ar-sentence"><strong>Boat from Sierpe</strong> &rarr; you land at San Josecito <strong>Beach</strong> &rarr; walk <strong>SOUTH</strong> 20 minutes, ocean on your <strong>right</strong>.</p>
+          <p class="ar-summary">Tracopa bus from San Jose. Get off at Palmar Norte. Taxi to Sierpe. Connect with the afternoon boat.</p>
+        </div>
+
+        <div class="ar-route" data-route="drive">
+          <div class="ar-route-head">
+            <h3>Drive to San Josecito</h3>
+            <span class="ar-season dry">Dry season only, December to April</span>
+          </div>
+          <p class="ar-sentence"><strong>Car, taxi or plane</strong> &rarr; you are dropped at San Josecito <strong>School</strong> &rarr; walk <strong>NORTH</strong> 20 minutes, ocean on your <strong>left</strong>.</p>
+          <p class="ar-summary">4x4 required, two river crossings. About 370 km from San Jose. Park at the rural school. Walk north.</p>
+        </div>
+
+        <div class="ar-route" data-route="fly">
+          <div class="ar-route-head">
+            <h3>Fly to Drake Bay</h3>
+            <span class="ar-season dry">Dry season only</span>
+          </div>
+          <p class="ar-sentence"><strong>Car, taxi or plane</strong> &rarr; you are dropped at San Josecito <strong>School</strong> &rarr; walk <strong>NORTH</strong> 20 minutes, ocean on your <strong>left</strong>.</p>
+          <p class="ar-summary">Sansa Airlines from San Jose, book a month ahead. 4x4 taxi transfer ($60 per vehicle). Dropped at the school. Walk north.</p>
+        </div>
+
+      </div>
+
+      <!-- The per-route map panel and its "Download arrival card" button were
+           REMOVED 2026-08-09, Mehdi's call. Not hidden, removed. The four
+           route cards above already carry the walk sentence and the summary,
+           which is the information people actually came for. Neither the
+           route maps nor the arrival-card PDFs ever existed, and a panel that
+           opens onto a labelled empty frame is worse than no panel. Do not
+           reinstate this without asking - the decision was made after seeing
+           it on the page. -->
     </div>
   </section>
 
@@ -463,18 +457,18 @@
       <div>
         <h3>Explore</h3>
         <ul>
-          <li><a href="arriving.html">Arriving</a></li>
-          <li><a href="lodging.html">Lodging</a></li>
-          <li><a href="experiences.html">Experiences</a></li>
-          <li><a href="retreats.html">Retreats</a></li>
-          <li><a href="about.html">About</a></li>
+          <li><a href="/v2/arriving.html">Arriving</a></li>
+          <li><a href="/v2/lodging.html">Lodging</a></li>
+          <li><a href="/v2/experiences.html">Experiences</a></li>
+          <li><a href="/v2/retreats.html">Retreats</a></li>
+          <li><a href="/v2/about.html">About</a></li>
           <li><a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a></li>
         </ul>
       </div>
       <div>
         <h3>Blog</h3>
         <ul>
-          <li><a href="../blog.html">From the lodge</a></li>
+          <li><a href="/blog.html">From the lodge</a></li>
         </ul>
       </div>
       <div>
@@ -493,80 +487,16 @@
   </div>
 </footer>
 
-<script src="shell.js"></script>
+<script src="/v2/shell.js"></script>
 <script>
 (function () {
   'use strict';
 
-  /* ── ROUTE PICKER (Layer 2) ─────────────────────────────────────────────
-     Radio-behavior across the four route cards. Picking one reveals the
-     shared map area below the card group, loads that route's raster map
-     (or the missing-media placeholder), and wires the PDF button. */
-  function placeholder(file, note) {
-    var d = document.createElement('div');
-    d.className = 'ph';
-    d.innerHTML =
-      '<span class="ph-label">Photo to come</span>' +
-      '<span class="ph-file">media/' + file + '</span>' +
-      (note ? '<span class="ph-note">' + note + '</span>' : '');
-    return d;
-  }
-
-  function loadMedia(host, file, ratio, note) {
-    host.innerHTML = '';
-    host.style.aspectRatio = (ratio || '4/3').replace('/', ' / ');
-    var img = new Image();
-    img.onload = function () {
-      host.innerHTML = '';
-      img.alt = note || '';
-      host.appendChild(img);
-    };
-    img.onerror = function () {
-      host.innerHTML = '';
-      host.appendChild(placeholder(file, note));
-    };
-    img.src = '../media/' + file;
-  }
-
-  var routesHost = document.getElementById('arRoutes');
-  var pickedMap = document.getElementById('pickedMap');
-  var pickedMapMedia = document.getElementById('pickedMapMedia');
-  var pdfBtn = document.getElementById('pdfBtn');
-
-  if (routesHost && pickedMap && pickedMapMedia && pdfBtn) {
-    var cards = routesHost.querySelectorAll('.ar-route');
-
-    cards.forEach(function (card) {
-      var head = card.querySelector('.ar-route-head');
-      head.addEventListener('click', function () {
-        var slug = card.getAttribute('data-route');
-
-        cards.forEach(function (c) {
-          var picked = c === card;
-          c.classList.toggle('picked', picked);
-          c.querySelector('.ar-route-head').setAttribute('aria-checked', picked ? 'true' : 'false');
-        });
-
-        pickedMap.hidden = false;
-        loadMedia(pickedMapMedia, 'arriving/map-route-' + slug + '.jpg', '4/3', 'Map for the ' + slug + ' route');
-
-        var pdfHref = '../media/pdf/arrival-' + slug + '.pdf';
-        pdfBtn.href = pdfHref;
-        pdfBtn.removeAttribute('disabled');
-        pdfBtn.textContent = 'Download arrival card';
-
-        fetch(pdfHref, { method: 'HEAD' }).then(function (res) {
-          if (!res.ok) { throw new Error('missing'); }
-        }).catch(function () {
-          pdfBtn.setAttribute('disabled', 'true');
-          pdfBtn.removeAttribute('href');
-          pdfBtn.textContent = 'PDF to come';
-        });
-
-        pickedMap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      });
-    });
-  }
+  /* The route picker that lived here was deleted 2026-08-09. The four routes
+     are a read-only list now: no radio behaviour, no map to reveal, no PDF to
+     wire. Deleting it also removed the last relative `../media/` path in v2/,
+     which was a live instance of the bug rule 1 in the brief exists to stop.
+     The FAQ below is the only interaction left on this page. */
 
   /* ── ARRIVING FAQ ────────────────────────────────────────────────────── */
   var faq = document.getElementById('arFaq');

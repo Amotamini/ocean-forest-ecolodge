@@ -1,4 +1,27 @@
-STATUS: DRAFT
+STATUS: SHIPPED 2026-08-06
+
+Built and verified as commit `ce9dc1b`.
+
+**REVISED 2026-08-09.** Three corrections landed in `v2/retreats.html` after this spec shipped and
+were recorded only in `of-v2-revisions-2.md` (D5, D6, D8). Folded in below, so this spec now
+describes the page as it actually stands. What changed: the hero is no longer an empty slot behind
+a placeholder, it is `media/property/shala-exterior.jpg` full width with the heading laid over it
+(D5); the five accommodation cards each gained their photograph as a background behind the text
+(D6); and the calculator's room prices can now come from a published Google Sheet, falling back
+silently to `DEFAULT_ROOMS` (D8, in `Retreat calculator/retreat calculator.html`, a separate file
+from this page).
+
+Two things the build did that this spec did not describe, caught in the 2026-08-09 pass:
+- **This page has no `data-hero-slug` at all.** Every other V2 page's hero is `shell.js`'s hero-slot
+  loader (YouTube film, or a `data-hero-image` override); Retreats instead hard-codes its own
+  `.media-band .media-fade` block with `shala-exterior.jpg` (D5, above), because that photograph is
+  page-specific and not part of the shared hero-slot contract. Retreats is the one V2 page that gets
+  neither the empty hero slot nor the shared hero video from `shell.js`.
+- **The stat line's em dash was silently fixed**, not carried verbatim. §3 "Stat line" below says the
+  anchors are carried "verbatim from the current hero" and one of them (`#arriving`, "Ways in") used
+  an em dash in the source; the build replaced it rather than keeping it, which contradicts the
+  verbatim instruction. Recorded here rather than reverted, since the site-wide "no em dash" rule
+  (`of-v2-shell.md` §2) is the correct outcome either way.
 
 # A4 — Retreats
 
@@ -32,12 +55,12 @@ hero shell, footer, gallery) is swapped for A0's, and the page's own inline asse
   vanish, because the hero's stat line (kept, see below) carries the same anchors.
 - **Hero swap, with the page's real copy.** The current hero is a full-bleed YouTube aerial-video
   background (`youtube-nocookie` embed, id `AjqtTXfJbeg`) with a scrim, the headline, and the stat
-  line. It is replaced by the standard A0 empty hero slot (slug `retreats`, `mp4` then `jpg` then
-  placeholder — `of-v2-shell.md` §3 Hero slot contract). This is the one deliberate media change on
-  the page: the YouTube background is dropped, and the slot shows its labelled placeholder until
-  `../media/hero/retreats.mp4` or `.jpg` exists. The **headline copy is carried from the page, not
-  invented** — the first draft guessed at hero copy that does not exist on the page; the real copy is
-  in §3 below and is Eli's, frozen.
+  line. It is replaced not by the standard A0 empty hero slot but by a dedicated `.media-band
+  .media-fade` block showing `media/property/shala-exterior.jpg` full width, minimum 70vh, with the
+  heading and intro laid over it behind a scrim (D5, `of-v2-revisions-2.md` §3.5 — supersedes this
+  spec's original "empty A0 slot, placeholder until media exists" plan). The **headline copy is
+  carried from the page, not invented** — the first draft guessed at hero copy that does not exist on
+  the page; the real copy is in §3 below and is Eli's, frozen.
 - **Stat line is kept.** The hero's `<nav class="statline">` (six in-page anchors) moves onto the V2
   page directly beneath the A0 hero slot, verbatim. It is page-specific, not part of the A0 shell, and
   it is now the page's only in-page navigation once the A0 header stops carrying anchors. Its figures
@@ -49,9 +72,19 @@ hero shell, footer, gallery) is swapped for A0's, and the page's own inline asse
   loads `../shared-sections.js` so they render. `shared-sections.js` self-injects its own styles and
   renders placeholder frames (it does not load real image files), so it works from inside `v2/` with
   no path change — do not alter it.
-- **The calculator is carried whole.** The `#calculator` section, its two inline `<script>` blocks,
-  and the `CALC_ROOMS` twelve-room database are page-specific and stay in the page. Its CSS stays in
-  the page's own `<style>`.
+- **The five accommodation cards each gain their photograph as a background behind the text** (D6,
+  `of-v2-revisions-2.md` §3.6 — supersedes this spec's original photo-less cards): Beach Bungalows
+  (`lodging/beach-bungalow-01.jpg`), Jungle Suites (`lodging/jungle-suite-01.jpg`), Cachimbo Rooms
+  (`lodging/family-bungalow-01.jpg`), Lapa Lapa Rooms (`property/shala-exterior.jpg`), Garden Bungalow
+  (`lodging/family-bungalow-02.webp`) — all already on disk, no downloads needed. Text sits over the
+  photo behind a scrim dark enough to pass WCAG AA at the lightest part of each image, not the
+  average.
+- **The calculator is carried whole**, with one addition. The `#calculator` section, its two inline
+  `<script>` blocks, and the `CALC_ROOMS` twelve-room database are page-specific and stay in the page.
+  Its CSS stays in the page's own `<style>`. Separately, the standalone tool `Retreat calculator/
+  retreat calculator.html` (not this page, a different file, D8 above) can source its room prices from
+  a published Google Sheet, falling back silently to its hard-coded `DEFAULT_ROOMS` when the sheet is
+  unset, unreachable, slow, or empty.
 - No new copy is written anywhere on this page. If the current page has an outdated figure or a bug,
   it is carried forward as-is and named in the build report, not silently fixed (§5).
 
@@ -66,8 +99,9 @@ The A0 header markup exactly (`of-v2-shell.md` §3 "Nav markup"), with the **Ret
 "Talk to Eli" button.
 
 ### Hero
-A0 hero slot markup (`of-v2-shell.md` §3 "Hero slot contract"), `data-hero-slug="retreats"`, filled
-with the page's real hero copy, carried verbatim:
+Not the A0 hero slot (this page carries no `data-hero-slug`, D5 above). A `.media-band .media-fade`
+block, full viewport width, minimum 70vh, `media/property/shala-exterior.jpg` as the image, with the
+heading and intro laid over it behind a scrim. Real hero copy, carried verbatim:
 - Eyebrow: `Made for retreat leaders`
 - `h1`: `Everything goes smoothly <em>if you choose us.</em>` (the `<em>` on "if you choose us." is
   in the source and the shell's `h1 em` italic/accent styling renders it; keep it)
@@ -95,8 +129,9 @@ them.
    Full props included).
 2. **`#accommodation`** (`.alt`) — eyebrow "Accommodation", `h2` "Accommodation for up to 32 guests",
    lead, five `accom-card`s (Beach Bungalows · Jungle Suites · Cachimbo Rooms · Garden Bungalow ·
-   Lapa Lapa Rooms) plus the `accom-total` card "Ten rooms, 32 guests". The ten-rooms / 32-guests
-   finals are the client-corrected numbers from `of-main-page.md` §2; carry them as written.
+   Lapa Lapa Rooms), each with its photograph behind the text per D6 above, plus the `accom-total`
+   card "Eleven rooms, 32 guests" (corrected 2026-08-09, Phase 0 answer A — the eleven-rooms /
+   32-guests figures are now the client-final numbers).
 3. **`#food`** — eyebrow "Retreat package · full board", `h2` "Everything covered. Nothing to
    manage.", lead, the `food-quote` plus `lodge-breakfast.jpg` photo, the six-item `included-grid`
    (Full Accommodation · 3 Meals Daily + Beverages · Exclusive Yoga Shala Use · Guided Río Claro Tour
@@ -111,7 +146,9 @@ them.
    inputs, automatic room allocation, per-room sliders that rebalance, add/remove room controls, the
    25 / 50 / 25 payment schedule, the PDF-export-via-print button, the disclaimer, and the
    complimentary-leader pricing note. Driven by `CALC_ROOMS` and the section's two inline `<script>`
-   blocks. Carried whole.
+   blocks. Carried whole. **This section's `CALC_ROOMS` is separate from, and unaffected by, D8's**
+   Google Sheet pricing (D8 above) — that lives entirely in the standalone `Retreat calculator/
+   retreat calculator.html` file, not this page.
 7. **`#kit`** — eyebrow "One document", `h2` "Want everything in one document?", the ghost CTA to
    `/retreat-host-kit` (opens in a new tab).
 8. **`#inquire`** (`.alt`) — eyebrow "Before you write", `h2` "Is Ocean Forest right for your group?",
@@ -164,15 +201,17 @@ place to get this wrong:
 ## 4. Acceptance checks
 
 1. Every section of body copy on the current `retreats.html` appears on `v2/retreats.html` unedited:
-   the shala copy, pull-quote and specs; the five accommodation cards and the "Ten rooms, 32 guests"
-   total; the food quote, the six included-package items and the leader banner; the calculator; the
-   kit box; and the seven-item fit list, two side notes, four process steps and close box.
+   the shala copy, pull-quote and specs; the five accommodation cards, each with its D6 photograph
+   behind the text, and the "Eleven rooms, 32 guests" total; the food quote, the six included-package
+   items and the leader banner; the calculator; the kit box; and the seven-item fit list, two side
+   notes, four process steps and close box.
 2. The header is the A0 five-page nav (Arriving, Lodging, Experiences, Retreats, About) with Retreats
    marked current and the A0 "Book now" button — not the old anchor nav or the "Talk to Eli" button.
-3. The hero is the A0 slot (slug `retreats`) carrying the page's real copy — eyebrow "Made for retreat
-   leaders", `h1` "Everything goes smoothly *if you choose us.*" with "if you choose us." italicised,
-   and the "You bring your program…" sub — and it shows the hero placeholder, because no
-   `../media/hero/retreats.*` exists yet. The old YouTube background is gone.
+3. *(Rewritten 2026-08-09 for D5.)* The hero is the `.media-band .media-fade` block carrying the
+   page's real copy — eyebrow "Made for retreat leaders", `h1` "Everything goes smoothly *if you
+   choose us.*" with "if you choose us." italicised, and the "You bring your program…" sub — laid over
+   `media/property/shala-exterior.jpg` behind a scrim, full width, minimum 70vh. The old YouTube
+   background is gone.
 4. The stat line sits directly beneath the hero with its six anchors, and each one jumps to its
    in-page section: `#accommodation`, `#food`, `#experiences`, `#arriving`, `#shala`, `#calculator`.
 5. Both shared blocks render from `../shared-sections.js`: the `data-shared="tours"` tabs under
@@ -193,16 +232,17 @@ place to get this wrong:
   bug or an outdated figure, carry it forward as-is and flag it in the build report; do not fix it
   silently.
 - Editing `shared-sections.js` or the calculator's logic. Both are carried whole.
-- Supplying hero media. The slot is built empty and takes `../media/hero/retreats.mp4` (or `.jpg`)
-  later with no code change, exactly like every other V2 page. Dropping the old YouTube background is
-  a deliberate consequence of adopting the A0 slot (brief §2, §7), not an omission — but if Mehdi
-  wants the aerial video kept as the interim hero rather than the empty slot, that is his call to
-  make before A4 is built.
+- **(Superseded by D5, 2026-08-09.)** This section originally described the hero as an empty A0 slot
+  awaiting `../media/hero/retreats.mp4` or `.jpg`. That plan was replaced: the hero is
+  `media/property/shala-exterior.jpg`, live now, not a future addition. See §2 and §3 "Hero" above.
+- Creating or publishing the Google Sheet behind D8. Mehdi does that and supplies the URL to
+  `Retreat calculator/retreat calculator.html`'s `PRICE_SHEET_URL` constant.
 
 ## 6. Parking line
 
-The hero being empty until Ryan's per-page footage lands is the same wait every V2 page shares; it
-does not block building A4. Not blocked on the client, just not filmed yet.
+`PRICE_SHEET_URL` (D8) cannot be filled until Mehdi publishes the sheet. Until then it stays an
+empty string, which makes the fetch fail and the `DEFAULT_ROOMS` fallback engage. That is correct
+behaviour, not a bug.
 
 ## 7. Build prompt
 

@@ -13,6 +13,14 @@ is a YouTube embed rather than an mp4-then-jpg probe, the gallery list is 22 rea
 1.5s hero-video timeout named in the original note no longer exists — the loader it belonged to was
 replaced.
 
+**REVISED again 2026-08-09, evening.** Two defects were found by Mehdi on the signed-off build and
+are fixed and documented below: the hero embed showed YouTube's title card and spinner across the
+hero while it started (now covered by a still-photograph poster, see "Hero poster contract"), and
+the "Watch the full film" control was invisible in the light theme (see "Colours on the hero").
+Both were visible to anyone who looked at the page. Neither was caught, because the pass that
+signed the page off verified with `grep`. **Checks that describe what something looks like have to
+be run by looking at it.**
+
 # A0 — Shell
 
 ## 1. Goal
@@ -117,7 +125,8 @@ now picks one of three branches, in this order (`of-v2-assets.md` §3.5, and C5 
    no other change.
 2. **Otherwise, `prefers-reduced-motion: reduce`** → a static `.hero-media-still` div. No video.
 3. **Otherwise** → a `youtube-nocookie.com` iframe, autoplaying muted and looping, controls off,
-   `aria-hidden`, `tabindex="-1"`, `loading="lazy"`. The same film V1 uses.
+   `aria-hidden`, `tabindex="-1"`, `loading="lazy"`. The same film V1 uses, with nothing laid over
+   it. See "The home hero is the film, uncovered" below.
 
 Two constants at the top of that block are the seam:
 
@@ -131,6 +140,39 @@ A page gets its own cut by adding one entry to `HERO_OVERRIDES`. Nothing else ch
 There is **no `.ph` placeholder branch on the hero any more**, and no timeout fallback — both
 belonged to the mp4 probe that was removed. `media/hero/` holds only `hero-alt.jpg` and
 `hero-wide.jpg`; no per-slug file exists and none is expected.
+
+### The home hero is the film, uncovered — settled 2026-08-09
+
+A still-photograph poster was layered over the branch-3 iframe on 2026-08-09 and **removed the same
+day, Mehdi's call.** The home hero is the film, playing, with nothing in front of it, as it has
+always been.
+
+Recorded so the reasoning is not lost and the argument is not had a third time: a YouTube embed
+does show its own furniture while it starts — channel avatar, video title, loading spinner, across
+the hero for a few seconds. `modestbranding=1` has not suppressed the title for years. That cost is
+**known and accepted**. The alternative was worse in Mehdi's judgement, because it put a still
+photograph on the page you land on, and the film is the point of that page.
+
+`data-hero-image` (branch 1) remains the way any page pins itself to a photograph instead. Arriving
+uses it. The home does not.
+
+### Colours on the hero — added 2026-08-09
+
+Anything sitting on the hero must use a **literal light hex value, never `var(--white)`**.
+`body.light` — which since D7 is the only theme — flips `--white` to `#0e1310`, near black. That is
+correct everywhere else on the site, because everywhere else the background is light. On the hero
+the background is dark video, so a `var(--white)` element becomes invisible.
+
+This is not hypothetical: `.hm-film`, the "Watch the full film" control on the home page, shipped
+this way and was invisible in the only theme the site has. Caught by Mehdi on 2026-08-09, not by
+the check pass that had signed the page off, because that pass verified with `grep` rather than by
+looking. Now `#e8ede4`, matching the pattern every other hero element already followed:
+`.path-title` `#fafaf8`, `.path-arrow` `#e8ede4`, `.path-kicker` and `.hero .eyebrow` `#7fe3e4`,
+`.hero-sub` `rgba(232, 237, 228, 0.8)`.
+
+The one legitimate use of `var(--white)` near this material is inside the `max-width: 820px` blocks
+of `.media-band` and `.rt-hero`, where the text drops below the photograph onto the page
+background. Those are correct and should be left alone.
 
 Each page's build prompt (A1–A6) supplies its own `<slug>`, eyebrow, headline, and sub-line — those
 are fixed per page and not part of this shell spec.

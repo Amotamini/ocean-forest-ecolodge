@@ -1,6 +1,6 @@
 # Ocean Forest website — what we agreed
 
-For Eli and Jonathon. Last updated 7 August 2026.
+For Eli and Jonathon. Last updated 9 August 2026.
 
 This is every decision made about the new website, in plain language, with the date and the
 conversation it came from. **If anything here is not what you meant, say so and we change it.**
@@ -141,8 +141,9 @@ nothing."*
 
 ## How the site looks and works
 
-**The site opens in its light version.** Dark is still there on a toggle for anyone who prefers it.
-*Decided 5 August.*
+**The site is light, with no dark option.** The toggle was removed on 7 August. Light is the only
+theme now, for everyone.
+*Decided 5 August, toggle removed 7 August.*
 
 **No language switcher.** Every browser now offers to translate a page in one click, and it does a
 better job than a half-maintained second copy of the site would.
@@ -150,6 +151,30 @@ better job than a half-maintained second copy of the site would.
 
 **Every page opens with the film**, until Ryan's shorter per-page versions are ready. When they
 arrive they drop straight in.
+
+---
+
+## Six things Mehdi decided, 9 August
+
+These were open questions for a while. They are answered now and the site matches.
+
+**Eleven rooms, 32 guests maximum.** Five different sources gave five different room counts; eleven
+is the correct one, and every page now says so.
+
+**Lapa Lapa West and East are bookable**, the same as any other room. They are not held back for
+retreat facilitators only.
+
+**Rates are final: $120, $140, $150** for beach bungalow, jungle suite and family bungalow. There is
+no separate per-room, per-season table coming.
+
+**The route prices are published, as straight numbers, not "from" prices.** The boat from Sierpe was
+already showing $30 and $40. The 4x4 transfer for the fly-to-Drake-Bay route now shows its $60 too.
+
+**Founding year: 2003.** Your two sites disagreed; 2003 is correct and the site no longer flags it as
+unconfirmed.
+
+**The site's address is oceanforestecolodge.com.** That is where it goes live. The list of redirects
+from the old oceanforest.org is still owed, see the table below.
 
 ---
 
@@ -161,13 +186,15 @@ quietly filled with something wrong.
 
 | What | Who | Why it matters |
 |---|---|---|
-| **Room photographs** beyond the ones on your current site | Eli | Every empty frame on the site names the exact photograph it is waiting for |
 | **Ryan's shorter video cuts**, one per page | Ryan | The full film is running everywhere meanwhile |
 | **The Group Travel section copy** on Arriving | Eli | The only piece of writing on the site with no source anywhere |
 | **Confirming the Helpful Contacts** are still current | Eli | Those are other people's personal numbers, last checked in 2018. Every one currently shows as "unconfirmed". Sending a guest to a dead number at a bus station is worse than giving them none |
 | **Google reviews** | Eli | We will use a free service that shows your real reviews and keeps them updated. It needs to be set up on **your** account so it stays yours. All we need is that you can log into the Google Business Profile |
 | **The newsletter** | Eli | Which email service you use, and the signup code from it. The form on the new site is not connected to anything yet |
-| **Founding year: 2003 or 2002?** | Eli | Your two sites disagree. The new site says 2003 and we have flagged it rather than quietly picking one |
+| **The redirect list from oceanforest.org** | Eli | Every page currently live on the old site needs to point at its new address once the domain switches, or every existing link and everything ranking in Google breaks on launch day |
+
+Room photographs arrived 7 August and founding year was resolved 9 August (see above); both are off
+this list now.
 
 ---
 

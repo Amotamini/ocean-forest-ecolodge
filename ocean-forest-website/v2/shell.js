@@ -92,7 +92,14 @@ var GALLERY = [
   /* ── HERO VIDEO ──────────────────────────────────────────────────────────
      Same YouTube embed V1 uses, on all six pages, until Ryan's per-page cuts
      exist. One constant here is the seam: a page gets its own cut by adding
-     one entry to HERO_OVERRIDES, nothing else changes.                      */
+     one entry to HERO_OVERRIDES, nothing else changes.
+
+     A still-photograph poster was briefly layered over this iframe on
+     2026-08-09 to hide YouTube's start-up furniture. Removed the same day,
+     Mehdi's call: the home hero is the film, uncovered, as it has always
+     been. The furniture is a known cost of the embed and is accepted. If it
+     ever needs hiding again, the removal is in this file's history; do not
+     rebuild it from scratch.                                               */
   var HERO_YOUTUBE_ID = 'AjqtTXfJbeg';
   var HERO_OVERRIDES = {}; // slug -> youtube id, filled in as Ryan delivers per-page cuts
 
