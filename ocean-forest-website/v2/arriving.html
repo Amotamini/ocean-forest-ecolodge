@@ -60,6 +60,14 @@
   .ar-sentence strong { font-style: normal; color: var(--white); font-weight: 600; }
   .ar-summary { color: var(--dim); font-size: 0.92rem; font-weight: 300; max-width: 640px; margin: 0; line-height: 1.75; }
 
+  /* Hidden 2026-08-08, before the client review. The four route maps
+     (map-route-boat / bus / drive / fly) do not exist yet, so picking a route
+     revealed an empty labelled frame and a dead "Download arrival card"
+     button on the most important page of the site. The route cards already
+     carry the walk sentence, which was always the part that does the work.
+     Delete this one rule to bring the block back the day the maps land. */
+  .ar-picked-map { display: none !important; }
+
   .ar-picked-map { margin-top: 40px; max-width: 760px; }
   .ar-picked-map[hidden] { display: none; }
   .ar-picked-map .ar-map-title { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 14px; }
