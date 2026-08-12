@@ -429,6 +429,14 @@
     '  font-family:var(--sh-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;',
     '  color:var(--sh-teal-light);border:1px solid var(--sh-line);border-radius:24px;padding:11px 20px}',
     '.rv-all:hover{border-color:var(--sh-teal);color:var(--sh-white)}',
+    /* The route photograph opens the shared lightbox, so it has to look like
+       it can be opened and take a focus ring from the keyboard. */
+    '.sh-acc-shot [data-gallery]{cursor:zoom-in;border-radius:6px;overflow:hidden}',
+    '.sh-acc-shot [data-gallery] img{transition:transform .45s ease}',
+    '.sh-acc-shot [data-gallery]:hover img{transform:scale(1.04)}',
+    '.sh-acc-shot [data-gallery]:focus-visible{outline:2px solid var(--sh-teal);outline-offset:3px}',
+    '@media (prefers-reduced-motion:reduce){.sh-acc-shot [data-gallery] img{transition:none}',
+    '  .sh-acc-shot [data-gallery]:hover img{transform:none}}',
     '.sh-pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:30px}',
     '.sh-pill{border:1px solid var(--sh-line);background:none;color:var(--sh-dim);padding:9px 16px;border-radius:20px;font-size:.82rem;cursor:pointer;font-family:var(--sh-sans);font-weight:300}',
     '.sh-pill:hover{color:var(--sh-white)}',
@@ -767,9 +775,29 @@
                 '<p class="sh-sum">' + row.summary + '</p>' +
                 row.body.map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('') +
               '</div>' +
+              /* The route photograph opens full screen, 2026-08-11, Mehdi:
+                 "the photos in the boat, road, air should be expandable to
+                 full screen because they're gonna become maps." A map you
+                 cannot enlarge is a picture of a map.
+
+                 Its own photograph only, not all three as one set: you
+                 opened "By boat" because you want the boat route, and paging
+                 sideways into the road map from there would be a surprise.
+                 One file means the lightbox shows no arrows and no counter,
+                 which is what a single map should look like.
+
+                 role and tabindex because this is a div, same as the gallery
+                 tiles - without them it is mouse-only. shell.js listens on
+                 the document for both click and Enter/Space, so nothing has
+                 to be bound here. */
               (row.photo
                 ? '<div class="sh-acc-shot"><div data-media="' + esc(row.photo) +
-                  '" data-ratio="4/3" data-note="' + esc(row.photoNote || '') + '"></div></div>'
+                  '" data-ratio="4/3" data-note="' + esc(row.photoNote || '') + '"' +
+                  ' data-gallery="' + esc(row.photo) + '"' +
+                  ' data-gallery-note="' + esc(row.title || '') + '"' +
+                  ' data-gallery-start="0"' +
+                  ' role="button" tabindex="0"' +
+                  ' aria-label="Open the ' + esc(row.title || 'route') + ' photograph full screen"></div></div>'
                 : '') +
             '</div>' +
           '</div>' +

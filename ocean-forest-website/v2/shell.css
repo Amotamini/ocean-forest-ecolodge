@@ -633,8 +633,19 @@ h1 em { font-style: italic; color: #bfe6d8; }
    package) and .hm-shot-b (a card with only one photograph). */
 .hm-rooms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 8px; }
 @media (max-width: 900px) { .hm-rooms { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } }
+/* A column, not a block, since 2026-08-11. Three cards side by side had their
+   Book now buttons at three different heights, because each button sat
+   directly under its own list and one card's "En-suite bathroom with natural
+   ventilation" wrapped to a second line.
+
+   Flex column plus margin-top:auto on the last thing in the card puts every
+   button on one line however long the copy above it runs. That matters more
+   than it sounds: three buttons at three heights is the detail that makes a
+   row of cards look unfinished, and it would have come back every time
+   anybody edited a bullet. Now the layout absorbs it. */
 .hm-room {
-  display: block; width: 100%; text-align: left; font: inherit; color: inherit;
+  display: flex; flex-direction: column;
+  width: 100%; text-align: left; font: inherit; color: inherit;
   padding: 0; text-decoration: none; border: 1px solid var(--hairline);
   border-radius: 10px; overflow: hidden; background: var(--ink-2);
   transition: border-color 0.2s, transform 0.2s;
@@ -647,7 +658,16 @@ h1 em { font-style: italic; color: #bfe6d8; }
 .hm-shot-b { opacity: 0; }
 .hm-room.is-open .hm-shot-b { opacity: 1; }
 .hm-shot .ph { border-radius: 0; }
-.hm-room-body { padding: 22px 22px 24px; }
+/* flex:1 so the body takes all the height left under the photograph, and a
+   column so the rule below can push the last element to the floor of it. */
+.hm-room-body { padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+/* The bottom-aligned thing is "Book now" on Lodging and Retreats, and
+   "View room" on the home page. Both are named, rather than using
+   :last-child, so a card that later ends with a paragraph does not have that
+   paragraph shoved to the bottom of an over-tall card. */
+.hm-room-extra { display: flex; flex-direction: column; flex: 1; }
+.hm-room-extra .cta { margin-top: auto; align-self: flex-start; }
+.hm-room-body > .hm-room-more { margin-top: auto; }
 .hm-room-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .hm-room-top h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; color: var(--white); margin: 0; }
 .hm-room-price { font-family: var(--serif); font-size: 1.02rem; color: var(--white); white-space: nowrap; }
