@@ -1,42 +1,107 @@
 #!/bin/bash
-# Run this once from Terminal, then delete this file.
+# V2 replaces V1 at the root. Run once:
 #
 #   bash "/Users/mehdi/Work/PxN/Clients/Ocean Forest Ecolodge/COMMIT-AND-PUSH.sh"
 #
-# Why it exists: the sandbox Claude runs in can create files inside the repo
-# but cannot delete git's lock file, and cannot reach github.com through the
-# proxy. So the big commit (143f90d) is already made and waiting; this script
-# clears the stale lock, commits the one fix that came after it, and pushes
-# both.
+# The new pages are already written to the root — Claude can create and
+# overwrite files in the mounted folder but cannot delete them, so the
+# removals below are the part it could not do itself.
+#
+# It also fixes the message on 6c02b44, which went out labelled as a copy of
+# the commit before it. The code in it was right; the description was not,
+# and the description is what Scott reads.
+#
+# DELETE THIS FILE AFTERWARDS. It is scaffolding, not site.
 
 set -e
 cd "/Users/mehdi/Work/PxN/Clients/Ocean Forest Ecolodge"
 
-# Both of them. The first version of this script only cleared index.lock and
-# git then failed on HEAD.lock instead. The sandbox can create files in .git
-# but not delete them, so every lock it leaves behind has to be cleared here.
-rm -f .git/index.lock .git/HEAD.lock .git/objects/maintenance.lock
-rm -f .git/refs/heads/main.lock
+rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/main.lock
+rm -f .git/objects/maintenance.lock
 
+# ── 1. Fix the wrong commit message on the last push ────────────────────────
+git commit --amend -F - <<'MSG'
+Align the room buttons, take Eli's name off the site, open the route photos
+
+The three Book now buttons on a row of room cards sat at three different
+heights, because each sat directly under its own list and one card's
+"En-suite bathroom with natural ventilation" wrapped to a second line. The
+card is a flex column now and the button is pushed to the floor of it, so
+they land on one line however long the copy above them runs.
+
+The site no longer names Eli anywhere a visitor can see: "WhatsApp us",
+"Email us", "Talk to us". Her address stays as the mailto - it is the real
+inbox.
+
+The three arrival photographs open full screen in the shared lightbox,
+because they are about to be replaced by maps and a map you cannot enlarge
+is a picture of a map.
+MSG
+
+git push --force-with-lease origin main
+
+# ── 2. Remove V1 and the dead files ─────────────────────────────────────────
+cd "/Users/mehdi/Work/PxN/Clients/Ocean Forest Ecolodge/ocean-forest-website"
+
+# The old v2/ folder. Its contents now live at the root.
+rm -rf v2
+
+# V1's own shared script. The root now holds V2's.
+# (index.html, retreats.html and blog.html were overwritten in place, so
+#  there is nothing to delete for those three.)
+rm -f shared-sections.js.v1 2>/dev/null || true
+
+# The AI concierge — V1's, unused by V2. Mehdi's call, 2026-08-11.
+rm -f concierge.js concierge-knowledge.md
+rm -rf api
+
+# Dev leftovers that were being deployed to the public site.
+rm -f gateway.html.bak
+rm -f fetch-live-images.sh fetch-v2-images.sh
+rm -f .DS_Store
+
+echo
+echo "Root now holds:"
+ls -1 *.html
+
+# ── 3. Commit the move ──────────────────────────────────────────────────────
+cd "/Users/mehdi/Work/PxN/Clients/Ocean Forest Ecolodge"
 git add -A
 git commit -F - <<'MSG'
-Restore the missing-photograph fallback in the tour browser
+V2 replaces V1 at the root of the site
 
-Two of the eight complementary activities - Bat Cave and Drake Bay Walking -
-have no photograph published on either client site. The accordion that used
-to render them on Experiences carried its own img.onerror and showed the
-labelled placeholder naming the file it wanted.
+Mehdi, 2026-08-11: "it shouldn't have V2 in the address, it should fully
+replace the V1."
 
-Folding the activities into the shared tour browser lost that: the browser's
-renderStage had no error handler, so a listed-but-missing file rendered as a
-broken image icon on both Experiences and Retreats. It looked like a fault
-rather than like something the site is waiting for.
+The seven pages, shell.css, shell.js and shared-sections.js move out of v2/
+and to the root, and all 80 /v2/ references in them are rewritten. The home
+page, Retreats and Blog overwrite their V1 counterparts; Arriving, Lodging,
+Experiences and About are new URLs that did not exist before.
 
-The fallback now belongs to the component, so no future tour can lose it.
+V1 is deleted rather than archived. It survives in git history and as a
+frozen, clickable capture in Redline, and leaving a second copy live would
+have meant Google indexing the same lodge twice and Eli editing the wrong
+index.html. One site, no way to pick the wrong one.
+
+The AI concierge goes with it - V2 never referenced it.
+
+vercel.json redirects /v2 and /v2/* permanently to the new addresses, so
+every link already sent to anybody keeps working. shell.js strips the same
+prefix when deciding which nav item is current, because the local review
+server has no redirects and people will keep typing /v2/ for weeks.
+
+retreat-host-kit.html stays: the Retreats page links to it. stay.html and
+gateway.html stay; both are one-line redirects to /.
+
+Also updated so they do not lie: CLAUDE.md's rule about never editing V1
+(there is no V1), Redline's capture config (it pointed at three V1 pages,
+and would have captured V2 over the frozen v1), and two items in
+Last-little-things.md that were finished today - the film link and the
+guest reviews.
 MSG
 
 git push origin main
 
 echo
-echo "Done. Both commits are on GitHub:"
+echo "Done."
 git log --oneline -3

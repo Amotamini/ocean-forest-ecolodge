@@ -166,7 +166,7 @@ the single most common way small sites disappear.
 
 ## What this is
 
-Six-page static site, hand-written HTML, no framework and no build step. It sits in `v2/`.
+Six-page static site, hand-written HTML, no framework and no build step. It sits in ``.
 Deployed on Vercel from GitHub; push to `main` and it goes live.
 
 Serve it locally with `python3 serve.py` from `ocean-forest-website/`. That script disables caching
@@ -175,7 +175,7 @@ before you notice.
 
 ## The one thing to understand before you change anything
 
-**Everything shared lives in `v2/shell.css` and `v2/shell.js`.** One definition of the room card,
+**Everything shared lives in `shell.css` and `shell.js`.** One definition of the room card,
 the photo slider, the lightbox, the expanding row, the figure, the buttons. A change there reaches
 every page.
 
@@ -189,12 +189,12 @@ before, how the media placeholder system works, and what is still outstanding. R
 
 ## Standing rules that have each broken this site already
 
-1. **Every local reference in `v2/` must be root-absolute** — `/v2/shell.css`, `/media/x.jpg`.
+1. **Every local reference in `` must be root-absolute** — `/shell.css`, `/media/x.jpg`.
    Never relative, never `../`. Vercel serves clean URLs with `trailingSlash: false`, so a relative
    path resolves wrong in production while looking fine locally. This has broken the site three
    separate times.
 2. **V2 never shares a file with V1.** The root `index.html`, `retreats.html` and friends are the
-   OLD live site. `v2/` has its own copy of `shared-sections.js` on purpose.
+   OLD live site. `` has its own copy of `shared-sections.js` on purpose.
 3. **`media/` is additive only.** Never rename, move or delete a file already there.
 
 ## Eli's editing setup

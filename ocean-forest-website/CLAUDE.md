@@ -25,18 +25,18 @@ request costs a message. A broken layout costs a call to Scott.
 
 ### Words
 
-Any visible text inside the six pages in `v2/`:
+Any visible text inside the six pages in ``:
 
 | Page | File |
 |---|---|
-| Home | `v2/index.html` |
-| Arriving | `v2/arriving.html` |
-| Lodging | `v2/lodging.html` |
-| Experiences | `v2/experiences.html` |
-| Retreats | `v2/retreats.html` |
-| About | `v2/about.html` |
+| Home | `index.html` |
+| Arriving | `arriving.html` |
+| Lodging | `lodging.html` |
+| Experiences | `experiences.html` |
+| Retreats | `retreats.html` |
+| About | `about.html` |
 
-Some text lives in `v2/shared-sections.js` instead, because it appears on more than one page: the
+Some text lives in `shared-sections.js` instead, because it appears on more than one page: the
 tour descriptions and the three ways of getting here. **Changing it there changes it everywhere it
 appears — say so before you edit it.**
 
@@ -76,12 +76,22 @@ page is telling you exactly which file to add to `media/` to fill it.
 
 Do not edit these files for her under any circumstances:
 
-- `v2/shell.css` — the design of the whole site
-- `v2/shell.js` — the behaviour of the whole site
-- `vercel.json`, `package.json`, anything in `api/`
-- Any file at the root of the repository other than adding photographs to `media/`
-- The **V1 site**: `index.html`, `retreats.html`, `blog.html` and the other files at the root, all
-  of which are the OLD site. Everything current is inside `v2/`.
+- `shell.css` — the design of the whole site
+- `shell.js` — the behaviour of the whole site. It also builds the menu; there is no menu markup
+  in any page to edit.
+- `shared-sections.js` — the tours, the arrival routes, the FAQ and the guest reviews. One edit
+  here changes several pages at once, which is exactly why it is on this list.
+- `vercel.json`, `package.json`, `serve.py`
+- Any file at the root that is not one of the seven pages
+
+**There is no V1 any more.** Until 2026-08-11 the old site lived at the root and the new one in a
+`v2/` folder, and this file used to warn about editing the wrong one. That risk is gone: V2 moved
+to the root and replaced V1 outright, so there is exactly one set of pages and no way to edit the
+wrong copy. The old site survives in git history and as a frozen capture in Redline. Old `/v2/…`
+links still work — `vercel.json` redirects them.
+
+The seven pages, all at the root: `index.html`, `arriving.html`, `lodging.html`,
+`experiences.html`, `retreats.html`, `about.html`, `blog.html`.
 
 Also refuse, and route to Scott:
 
@@ -123,7 +133,7 @@ Format, exactly:
 
 ```
 ## 2026-08-14 · Eli · Changed the Lodging page heading
-"Choose Your Perfect Room" is now "Find Your Room". File: v2/lodging.html
+"Choose Your Perfect Room" is now "Find Your Room". File: lodging.html
 ```
 
 Date, who asked for it, one plain sentence, then what it said before and after, and the file. If

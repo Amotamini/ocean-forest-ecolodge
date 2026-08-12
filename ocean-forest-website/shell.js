@@ -48,16 +48,16 @@ var GALLERY = [
 
      ADDING OR RENAMING A LINK: edit NAV below. That is the whole job. */
   var NAV = [
-    { href: '/v2/arriving.html',    label: 'Arriving' },
-    { href: '/v2/lodging.html',     label: 'Lodging' },
-    { href: '/v2/experiences.html', label: 'Experiences' },
-    { href: '/v2/retreats.html',    label: 'Retreats' },
+    { href: '/arriving.html',    label: 'Arriving' },
+    { href: '/lodging.html',     label: 'Lodging' },
+    { href: '/experiences.html', label: 'Experiences' },
+    { href: '/retreats.html',    label: 'Retreats' },
     /* About is a link AND a menu - Mehdi's call: clicking it goes to the
        About page, hovering it opens the three below. A top-level item that
        only opens a menu strands anyone who wanted the page itself. */
-    { href: '/v2/about.html', label: 'About', children: [
-      { href: '/v2/about.html', label: 'About the lodge' },
-      { href: '/v2/blog.html',  label: 'Blog' },
+    { href: '/about.html', label: 'About', children: [
+      { href: '/about.html', label: 'About the lodge' },
+      { href: '/blog.html',  label: 'Blog' },
       { href: 'https://rainforest-medicine-gatherings.vercel.app/',
         label: 'Rainforest Medicine', external: true }
     ] }
@@ -65,14 +65,28 @@ var GALLERY = [
 
   var BOOK_URL = 'https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3';
 
-  /* A page is "current" if the path matches. index.html is also '/v2/' and
-     '/v2', and Vercel serves these without the .html because of cleanUrls,
-     so compare on the stem rather than the literal string. */
+  /* A page is "current" if the path matches. The home page arrives as
+     '/index.html', as '/' and — from an old link — as '/v2' or '/v2/', and
+     Vercel serves all of them without the .html because of cleanUrls. So
+     compare on the stem rather than the literal string.
+
+     The '/v2' prefix is stripped here as well as being redirected in
+     vercel.json. Belt and braces on purpose: the redirect handles the real
+     world, and this handles a local review server, which has no redirects
+     and where somebody will absolutely still be opening /v2/ URLs out of
+     habit for weeks. Without it the nav simply stops marking the current
+     page there, which is the kind of thing nobody reports and everybody
+     half-notices.
+
+     Returns '/' for the home page — the site moved out of /v2/ and to the
+     root of the domain on 2026-08-11, Mehdi: "it shouldn't have V2 in the
+     address, it should fully replace the V1." */
   function stem(path) {
     return String(path || '')
+      .replace(/^\/v2(?=\/|$)/, '')
       .replace(/\/index\.html$/, '/')
       .replace(/\.html$/, '')
-      .replace(/\/$/, '') || '/v2';
+      .replace(/\/$/, '') || '/';
   }
 
   function navLinkHTML(item, here) {
@@ -112,7 +126,7 @@ var GALLERY = [
     mount.outerHTML =
       '<a class="skip" href="#main">Skip to the lodge</a>' +
       '<header class="site-head" id="siteHead">' +
-        '<a href="/v2/index.html" class="nav-logo">' +
+        '<a href="/index.html" class="nav-logo">' +
           '<img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">' +
           '<img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">' +
         '</a>' +

@@ -1,6 +1,6 @@
 # Last little things — Ocean Forest V2
 
-Six unfinished items. Every one of them is a small job for Mehdi today and a wall for Eli alone
+Four unfinished items, and two closed. Every one of them is a small job for Mehdi today and a wall for Eli alone
 after the handover. None is a bug. Each is something the site is correctly *waiting* for.
 
 Written 2026-08-09, updated 2026-08-11. The "and Sanity" in the original note is out of date:
@@ -22,38 +22,26 @@ saying signup is not connected yet. Nobody is subscribed. Nothing is stored. No 
 `action="#newsletter-endpoint-TODO"` and a visible honest message rather than pretending to work.
 
 **To finish:** pick a service (Mailchimp, Brevo, ConvertKit, Beehiiv — any of them), create the
-list, and paste the form endpoint into `v2/index.html`. About ten minutes once the account exists.
+list, and paste the form endpoint into `index.html`. About ten minutes once the account exists.
 
 **Owed by:** Eli.
 
 ---
 
-## 2. "Watch the full film" points at a placeholder
+## 2. ~~"Watch the full film" points at a placeholder~~ — DONE 2026-08-11
 
-**Where:** home page hero, the small control under the headline.
-**What happens now:** the link opens YouTube at `VIDEO_ID_TO_COME`, which is not a video.
-
-**To finish:** replace `VIDEO_ID_TO_COME` in `v2/index.html` with the real YouTube ID of the full
-film. One string.
-
-**Owed by:** Eli or Ryan, whoever holds the final cut.
+The link now opens the real film, `youtube.com/watch?v=AjqtTXfJbeg`. Nothing owed.
 
 ---
 
-## 3. Guest reviews are an empty labelled slot
+## 3. ~~Guest reviews are an empty labelled slot~~ — DONE 2026-08-11
 
-**Where:** home page, "What guests say".
-**What happens now:** a dashed frame reading "Guest reviews to come — testimonials from Eli.
-Nothing is quoted until it is real."
+Four real Google reviews, transcribed verbatim from the lodge's Google page and styled as
+Google's own widget, with a link through to the full list. No overall score or review count is
+shown, because we have four screenshots and not the lodge's real average — the link carries those.
 
-**Why it is like this:** deliberate. No review was ever invented. The slot is honest about being
-empty rather than filled with something nobody said.
-
-**To finish:** this needs Eli's own Google Business Profile login, so the review widget is
-connected to her account and not ours. Then either embed the widget or paste real quotes with
-names.
-
-**Owed by:** Eli. **Blocked on:** her Google Business Profile access.
+To add a fifth: one entry in `REVIEWS` in `shared-sections.js`. Dates are stored as plain dates
+and shown as "4 days ago", worked out fresh on every visit, so they never go stale.
 
 ---
 

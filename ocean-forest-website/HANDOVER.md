@@ -10,7 +10,7 @@ There are two sites living in one folder, and they are separate on purpose.
 - **V1 is everything at the root of this folder** — `index.html`, `retreats.html`, `lodging.html`
   (via `stay.html`), and so on. **This is the live site right now.** Anything you touch here goes
   out to real visitors immediately on the next deploy.
-- **V2 is everything inside `v2/`** — six pages (`index.html`, `arriving.html`, `lodging.html`,
+- **V2 is everything inside ``** — six pages (`index.html`, `arriving.html`, `lodging.html`,
   `experiences.html`, `retreats.html`, `about.html`). This is the new site, built to replace V1,
   not yet switched on.
 
@@ -18,13 +18,13 @@ V2 has **its own copy** of `shared-sections.js` (the tour and logistics data bot
 Arriving pages pull from), separate from the one at the folder root that V1 uses. This looks like
 duplication and it is deliberate: a V2 build once edited the shared root copy directly, and that
 change would have gone live on V1 on the next push, before V2 was ready to launch. Always edit
-`v2/shared-sections.js` for V2 work. Never touch the root one unless you are intentionally
+`shared-sections.js` for V2 work. Never touch the root one unless you are intentionally
 changing V1.
 
 ## Three rules that have already broken this project. Follow them.
 
-**1. Every local reference inside `v2/` must be root-absolute** — `/v2/shell.css`,
-`/v2/lodging.html`, `/images/logo-white.png`, `/media/gallery/gallery-01.jpg`. Never a relative
+**1. Every local reference inside `` must be root-absolute** — `/shell.css`,
+`/lodging.html`, `/images/logo-white.png`, `/media/gallery/gallery-01.jpg`. Never a relative
 filename, never a `../` climb. Reason: this site deploys to Vercel with `trailingSlash: false`, so
 a page served at a clean URL with no trailing slash resolves a relative `shell.css` to the wrong
 place, and the page renders with no stylesheet at all. This exact bug has hit this project three
@@ -40,7 +40,7 @@ both sites, make it in both places separately, or ask before assuming they shoul
 
 **3. `media/` is additive only.** V1 and V2 share this one folder. Add new files freely. Never
 rename, move, or delete a file that's already there — something on the live V1 site is probably
-using it, even if you can't see the reference from inside `v2/`.
+using it, even if you can't see the reference from inside ``.
 
 ## Running it locally
 
@@ -49,7 +49,7 @@ cd ocean-forest-website
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080/v2/` (or `http://localhost:8080/` for V1).
+Then open `http://localhost:8080/` (or `http://localhost:8080/` for V1).
 
 **Do not open any HTML file by double-clicking it.** Because every V2 reference is root-absolute
 (rule 1 above), a file opened directly from Finder loads over `file://`, where a leading slash
@@ -116,7 +116,7 @@ call, 2026-08-09:
 
 ## Found during this pass, not fixed
 
-- **`v2/retreats.html`'s shala video** (`media/video/shala-360.mp4`) shows a labelled placeholder
+- **`retreats.html`'s shala video** (`media/video/shala-360.mp4`) shows a labelled placeholder
   and a 404 in the console. This is expected, not a bug: the file has never been delivered, and
   the placeholder is exactly the "waiting for" pattern described above. It'll resolve itself the
   day the file is dropped into `media/video/`.
@@ -124,8 +124,8 @@ call, 2026-08-09:
   (`HOLD HARMLESS AGREEMENT — For Visiting Ocean Forest Ecolodge Retreat`). Left alone on purpose:
   that section's text is explicitly retrieved verbatim from the client's legal wording, and
   `of-v2-lodging.md` says not to rewrite it into the site's voice. Every other em and en dash found
-  across `v2/` during this pass, including two in the shared logistics data
-  (`v2/shared-sections.js`), was fixed.
-- **A stale $70 price** was found alongside the em-dash sweep, in `v2/shared-sections.js`'s shared
+  across `` during this pass, including two in the shared logistics data
+  (`shared-sections.js`), was fixed.
+- **A stale $70 price** was found alongside the em-dash sweep, in `shared-sections.js`'s shared
   logistics widget (the "By air" transfer summary, used on both Arriving and Retreats). It
   contradicted the $60 figure decided the same day this pass ran, and has been corrected to match.
