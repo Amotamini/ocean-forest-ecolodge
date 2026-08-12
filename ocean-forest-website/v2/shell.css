@@ -979,6 +979,17 @@ body.light .ph {
 /* ── GALLERY ── */
 .gal { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 36px; }
 .gal > div { min-height: 160px; }
+/* The tiles open the shared lightbox (2026-08-11). They need to look like it:
+   a picture that magnifies on hover and takes a focus ring from the keyboard.
+   Before this the strip was eight photographs that ignored being clicked. */
+.gal > [data-gallery-start] { cursor: zoom-in; overflow: hidden; border-radius: 6px; }
+.gal > [data-gallery-start] img { transition: transform 0.45s ease; }
+.gal > [data-gallery-start]:hover img { transform: scale(1.05); }
+.gal > [data-gallery-start]:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .gal > [data-gallery-start] img { transition: none; }
+  .gal > [data-gallery-start]:hover img { transform: none; }
+}
 @media (max-width: 820px) { .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* Footer map link — not in the spec's lifted line ranges (it sits outside

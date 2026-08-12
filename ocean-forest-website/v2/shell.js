@@ -334,14 +334,34 @@ var GALLERY = [
   var galHost = document.querySelector('[data-gallery-offset]');
   if (galHost) {
     var offset = parseInt(galHost.getAttribute('data-gallery-offset'), 10) || 0;
+    var galFiles = [];
     for (var i = 0; i < 8; i++) {
       var file = GALLERY[(offset + i) % GALLERY.length];
+      galFiles.push(file);
       var slot = document.createElement('div');
       slot.setAttribute('data-media', file);
       slot.setAttribute('data-ratio', '1/1');
       slot.setAttribute('data-note', 'Gallery slot ' + (i + 1));
+      /* Opens the shared lightbox at THIS tile, 2026-08-11. The strip was
+         eight pictures you could not click, on every page, which is the one
+         thing everybody tries with a gallery.
+
+         The file list goes on the host and the index on the tile, so the
+         lightbox opens on the photograph you actually clicked rather than
+         always on the first. Eight photographs, not all 22 in GALLERY: what
+         you can see is what you can page through.
+
+         role and tabindex because these are divs. Without them the strip is
+         mouse-only, and it is the only gallery on the site that is not a
+         real <button> - the room cards and the slider stages already are. */
+      slot.setAttribute('data-gallery-start', String(i));
+      slot.setAttribute('role', 'button');
+      slot.setAttribute('tabindex', '0');
+      slot.setAttribute('aria-label', 'Open photograph ' + (i + 1) + ' of 8 full screen');
       galHost.appendChild(slot);
     }
+    galHost.setAttribute('data-gallery', galFiles.join(','));
+    galHost.setAttribute('data-gallery-note', 'Ocean Forest Ecolodge');
     galHost.querySelectorAll('[data-media]').forEach(function (host) {
       paint(host,
             host.getAttribute('data-media'),
@@ -540,20 +560,48 @@ var GALLERY = [
        [data-gallery] that is rendered later still works. The tour slider in
        shared-sections.js rewrites itself every time you change tab or tour,
        and binding at load would have missed every one of those. */
-    document.addEventListener('click', function (e) {
-      if (!lb.hidden) return;                       // ignore clicks inside it
-      var el = e.target.closest && e.target.closest('[data-gallery]');
-      if (!el) return;
+    function lbOpen(target) {
+      var el = target.closest && target.closest('[data-gallery]');
+      if (!el) return false;
       var files = (el.getAttribute('data-gallery') || '').split(',').filter(Boolean);
-      if (!files.length) return;
+      if (!files.length) return false;
+
+      /* Which photograph to open on. The file list lives on the container
+         and the index on the thing you clicked, so a strip of tiles sharing
+         one list can each open at their own picture. Anything without
+         data-gallery-start opens at the first, which is every opener that
+         existed before the gallery strips were wired up. */
+      var startEl = target.closest('[data-gallery-start]');
+      var start = startEl ? parseInt(startEl.getAttribute('data-gallery-start'), 10) : 0;
+      if (isNaN(start) || start < 0 || start >= files.length) start = 0;
+
       lbFiles = files;
       lbLabel = el.getAttribute('data-gallery-note') || '';
-      lbAt = 0;
-      lbOpener = el;
+      lbAt = start;
+      lbOpener = startEl || el;
       lbPaint();
       lb.hidden = false;
       document.body.style.overflow = 'hidden';
       lbClose.focus();
+      return true;
+    }
+
+    document.addEventListener('click', function (e) {
+      if (!lb.hidden) return;                       // ignore clicks inside it
+      lbOpen(e.target);
+    });
+
+    /* The gallery tiles are divs with role="button", so the browser gives
+       them no keyboard behaviour of their own. Enter and Space have to be
+       wired up by hand or the strip is reachable by Tab and then does
+       nothing, which is worse than not being reachable at all. */
+    document.addEventListener('keydown', function (e) {
+      if (!lb.hidden) return;
+      if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+      var t = e.target;
+      if (!t.closest || !t.closest('[data-gallery-start]')) return;
+      e.preventDefault();
+      lbOpen(t);
     });
   }
 

@@ -619,7 +619,28 @@
 
       if (photos.length) {
         var img = new Image();
-        img.src = '/media/' + photos[shot];
+        var want = photos[shot];
+        /* If the file is not there, fall back to the labelled placeholder
+           naming it - the same thing an empty TOUR_PHOTOS entry produces.
+           Without this, a listed-but-missing photograph renders as a broken
+           image icon, which looks like a fault rather than like something
+           the site is waiting for.
+
+           Added 2026-08-11 after exactly that happened. Folding the eight
+           activities into this component meant activitiesAsTours() writes a
+           TOUR_PHOTOS entry for every one of them, and two - Bat Cave and
+           Drake Bay Walking - have no photograph published on either client
+           site. The accordion this replaced had its own img.onerror and
+           handled it; this renderer did not, so the fallback was lost in the
+           move. Now it belongs to the component, so no future tour can lose
+           it again. */
+        img.onerror = function () {
+          if (photos[shot] !== want) return;      // a later click already won
+          slider.innerHTML = phHTML(want, t.name + ' · photograph not published yet', '340px');
+          slider.removeAttribute('data-gallery');
+          slider.style.cursor = '';
+        };
+        img.src = '/media/' + want;
         img.alt = t.name + (photos.length > 1 ? ' · photo ' + (shot + 1) + ' of ' + photos.length : '');
         img.style.cssText = 'width:100%;min-height:340px;max-height:520px;object-fit:cover;display:block;border-radius:6px';
         slider.innerHTML = '';
