@@ -14,177 +14,77 @@
   /* C11: the accommodations line ("coconut-laddered beach") is removed, and
      its .lo-accom rules with it. Nothing else used them. */
 
-  /* ── NATURE NOTE — calm info block, deliberately not a warning callout ── */
-  .lo-nature {
-    max-width: 760px; margin-top: 34px; border: 1px solid var(--hairline);
-    border-radius: 8px; padding: 26px 30px; background: var(--ink-2);
-  }
-  .lo-nature p { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.75; margin: 0; }
-  .lo-nature strong { color: var(--white); font-weight: 500; }
+  /* The nature note is no longer a bordered box in its own section. It IS the
+     intro to "Choose Your Perfect Room" now (2026-08-09, Mehdi's call), which
+     is the honest place for it: somebody about to pick a room should read it
+     before they choose, not after. .lo-nature and its rules went with the box. */
 
-  /* ── ROOM CARDS ─────────────────────────────────────────────────────────
-     Rebuilt 2026-08-09, Mehdi's call: the three room types now use the home
-     page's card model, three across, rather than the stacked expandable list
-     they were. Same shape as .hm-room on index.html, with Lodging's fuller
-     detail kept under each: the tag line, the four specifics, the price and
-     the Book now button. Clicking a card's photograph opens the lightbox. */
-  .lo-rooms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 12px; }
-  @media (max-width: 980px) { .lo-rooms { grid-template-columns: 1fr; max-width: 520px; margin-left: auto; margin-right: auto; } }
-  .lo-room {
-    display: flex; flex-direction: column; min-width: 0;
-    border: 1px solid var(--hairline); border-radius: 10px; overflow: hidden;
-    background: var(--ink-2); transition: border-color 0.2s, transform 0.2s;
-  }
-  .lo-room:hover { border-color: var(--teal); transform: translateY(-3px); }
+  /* The room card, the slider furniture and the lightbox all moved to
+     shell.css on 2026-08-09. This page used to define its own copy of each,
+     which is how Lodging and the home page ended up showing the same three
+     rooms in two different card designs. Nothing room-related is defined
+     here any more: see .hm-room, .sl and .lb in the shell. */
 
-  /* The photograph is a real <button>: it opens the lightbox, so it has to be
-     clickable, keyboard reachable and announced as a control. */
-  .lo-room-photo {
-    position: relative; display: block; width: 100%; padding: 0; border: 0;
-    background: var(--ink-3); cursor: zoom-in; overflow: hidden;
-  }
-  .lo-room-photo [data-media] { border-radius: 0; }
-  .lo-room-photo .ph { border-radius: 0; }
-  .lo-room-expand {
-    position: absolute; right: 12px; bottom: 12px; z-index: 2;
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 1px solid rgba(250, 250, 248, 0.32); background: rgba(8, 14, 12, 0.55);
-    color: #fafaf8; display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.2s, background 0.2s;
-  }
-  .lo-room-expand svg { width: 16px; height: 16px; }
-  .lo-room:hover .lo-room-expand,
-  .lo-room-photo:focus-visible .lo-room-expand { opacity: 1; }
-  .lo-room-count {
-    position: absolute; left: 12px; bottom: 12px; z-index: 2;
-    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: #fafaf8;
-    background: rgba(8, 14, 12, 0.55); border-radius: 12px; padding: 4px 10px;
-  }
+  /* ── AMENITY ROW — five photographs, not icons ─────────────────────────
+     Eli's photographs, kept as supplied. Sized down and pulled up on
+     2026-08-09, Mehdi's call: at full column width these five read as five
+     more room cards competing with the three real ones directly above.
+     Capping the row makes them a footnote to the rooms, which is what they
+     are. Left-aligned with the heading, not centred: a centred 720px row
+     under a left-aligned heading reads as a mistake.
 
-  .lo-room-body { padding: 22px 22px 26px; display: flex; flex-direction: column; flex: 1; }
-  .lo-room-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+     The files here are *-photo.webp, cropped from Eli's originals on
+     2026-08-09. Hers are 500x500 with a near-black surround, a decorative
+     arc and a ragged circular mask baked in, which rendered as five black
+     tiles. The crop takes the largest square inside the photograph circle,
+     3% in from the ragged edge, and resamples to 600x600. media/ is additive
+     only (standing rule 3), so the originals are untouched and still there
+     under their own names. */
+  /* The row spans the full column, so its left and right edges line up
+     exactly with the three room cards above it. The circles do NOT grow to
+     fill: each is capped and centred in its cell, so five small bubbles
+     spread across the same width rather than five big ones. */
+  .lo-amen {
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px; margin: 4px 0 0;
+  }
+  .lo-amen-item { max-width: 150px; margin-inline: auto; }
+  @media (max-width: 900px) { .lo-amen { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .lo-amen { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  /* Circles, the way Eli drew them - but as a CSS mask on a clean square
+     photograph rather than baked into the file, so there is no black corner
+     and no ragged edge. The hairline ring echoes her decorative arc. */
+  .lo-amen [data-media] {
+    border-radius: 50%; overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(42, 173, 168, 0.35);
+  }
+  .lo-amen [data-media] > img { border-radius: 50%; }
 
-  /* ── SLIDER FURNITURE — arrows and dots ─────────────────────────────────
-     Originally built for the per-room galleries (C14). Those are now cards
-     plus a lightbox, so this set is used by the food slider and the lightbox
-     inherits its arrow styling. Real buttons, keyboard reachable, no motion,
-     so prefers-reduced-motion needs no special case. */
-  .lo-gal-stage [data-media] { border-radius: 6px; }
-
-  /* ── GALLERY ARROWS (D1) — the classic pattern: one at each edge of the
-     photograph, vertically centred, overlaid on the image itself. A
-     semi-transparent dark circle with a light chevron, so they read against
-     a bright beach shot and a dark jungle one alike. Real buttons, so they
-     are keyboard reachable, and they share the same show(n) as the dots, so
-     the two can never drift out of sync. Hidden when a room has one photo. */
-  .lo-gal-frame { position: relative; }
-  .lo-gal-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
-    border: 1px solid rgba(250, 250, 248, 0.32);
-    background: rgba(8, 14, 12, 0.55); color: #fafaf8;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, border-color 0.2s; z-index: 2;
-  }
-  .lo-gal-arrow:hover, .lo-gal-arrow:focus-visible {
-    background: rgba(8, 14, 12, 0.78); border-color: var(--teal);
-  }
-  .lo-gal-arrow svg { width: 20px; height: 20px; }
-  .lo-gal-prev { left: 12px; }
-  .lo-gal-next { right: 12px; }
-  @media (max-width: 480px) {
-    .lo-gal-arrow { width: 36px; height: 36px; }
-    .lo-gal-prev { left: 8px; }
-    .lo-gal-next { right: 8px; }
-  }
-
-  .lo-gal-dots { display: flex; gap: 9px; margin-top: 12px; }
-  .lo-gal-dots button {
-    width: 11px; height: 11px; padding: 0; border-radius: 50%; cursor: pointer;
-    border: 1px solid var(--hairline); background: rgba(232, 237, 228, 0.25);
-  }
-  body.light .lo-gal-dots button { background: rgba(20, 26, 22, 0.2); }
-  .lo-gal-dots button[aria-current="true"] { background: var(--teal-light); border-color: var(--teal-light); }
-
-  .lo-room-body h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--white); margin: 0; }
-  .lo-room-meta {
-    display: block; margin-top: 8px;
-    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--teal-light);
-  }
-  .lo-room-price-head { font-family: var(--serif); font-size: 1.05rem; color: var(--white); font-weight: 400; white-space: nowrap; margin-left: auto; }
-  .lo-room-price-head b { font-weight: 600; }
-  .lo-room-tag { font-family: var(--serif); font-style: italic; font-size: 1.1rem; color: var(--mist); line-height: 1.6; margin: 18px 0 18px; }
-  .lo-room-body ul { list-style: none; margin: 0 0 22px; }
-  .lo-room-body li {
-    position: relative; padding: 8px 0 8px 22px; font-size: 0.92rem; color: var(--dim); font-weight: 300;
-    border-bottom: 1px solid var(--hairline);
-  }
-  .lo-room-body li:last-child { border-bottom: 0; }
-  .lo-room-body li::before { content: ''; position: absolute; left: 0; top: 16px; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
-  .lo-room-price { font-size: 1.02rem; color: var(--white); font-weight: 300; margin: auto 0 18px; }
-  .lo-room-price b { font-weight: 600; }
-
-  /* ── LIGHTBOX ───────────────────────────────────────────────────────────
-     Added 2026-08-09. Clicking a room photograph opens that room's four
-     photographs full screen, with arrows, a counter, Escape and the arrow
-     keys. It is inert markup until opened: [hidden] keeps it out of the
-     accessibility tree and out of the tab order. */
-  .lb[hidden] { display: none; }
-  .lb {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(6, 10, 9, 0.94);
-    display: flex; align-items: center; justify-content: center;
-    padding: 64px 76px;
-  }
-  @media (max-width: 720px) { .lb { padding: 56px 12px; } }
-  .lb-img {
-    max-width: 100%; max-height: 100%;
-    object-fit: contain; border-radius: 4px; display: block;
-  }
-  .lb-btn {
-    position: absolute; width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
-    border: 1px solid rgba(250, 250, 248, 0.32); background: rgba(8, 14, 12, 0.6);
-    color: #fafaf8; display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, border-color 0.2s;
-  }
-  .lb-btn:hover, .lb-btn:focus-visible { background: rgba(8, 14, 12, 0.9); border-color: var(--teal); }
-  .lb-btn svg { width: 22px; height: 22px; }
-  .lb-prev { left: 18px; top: 50%; transform: translateY(-50%); }
-  .lb-next { right: 18px; top: 50%; transform: translateY(-50%); }
-  .lb-close { right: 18px; top: 18px; }
-  @media (max-width: 720px) {
-    .lb-btn { width: 38px; height: 38px; }
-    .lb-prev { left: 6px; } .lb-next { right: 6px; }
-  }
-  .lb-count {
-    position: absolute; left: 50%; bottom: 20px; transform: translateX(-50%);
-    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: rgba(250, 250, 248, 0.72);
-  }
-  .lb-title {
-    position: absolute; left: 24px; top: 26px;
-    font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: #fafaf8;
-  }
-  @media (max-width: 720px) { .lb-title { font-size: 1rem; left: 14px; top: 18px; } }
-
-  /* ── AMENITY ROW — five photographs, not icons ── */
-  .lo-amen { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; margin-top: 34px; }
-  @media (max-width: 900px) { .lo-amen { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 480px) { .lo-amen { grid-template-columns: 1fr; } }
-  .lo-amen-item { min-width: 0; }
   .lo-amen-label {
-    margin-top: 12px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--mist); text-align: center; line-height: 1.5;
+    /* A phrase, so sans. In mono at this size it wrapped to two lines of
+       uppercase monospace under every tile. */
+    margin-top: 9px; font-family: var(--sans); font-size: 0.76rem;
+    color: var(--dim); text-align: center; line-height: 1.45;
   }
+  /* Spacing moved to the shared classes 2026-08-11 and the two padding rules
+     that were here are deleted. Rooms, Included and Food are one run about
+     staying, so they sit closer than the 104px a section normally gets:
+
+       #included  class="flush-top flush-bottom"   (was padding: 0 0)
+       #food      class="tight-top"                (was padding-top: 40px)
+
+     Identical to the pixel. The difference is that the two classes are in
+     shell.css where anyone can see the exception exists, rather than in this
+     page where nobody would look. Adjust --space-tight there, not here. */
+  /* The heading is a footnote to the rooms too, not a section title
+     competing with "Choose Your Perfect Room" a screen above it. */
+  #included .sec-head h2 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); }
+  #included .sec-head { margin-bottom: 4px; }
 
   /* ── PROPERTY MAP ── */
-  .lo-map { max-width: 760px; margin-top: 8px; }
-  .lo-map figcaption {
-    margin-top: 18px; max-width: 640px; color: var(--dim); font-size: 0.92rem;
-    font-weight: 300; font-style: italic; line-height: 1.7;
-  }
+  /* The property-map frame and the two-policy expander moved to shell.css
+     on 2026-08-09 as .figure and .xp. Four pages had grown their own
+     expanding row; there is one now. */
 
   /* ── FOOD ── */
   .lo-chips { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 40px; }
@@ -210,46 +110,6 @@
      .lo-rate-grid / .lo-rate rules with them. Only the policy links remain. */
   .lo-rates { border-top: 1px solid var(--hairline); padding-top: 34px; margin-top: 8px; }
 
-  /* ── THE TWO POLICIES (D2) — expand in place, same pattern as the rooms
-     above and the activities on Experiences. Both closed on load. The texts
-     are legal documents reproduced verbatim from the source of 7 August
-     2026: they are deliberately NOT rewritten into the site's voice, not
-     shortened, and the house no-dash rule does not apply to them. Nothing
-     here links to oceanforest.org; the policies are hosted here now. */
-  .lo-pols { border-top: 1px solid var(--hairline); max-width: 860px; }
-  .lo-pol { border-bottom: 1px solid var(--hairline); }
-  .lo-pol-head {
-    width: 100%; background: none; border: 0; color: var(--mist); cursor: pointer;
-    display: flex; align-items: center; gap: 14px; padding: 24px 4px; text-align: left;
-  }
-  .lo-pol-head svg { width: 18px; height: 18px; color: var(--teal-light); flex-shrink: 0; }
-  .lo-pol-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--white); flex: 1; }
-  .lo-pol-arrow { transition: transform 0.25s; color: var(--dim); flex-shrink: 0; font-size: 1.3rem; }
-  .lo-pol[data-open="true"] .lo-pol-arrow { transform: rotate(90deg); }
-  .lo-pol-body { display: none; padding: 0 4px 30px; }
-  .lo-pol[data-open="true"] .lo-pol-body { display: block; }
-  .lo-pol-body h4 {
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--white); font-weight: 400; margin: 0 0 16px;
-  }
-  .lo-pol-body h5 {
-    font-family: var(--serif); font-size: 1.1rem; font-weight: 500;
-    color: var(--white); margin: 24px 0 12px;
-  }
-  .lo-pol-body p {
-    color: var(--dim); font-size: 0.94rem; font-weight: 300; line-height: 1.8; margin: 0 0 14px;
-  }
-  .lo-pol-body em { font-style: italic; }
-  .lo-pol-body ul { list-style: none; margin: 0 0 14px; }
-  .lo-pol-body li {
-    position: relative; padding: 9px 0 9px 22px; color: var(--dim);
-    font-size: 0.94rem; font-weight: 300; line-height: 1.8;
-  }
-  .lo-pol-body li::before {
-    content: ''; position: absolute; left: 0; top: 18px;
-    width: 6px; height: 6px; border-radius: 50%; background: var(--teal);
-  }
-
   /* .lo-policies / .lo-policy styled the two outbound links to
      oceanforest.org that D2 replaced with the expandable sections above.
      Kept alongside the dark rules for the same later cleanup pass. */
@@ -266,27 +126,13 @@
 </head>
 <body class="light">
 
-<a class="skip" href="#main">Skip to the lodge</a>
-
-<header class="site-head" id="siteHead">
-  <a href="/v2/index.html" class="nav-logo">
-    <img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">
-    <img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">
-  </a>
-  <nav class="nav-menu" id="navMenu" aria-label="Main">
-    <a href="/v2/arriving.html">Arriving</a>
-    <a href="/v2/lodging.html" class="current" aria-current="page">Lodging</a>
-    <a href="/v2/experiences.html">Experiences</a>
-    <a href="/v2/retreats.html">Retreats</a>
-    <a href="/v2/about.html">About</a>
-  </nav>
-  <div class="nav-actions">
-    <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
-    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-</header>
+<!-- The header. Built by shell.js from its NAV list - see "HEADER: built
+     here, once" in that file. This used to be ~20 lines of hand-written menu
+     in every page, six copies of the same thing; adding one link meant six
+     edits. To change the menu, edit NAV in shell.js. Do not put markup back
+     in here. shell.css holds this div at the header's height so the page
+     does not jump while it loads. -->
+<div data-shell="header"></div>
 
 <div class="hero" id="hero">
   <div class="hero-media" data-hero-slug="lodging"></div>
@@ -302,16 +148,6 @@
 
 <main id="main">
 
-  <!-- Nature note, near the top. C11: the "coconut-laddered beach" paragraph
-       that opened this section is removed in full. -->
-  <section id="intro">
-    <div class="wrap">
-      <div class="lo-nature reveal" style="margin-top: 0;">
-        <p>This is one of the most thriving ecosystems on the planet. Rooms are bugproof, but life gets in. That is the place working exactly as it should. Expect to meet insects. It is part of being here, not a defect in your room.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- C12: "Choose your perfect room" now sits directly beneath the nature
        warning, above everything else on the page.
        C13: all three room types render expanded by default. The expand and
@@ -319,99 +155,108 @@
   <section id="rooms">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="eyebrow">The Rooms</span>
+        <span class="eyebrow">Lodging</span>
         <h2>Choose Your <span class="grad-text">Perfect Room</span></h2>
         <hr class="grad-bar">
-        <p class="lead">The rainforest at your doorstep, the Pacific steps away. Drift to sleep with the ocean. Wake up to birdsong, monkeys, and morning light through the canopy.</p>
+        <p class="lead">This is one of the most thriving ecosystems on the planet. Rooms are bugproof, but life gets in. That is the place working exactly as it should. Expect to meet insects. It is part of being here, not a defect in your room.</p>
       </div>
 
       <!-- Three across, the home page's card model, with Lodging's fuller
            detail kept under each. The photograph is a button: it opens the
            lightbox on that room's four photographs. data-gallery is the
            single source for both the card's first shot and the lightbox. -->
-      <div class="lo-rooms reveal" id="loRooms">
+      <div class="hm-rooms reveal" id="loRooms">
 
-        <article class="lo-room" data-room="beach"
-                 data-gallery="lodging/beach-bungalow-01.jpg,lodging/beach-bungalow-02.webp,lodging/beach-bungalow-03.webp,lodging/beach-bungalow-04.webp"
-                 data-gallery-note="Beach Bungalows">
-          <button class="lo-room-photo" type="button" aria-label="Open the Beach Bungalows photographs full screen">
-            <div class="lo-room-shot" data-media="lodging/beach-bungalow-01.jpg" data-ratio="4/3" data-note="Beach Bungalows"></div>
-            <span class="lo-room-count">1 of 4</span>
-            <span class="lo-room-expand" aria-hidden="true">
+        <article class="hm-room" data-room="beach">
+          <button class="hm-room-media" type="button"
+                  data-gallery="lodging/beach-bungalow-01.jpg,lodging/beach-bungalow-02.webp,lodging/beach-bungalow-03.webp,lodging/beach-bungalow-04.webp"
+                  data-gallery-note="Beach Bungalows"
+                  aria-label="Open the Beach Bungalows photographs full screen">
+            <div class="hm-shot hm-shot-a" data-media="lodging/beach-bungalow-01.jpg" data-ratio="4/3" data-note="Beach Bungalows"></div>
+            <div class="hm-shot hm-shot-b" data-media="lodging/beach-bungalow-02.webp" data-ratio="4/3" data-note="Beach Bungalows, second shot"></div>
+            <span class="hm-room-badge">1 of 4</span>
+            <span class="hm-room-zoom" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </button>
-          <div class="lo-room-body">
-            <div class="lo-room-top">
+          <div class="hm-room-body">
+            <div class="hm-room-top">
               <h3>Beach Bungalows</h3>
-              <span class="lo-room-price-head">From <b>$120</b> / night</span>
+              <span class="hm-room-price">From <b>$120</b> / night</span>
             </div>
-            <span class="lo-room-meta">Ideal for couples</span>
-            <p class="lo-room-tag">Steps from the Pacific. Fall asleep to the ocean breeze, wake up to blue water and monkeys playing in the trees, all from your own balcony.</p>
-            <ul>
+            <span class="hm-room-meta">Ideal for couples</span>
+            <p class="hm-room-detail">Steps from the Pacific. Fall asleep to the ocean breeze, wake up to blue water and monkeys playing in the trees, all from your own balcony.</p>
+            <div class="hm-room-extra">
+              <ul>
               <li>1 double bed</li>
               <li>Private balcony overlooking the ocean</li>
               <li>En-suite bathroom with natural ventilation</li>
               <li>Rustic open design · 260 ft² / 24 m²</li>
-            </ul>
-            <p class="lo-room-price">From <b>$120</b> per night</p>
-            <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+              </ul>
+              <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+            </div>
           </div>
         </article>
 
-        <article class="lo-room" data-room="jungle"
-                 data-gallery="lodging/jungle-suite-01.jpg,lodging/jungle-suite-02.webp,lodging/jungle-suite-03.webp,lodging/jungle-suite-04.webp"
-                 data-gallery-note="Jungle Suites">
-          <button class="lo-room-photo" type="button" aria-label="Open the Jungle Suites photographs full screen">
-            <div class="lo-room-shot" data-media="lodging/jungle-suite-01.jpg" data-ratio="4/3" data-note="Jungle Suites"></div>
-            <span class="lo-room-count">1 of 4</span>
-            <span class="lo-room-expand" aria-hidden="true">
+        <article class="hm-room" data-room="jungle">
+          <button class="hm-room-media" type="button"
+                  data-gallery="lodging/jungle-suite-01.jpg,lodging/jungle-suite-02.webp,lodging/jungle-suite-03.webp,lodging/jungle-suite-04.webp"
+                  data-gallery-note="Jungle Suites"
+                  aria-label="Open the Jungle Suites photographs full screen">
+            <div class="hm-shot hm-shot-a" data-media="lodging/jungle-suite-01.jpg" data-ratio="4/3" data-note="Jungle Suites"></div>
+            <div class="hm-shot hm-shot-b" data-media="lodging/jungle-suite-02.webp" data-ratio="4/3" data-note="Jungle Suites, second shot"></div>
+            <span class="hm-room-badge">1 of 4</span>
+            <span class="hm-room-zoom" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </button>
-          <div class="lo-room-body">
-            <div class="lo-room-top">
+          <div class="hm-room-body">
+            <div class="hm-room-top">
               <h3>Jungle Suites</h3>
-              <span class="lo-room-price-head">From <b>$140</b> / night</span>
+              <span class="hm-room-price">From <b>$140</b> / night</span>
             </div>
-            <span class="lo-room-meta">Ideal for families of three</span>
-            <p class="lo-room-tag">Forest views, partial ocean glimpses, and space to breathe. The monkeys visit. The birds arrive early. You won&rsquo;t mind.</p>
-            <ul>
+            <span class="hm-room-meta">Ideal for families of three</span>
+            <p class="hm-room-detail">Forest views, partial ocean glimpses, and space to breathe. The monkeys visit. The birds arrive early. You won&rsquo;t mind.</p>
+            <div class="hm-room-extra">
+              <ul>
               <li>1 double bed + 1 single bed</li>
               <li>Large balcony with partial ocean view</li>
               <li>Hardwood floors · 430 ft² / 40 m²</li>
               <li>En-suite bathroom with hot water</li>
-            </ul>
-            <p class="lo-room-price">From <b>$140</b> per night</p>
-            <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+              </ul>
+              <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+            </div>
           </div>
         </article>
 
-        <article class="lo-room" data-room="family"
-                 data-gallery="lodging/family-bungalow-01.jpg,lodging/family-bungalow-02.webp,lodging/family-bungalow-03.webp,lodging/family-bungalow-04.webp"
-                 data-gallery-note="Family Bungalows">
-          <button class="lo-room-photo" type="button" aria-label="Open the Family Bungalows photographs full screen">
-            <div class="lo-room-shot" data-media="lodging/family-bungalow-01.jpg" data-ratio="4/3" data-note="Family Bungalows"></div>
-            <span class="lo-room-count">1 of 4</span>
-            <span class="lo-room-expand" aria-hidden="true">
+        <article class="hm-room" data-room="family">
+          <button class="hm-room-media" type="button"
+                  data-gallery="lodging/family-bungalow-01.jpg,lodging/family-bungalow-02.webp,lodging/family-bungalow-03.webp,lodging/family-bungalow-04.webp"
+                  data-gallery-note="Family Bungalows"
+                  aria-label="Open the Family Bungalows photographs full screen">
+            <div class="hm-shot hm-shot-a" data-media="lodging/family-bungalow-01.jpg" data-ratio="4/3" data-note="Family Bungalows"></div>
+            <div class="hm-shot hm-shot-b" data-media="lodging/family-bungalow-02.webp" data-ratio="4/3" data-note="Family Bungalows, second shot"></div>
+            <span class="hm-room-badge">1 of 4</span>
+            <span class="hm-room-zoom" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3H3v6M15 3h6v6M9 21H3v-6M15 21h6v-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </button>
-          <div class="lo-room-body">
-            <div class="lo-room-top">
+          <div class="hm-room-body">
+            <div class="hm-room-top">
               <h3>Family Bungalows</h3>
-              <span class="lo-room-price-head">From <b>$150</b> / night</span>
+              <span class="hm-room-price">From <b>$150</b> / night</span>
             </div>
-            <span class="lo-room-meta">Ideal for families up to 4 guests</span>
-            <p class="lo-room-tag">Room for everyone, and space to spread out. A double bed, two singles, a terrace, and the kind of quiet that makes families remember why they travel together.</p>
-            <ul>
+            <span class="hm-room-meta">Ideal for families up to 4 guests</span>
+            <p class="hm-room-detail">Room for everyone, and space to spread out. A double bed, two singles, a terrace, and the kind of quiet that makes families remember why they travel together.</p>
+            <div class="hm-room-extra">
+              <ul>
               <li>1 double + 2 single beds</li>
               <li>Private terrace overlooking garden</li>
               <li>Generous layout · 540 ft² / 50 m²</li>
               <li>En-suite bathroom with fans</li>
-            </ul>
-            <p class="lo-room-price">From <b>$150</b> per night</p>
-            <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+              </ul>
+              <a class="cta" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
+            </div>
           </div>
         </article>
 
@@ -420,7 +265,7 @@
   </section>
 
   <!-- Amenity row — five photographs, not icons -->
-  <section id="included">
+  <section id="included" class="flush-top flush-bottom">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow">What is included with your stay</span>
@@ -429,46 +274,31 @@
       </div>
       <div class="lo-amen reveal">
         <div class="lo-amen-item">
-          <div data-media="amenities/meals.webp" data-ratio="1/1" data-note="Breakfast, served fresh each morning"></div>
+          <div data-media="amenities/meals-photo.webp" data-ratio="1/1" data-note="Breakfast, served fresh each morning"></div>
           <p class="lo-amen-label">Breakfast, served fresh each morning</p>
         </div>
         <div class="lo-amen-item">
-          <div data-media="amenities/bed.webp" data-ratio="1/1" data-note="Queen-size double bed"></div>
+          <div data-media="amenities/bed-photo.webp" data-ratio="1/1" data-note="Queen-size double bed"></div>
           <p class="lo-amen-label">Queen-size double bed</p>
         </div>
         <div class="lo-amen-item">
-          <div data-media="amenities/linens.webp" data-ratio="1/1" data-note="Fresh linens and towels"></div>
+          <div data-media="amenities/linens-photo.webp" data-ratio="1/1" data-note="Fresh linens and towels"></div>
           <p class="lo-amen-label">Fresh linens and towels</p>
         </div>
         <div class="lo-amen-item">
-          <div data-media="amenities/mosquito-nets.webp" data-ratio="1/1" data-note="Mosquito nets"></div>
+          <div data-media="amenities/mosquito-nets-photo.webp" data-ratio="1/1" data-note="Mosquito nets"></div>
           <p class="lo-amen-label">Mosquito nets</p>
         </div>
         <div class="lo-amen-item">
-          <div data-media="amenities/hand-soap.webp" data-ratio="1/1" data-note="Hand soap"></div>
+          <div data-media="amenities/hand-soap-photo.webp" data-ratio="1/1" data-note="Hand soap"></div>
           <p class="lo-amen-label">Hand soap</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Hand-drawn property map — real file, reused directly -->
-  <section id="property">
-    <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">The Grounds</span>
-        <h2>The Property, <span class="grad-text">by Hand</span></h2>
-        <hr class="grad-bar">
-      </div>
-      <figure class="lo-map reveal">
-        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
-        <figcaption>The grounds, drawn by hand: beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
-      </figure>
-    </div>
-  </section>
-
   <!-- Food — no menu, ever -->
-  <section id="food">
+  <section id="food" class="tight-top">
     <div class="wrap">
       <div class="sec-head reveal">
         <span class="eyebrow">Wholesome Cuisine</span>
@@ -520,18 +350,38 @@
           <p class="lo-food-body">Every dish can be tailored to your needs. We accommodate allergies and special diets: gluten-free, vegetarian, and vegan. Share your preferences at least 48 hours before arrival.</p>
         </div>
         <div class="media-shot">
-          <div class="lo-gal-frame">
-            <div class="lo-gal-stage" id="loFoodStage"></div>
-            <button class="lo-gal-arrow lo-gal-prev" type="button" id="loFoodPrev" aria-label="Previous photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="lo-gal-arrow lo-gal-next" type="button" id="loFoodNext" aria-label="Next photo">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
+          <!-- The shared slider. Arrows and dots are built by shell.js; no
+               data-auto, so it waits to be asked, which is the rule for any
+               set of photographs somebody is actually comparing. Add a file
+               to media/property/ and one name to data-files. -->
+          <div class="sl" data-ratio="4/3"
+               data-label="The open-air dining room"
+               data-files="property/kitchen-table.jpg,property/dining-01.webp,property/dining-02.webp,property/dining-03.webp,property/dining-04.webp,property/dining-05.webp,property/dining-06.webp,property/dining-07.webp,property/dining-08.webp,property/dining-09.webp">
+            <!-- The stage carries data-gallery, not the slider root: the
+                 arrows and dots are appended to the root, and a lightbox that
+                 also opened when you clicked "next" would be unusable. -->
+            <button class="sl-stage" type="button"
+                    aria-label="Open the dining photographs full screen"
+                    data-gallery="property/kitchen-table.jpg,property/dining-01.webp,property/dining-02.webp,property/dining-03.webp,property/dining-04.webp,property/dining-05.webp,property/dining-06.webp,property/dining-07.webp,property/dining-08.webp,property/dining-09.webp"
+                    data-gallery-note="The open-air dining room"></button>
           </div>
-          <div class="lo-gal-dots" id="loFoodDots" role="group" aria-label="Dining photographs"></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Hand-drawn property map — real file, reused directly -->
+  <section id="property">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The Grounds</span>
+        <h2>The Property, <span class="grad-text">by Hand</span></h2>
+        <hr class="grad-bar">
+      </div>
+      <figure class="figure reveal">
+        <div data-media="property/property-map.webp" data-ratio="49/60" data-note="Hand-drawn property map"></div>
+        <figcaption>The grounds, drawn by hand: beach bungalows on the sand, jungle suites in the trees, the shala at the center.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -550,15 +400,15 @@
            links out to oceanforest.org. Both texts are verbatim, retrieved
            from the source 7 August 2026. -->
       <div class="lo-rates reveal">
-        <div class="lo-pols" id="loPols">
+        <div class="xp-list" id="loPols" data-exclusive="false" style="max-width:860px">
 
-          <div class="lo-pol" data-open="false">
-            <button class="lo-pol-head" type="button" aria-expanded="false">
+          <div class="xp" data-open="false">
+            <button class="xp-head" type="button" aria-expanded="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" stroke-linejoin="round"/></svg>
-              <span class="lo-pol-name">Hold Harmless Agreement</span>
-              <span class="lo-pol-arrow" aria-hidden="true">&rsaquo;</span>
+              <span class="xp-name">Hold Harmless Agreement</span>
+              <span class="xp-arrow" aria-hidden="true">&rsaquo;</span>
             </button>
-            <div class="lo-pol-body">
+            <div class="xp-body">
               <h4>HOLD HARMLESS AGREEMENT — For Visiting Ocean Forest Ecolodge Retreat</h4>
               <p><em>All adult visitors, whether Independent Travelers or participants on Group Retreats, agree to this Hold Harmless Agreement.</em></p>
               <ul>
@@ -576,13 +426,13 @@
             </div>
           </div>
 
-          <div class="lo-pol" data-open="false">
-            <button class="lo-pol-head" type="button" aria-expanded="false">
+          <div class="xp" data-open="false">
+            <button class="xp-head" type="button" aria-expanded="false">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 2v4M16 2v4M4 8h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z" stroke-linejoin="round"/></svg>
-              <span class="lo-pol-name">Cancellation Policy</span>
-              <span class="lo-pol-arrow" aria-hidden="true">&rsaquo;</span>
+              <span class="xp-name">Cancellation Policy</span>
+              <span class="xp-arrow" aria-hidden="true">&rsaquo;</span>
             </button>
-            <div class="lo-pol-body">
+            <div class="xp-body">
               <h4>PAYMENT AND CANCELLATION POLICIES</h4>
               <h5>Book a Stay Program / Independent Travelers</h5>
               <ul>
@@ -638,7 +488,7 @@
       <div>
         <h3>Blog</h3>
         <ul>
-          <li><a href="/blog.html">From the lodge</a></li>
+          <li><a href="/v2/blog.html">From the lodge</a></li>
         </ul>
       </div>
       <div>
@@ -657,207 +507,13 @@
   </div>
 </footer>
 
-<!-- Lightbox. Inert until a room photograph is clicked: [hidden] keeps it out
-     of the tab order and out of the accessibility tree. -->
-<div class="lb" id="loLightbox" role="dialog" aria-modal="true" aria-label="Room photographs" hidden>
-  <span class="lb-title" id="lbTitle"></span>
-  <img class="lb-img" id="lbImg" alt="">
-  <button class="lb-btn lb-prev" id="lbPrev" type="button" aria-label="Previous photograph">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <button class="lb-btn lb-next" id="lbNext" type="button" aria-label="Next photograph">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-  <button class="lb-btn lb-close" id="lbClose" type="button" aria-label="Close">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
-  </button>
-  <span class="lb-count" id="lbCount"></span>
-</div>
-
 <script src="/v2/shell.js"></script>
 <script>
-(function () {
-  'use strict';
-
-  /* ── SHARED PHOTO HELPERS ────────────────────────────────────────────────
-     Used by the food slider and the lightbox below. A missing file falls
-     back to the shell's labelled placeholder, exactly as any other
-     [data-media] host does: a missing file is not a bug here, it is a note
-     telling you which filename to drop in. */
-  function placeholder(file, note) {
-    var d = document.createElement('div');
-    d.className = 'ph';
-    d.innerHTML =
-      '<span class="ph-label">Photo to come</span>' +
-      '<span class="ph-file">media/' + file + '</span>' +
-      (note ? '<span class="ph-note">' + note + '</span>' : '');
-    return d;
-  }
-
-  function paint(stage, file, note) {
-    stage.innerHTML = '';
-    stage.style.aspectRatio = '4 / 3';
-    var img = new Image();
-    img.onload = function () {
-      stage.innerHTML = '';
-      img.alt = note || '';
-      img.style.width = '100%';
-      img.style.height = '100%';
-      img.style.objectFit = 'cover';
-      img.style.display = 'block';
-      img.style.borderRadius = '6px';
-      stage.appendChild(img);
-    };
-    img.onerror = function () {
-      stage.innerHTML = '';
-      stage.appendChild(placeholder(file, note));
-    };
-    img.src = '/media/' + file;
-  }
-
-  /* ── FOOD SLIDER ─────────────────────────────────────────────────────────
-     The dining photographs, beside the copy. Arrows and dots drive the same
-     show(n), so they can never drift apart, and the arrows wrap. Add a file
-     to media/property/ and one line to this list; nothing else changes. */
-  var FOOD = [
-    'property/kitchen-table.jpg',
-    'property/dining-01.webp', 'property/dining-02.webp', 'property/dining-03.webp',
-    'property/dining-04.webp', 'property/dining-05.webp', 'property/dining-06.webp',
-    'property/dining-07.webp', 'property/dining-08.webp', 'property/dining-09.webp'
-  ];
-
-  var foodStage = document.getElementById('loFoodStage');
-  var foodDots  = document.getElementById('loFoodDots');
-  if (foodStage && foodDots) {
-    var foodAt = 0;
-
-    function foodShow(n) {
-      foodAt = n;
-      paint(foodStage, FOOD[n], 'The open-air dining room, photograph ' + (n + 1) + ' of ' + FOOD.length);
-      foodDots.querySelectorAll('button').forEach(function (b, i) {
-        b.setAttribute('aria-current', i === n ? 'true' : 'false');
-      });
-    }
-
-    FOOD.forEach(function (file, i) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.setAttribute('aria-label', 'Dining photograph ' + (i + 1) + ' of ' + FOOD.length);
-      b.addEventListener('click', function () { foodShow(i); });
-      foodDots.appendChild(b);
-    });
-
-    var fPrev = document.getElementById('loFoodPrev');
-    var fNext = document.getElementById('loFoodNext');
-    if (FOOD.length < 2) {
-      if (fPrev) fPrev.style.display = 'none';
-      if (fNext) fNext.style.display = 'none';
-      foodDots.style.display = 'none';
-    } else {
-      if (fPrev) fPrev.addEventListener('click', function () {
-        foodShow((foodAt - 1 + FOOD.length) % FOOD.length);
-      });
-      if (fNext) fNext.addEventListener('click', function () {
-        foodShow((foodAt + 1) % FOOD.length);
-      });
-    }
-
-    foodShow(0);
-  }
-
-  /* ── LIGHTBOX ────────────────────────────────────────────────────────────
-     Clicking a room card's photograph opens that room's four photographs
-     full screen. Arrows and the left/right keys step through and wrap,
-     Escape closes, clicking the backdrop closes, and focus returns to the
-     photograph that opened it so a keyboard user is not dumped at the top of
-     the page. Scrolling behind the overlay is locked while it is open. */
-  var lb       = document.getElementById('loLightbox');
-  var lbImg    = document.getElementById('lbImg');
-  var lbCount  = document.getElementById('lbCount');
-  var lbTitle  = document.getElementById('lbTitle');
-  var lbPrev   = document.getElementById('lbPrev');
-  var lbNext   = document.getElementById('lbNext');
-  var lbClose  = document.getElementById('lbClose');
-
-  if (lb && lbImg) {
-    var lbFiles = [];
-    var lbLabel = '';
-    var lbAt = 0;
-    var lbOpener = null;
-
-    function lbPaint() {
-      lbImg.src = '/media/' + lbFiles[lbAt];
-      lbImg.alt = lbLabel + ', photograph ' + (lbAt + 1) + ' of ' + lbFiles.length;
-      lbCount.textContent = (lbAt + 1) + ' of ' + lbFiles.length;
-      lbTitle.textContent = lbLabel;
-      var many = lbFiles.length > 1;
-      lbPrev.hidden = !many;
-      lbNext.hidden = !many;
-    }
-
-    function lbStep(d) {
-      lbAt = (lbAt + d + lbFiles.length) % lbFiles.length;
-      lbPaint();
-    }
-
-    function lbOpen(files, label, opener) {
-      lbFiles = files; lbLabel = label; lbAt = 0; lbOpener = opener || null;
-      lbPaint();
-      lb.hidden = false;
-      document.body.style.overflow = 'hidden';
-      lbClose.focus();
-    }
-
-    function lbShut() {
-      lb.hidden = true;
-      document.body.style.overflow = '';
-      lbImg.removeAttribute('src');
-      if (lbOpener) { lbOpener.focus(); lbOpener = null; }
-    }
-
-    lbPrev.addEventListener('click', function () { lbStep(-1); });
-    lbNext.addEventListener('click', function () { lbStep(1); });
-    lbClose.addEventListener('click', lbShut);
-
-    /* Only the backdrop closes, never the photograph itself. */
-    lb.addEventListener('click', function (e) { if (e.target === lb) lbShut(); });
-
-    document.addEventListener('keydown', function (e) {
-      if (lb.hidden) return;
-      if (e.key === 'Escape') { lbShut(); }
-      else if (e.key === 'ArrowLeft')  { lbStep(-1); }
-      else if (e.key === 'ArrowRight') { lbStep(1); }
-    });
-
-    document.querySelectorAll('.lo-room[data-gallery]').forEach(function (room) {
-      var files = room.getAttribute('data-gallery').split(',').filter(Boolean);
-      var label = room.getAttribute('data-gallery-note') || '';
-      var btn = room.querySelector('.lo-room-photo');
-      if (!files.length || !btn) return;
-
-      /* The card's own badge is written from the same list, so it can never
-         claim a count the lightbox does not have. */
-      var badge = room.querySelector('.lo-room-count');
-      if (badge) badge.textContent = '1 of ' + files.length;
-
-      btn.addEventListener('click', function () { lbOpen(files, label, btn); });
-    });
-  }
-
-  /* ── THE TWO POLICIES (D2) ───────────────────────────────────────────────
-     Same expand-in-place pattern as the rooms above. Both closed on load.
-     Unlike the activities on Experiences these are independent: a visitor
-     comparing the refund window against the waiver can hold both open. */
-  document.querySelectorAll('#loPols .lo-pol').forEach(function (pol) {
-    var head = pol.querySelector('.lo-pol-head');
-    if (!head) return;
-    head.addEventListener('click', function () {
-      var open = pol.getAttribute('data-open') !== 'true';
-      pol.setAttribute('data-open', open ? 'true' : 'false');
-      head.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-})();
+/* Everything this page used to run itself - the room expander, the room
+   galleries, the food slider, the two policies, the lightbox and two copies
+   of the media helpers - is now shared code in shell.js. Nothing page-local
+   is left, so there is no page script.
+   See .hm-room, .sl, .lb and .xp in shell.css / shell.js. */
 </script>
 </body>
 </html>

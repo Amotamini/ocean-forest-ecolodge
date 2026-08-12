@@ -46,44 +46,9 @@
   .hm-film:hover, .hm-film:focus-visible { border-color: var(--teal); background: rgba(14, 19, 16, 0.5); }
   .hm-film svg { width: 15px; height: 15px; flex-shrink: 0; }
 
-  /* ── ROOM CARDS — photo-led, hover swaps the photo and expands the detail ─ */
-  .hm-rooms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 8px; }
-  @media (max-width: 900px) { .hm-rooms { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } }
-  .hm-room {
-    display: block; text-decoration: none; border: 1px solid var(--hairline);
-    border-radius: 10px; overflow: hidden; background: var(--ink-2);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .hm-room:hover, .hm-room:focus-visible { border-color: var(--teal); transform: translateY(-3px); }
-  /* Two stacked shots; the second fades in on hover/focus. Missing files show
-     the shell's labelled placeholder in each host, exactly as on Lodging. */
-  .hm-room-media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--ink-3); }
-  .hm-shot { position: absolute; inset: 0; transition: opacity 0.4s ease; }
-  .hm-shot-b { opacity: 0; }
-  .hm-room.is-open .hm-shot-b { opacity: 1; }
-  .hm-shot .ph { border-radius: 0; }
-  .hm-room-body { padding: 22px 22px 24px; }
-  .hm-room-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .hm-room-top h3 { font-family: var(--serif); font-weight: 400; font-size: 1.5rem; color: var(--white); margin: 0; }
-  .hm-room-price { font-family: var(--serif); font-size: 1.02rem; color: var(--white); white-space: nowrap; }
-  .hm-room-price b { font-weight: 600; }
-  .hm-room-meta {
-    display: block; margin-top: 8px; font-family: var(--mono); font-size: 0.6rem;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-light);
-  }
-  /* The short detail expands in place on hover/focus. */
-  .hm-room-detail {
-    color: var(--dim); font-size: 0.92rem; font-weight: 300; line-height: 1.7;
-    max-height: 0; opacity: 0; overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.3s ease;
-    margin-top: 0;
-  }
-  .hm-room.is-open .hm-room-detail { max-height: 160px; opacity: 1; margin-top: 14px; }
-  .hm-room-more {
-    display: inline-block; margin-top: 16px; font-family: var(--mono);
-    font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--white);
-  }
-  .hm-room-more::after { content: ' \203A'; }
+  /* The room-card rules moved to shell.css on 2026-08-09 so the home page,
+     Lodging and Retreats all render rooms from one definition instead of
+     three drifting copies. Nothing page-specific is left here. */
 
   /* ── THREE VISUAL BLOCKS — Food, Tours, Retreats ─────────────────────────
      C4: these now use the shared .media-bleed .media-fade treatment from
@@ -93,21 +58,16 @@
      only the text column's own typography. */
   .hm-block + .hm-block { margin-top: 84px; }
   .hm-block-body h3 { font-family: var(--serif); font-weight: 300; font-size: clamp(1.8rem, 3.4vw, 2.5rem); color: var(--white); line-height: 1.12; margin: 0 0 8px; }
-  .hm-block-quote { font-family: var(--serif); font-style: italic; font-size: 1.3rem; color: var(--white); line-height: 1.5; margin: 0 0 18px; }
+  /* .hm-block-quote is gone (2026-08-09). The middle block used it as its
+     heading while the other two used an h3, so one section of three had a
+     smaller italic title and the other two a large roman one - two type
+     styles doing the same job, side by side. All three are h3 now. */
   .hm-block-body p.hm-block-copy { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.8; margin: 0 0 22px; }
 
-  /* ── REVIEWS — honest labelled slot, no invented quotes ─────────────────── */
-  .hm-reviews-slot {
-    border: 1px dashed rgba(42, 173, 168, 0.55); border-radius: 10px;
-    background: repeating-linear-gradient(45deg, rgba(42,173,168,0.05) 0 12px, rgba(42,173,168,0.09) 12px 24px);
-    padding: 54px 32px; text-align: center; margin-top: 8px;
-  }
-  body.light .hm-reviews-slot {
-    border-color: rgba(22, 112, 126, 0.5);
-    background: repeating-linear-gradient(45deg, rgba(22,112,126,0.05) 0 12px, rgba(22,112,126,0.1) 12px 24px);
-  }
-  .hm-reviews-label { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light); }
-  .hm-reviews-note { margin-top: 12px; color: var(--dim); font-size: 0.94rem; font-weight: 300; max-width: 44ch; margin-left: auto; margin-right: auto; }
+  /* The .hm-reviews-slot rules were deleted 2026-08-11 with the empty frame
+     they styled. Reviews are real now and come from the shared component;
+     its .rv-* styling lives with it in shared-sections.js, because a review
+     card has to look like Google rather than like this page. */
 
   /* ── NEWSLETTER — real field + button, submission target not yet wired ──── */
   .hm-news { max-width: 640px; }
@@ -126,33 +86,20 @@
     text-transform: uppercase; padding: 13px 26px; border-radius: 26px;
   }
   .hm-news-btn:hover { filter: brightness(1.08); }
-  .hm-news-msg { margin-top: 14px; font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--teal-light); }
+  /* A full sentence of explanation, so sans. */
+  .hm-news-msg { margin-top: 14px; font-family: var(--sans); font-size: 0.88rem; color: var(--teal-light); }
   .hm-news-msg[hidden] { display: none; }
 </style>
 </head>
 <body class="light">
 
-<a class="skip" href="#main">Skip to the lodge</a>
-
-<header class="site-head" id="siteHead">
-  <a href="/v2/index.html" class="nav-logo">
-    <img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">
-    <img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">
-  </a>
-  <nav class="nav-menu" id="navMenu" aria-label="Main">
-    <a href="/v2/arriving.html">Arriving</a>
-    <a href="/v2/lodging.html">Lodging</a>
-    <a href="/v2/experiences.html">Experiences</a>
-    <a href="/v2/retreats.html">Retreats</a>
-    <a href="/v2/about.html">About</a>
-  </nav>
-  <div class="nav-actions">
-    <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
-    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-</header>
+<!-- The header. Built by shell.js from its NAV list - see "HEADER: built
+     here, once" in that file. This used to be ~20 lines of hand-written menu
+     in every page, six copies of the same thing; adding one link meant six
+     edits. To change the menu, edit NAV in shell.js. Do not put markup back
+     in here. shell.css holds this div at the header's height so the page
+     does not jump while it loads. -->
+<div data-shell="header"></div>
 
 <!-- ══ HERO — PORTED FROM V1's index.html, structure unchanged ══════════════
      of-v2-revisions.md §3.1. This is V1's hero block: the eyebrow locating
@@ -173,10 +120,10 @@
            the two words that say where this is and what it is. -->
       <h1>Your <span class="grad-text">beachfront</span> ecolodge at the edge of <span class="grad-text">Corcovado</span> National Park.</h1>
       <p class="hero-sub">The most biodiverse place on Earth. No roads. No crowds. Just jungle.</p>
-      <!-- Watch the full film: the YouTube URL is a content slot (of-v2-home.md §6,
-           Ryan / Eli). Replace VIDEO_ID_TO_COME with the real full-film link. The
-           control below already works as a keyboard-reachable new-tab link. -->
-      <a class="hm-film" href="https://www.youtube.com/watch?v=VIDEO_ID_TO_COME" target="_blank" rel="noopener">
+      <!-- The full film. Same video that plays muted behind the hero, opened
+           full size on YouTube in a new tab. Wired 2026-08-09; this was a
+           VIDEO_ID_TO_COME placeholder until then. -->
+      <a class="hm-film" href="https://www.youtube.com/watch?v=AjqtTXfJbeg" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke-linejoin="round"/></svg>
         Watch the full film
       </a>
@@ -333,7 +280,7 @@
         </div>
         <div class="hm-block-body">
           <span class="eyebrow">Tours and Adventures</span>
-          <p class="hm-block-quote">Where the silence of the jungle speaks loudest.</p>
+          <h3>Where the silence of the jungle speaks loudest</h3>
           <p class="hm-block-copy">Rainforest Discovery, Ocean Discovery, and eight complementary activities, from waterfall hikes to the Sierpe mangroves. Every tour departs from the lodge.</p>
           <a class="cta ghost" href="/v2/experiences.html">See the tours</a>
         </div>
@@ -356,17 +303,20 @@
   </section>
 
   <!-- ══ REVIEWS — honest "to come" slot, no invented quotes ═════════════════ -->
+  <!-- ══ REVIEWS — real, as of 2026-08-11 ═══════════════════════════════════
+       This was a dashed empty frame reading "Guest reviews to come. Nothing
+       is quoted until it is real." It is real now: four Google reviews Mehdi
+       pulled off the lodge's Google page, transcribed verbatim into REVIEWS
+       in shared-sections.js.
+
+       Styled to look like Google's own widget rather than like this site,
+       on purpose - a review has to read as evidence from somewhere else. No
+       overall score and no review count are shown, because we have four
+       screenshots and not the lodge's real average. The link at the bottom
+       goes to Google, where the true numbers are. -->
   <section id="reviews" class="alt">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">Guests</span>
-        <h2>What guests <span class="grad-text">say</span></h2>
-        <hr class="grad-bar">
-      </div>
-      <div class="hm-reviews-slot reveal">
-        <p class="hm-reviews-label">Guest reviews to come</p>
-        <p class="hm-reviews-note">Testimonials from Eli will land here. Nothing is quoted until it is real.</p>
-      </div>
+      <div class="reveal" data-shared="reviews"></div>
     </div>
   </section>
 
@@ -390,6 +340,25 @@
         </form>
         <p class="hm-news-msg" id="hmNewsMsg" role="status" hidden>Signup is not connected yet. Nobody was subscribed. This form is a placeholder awaiting its mailing-list endpoint.</p>
       </div>
+    </div>
+  </section>
+
+  <!-- ══ FAQ — moved here from About 2026-08-11, Mehdi's call: "The FAQ in
+       about, good to know should transfer to the main page just above the
+       gallery."
+
+       It is the shared component now, not markup. About's six general
+       questions and Arriving's three arrival questions were merged into one
+       list of nine in shared-sections.js; the home page shows all of them,
+       Arriving shows the six tagged 'arrival'. Adding a question is one entry
+       in that file and it appears in both places.
+
+       The merge also settled a contradiction the two lists had been carrying
+       in public - About said backpacks only, Arriving said a suitcase is
+       fine. See the PACK note in shared-sections.js. -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="reveal" data-shared="faq"></div>
     </div>
   </section>
 
@@ -433,7 +402,7 @@
       <div>
         <h3>Blog</h3>
         <ul>
-          <li><a href="/blog.html">From the lodge</a></li>
+          <li><a href="/v2/blog.html">From the lodge</a></li>
         </ul>
       </div>
       <div>
@@ -453,24 +422,19 @@
 </footer>
 
 <script src="/v2/shell.js"></script>
+<!-- Added 2026-08-11 with the FAQ. This page had never needed
+     shared-sections.js before - it mounts no tours and no logistics - so the
+     new <div data-shared="faq"> rendered nothing at all and the section came
+     out as 208px of empty padding. A mount with no builder loaded fails
+     silently, which is the trap: the markup looks right in the file.
+     Any page carrying a data-shared attribute must load this file. -->
+<script src="/v2/shared-sections.js"></script>
 <script>
 (function () {
   'use strict';
 
-  /* ── ROOM CARDS — hover-swap the photo and expand the detail in place ─────
-     The visual state is one class, .is-open, toggled on pointer and focus.
-     CSS does the actual swap and expand; this only decides when. Pointer
-     covers mouse hover; focusin/focusout covers keyboard so a tabbed-to card
-     opens too. The card itself is a link to lodging.html, unchanged. */
-  var cards = document.querySelectorAll('.hm-room');
-  cards.forEach(function (card) {
-    function open()  { card.classList.add('is-open'); }
-    function close() { card.classList.remove('is-open'); }
-    card.addEventListener('mouseenter', open);
-    card.addEventListener('mouseleave', close);
-    card.addEventListener('focusin', open);
-    card.addEventListener('focusout', close);
-  });
+  /* The room-card hover handler moved to shell.js on 2026-08-09, with the
+     CSS, so every page that shows rooms behaves the same way. */
 
   /* ── NEWSLETTER — inert on purpose ────────────────────────────────────────
      No endpoint is decided yet (of-v2-home.md §6). Block the submit so the

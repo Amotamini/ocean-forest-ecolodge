@@ -25,19 +25,191 @@ var GALLERY = [
      runs and there is no flash of the wrong palette. Nothing is read from
      storage, so a stale value left there by the old toggle has no effect. */
 
+  /* ── HEADER: built here, once, for every page ────────────────────────────
+     Until 2026-08-11 this markup was hand-written into all six pages. It had
+     to be: this is a static site with no build step, so nothing assembles a
+     page from parts - whatever is in the .html file is what the browser
+     gets. shell.js owned the header's BEHAVIOUR from the start and never
+     owned its MARKUP, so there were six copies of the menu driven by one
+     brain. Adding one link meant six edits, and five of them going right was
+     a silently broken site.
+
+     Mehdi, 2026-08-11: "The nav should be the same for the page, not hand
+     written right? Why is there 6 copies?" It is one now. A page carries
+     <div data-shell="header"></div> and nothing else.
+
+     Two things make that safe on a site with no build step:
+
+     - shell.css reserves the header's height on the empty mount, so the page
+       does not jump when the real header lands in it.
+     - The current page is read from the URL rather than written into the
+       markup, which was the only thing that differed between the six copies
+       anyway. Nothing to keep in sync.
+
+     ADDING OR RENAMING A LINK: edit NAV below. That is the whole job. */
+  var NAV = [
+    { href: '/v2/arriving.html',    label: 'Arriving' },
+    { href: '/v2/lodging.html',     label: 'Lodging' },
+    { href: '/v2/experiences.html', label: 'Experiences' },
+    { href: '/v2/retreats.html',    label: 'Retreats' },
+    /* About is a link AND a menu - Mehdi's call: clicking it goes to the
+       About page, hovering it opens the three below. A top-level item that
+       only opens a menu strands anyone who wanted the page itself. */
+    { href: '/v2/about.html', label: 'About', children: [
+      { href: '/v2/about.html', label: 'About the lodge' },
+      { href: '/v2/blog.html',  label: 'Blog' },
+      { href: 'https://rainforest-medicine-gatherings.vercel.app/',
+        label: 'Rainforest Medicine', external: true }
+    ] }
+  ];
+
+  var BOOK_URL = 'https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3';
+
+  /* A page is "current" if the path matches. index.html is also '/v2/' and
+     '/v2', and Vercel serves these without the .html because of cleanUrls,
+     so compare on the stem rather than the literal string. */
+  function stem(path) {
+    return String(path || '')
+      .replace(/\/index\.html$/, '/')
+      .replace(/\.html$/, '')
+      .replace(/\/$/, '') || '/v2';
+  }
+
+  function navLinkHTML(item, here) {
+    var on = stem(item.href) === here;
+    return '<a href="' + item.href + '"' +
+           (item.external ? ' target="_blank" rel="noopener"' : '') +
+           (on ? ' class="current" aria-current="page"' : '') + '>' +
+           item.label + (item.external ? ' <span aria-hidden="true">&#8599;</span>' : '') +
+           '</a>';
+  }
+
+  function buildHeader(mount) {
+    var here = stem(location.pathname);
+
+    var items = NAV.map(function (item) {
+      if (!item.children) return navLinkHTML(item, here);
+
+      /* One <a> plus a panel. The panel is a sibling of the link, not inside
+         it: an <a> may not contain other <a>s, and a browser that repairs
+         that markup will move the children out from under you. */
+      var childOn = item.children.some(function (c) { return !c.external && stem(c.href) === here; });
+      return '<span class="nav-drop">' +
+               '<a href="' + item.href + '" class="nav-drop-top' +
+                 (childOn ? ' current' : '') + '"' +
+                 (childOn ? ' aria-current="page"' : '') + '>' +
+                 item.label +
+                 '<svg class="nav-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+                 'stroke-width="1.8" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" ' +
+                 'stroke-linejoin="round"/></svg>' +
+               '</a>' +
+               '<span class="nav-drop-menu">' +
+                 item.children.map(function (c) { return navLinkHTML(c, here); }).join('') +
+               '</span>' +
+             '</span>';
+    }).join('');
+
+    mount.outerHTML =
+      '<a class="skip" href="#main">Skip to the lodge</a>' +
+      '<header class="site-head" id="siteHead">' +
+        '<a href="/v2/index.html" class="nav-logo">' +
+          '<img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">' +
+          '<img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">' +
+        '</a>' +
+        '<nav class="nav-menu" id="navMenu" aria-label="Main">' + items + '</nav>' +
+        '<div class="nav-actions">' +
+          '<a class="book-btn" href="' + BOOK_URL + '" rel="noopener">Book now</a>' +
+          '<button class="burger" id="burger" type="button" aria-label="Menu" ' +
+                  'aria-expanded="false" aria-controls="navMenu">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+            'aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>' +
+          '</button>' +
+        '</div>' +
+      '</header>';
+  }
+
+  var headerMount = document.querySelector('[data-shell="header"]');
+  if (headerMount) buildHeader(headerMount);
+
+  /* ── BAND SPACING ────────────────────────────────────────────────────────
+     A .media-band fades into the page at its top and bottom edges. That fade
+     is already about 70px of visual breathing room, so a section that adds
+     its own 104px on the same edge shows roughly 280px of white where a
+     text-led section shows 170px. Four sections on this site had that fault
+     - Arriving #layer3, Experiences #break, About #story and Retreats
+     #conservation - and it is why Mehdi read Arriving as a different page
+     from the home page although both obeyed the same padding rule.
+
+     So: if a section's content STARTS with a band, the section loses its top
+     padding. If it ENDS with one, it loses its bottom padding. The band's
+     own fade does that job.
+
+     Done here rather than by hand on each page for the reason everything
+     else moved into this file: written on a page it is invisible from
+     anywhere else, and the next person to add a band will not know. The
+     .flush-top / .flush-bottom classes it applies are real classes in
+     shell.css, so anything this cannot detect can still be written by hand.
+
+     The hero case, separately: a band directly under a hero must fade
+     DOWNWARD only. There is no page above a hero to dissolve into, so a
+     top fade renders as a white stripe between the two. That has now been
+     found and fixed by hand twice - Experiences, then Retreats - which is
+     twice too many, so it is detected here as well. */
+  function bandSpacing() {
+    var main = document.getElementById('main');
+    var firstSection = main ? main.querySelector(':scope > section') : null;
+
+    Array.prototype.forEach.call(document.querySelectorAll('section'), function (sec) {
+      /* Bands live inside the section's .wrap, which is what gives them a
+         containing block wide enough for calc(50% - 50vw) to reach the
+         viewport edge. Look at the wrap's children, not the section's. */
+      var wrap = sec.querySelector(':scope > .wrap');
+      if (!wrap) return;
+      var kids = Array.prototype.filter.call(wrap.children, function (n) {
+        return n.nodeType === 1;
+      });
+      if (!kids.length) return;
+
+      var first = kids[0];
+      var last  = kids[kids.length - 1];
+
+      if (first.classList && first.classList.contains('media-band')) {
+        sec.classList.add('flush-top');
+
+        /* First section on the page means this band is directly beneath the
+           hero. Swap the four-edge fade for the downward one. */
+        if (sec === firstSection && first.classList.contains('media-fade')) {
+          first.classList.remove('media-fade');
+          first.classList.add('media-fade-down');
+        }
+      }
+      if (last.classList && last.classList.contains('media-band')) {
+        sec.classList.add('flush-bottom');
+      }
+    });
+  }
+  bandSpacing();
+
   /* ── HEADER: pinned, shrinks on scroll ─────────────────────────────────── */
   var head = document.getElementById('siteHead');
   var ticking = false;
   function onScroll() {
-    if (ticking) return;
+    if (ticking || !head) return;
     ticking = true;
     window.requestAnimationFrame(function () {
       head.classList.toggle('scrolled', window.scrollY > 60);
       ticking = false;
     });
   }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  /* Guarded, 2026-08-11. Before the header moved in here it was always in the
+     markup, so head could not be null. Now a page that forgets the mount
+     would throw on the first scroll and take every component below down with
+     it - the galleries, the lightbox, the tour tabs, all of it. A missing
+     header should cost a header, not the page. */
+  if (head) {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
 
   /* ── MOBILE MENU (Book now stays outside it, always visible) ───────────── */
   var burger = document.getElementById('burger');
@@ -56,10 +228,16 @@ var GALLERY = [
   }
 
   /* ── MEDIA PLACEHOLDERS ──────────────────────────────────────────────────
-     Any element with data-media points at a file in ../media (one level up
-     from v2/). If the file is missing, a labelled frame appears showing
-     exactly which filename to drop in. Nothing else needs changing when the
-     real assets arrive.                                                    */
+     Any element with data-media points at a file in /media. If the file is
+     missing, a labelled frame appears showing exactly which filename to drop
+     in. Nothing else needs changing when the real assets arrive.
+
+     These two helpers are published on window.OF (bottom of this file). They
+     used to be copy-pasted into lodging.html, experiences.html and
+     retreats.html as well as living here - four definitions of the same
+     twenty lines, which is how a fix to one of them silently misses the
+     other three. There is one now. Page scripts call OF.placeholder and
+     OF.paint; nothing redefines them.                                     */
   function placeholder(file, note) {
     var d = document.createElement('div');
     d.className = 'ph';
@@ -70,16 +248,21 @@ var GALLERY = [
     return d;
   }
 
-  document.querySelectorAll('[data-media]').forEach(function (host) {
-    var file  = host.getAttribute('data-media');
-    var ratio = host.getAttribute('data-ratio') || '4/3';
-    var note  = host.getAttribute('data-note') || '';
-    host.style.aspectRatio = ratio.replace('/', ' / ');
+  /* Paint one file into a host element, swapping in the labelled placeholder
+     if it is not there. `ratio` is a CSS aspect-ratio like '4/3'; pass null
+     to leave the host's own height alone (the full-bleed sliders do). */
+  function paint(host, file, note, ratio) {
+    host.innerHTML = '';
+    if (ratio) host.style.aspectRatio = String(ratio).replace('/', ' / ');
 
     var img = new Image();
     img.onload = function () {
       host.innerHTML = '';
       img.alt = note || '';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = 'cover';
+      img.style.display = 'block';
       host.appendChild(img);
     };
     img.onerror = function () {
@@ -87,6 +270,14 @@ var GALLERY = [
       host.appendChild(placeholder(file, note));
     };
     img.src = '/media/' + file;
+    return img;
+  }
+
+  document.querySelectorAll('[data-media]').forEach(function (host) {
+    paint(host,
+          host.getAttribute('data-media'),
+          host.getAttribute('data-note') || '',
+          host.getAttribute('data-ratio') || '4/3');
   });
 
   /* ── HERO VIDEO ──────────────────────────────────────────────────────────
@@ -152,24 +343,281 @@ var GALLERY = [
       galHost.appendChild(slot);
     }
     galHost.querySelectorAll('[data-media]').forEach(function (host) {
-      var file  = host.getAttribute('data-media');
-      var ratio = host.getAttribute('data-ratio') || '4/3';
-      var note  = host.getAttribute('data-note') || '';
-      host.style.aspectRatio = ratio.replace('/', ' / ');
-
-      var img = new Image();
-      img.onload = function () {
-        host.innerHTML = '';
-        img.alt = note || '';
-        host.appendChild(img);
-      };
-      img.onerror = function () {
-        host.innerHTML = '';
-        host.appendChild(placeholder(file, note));
-      };
-      img.src = '/media/' + file;
+      paint(host,
+            host.getAttribute('data-media'),
+            host.getAttribute('data-note') || '',
+            host.getAttribute('data-ratio') || '4/3');
     });
   }
+
+  /* ── ROOM CARDS ──────────────────────────────────────────────────────────
+     Moved here from index.html on 2026-08-09, with the CSS, so the home
+     page, Lodging and Retreats all behave identically. The visual state is
+     one class, .is-open; the stylesheet does the photo swap and the detail
+     expand, this only decides when. mouseenter/leave covers the pointer,
+     focusin/focusout covers the keyboard so a tabbed-to card opens too.
+     Whether the card is a link or a button is the page's business. */
+  document.querySelectorAll('.hm-room').forEach(function (card) {
+    function open()  { card.classList.add('is-open'); }
+    function close() { card.classList.remove('is-open'); }
+    card.addEventListener('mouseenter', open);
+    card.addEventListener('mouseleave', close);
+    card.addEventListener('focusin', open);
+    card.addEventListener('focusout', close);
+  });
+
+  /* ══ SLIDER ═══════════════════════════════════════════════════════════════
+     One photo slider for the whole site. Before this there were four: the
+     Lodging food strip, the Retreats conservation strip, the Experiences
+     frame and the tour slider in shared-sections.js, each with its own
+     arrows, dots and bugs.
+
+     Markup:
+       <div class="sl" data-files="a.jpg,b.webp" data-notes="A|B"
+            data-auto="5000" data-arrows="true" data-ratio="4/3">
+         <div class="sl-stage"></div>
+       </div>
+     Everything except data-files is optional. Arrows and dots are built by
+     this code, so a page never hand-writes them and they cannot drift.
+
+     data-auto is the only reason a slider ever moves on its own. Mehdi's
+     rule, 2026-08-09: ONLY the conservation strip sets it. Photographs a
+     visitor is actively comparing - rooms, food, tours - wait to be asked,
+     because a set that slides away mid-sentence is worse than a static one.
+
+     Auto-advance pauses on hover and while the tab is in the background, and
+     stops for good the moment the visitor touches a control. It never starts
+     under prefers-reduced-motion.                                          */
+  function buildSlider(root) {
+    var files = (root.getAttribute('data-files') || '').split(',').filter(Boolean);
+    if (!files.length) return;
+
+    var notes  = (root.getAttribute('data-notes') || '').split('|');
+    var ratio  = root.getAttribute('data-ratio') || null;
+    var auto   = parseInt(root.getAttribute('data-auto'), 10) || 0;
+    var arrows = root.getAttribute('data-arrows') !== 'false';
+    var label  = root.getAttribute('data-label') || 'Photographs';
+
+    var stage = root.querySelector('.sl-stage');
+    if (!stage) return;
+
+    var at = 0, timer = null, stopped = false;
+
+    var dots = document.createElement('div');
+    dots.className = 'sl-dots';
+    dots.setAttribute('role', 'group');
+    dots.setAttribute('aria-label', label);
+
+    function noteFor(i) { return (notes[i] || label).trim(); }
+
+    function show(n) {
+      at = n;
+      paint(stage, files[n], noteFor(n) + ' (' + (n + 1) + ' of ' + files.length + ')', ratio);
+      dots.querySelectorAll('button').forEach(function (b, i) {
+        b.setAttribute('aria-current', i === n ? 'true' : 'false');
+      });
+    }
+    function step(d) { show((at + d + files.length) % files.length); }
+
+    function start() { if (!stopped && !reducedMotion && auto && !timer) timer = window.setInterval(function () { step(1); }, auto); }
+    function pause() { if (timer) { window.clearInterval(timer); timer = null; } }
+    function stop()  { stopped = true; pause(); }
+
+    files.forEach(function (f, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', noteFor(i));
+      b.addEventListener('click', function () { stop(); show(i); });
+      dots.appendChild(b);
+    });
+
+    if (files.length > 1 && arrows) {
+      ['prev', 'next'].forEach(function (dir) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'sl-arrow sl-' + dir;
+        b.setAttribute('aria-label', dir === 'prev' ? 'Previous photograph' : 'Next photograph');
+        b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">' +
+          '<path d="' + (dir === 'prev' ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7') + '" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        b.addEventListener('click', function () { stop(); step(dir === 'prev' ? -1 : 1); });
+        root.appendChild(b);
+      });
+    }
+
+    if (files.length > 1) root.appendChild(dots);
+
+    root.addEventListener('mouseenter', pause);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', pause);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) pause(); else start();
+    });
+
+    show(0);
+    start();
+
+    /* Handed back so a page can drive the slider from something else, which
+       is how the Experiences frame follows its list of activities. */
+    return { show: show, step: step, stop: stop, count: files.length };
+  }
+
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.sl').forEach(buildSlider);
+
+  /* ══ LIGHTBOX ═════════════════════════════════════════════════════════════
+     One lightbox for the whole site, built once here rather than copied into
+     each page that wants one. Any element carrying data-gallery opens it:
+
+       <button data-gallery="a.jpg,b.webp" data-gallery-note="Beach Bungalows">
+
+     Wired to rooms, tours and food - anywhere there is a real set worth
+     stepping through. Maps, hero images and one-off shots stay inert on
+     purpose: a lightbox that opens onto a single photograph with nothing to
+     browse is a dead end dressed as a feature.
+
+     Arrows and the left/right keys step and wrap, Escape closes, clicking
+     the backdrop closes, scrolling behind it is locked, and focus returns to
+     whatever opened it so a keyboard user is not dumped at the top of the
+     page.                                                                  */
+  {
+    var lb = document.createElement('div');
+    lb.className = 'lb';
+    lb.setAttribute('role', 'dialog');
+    lb.setAttribute('aria-modal', 'true');
+    lb.setAttribute('aria-label', 'Photographs');
+    lb.hidden = true;
+    lb.innerHTML =
+      '<span class="lb-title"></span>' +
+      '<img class="lb-img" alt="">' +
+      '<button class="lb-btn lb-prev" type="button" aria-label="Previous photograph">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+      '<button class="lb-btn lb-next" type="button" aria-label="Next photograph">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>' +
+      '<button class="lb-btn lb-close" type="button" aria-label="Close">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button>' +
+      '<span class="lb-count"></span>';
+    document.body.appendChild(lb);
+
+    var lbImg   = lb.querySelector('.lb-img');
+    var lbTitle = lb.querySelector('.lb-title');
+    var lbCount = lb.querySelector('.lb-count');
+    var lbPrev  = lb.querySelector('.lb-prev');
+    var lbNext  = lb.querySelector('.lb-next');
+    var lbClose = lb.querySelector('.lb-close');
+
+    var lbFiles = [], lbLabel = '', lbAt = 0, lbOpener = null;
+
+    function lbPaint() {
+      lbImg.src = '/media/' + lbFiles[lbAt];
+      lbImg.alt = lbLabel + ', photograph ' + (lbAt + 1) + ' of ' + lbFiles.length;
+      lbTitle.textContent = lbLabel;
+      lbCount.textContent = (lbAt + 1) + ' of ' + lbFiles.length;
+      var many = lbFiles.length > 1;
+      lbPrev.hidden = !many;
+      lbNext.hidden = !many;
+    }
+    function lbStep(d) { lbAt = (lbAt + d + lbFiles.length) % lbFiles.length; lbPaint(); }
+    function lbShut() {
+      lb.hidden = true;
+      document.body.style.overflow = '';
+      lbImg.removeAttribute('src');
+      if (lbOpener) { lbOpener.focus(); lbOpener = null; }
+    }
+
+    lbPrev.addEventListener('click', function () { lbStep(-1); });
+    lbNext.addEventListener('click', function () { lbStep(1); });
+    lbClose.addEventListener('click', lbShut);
+    /* Only the backdrop closes, never the photograph itself. */
+    lb.addEventListener('click', function (e) { if (e.target === lb) lbShut(); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') lbShut();
+      else if (e.key === 'ArrowLeft') lbStep(-1);
+      else if (e.key === 'ArrowRight') lbStep(1);
+    });
+
+    /* Delegated from the document rather than bound to each opener, so a
+       [data-gallery] that is rendered later still works. The tour slider in
+       shared-sections.js rewrites itself every time you change tab or tour,
+       and binding at load would have missed every one of those. */
+    document.addEventListener('click', function (e) {
+      if (!lb.hidden) return;                       // ignore clicks inside it
+      var el = e.target.closest && e.target.closest('[data-gallery]');
+      if (!el) return;
+      var files = (el.getAttribute('data-gallery') || '').split(',').filter(Boolean);
+      if (!files.length) return;
+      lbFiles = files;
+      lbLabel = el.getAttribute('data-gallery-note') || '';
+      lbAt = 0;
+      lbOpener = el;
+      lbPaint();
+      lb.hidden = false;
+      document.body.style.overflow = 'hidden';
+      lbClose.focus();
+    });
+  }
+
+  /* ══ EXPANDER ═════════════════════════════════════════════════════════════
+     One expand-in-place row for the whole site. Before this there were five
+     families - ea-bar, lo-pol, ar-faq, ab-faq and the include cards - all
+     doing the same thing with different class names, different arrows and
+     different motion.
+
+     Markup:
+       <div class="xp-list" data-exclusive="true">
+         <div class="xp">
+           <button class="xp-head"><span class="xp-name">…</span></button>
+           <div class="xp-body">…</div>
+         </div>
+       </div>
+
+     data-exclusive="true" means opening one closes the rest. Mehdi's rule,
+     2026-08-09: exclusive wherever the list drives something else (the
+     Experiences photo frame), independent everywhere else, because people
+     comparing two policies or two answers want both open at once.
+
+     Opening dispatches an 'xp:open' event on the row, which is how the
+     Experiences page swaps its photograph without this component needing to
+     know anything about photographs.                                       */
+  /* Delegated from the document, not bound to each row at load. The
+     Experiences accordion is built from shared data AFTER this file runs, and
+     binding at load would have missed every row - the same reason the
+     lightbox delegates. */
+  document.addEventListener('click', function (e) {
+    var head = e.target.closest && e.target.closest('.xp-head');
+    if (!head) return;
+    var row  = head.closest('.xp');
+    var list = head.closest('.xp-list');
+    if (!row || !list) return;
+
+    var exclusive = list.getAttribute('data-exclusive') === 'true';
+    var wasOpen = row.getAttribute('data-open') === 'true';
+
+    if (exclusive) {
+      list.querySelectorAll('.xp').forEach(function (other) {
+        other.setAttribute('data-open', 'false');
+        var h = other.querySelector('.xp-head');
+        if (h) h.setAttribute('aria-expanded', 'false');
+      });
+    }
+    var nowOpen = !wasOpen;
+    row.setAttribute('data-open', nowOpen ? 'true' : 'false');
+    head.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+
+    /* Exclusive lists fire on every click, open or closed, so whatever is
+       listening keeps following the selection rather than blanking. */
+    if (nowOpen || exclusive) {
+      row.dispatchEvent(new CustomEvent('xp:open', { bubbles: true }));
+    }
+  });
+
+  /* Rows that exist at load get their starting state stamped. Rows added
+     later carry data-open in their own markup. */
+  document.querySelectorAll('.xp').forEach(function (row) {
+    if (row.getAttribute('data-open') !== 'true') row.setAttribute('data-open', 'false');
+    var h = row.querySelector('.xp-head');
+    if (h) h.setAttribute('aria-expanded', row.getAttribute('data-open'));
+  });
 
   /* ── REVEAL ON SCROLL ──────────────────────────────────────────────────── */
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -188,4 +636,10 @@ var GALLERY = [
     }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
     targets.forEach(function (el) { io.observe(el); });
   }
+
+  /* ── PUBLISHED ───────────────────────────────────────────────────────────
+     The two media helpers, so a page script can paint a photograph into
+     something the shell does not own (the Experiences frame) without
+     redefining them. Nothing else is exported: pages use the components. */
+  window.OF = { paint: paint, placeholder: placeholder };
 })();

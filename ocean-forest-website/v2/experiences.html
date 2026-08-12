@@ -10,157 +10,44 @@
 <link rel="stylesheet" href="/v2/shell.css">
 <style>
   /* Experiences — page-specific rules, per specs/of-v2-experiences.md.
-     The Rainforest / Ocean Discovery tabs are the shared component (.sh-*,
-     from ../shared-sections.js). Everything below is the page's own copy:
-     the section-break line and the eight-bar Complementary Activities pattern.
-     Prefix ea- so nothing collides with the shared sh- classes. */
+     There is one rule left. Everything on this page is now either the shell
+     or the shared tour browser: the hero, the photograph band, all three
+     tabs of tours and activities, and the gallery. The ea- prefix that used
+     to keep this page's classes clear of the shared sh- ones has no classes
+     left to protect. */
 
   /* The .ea-break rules that styled the two centred lines here were deleted
      2026-08-09 with the markup they styled. The section is now a shared
-     .media-band .media-fade photograph band and needs no page-specific CSS. */
+     .media-band photograph band.
 
-  /* ── COMPLEMENTARY ACTIVITIES — eight expandable bars ──────────────────
-     C17: the pattern is the accordion from oceanforestecolodge.com's
-     /experiences-tours/ page. A vertical stack of full-width bars, each
-     showing only the activity name; click one and it expands in place to
-     reveal its description; click another and the first collapses; click an
-     open bar and it closes. One open at a time, never two, none open on
-     load. The photograph is NOT in the panel; see D4 below.
-     The pattern only: the green-to-blue gradient belongs to the old site.
-     This uses V2's teal and V2's radius system.
-     Built with <button aria-expanded> and a panel rather than <details>,
-     because one-open-at-a-time needs the state managed. */
-  /* ── D4: TWO COLUMNS ────────────────────────────────────────────────────
-     The reference on oceanforestecolodge.com/experiences-tours/ is a pair of
-     columns of roughly equal width. Left: the stack of bars. Right: ONE
-     large photograph at roughly the height of the section, which lives
-     OUTSIDE the accordion and never moves. Selecting a different activity
-     swaps what that frame contains; it does not put a photograph inside the
-     panel. That distinction is the whole change.
-     The frame is sticky so it stays beside whichever bar is being read as
-     the stack grows and shrinks. Below 860px the two columns stack, the
-     photograph goes above the bars, and it still swaps on selection. It
-     never moves inside a panel at any width. */
-  .ea-layout {
-    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 44px; align-items: stretch; margin-top: 34px;
-  }
-  .ea-layout > * { min-width: 0; }
-  .ea-stage { position: relative; }
-  .ea-stage-inner {
-    position: sticky; top: calc(var(--nav-h) + 22px);
-    height: min(72vh, 640px); border-radius: 6px; overflow: hidden;
-  }
-  .ea-stage-inner > * {
-    position: absolute; inset: 0; width: 100%; height: 100%;
-  }
-  .ea-stage-inner img { object-fit: cover; display: block; }
-  /* The cross-fade. Every layer starts transparent and is brought up on the
-     next frame; the outgoing one is removed when its transition ends.
-     Suppressed wholesale under prefers-reduced-motion below. */
-  .ea-shot { opacity: 0; transition: opacity 0.42s ease; }
-  .ea-shot.in { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) {
-    .ea-shot { transition: none; }
-  }
-  @media (max-width: 860px) {
-    .ea-layout { grid-template-columns: 1fr; gap: 26px; }
-    .ea-stage { order: -1; }
-    .ea-stage-inner { position: static; height: 46vh; }
-  }
+     `#break { padding-top: 0 }` was here until 2026-08-11 and is gone: a
+     band eating the section padding on the edge it touches is the site-wide
+     rule now, applied by shell.js. Same for the .media-fade-down swap. This
+     page states nothing about spacing any more, which is the point - four
+     pages were each bending the 104px standard in private. */
 
-  .ea-bars {
-    border-top: 1px solid var(--hairline);
-  }
-  .ea-bar { border-bottom: 1px solid var(--hairline); }
-  .ea-bar-head {
-    width: 100%; background: none; border: 0; color: var(--mist);
-    display: flex; align-items: center; gap: 16px; padding: 24px 4px;
-    cursor: pointer; text-align: left;
-  }
-  .ea-bar-name {
-    font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
-    flex: 1; margin: 0; color: var(--white);
-  }
-  .ea-arrow {
-    transition: transform 0.25s; color: var(--dim); flex-shrink: 0; font-size: 1.3rem;
-  }
-  .ea-bar[data-open="true"] .ea-arrow { transform: rotate(90deg); }
-  .ea-bar-body {
-    display: none; padding: 0 4px 26px; color: var(--dim); font-size: 0.94rem;
-    font-weight: 300; line-height: 1.8;
-  }
-  .ea-bar[data-open="true"] .ea-bar-body { display: block; }
-  .ea-bar-body p { margin: 0 0 14px; }
-  .ea-bar-note {
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.06em;
-    color: var(--teal-light); margin: 0;
-  }
+  /* ── COMPLEMENTARY ACTIVITIES ───────────────────────────────────────────
+     Everything that used to be here - .ea-layout, .ea-stage, .ea-shot, the
+     .xp-peek hover teaser and the (max-width: 860px) stack - was deleted
+     2026-08-11 with the accordion it styled. Mehdi: "I like the
+     complementary activities section, make it the standard everywhere." The
+     eight activities are the shared tour browser's third tab now, on this
+     page and on Retreats, so they need no page CSS at all.
 
-  /* ── HOVER PEEK, 2026-08-09 ─────────────────────────────────────────────
-     Same idea as the room cards on the home page: hovering a bar brings it
-     to life rather than requiring a click to find out anything. Hovering
-     swaps the photograph in the frame on the right (in the script below)
-     and opens a one-sentence teaser under the name. Clicking still opens
-     the full description, which is where the rest of the copy lives.
-
-     grid-template-rows 0fr -> 1fr is what animates it: the teaser is a
-     different length on every activity, so any fixed max-height would be
-     wrong for at least one of them.
-
-     Hidden by default and only switched on inside (hover: hover), because a
-     touch device has no hover state and would be left with a teaser it can
-     never open. There, tapping goes straight to the full panel as before. */
-  .ea-bar-peek { display: none; }
-  @media (hover: hover) {
-    .ea-bar { transition: background 0.25s ease; }
-    .ea-bar:hover { background: rgba(42, 173, 168, 0.06); }
-    .ea-bar:hover .ea-bar-name { color: var(--teal-light); }
-    .ea-bar-peek {
-      display: grid; grid-template-rows: 0fr;
-      transition: grid-template-rows 0.32s ease; padding: 0 4px;
-    }
-    .ea-bar-peek > span {
-      overflow: hidden; display: block;
-      color: var(--dim); font-size: 0.9rem; font-weight: 300; line-height: 1.7;
-    }
-    .ea-bar:hover .ea-bar-peek { grid-template-rows: 1fr; }
-    .ea-bar:hover .ea-bar-peek > span { padding-bottom: 20px; }
-    /* An open bar shows the whole description, so the teaser would be the
-       same sentence twice. */
-    .ea-bar[data-open="true"] .ea-bar-peek { display: none; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .ea-bar, .ea-bar-peek { transition: none; }
-  }
-  /* D4: .ea-bar-inner and .ea-bar-shot are gone. They put the photograph
-     inside the expanding panel, which is what this change corrects. The
-     photograph now lives in .ea-stage, outside the accordion entirely. */
+     If somebody wants the two-column accordion back, it is in git, not here.
+     Reviving it would put the same eight activities on the site in two
+     shapes again, which is the thing this removed. */
 </style>
 </head>
 <body class="light">
 
-<a class="skip" href="#main">Skip to the lodge</a>
-
-<header class="site-head" id="siteHead">
-  <a href="/v2/index.html" class="nav-logo">
-    <img class="logo-dark" src="/images/logo-white.png" alt="Ocean Forest Ecolodge">
-    <img class="logo-light" src="/images/logo-color.png" alt="" aria-hidden="true">
-  </a>
-  <nav class="nav-menu" id="navMenu" aria-label="Main">
-    <a href="/v2/arriving.html">Arriving</a>
-    <a href="/v2/lodging.html">Lodging</a>
-    <a href="/v2/experiences.html" class="current" aria-current="page">Experiences</a>
-    <a href="/v2/retreats.html">Retreats</a>
-    <a href="/v2/about.html">About</a>
-  </nav>
-  <div class="nav-actions">
-    <a class="book-btn" href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a>
-    <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navMenu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-</header>
+<!-- The header. Built by shell.js from its NAV list - see "HEADER: built
+     here, once" in that file. This used to be ~20 lines of hand-written menu
+     in every page, six copies of the same thing; adding one link meant six
+     edits. To change the menu, edit NAV in shell.js. Do not put markup back
+     in here. shell.css holds this div at the header's height so the page
+     does not jump while it loads. -->
+<div data-shell="header"></div>
 
 <div class="hero" id="hero">
   <div class="hero-media" data-hero-slug="experiences"></div>
@@ -176,15 +63,6 @@
 
 <main id="main">
 
-  <!-- Rainforest Discovery + Ocean Discovery — the shared tabs component.
-       Same mount as index.html; White Hawk and Rio Claro now live in
-       TOURS.forest in ../shared-sections.js. -->
-  <section id="tours">
-    <div class="wrap">
-      <div data-shared="tours"></div>
-    </div>
-  </section>
-
   <!-- Section break. Replaced 2026-08-09, Mehdi's call: this was two lines of
        centred type kept from the .com site ("Where the silence of the jungle
        speaks loudest" and a sub-line about reserving a place). It is now a
@@ -194,7 +72,12 @@
        booking already sits directly above this on the page. -->
   <section id="break">
     <div class="wrap">
-      <div class="media-band media-fade reveal">
+      <!-- .media-fade-down ONLY. It used to carry .media-fade as well, which
+           is the four-edge treatment, and that put the top fade back: same
+           weight, and .media-fade was written later in shell.css so it won.
+           shell.css now orders the two so intent wins whatever a page does,
+           but carrying both here says two contradictory things at once. -->
+      <div class="media-band media-fade-down reveal">
         <div class="media-shot">
           <div data-media="gallery/gallery-05.jpg" data-ratio="16/9" data-note="The Osa Peninsula, rainforest meeting the Pacific"></div>
         </div>
@@ -210,117 +93,24 @@
     </div>
   </section>
 
-  <!-- Complementary Activities — eight expandable bars, book on arrival -->
-  <section id="complementary">
+  <!-- Rainforest Discovery + Ocean Discovery + Complementary Activities —
+       the shared tabs component, all three worlds.
+
+       2026-08-11, Mehdi's call: "I like the complementary activities section,
+       make it the standard everywhere." The eight activities used to render
+       here as an accordion with a photo frame beside it, and on Retreats as
+       a third tab. Same eight facts, two different shapes, which is the
+       inconsistency Eli asked us to remove. They are now the third tab on
+       both pages. The accordion, its .ea-* rules and the ~120-line page
+       script that drove them are gone; this page now carries no script of
+       its own at all.
+
+       The list itself still lives once, in ACTIVITIES in shared-sections.js.
+       The "Immerse yourself in the Osa Peninsula" lead that used to sit above
+       the accordion is gone, not moved - Mehdi cut it the same day. -->
+  <section id="tours">
     <div class="wrap">
-      <div class="sec-head reveal">
-        <span class="eyebrow">Complementary Activities</span>
-        <h2>Activities that <span class="grad-text">awaken the wild soul</span></h2>
-        <hr class="grad-bar">
-      </div>
-      <p class="lead reveal">Immerse yourself in the Osa Peninsula, the most biodiverse place on Earth. From the ancient wisdom of the Botanical Garden to the nighttime magic of our Night Tour, every experience is a portal to pure nature. Discover hidden waterfalls, ride horses along pristine beaches, and witness the mesmerizing flight of bats.</p>
-      <p class="lead reveal" style="margin-top: 14px;">Your epic adventure in the heart of Costa Rica begins here.</p>
-
-      <div class="ea-layout reveal">
-        <div class="ea-bars" id="eaBars">
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-botanical-garden-01.jpg" data-photo-note="The ethnobotanical garden at Ocean Forest Ecolodge">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Botanical Garden</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Discover our Ethnobotanical Walk, a self-guided journey through Ocean Forest Ecolodge's living classroom of permaculture and rainforest wisdom. Wander lush gardens brimming with rare ancestral plants, learning their medicinal, edible, and sacred uses through captivating stories, myths, and hands-on tasting and preparation. Engage your senses as you smell, touch, and sip herbal infusions, exploring a vibrant collection that also nourishes our kitchen. Reconnect with the profound healing wisdom of the jungle and let nature be your ultimate teacher.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-bat-cave-01.jpg" data-photo-note="The Bat Cave walk. Neither of the client sites has a photograph of this one">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Bat Cave</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Set out from Ocean Forest Ecolodge on a coastal walk to our “Bat Cave”, where, at dusk, thousands of bats stream into the sky, a mesmerizing natural spectacle. Wander past tide pools and coral reefs at low tide, with sweeping views of the rainforest-cloaked peninsula and Caño Island shimmering offshore. Return along the beach as the sun sets and ocean breezes wash over you. Simple, wild, unforgettable. Add the Bat Cave walk to your must-do Osa adventures.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-river-walk-01.webp" data-photo-note="Rio Claro, where the River Walk ends">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">River Walk</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Follow a wild, breathtaking coastline from Ocean Forest Ecolodge to Río Claro, a jade-green river bordered by towering trees and a pristine beach just 45 minutes away. Pause at the dramatic Blow Hole, then swim in crystal pools, unwind on golden sand, or float in the river's fresh, clear water. Join a gentle canoe or boat ride to explore the jungle-lined river, spot birds and monkeys, and discover hidden waterfalls, perfect for photos and a picnic. Ideal for families with children, Río Claro is pure paradise and an unmissable day adventure.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-drake-bay-walking-01.jpg" data-photo-note="The coastal walk to Drake Bay. Neither of the client sites has a photograph of this one">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Drake Bay Walking</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Embark on a breathtaking 3-hour coastal walk from Ocean Forest Ecolodge to the charming town of Drake Bay, an unforgettable journey through rainforest-cloaked cliffs, hidden coves, and more than ten pristine beaches along the South Pacific coast. Stop for a refreshing swim in Río Claro or a rest under palm shade before reaching Drake Bay, where local cafés, shops, and friendly smiles await. Enjoy lunch and a tropical fruit juice, then return by 4x4 taxi or by boat along the scenic shoreline. A true adventure for nature lovers, this is the most beautiful way to experience the wild soul of the Osa Peninsula.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-horse-riding-01.webp" data-photo-note="Horseback riding near Corcovado">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Horse Riding</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Saddle up for our Half-Day Horseback Adventure, an unforgettable way to experience the wild beauty surrounding Corcovado National Park. Guided by expert local horsemen and matched with well-trained horses, riders of all levels follow scenic coastal trails, venture along Río Claro's jungle paths, and traverse countryside vistas with chances to spot birds, monkeys, and lush rainforest life. Pause for a refreshing swim in a crystal-clear river before a picturesque return to the lodge.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-night-tour-01.webp" data-photo-note="The rainforest after dark on the Night Tour">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Night Tour</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Step into the rainforest after dark on our Night Tour, an enchanting two-hour adventure where the jungle comes alive. Follow our naturalist guide along the beach, then slip beneath the canopy to seek glass frogs, colorful tree frogs, curious reptiles, and nocturnal insects as the forest sings around you. Guided, safe, and unforgettable, this immersive experience reveals Corcovado's magic in a whole new light. Book your Night Tour with Ocean Forest Ecolodge and meet the jungle at its most mysterious.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-sierpe-mangrove-tour-01.jpg" data-photo-note="The Sierpe River mangroves">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Sierpe Mangrove Tour</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Discover the hidden paradise of the Sierpe River mangroves, Central America's largest and most pristine mangrove system, with our trusted local tour operators. This 3-hour guided boat excursion takes you through a breathtaking ecosystem teeming with wildlife. Spot three species of monkeys, sloths, crocodiles, caimans, and over 150 bird species, including scarlet macaws. Our expert bilingual guides know every secret spot, ensuring incredible viewing and photo opportunities from our comfortable, shaded vessel. Ideal for all ages, this tour offers a serene yet exhilarating look into one of Costa Rica's most vital and beautiful natural wonders, a must-do experience from Ocean Forest Ecolodge.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        <div class="ea-bar" data-open="false" data-photo="experiences/activity-waterfall-hiking-01.webp" data-photo-note="Goddess Jacuzzi, one of the two falls on the waterfall hike">
-          <button class="ea-bar-head" type="button" aria-expanded="false">
-            <span class="ea-bar-name">Waterfall Hiking</span>
-            <span class="ea-arrow" aria-hidden="true">&rsaquo;</span>
-          </button>
-          <div class="ea-bar-body">
-            <p>Discover two hidden gems, Goddess Jacuzzi and Cocoterra Waterfall, on a guided rainforest adventure from Ocean Forest Ecolodge. Travel by 4x4 to the trailhead, then hike through towering primary forest to crystal pools and cascading falls perfect for a refreshing swim; at Río Claro's headwaters, natural “jacuzzis” bubble over smooth rock, and adventurous guests can leap into deep swimming holes. Each waterfall is a separate day trip; our team provides round-trip transport arrangements and a picnic by the pools. Ask our staff for details and let us plan your unforgettable waterfall escape.</p>
-            <p class="ea-bar-note">Book this one with us when you arrive.</p>
-          </div>
-        </div>
-
-        </div>
-
-        <!-- D4: the fixed photo frame. Outside the accordion, one per
-             section, never inside a panel. shell.js does not touch it;
-             the script at the foot of this page fills and swaps it. -->
-        <div class="ea-stage">
-          <div class="ea-stage-inner" id="eaStage" aria-live="polite"></div>
-        </div>
-      </div>
+      <div data-shared="tours" data-activities="true"></div>
     </div>
   </section>
 
@@ -363,7 +153,7 @@
       <div>
         <h3>Blog</h3>
         <ul>
-          <li><a href="/blog.html">From the lodge</a></li>
+          <li><a href="/v2/blog.html">From the lodge</a></li>
         </ul>
       </div>
       <div>
@@ -384,132 +174,12 @@
 
 <script src="/v2/shell.js"></script>
 <script src="/v2/shared-sections.js"></script>
-<script>
-(function () {
-  'use strict';
 
-  /* ── COMPLEMENTARY ACTIVITIES (D4) ───────────────────────────────────────
-     Two columns. The bars are on the left; the photograph is a FIXED FRAME
-     on the right whose contents change. It is not part of any panel, at any
-     window width, and this script is the only thing that writes into it.
-
-     Behaviour, matching oceanforestecolodge.com/experiences-tours/:
-       - nothing open on load, and the frame shows the FIRST activity,
-       - clicking a closed bar opens it, closes whichever was open, and
-         swaps the frame to that activity's photograph,
-       - clicking the open bar closes it; the frame keeps showing that
-         activity rather than going blank.
-     One open at a time, never two. That exclusivity is why the state is
-     managed here rather than with <details>. */
-  var bars  = Array.prototype.slice.call(document.querySelectorAll('.ea-bar'));
-  var stage = document.getElementById('eaStage');
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var showing = null;
-
-  function setOpen(bar, open) {
-    bar.setAttribute('data-open', open ? 'true' : 'false');
-    var head = bar.querySelector('.ea-bar-head');
-    if (head) head.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-
-  /* Bat Cave and Drake Bay Walking have no photograph published on either
-     client site. Those two get the site's labelled placeholder naming the
-     file the frame wants. No other activity's photograph is substituted. */
-  function placeholder(file, note) {
-    var d = document.createElement('div');
-    d.className = 'ph';
-    d.innerHTML =
-      '<span class="ph-label">Photo to come</span>' +
-      '<span class="ph-file">media/' + file + '</span>' +
-      (note ? '<span class="ph-note">' + note + '</span>' : '');
-    return d;
-  }
-
-  function mount(layer) {
-    var old = Array.prototype.slice.call(stage.children);
-    stage.appendChild(layer);
-    function retire() {
-      old.forEach(function (el) { if (el.parentNode === stage) stage.removeChild(el); });
-    }
-    if (reduced) { layer.classList.add('in'); retire(); return; }
-    /* Force a reflow so the transition has a start value to move from. Using
-       requestAnimationFrame here would look identical on screen but never
-       fire in a background tab, leaving the frame blank until it is looked
-       at and stacking up layers that are never cleared. */
-    void layer.offsetWidth;
-    layer.classList.add('in');
-    window.setTimeout(retire, 460);
-  }
-
-  function swap(bar) {
-    if (!stage) return;
-    var file = bar.getAttribute('data-photo');
-    var note = bar.getAttribute('data-photo-note') || '';
-    if (!file || file === showing) return;
-    showing = file;
-
-    var layer = document.createElement('div');
-    layer.className = 'ea-shot';
-
-    var img = new Image();
-    img.onload = function () {
-      if (showing !== file) return;
-      img.alt = note;
-      layer.appendChild(img);
-      mount(layer);
-    };
-    img.onerror = function () {
-      if (showing !== file) return;
-      layer.appendChild(placeholder(file, note));
-      mount(layer);
-    };
-    img.src = '/media/' + file;
-  }
-
-  /* The teaser is the first sentence of the activity's own description, read
-     out of the panel below it. Deriving it means there is one copy of this
-     text in the file, so the teaser can never drift out of step with the
-     description the way a hand-written duplicate would. */
-  function firstSentence(text) {
-    var t = String(text || '').trim();
-    var cut = t.search(/[.!?](\s|$)/);
-    return cut === -1 ? t : t.slice(0, cut + 1);
-  }
-
-  bars.forEach(function (bar) {
-    setOpen(bar, false);
-    var head = bar.querySelector('.ea-bar-head');
-    if (!head) return;
-
-    var firstP = bar.querySelector('.ea-bar-body p');
-    if (firstP) {
-      var peek = document.createElement('div');
-      peek.className = 'ea-bar-peek';
-      peek.setAttribute('aria-hidden', 'true');   // the full text is already
-      var inner = document.createElement('span'); // in the panel below
-      inner.textContent = firstSentence(firstP.textContent);
-      peek.appendChild(inner);
-      head.insertAdjacentElement('afterend', peek);
-    }
-
-    /* Hovering previews: the frame on the right follows the pointer. It does
-       NOT revert on mouseleave - snapping back would flicker the column on
-       the way down the list, and leaving the last hovered photograph up is
-       the same behaviour as closing a bar. */
-    bar.addEventListener('mouseenter', function () { swap(bar); });
-
-    head.addEventListener('click', function () {
-      var wasOpen = bar.getAttribute('data-open') === 'true';
-      bars.forEach(function (other) { setOpen(other, false); });
-      if (!wasOpen) setOpen(bar, true);
-      /* The frame follows the selection either way: closing a bar leaves its
-         photograph up rather than emptying the column. */
-      swap(bar);
-    });
-  });
-
-  if (bars.length) swap(bars[0]);
-})();
-</script>
+<!-- No page script. Deleted 2026-08-11 with the Complementary Activities
+     accordion it drove: the photograph frame, its cross-fade, the hover
+     teaser and the first-sentence helper. The eight activities are the
+     shared tour browser's third tab now, and that component brings its own
+     photograph, its own selection and its own copy. This page is markup
+     plus the two shared files, which is where every page is headed. -->
 </body>
 </html>

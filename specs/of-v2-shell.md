@@ -21,6 +21,80 @@ Both were visible to anyone who looked at the page. Neither was caught, because 
 signed the page off verified with `grep`. **Checks that describe what something looks like have to
 be run by looking at it.**
 
+## The component set — added 2026-08-09, and this is the important part
+
+**Every recurring pattern on this site is defined exactly once, in `shell.css` and `shell.js`.
+A page may not grow its own copy of one.** This section exists because it did, repeatedly, and
+the site drifted into looking like six different websites.
+
+What was found on 2026-08-09, counted rather than eyeballed: **four** photo sliders, **five**
+expand-in-place row families, **seven** small "more" links, **four** copies of the same
+`placeholder()` helper, **two** lightboxes and **four** page-local photo frames. `retreats.html`
+carried 406 lines of its own CSS and `lodging.html` 255, against 44 for `about.html`. That gap was
+the inconsistency, measured.
+
+| Component | Class | Where it lives | Notes |
+|---|---|---|---|
+| Cinematic band | `.media-band .media-fade` | shell.css | Full viewport, 16/9, 56vh, text over. The house "cinematic". |
+| Text beside a bleeding photo | `.media-bleed .media-fade` | shell.css | Add `.flip` to bleed off the right instead of the left. |
+| Room card | `.hm-room` | shell.css + shell.js | Photo on top, detail expands on hover. |
+| Photo slider | `.sl` | shell.css + shell.js | Arrows and dots are **built by the script**. |
+| Lightbox | `.lb` | shell.js | Built once, opens on any `[data-gallery]`. |
+| Expander | `.xp` | shell.css + shell.js | `data-exclusive="true"` for one-at-a-time. |
+| Standing photo | `.figure` | shell.css | Optional `<figcaption>`. |
+| Buttons | `.cta`, `.cta.ghost`, `.book-btn` | shell.css | Three roles, no fourth. |
+| Media helpers | `OF.paint`, `OF.placeholder` | shell.js | Published on `window.OF`. Do not redefine. |
+
+**The three rules Mehdi settled, 2026-08-09:**
+
+1. **One component, the page decides how much content.** The room card carries a price on Lodging,
+   none on Retreats (a retreat is quoted as a package), and a teaser on the home page. Optional
+   parts (`.hm-room-price`, `.hm-room-extra`, `.hm-shot-b`) are used where they apply and left out
+   where they do not. That is not three components.
+2. **Only the conservation slider auto-advances** (`data-auto="5000"`). Nobody clicks a decorative
+   strip. Everything a visitor is actually comparing — rooms, food, tours — waits to be asked,
+   because a photograph that slides away mid-sentence is worse than a static one. Auto-advance
+   pauses on hover and in a background tab, stops for good once a dot is touched, and never starts
+   under `prefers-reduced-motion`.
+3. **The lightbox is wired to rooms, tours and food only.** Maps, hero images and one-off shots
+   stay inert. A lightbox that opens onto a single photograph with nothing to browse is a dead end
+   dressed as a feature.
+
+Expanders are exclusive **only where the list drives something else** — Experiences, whose bars
+control the photograph beside them. The FAQ lists on Arriving and About and the two policies on
+Lodging are independent, because somebody comparing two answers wants both open.
+
+The lightbox binds by **delegation on the document**, not to each opener at load. The tour slider
+in `shared-sections.js` rewrites its own markup every time you change tab or tour, and binding at
+load missed every one of those.
+
+### Arriving is one component on two pages — settled 2026-08-09
+
+`data-shared="logistics"` in `shared-sections.js` is the **only** description of how to get to the
+lodge. The Arriving page used to carry its own four hand-written route cards; it now mounts the
+same component the Retreats page does. Three ways in, not four — bus-and-boat was a variation of
+the boat run, not a fourth route.
+
+Two things moved *into* the component rather than being lost with the cards:
+
+- **The walk sentence** — which way to turn at the drop point and which side the ocean is on. It is
+  the one line somebody standing on the beach actually needs, and only the Arriving page had it.
+- **A photograph per route**, shown on the right when a route is opened, with the same left-edge
+  fade `.media-fade.flip` gives every other photograph beside copy.
+
+The component injects its own `[data-media]` hosts *after* `shell.js` has run its pass, so it
+paints them itself with `OF.paint`. It does not define a second copy of that helper.
+
+**The walk is 20 minutes.** The logistics copy said 15 in four places while the Landing band, the
+route cards and the Departing timeline all said 20 — and after this merge the two numbers sat in
+the same open panel. All now read 20. This is the one place the "client-supplied finals, do not
+correct" note on `LOGISTICS` was overridden, deliberately, and it is recorded here so nobody
+"restores" 15 from the old copy deck.
+
+**If you are adding a section: look here first.** If the thing you want exists, use it. If it does
+not, add it *here* and use it from the page. Writing it into a page's `<style>` block is how this
+project got into the state this section describes.
+
 # A0 — Shell
 
 ## 1. Goal

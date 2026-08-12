@@ -85,3 +85,34 @@ still live and still gets traffic.
 `.org` says 15-20 minutes south from the beach and 15 north from the school. The newer copy says 15
 for both. V2 says 20 for both, deliberately. Somebody should actually walk it with a stopwatch and
 a suitcase, and then every source should say the same number.
+
+## 2026-08-11
+
+**Jonathon wants to edit the site himself.** Redline note 12, on The Setting: *"Is there a
+way I can change images? Do I need to make a Google Drive with images, or is there a way I
+can add images and edit text myself?"*
+
+Right now every word lives in one file a builder opens, and every photograph has to be
+handed over, processed through `npm run images` and given a catalogue entry. He has no key
+to either. That makes him permanently dependent on a build thread for a sentence or a
+photograph, which is slow for him and unpaid work for us.
+
+The shape of the answer is a small control room he logs into, with the site reading its
+words and pictures from there instead of from a file. That is a real build with real
+decisions in it — what he is allowed to change, what stays locked, whether it costs a
+monthly fee, and what happens if he writes something that breaks the page. It has never
+been costed and should not be bolted onto a notes-fix.
+
+Worth noting it would also have caught the tarp: he could have swapped that photograph
+himself the day he noticed it, instead of writing a note and waiting.
+
+**Merging 4biodiversity into Living Bridges Foundation.** Also his words, from note 3. Two
+organisations, two websites, two histories of conservation claims. Not a website job — a
+decision about the charities themselves that needs him and Eli in a room. The website change
+in the spec only repoints a link.
+
+**The best photograph nobody is using.** `photo-originals/OceanForest_WEBSITE/RetreatTeaser_ASZ09580.jpg`
+— a group in the forest toasting with fresh coconuts, laughing. It is the only image in the
+whole set showing people enjoying themselves, and the site currently sells a $2,700 retreat
+without one. Deliberately left out of the notes-fix spec because it changes a section
+Jonathon did not raise. Should go somewhere in the next pass.
