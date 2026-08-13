@@ -395,22 +395,32 @@ h1 em { font-style: italic; color: #bfe6d8; }
   font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.16em;
   text-transform: uppercase; color: #7fe3e4; margin-bottom: 10px;
 }
-/* A kicker that is a whole sentence rather than a label: sentence case, wider
-   line height, no tracking. V1's rule, restored with V1's copy. */
-.path-kicker-long {
-  /* A whole sentence, so it is sans - mono is for labels of a few words.
-     Space Mono set as prose is the single loudest thing on a page. */
-  font-family: var(--sans);
-  text-transform: none; letter-spacing: 0.01em; font-size: 0.8rem; line-height: 1.55;
-}
+/* .path-kicker-long is gone, 2026-08-12. It set the left box's kicker in sans
+   sentence case while the right box's was a mono uppercase label, so the two
+   boxes sitting side by side in the hero were visibly written in two
+   different languages - Mehdi: "text looks different on both boxes".
+
+   Both are mono labels now. The sentence that used to be the left kicker was
+   too long to be one, so it moved into that box's description where a
+   sentence belongs. */
 .path-title {
   font-family: var(--serif); font-size: clamp(1.7rem, 2.6vw, 2.35rem);
   font-weight: 300; line-height: 1.1; color: #fafaf8; margin-bottom: 8px;
+  /* Two lines' worth, reserved whether the title fills them or not. "I want
+     to stay" is one line and "I want to lead the retreat they'll never
+     forget." is two, which pushed everything below them out of step. */
+  min-height: calc(2 * 1.1em);
 }
 .path-desc { font-size: 0.92rem; font-weight: 300; color: rgba(232, 237, 228, 0.72); line-height: 1.6; max-width: 34ch; }
+/* The whole box is a column and the arrow is pushed to the floor of it, so
+   the two "Plan your stay" / "Host your retreat" lines sit level however
+   long the copy above them runs. Same fix as the room cards. */
+.path { display: flex; flex-direction: column; }
 .path-arrow {
-  margin-top: 16px; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em;
+  margin-top: auto; padding-top: 16px;
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.12em;
   text-transform: uppercase; color: #e8ede4; display: inline-flex; align-items: center; gap: 8px;
+  align-self: flex-start;
 }
 .path-arrow svg { width: 15px; height: 15px; transition: transform 0.25s ease; }
 .path:hover .path-arrow svg { transform: translateX(5px); }
@@ -444,6 +454,63 @@ h1 em { font-style: italic; color: #bfe6d8; }
   margin-inline-start: calc(50% - 50vw);
 }
 .media-bleed > * { min-width: 0; }
+/* .align-bottom — the photograph's last line and the text's last line sit on
+   the same rule. The photograph keeps its own proportions and, being taller
+   than the paragraphs, rises above them.
+
+   Two earlier attempts, both wrong, both worth naming so nobody repeats them:
+   .align-top pinned the top and let the picture run on past the end of the
+   copy; then .match-copy stretched it to the copy's exact height, which lined
+   both edges up but squashed the photograph out of its own aspect ratio to do
+   it. Mehdi: "Align to the bottom but don't cut the top, just move the photo
+   up." So the picture is left alone and moved instead.
+
+   align-items:end does all of it. The row takes the height of the taller
+   child - the photograph - and both children are dropped to its floor.
+
+   The bleed is untouched: Mehdi's call was "keep the bleeding part only", so
+   the photograph still runs off the edge of the window. */
+.media-bleed.align-bottom { align-items: end; }
+.media-bleed.align-bottom .media-shot > .sl { position: relative; }
+/* The dots sit ON the photograph, not under it. Under it they are part of the
+   column and push the picture up by their own height, so the two bottom edges
+   miss each other by about 23px - which is the one thing this class exists to
+   prevent. Over it they cost nothing, and it is what .sl-band and the
+   full-width bands already do, so the two read as the same component. */
+.media-bleed.align-bottom .media-shot > .sl > .sl-dots {
+  position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+  margin-top: 0; z-index: 3;
+}
+.media-bleed.align-bottom .media-shot > .sl > .sl-dots button {
+  border-color: rgba(250, 250, 248, 0.6); background: rgba(250, 250, 248, 0.35);
+}
+.media-bleed.align-bottom .media-shot > .sl > .sl-dots button[aria-current="true"] {
+  background: var(--teal-light); border-color: var(--teal-light);
+}
+
+/* A slider standing in for the still photograph inside a band.
+
+   min-height, NOT height. Written as `height: 56vh` on 2026-08-12 and that
+   was wrong: a still band is sized by its data-ratio, so at 16/9 on a 1440px
+   window it stands about 810px tall, and a fixed 56vh cut it to roughly 440.
+   Swapping the photographs for a rotation is not licence to resize the band,
+   and it visibly shrank. Mehdi: "Why is the size different from what it was?"
+
+   These are the same two rules a still band gets - aspect ratio from
+   data-ratio, floor from min-height - so a rotating band and a still one are
+   now the same size as well as the same object. */
+.media-band .media-shot .sl-stage { min-height: 56vh; }
+@media (max-width: 720px) { .media-band .media-shot .sl-stage { min-height: 44vh; } }
+.media-band .media-shot .sl-dots {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  margin-top: 0; z-index: 3;
+}
+.media-band .media-shot .sl-dots button {
+  border-color: rgba(250, 250, 248, 0.5); background: rgba(250, 250, 248, 0.3);
+}
+.media-band .media-shot .sl-dots button[aria-current="true"] {
+  background: var(--teal-light); border-color: var(--teal-light);
+}
 .media-bleed .media-shot [data-media],
 .media-bleed .media-shot .ph { min-height: 60vh; border-radius: 0; }
 .media-bleed .media-shot [data-media] > img { min-height: 60vh; border-radius: 0; }
@@ -616,6 +683,36 @@ h1 em { font-style: italic; color: #bfe6d8; }
   .media-bleed.flip .media-shot .sl-next { right: 14px; }
 }
 
+/* ── THE FOOD SECTION — "Nourishing the Soul" ─────────────────────────────
+   Moved here from lodging.html's own <style> block on 2026-08-12, because the
+   section now runs on two pages.
+
+   It was copied to Retreats the day before and its CSS was not, so on that
+   page the diet chips rendered as unstyled inline SVGs the height of the
+   window. The lesson is the one this shell exists for: markup that travels
+   between pages has to have its styling in the shell, or it arrives naked.
+   Anything used twice belongs here, not in a page.                        */
+.lo-chips { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 40px; }
+.lo-chip {
+  display: inline-flex; align-items: center; gap: 9px; padding: 9px 18px; border-radius: 22px;
+  border: 1px solid var(--hairline); font-family: var(--mono); font-size: 0.66rem;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist);
+}
+/* The width AND the height, and flex-shrink so a long label cannot squash the
+   icon into an ellipse. Without a height an inline SVG takes its viewBox as a
+   ratio against whatever width it is given, which is how these became
+   full-page leaves. */
+.lo-chip svg {
+  width: 17px; height: 17px; flex: 0 0 auto; color: var(--teal-light);
+}
+.lo-food-quote {
+  font-family: var(--serif); font-style: italic; font-size: 1.35rem;
+  color: var(--white); line-height: 1.55; margin: 0 0 20px;
+}
+.lo-food-body { color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.8; margin: 0 0 16px; }
+.lo-food-body:last-child { margin-bottom: 0; }
+.lo-food-copy { max-width: 62ch; }
+
 /* ── ROOM CARDS — the house pattern for showing rooms ─────────────────────
    Moved here from index.html's inline block on 2026-08-09. Three pages show
    rooms - the home page, Lodging and Retreats - and until now each carried
@@ -738,6 +835,20 @@ h1 em { font-style: italic; color: #bfe6d8; }
    is in, which is how the food and tour sliders sit beside their copy. */
 .sl { position: relative; }
 .sl-stage { position: relative; overflow: hidden; }
+/* Every photograph in a slider is a layer filling the stage, and two of them
+   exist at once during a slide. Added 2026-08-12 with the slide itself.
+
+   All of them are absolute, so the stage carries the shape on its own —
+   shell.js sets its aspect-ratio from data-ratio, and .sl-band and the band
+   rules set an explicit height. If a stage ever collapses to nothing, that is
+   the reason: it was given neither. */
+.sl-stage > .sl-layer {
+  position: absolute; inset: 0; will-change: transform;
+}
+.sl-stage > .sl-layer > img,
+.sl-stage > .sl-layer > .ph {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
 /* The stage may be a <button> where the slider also opens the lightbox. */
 button.sl-stage { border: 0; padding: 0; width: 100%; display: block; background: none; cursor: zoom-in; }
 .sl-stage img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 6px; }
@@ -879,6 +990,12 @@ body.light .sl-dots button { background: rgba(20, 26, 22, 0.2); }
    now and mounts on the home page and on Arriving, neither of which ever had
    these rules, so the lists rendered unstyled the moment About was cleaned
    out. They belong to the component, so they belong here. */
+/* Numbered clauses, for the Hold Harmless agreement. Each clause opens with
+   its own name in bold so a reader can find the one that applies to them
+   instead of reading nine paragraphs of law. */
+.xp-body ol { margin: 0; padding-left: 22px; }
+.xp-body ol li { margin: 0 0 12px; color: var(--dim); font-weight: 300; line-height: 1.8; }
+.xp-body ol li b { color: var(--mist); font-weight: 500; }
 .xp-body a  { color: var(--teal-light); }
 .xp-body ul { margin: 0; padding-left: 20px; list-style: disc; }
 .xp-body li { margin: 0 0 6px; color: var(--dim); font-weight: 300; line-height: 1.8; }

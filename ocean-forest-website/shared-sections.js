@@ -551,6 +551,18 @@
   /* The activities reshaped to look like a tour, so the renderer below does
      not need to know the difference. No ctas: these are included with a stay
      and arranged on arrival. */
+  /* Horse riding has five photographs where every other activity has one -
+     Mehdi delivered four more on 2026-08-12. activitiesAsTours() only ever
+     copies the single cover photo across, so the rest are declared here
+     directly and it leaves them alone. */
+  TOUR_PHOTOS['horse-riding'] = [
+    'experiences/activity-horse-riding-01.webp',
+    'experiences/activity-horse-riding-02.jpg',
+    'experiences/activity-horse-riding-03.jpg',
+    'experiences/activity-horse-riding-04.jpg',
+    'experiences/activity-horse-riding-05.jpg'
+  ];
+
   function activitiesAsTours() {
     return ACTIVITIES.map(function (a) {
       return {

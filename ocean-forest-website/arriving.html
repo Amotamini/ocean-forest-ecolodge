@@ -115,7 +115,31 @@
     <div class="wrap">
       <div class="media-band media-fade reveal">
         <div class="media-shot">
-          <div data-media="arriving/beach-walk.jpg" data-ratio="16/9" data-note="Walking along San Josecito Beach toward Ocean Forest Ecolodge"></div>
+          <!-- Three photographs on a three-second rotation, 2026-08-12,
+               Mehdi: "should have 3 photos that automatically rotate every 3
+               seconds. And all sections like this should be the same."
+
+               It is the shared slider, not a second component - the same one
+               that runs the food strip and the tour photographs. Everything
+               it needs is on this one tag: the files, the interval, and no
+               arrows, because a band that turns on its own does not also need
+               to be steered. Dots appear over the photograph so a reader can
+               see there are three.
+
+               It stops on hover, stops for good once anybody touches a
+               control, and never starts at all under prefers-reduced-motion.
+               That is the component's behaviour, not this page's.
+
+               To change the photographs: edit data-files. Nothing else. -->
+          <!-- data-ratio="16/9" is not optional here: it is what the single
+               photograph this replaced was sized by, and without it the band
+               loses its shape. The slider passes it straight through to the
+               same painter the still band used. -->
+          <div class="sl" data-auto="3000" data-arrows="false" data-ratio="16/9"
+               data-files="arriving/beach-walk.jpg,gallery/gallery-01.jpg,gallery/gallery-16.webp"
+               data-notes="Walking along San Josecito Beach toward Ocean Forest Ecolodge|Guests arriving along the beach with their packs|The shoreline at San Josecito">
+            <div class="sl-stage"></div>
+          </div>
         </div>
         <div class="media-over">
           <div class="wrap">
@@ -321,6 +345,10 @@
   </div>
 </footer>
 
+<!-- The gallery photographs. Loaded before shell.js because shell.js
+     reads the list at start-up. Safe for Eli to edit; see the note at
+     the top of the file. -->
+<script src="/photos.js"></script>
 <script src="/shell.js"></script>
 <script src="/shared-sections.js"></script>
 <script>

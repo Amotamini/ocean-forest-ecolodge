@@ -613,15 +613,13 @@
            where it meets the text, rather than sitting in a box beside it.
            .media-bleed must be a direct child of .wrap for its
            calc(50% - 50vw) to reach the viewport edge, which it is. -->
-      <div class="media-bleed media-fade flip reveal">
-        <div>
-          <p class="food-quote">Farm-to-table food prepared by our local chefs. Three balanced meals per day, plus coffee and tea service all day long.</p>
-          <p class="body-p" style="margin-top:18px">Ingredients sourced within an hour of the lodge. Dietary preferences accommodated.</p>
-        </div>
-        <div class="media-shot">
-          <img src="/images/lodge-breakfast.jpg" alt="Breakfast served at Ocean Forest Ecolodge" loading="lazy">
-        </div>
-      </div>
+      <!-- The food quote and its photograph were here until 2026-08-12 and
+           are gone. "Nourishing the Soul" now follows this section and tells
+           the whole food story properly, so this block was the same subject
+           twice on one page, forty lines apart - the exact duplication the
+           rest of today was spent removing.
+           What is left is what this section is actually for: the heading and
+           the six things a retreat package includes. -->
 
       <div class="included-grid">
         <div class="include-item reveal">
@@ -680,6 +678,102 @@
 
   <!-- ══ 4 · EXPERIENCES — shared tours block ════════════════════════════════
        Rendered by shared-sections.js, which self-injects its own styles. -->
+  <!-- ══ THE KITCHEN — the same section as Lodging's "Nourishing the Soul"
+       ═══════════════════════════════════════════════════════════════════════
+       Copied here whole on 2026-08-12, Mehdi's call. Retreats already listed
+       food as one line in the package table above; a retreat leader choosing
+       where to bring thirty people wants the same account of the kitchen
+       that an individual traveller gets, not a bullet point.
+
+       Deliberately a copy rather than a shared component: the two pages are
+       likely to want different photographs and a different emphasis later,
+       and a shared block would force them to stay identical forever. If they
+       are still word for word in six months, that is the moment to make it
+       one - not before.
+
+       The photographs rotate every three seconds, same as Lodging. -->
+  <section id="kitchen">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">Wholesome Cuisine</span>
+        <h2>Nourishing <span class="grad-text">the Soul</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Farm-to-Table · Jungle Kitchen · Every Day Different</p>
+      </div>
+
+
+      <!-- Changed 2026-08-09, Mehdi's call. This photograph used to sit BESIDE
+           the copy as .media-bleed .media-fade at 4/3, which made it tower
+           over the paragraphs. It is now the house cinematic treatment,
+           matching Arriving and Retreats: the text reads first, then the
+           photograph runs the full width of the viewport at 16/9. No text is
+           laid over this one - the copy above it is the copy, and a scrim
+           over an interior shot this bright would not hold it anyway.
+           .media-band has to be a direct child of .wrap for its
+           calc(50% - 50vw) to reach the viewport edge, which it is. -->
+      <!-- Back beside the copy on the right, 2026-08-09, Mehdi's call, and now
+           a slider rather than one photograph. Treatment is .media-bleed
+           .media-fade .flip: the photographs run off the right edge of the
+           viewport and dissolve where they meet the text. The ten dining
+           photographs come from the client's own site - run
+           media/property/fetch-dining-images.sh once to pull them down. Any
+           that are not there yet show the shell's labelled placeholder naming
+           the file, which is the house pattern, not a bug. -->
+      <div class="media-bleed media-fade flip align-bottom reveal">
+        <div class="lo-food-copy">
+        <!-- The diet chips live INSIDE the text column, 2026-08-12. They used
+             to sit above the whole two-column block, which pushed the
+             photograph down the page so it started level with the quote
+             rather than with the heading. Mehdi: "align the top to the
+             bottom of Nourishing the soul."
+             Inside the column, the photograph's top edge now lands directly
+             under the heading and the chips read as part of the copy they
+             belong to. -->
+        <div class="lo-chips">
+          <span class="lo-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21c0-7 4-11 9-11 0 6-4 11-9 11z" stroke-linejoin="round"/><path d="M12 21c0-5-3-8-7-8 0 4 3 8 7 8z" stroke-linejoin="round"/></svg>
+            Vegetarian
+          </span>
+          <span class="lo-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22V9" stroke-linecap="round"/><path d="M12 9C12 5 15 2 20 2c0 5-3 8-8 7z" stroke-linejoin="round"/><path d="M12 14c0-3-2-5-6-5 0 3 2 5 6 5z" stroke-linejoin="round"/></svg>
+            Vegan
+          </span>
+          <span class="lo-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22V8" stroke-linecap="round"/><path d="M12 12c0-3 2-5 5-5 0 3-2 5-5 5zM12 17c0-3-2-5-5-5 0 3 2 5 5 5z" stroke-linejoin="round"/><path d="M4 20l16-16" stroke-linecap="round"/></svg>
+            Gluten-free
+          </span>
+          <span class="lo-chip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 3v8a2 2 0 004 0V3M8 11v10" stroke-linecap="round"/><path d="M17 3c-1.5 2-2 4-2 6s.7 3 2 3 2-1 2-3-.5-4-2-6zM17 12v9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Omnivore
+          </span>
+        </div>
+          <p class="lo-food-quote">Three meals a day, made from what the garden and the sea offer that morning. Fresh fruit juices, medicinal herbs, detox teas. Food that tastes like the place it came from.</p>
+          <p class="lo-food-body">No menus. Every meal changes with the tides and the season. Local fishermen, the lodge garden, and the jungle itself supply the kitchen. Come hungry.</p>
+          <p class="lo-food-body">Every dish can be tailored to your needs. We accommodate allergies and special diets: gluten-free, vegetarian, and vegan. Share your preferences at least 48 hours before arrival.</p>
+        </div>
+        <div class="media-shot">
+          <!-- The shared slider. Arrows and dots are built by shell.js; no
+               data-auto, so it waits to be asked, which is the rule for any
+               set of photographs somebody is actually comparing. Add a file
+               to media/property/ and one name to data-files. -->
+          <div class="sl" data-ratio="4/3" data-auto="3000"
+               data-label="The open-air dining room"
+               data-files="property/kitchen-table.jpg,property/dining-01.webp,property/dining-02.webp,property/dining-03.webp,property/dining-04.webp,property/dining-05.webp,property/dining-06.webp,property/dining-07.webp,property/dining-08.webp,property/dining-09.webp,food/food-01.jpg,food/food-02.jpg,food/food-03.jpg,food/food-04.jpg,food/food-05.jpg,food/food-06.jpg,food/food-07.jpg,food/food-08.jpg">
+            <!-- The stage carries data-gallery, not the slider root: the
+                 arrows and dots are appended to the root, and a lightbox that
+                 also opened when you clicked "next" would be unusable. -->
+            <button class="sl-stage" type="button"
+                    aria-label="Open the dining photographs full screen"
+                    data-gallery="property/kitchen-table.jpg,property/dining-01.webp,property/dining-02.webp,property/dining-03.webp,property/dining-04.webp,property/dining-05.webp,property/dining-06.webp,property/dining-07.webp,property/dining-08.webp,property/dining-09.webp,food/food-01.jpg,food/food-02.jpg,food/food-03.jpg,food/food-04.jpg,food/food-05.jpg,food/food-06.jpg,food/food-07.jpg,food/food-08.jpg"
+                    data-gallery-note="The open-air dining room"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hand-drawn property map — real file, reused directly -->
+
   <section id="experiences" class="alt">
     <div class="wrap">
       <!-- data-activities="true": this page also gets the Complementary
@@ -920,6 +1014,10 @@
      until 2026-08-09. Both are shared components now: .sl and .lb in
      shell.js. This page declares them in markup and runs neither. -->
 
+<!-- The gallery photographs. Loaded before shell.js because shell.js
+     reads the list at start-up. Safe for Eli to edit; see the note at
+     the top of the file. -->
+<script src="/photos.js"></script>
 <script src="/shell.js"></script>
 <script src="/shared-sections.js"></script>
 

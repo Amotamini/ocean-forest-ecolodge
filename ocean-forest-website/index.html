@@ -143,9 +143,17 @@
           <!-- V2 has a Lodging page, so this box goes there. V1 went straight
                to the booking engine. -->
           <a class="path path-stay" href="/lodging.html" data-path="stay">
-            <span class="path-kicker path-kicker-long">For couples, families, and solo travelers ready for the real Costa Rica.</span>
+            <!-- The kicker was the whole sentence now sitting in the
+                 description below, set in sans while the box beside it used a
+                 mono label. Two boxes side by side in the same hero, written
+                 in two different voices. Mehdi, 2026-08-12: "text looks
+                 different on both boxes."
+                 "For your own trip" is the parallel of "Bring your group" -
+                 same length, same register, and the sentence it replaced is
+                 not lost, only moved. -->
+            <span class="path-kicker">For your own trip</span>
             <span class="path-title">I want to stay</span>
-            <span class="path-desc">10 rooms surrounded by lush rainforest, wildlife, ocean, and three meals a day made from scratch.</span>
+            <span class="path-desc">For couples, families and solo travelers ready for the real Costa Rica. Ten rooms in the rainforest, and three meals a day made from scratch.</span>
             <span class="path-arrow">Plan your stay
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -421,6 +429,10 @@
   </div>
 </footer>
 
+<!-- The gallery photographs. Loaded before shell.js because shell.js
+     reads the list at start-up. Safe for Eli to edit; see the note at
+     the top of the file. -->
+<script src="/photos.js"></script>
 <script src="/shell.js"></script>
 <!-- Added 2026-08-11 with the FAQ. This page had never needed
      shared-sections.js before - it mounts no tours and no logistics - so the

@@ -6,14 +6,11 @@
    after shell.css. Edit once here and every page changes.
    ========================================================================== */
 
-var GALLERY = [
-  'gallery/gallery-01.jpg', 'gallery/gallery-02.jpg', 'gallery/gallery-03.jpg', 'gallery/gallery-04.jpg',
-  'gallery/gallery-05.jpg', 'gallery/gallery-06.jpg', 'gallery/gallery-07.jpg', 'gallery/gallery-08.jpg',
-  'gallery/gallery-09.webp', 'gallery/gallery-10.webp', 'gallery/gallery-11.webp', 'gallery/gallery-12.webp',
-  'gallery/gallery-13.webp', 'gallery/gallery-14.webp', 'gallery/gallery-15.webp', 'gallery/gallery-16.webp',
-  'gallery/gallery-17.webp', 'gallery/gallery-18.webp', 'gallery/gallery-19.webp', 'gallery/gallery-20.webp',
-  'gallery/gallery-21.webp', 'gallery/gallery-22.webp'
-];
+/* The gallery list lives in photos.js now, so Eli can add and remove
+   photographs without opening this file — see the note at the top of it.
+   The fallback is an empty list rather than a crash: a page that forgets the
+   script loses its gallery strip and keeps everything else. */
+var GALLERY = (typeof window !== 'undefined' && window.GALLERY) || [];
 
 (function () {
   'use strict';
@@ -189,6 +186,19 @@ var GALLERY = [
 
       if (first.classList && first.classList.contains('media-band')) {
         sec.classList.add('flush-top');
+
+        /* And the section ABOVE it gives up its bottom padding too, added
+           2026-08-12. Taking the band's own top padding away only closed
+           half the gap: the section before it still contributed its full
+           104px, so a full-width photograph still arrived after a stripe of
+           empty page. Mehdi, on the Retreats shala: "remove the white space,
+           so the photo of the conservation space just starts straight after."
+
+           Its previous sibling rather than any section, so this only ever
+           affects the one directly above a band. */
+        var prev = sec.previousElementSibling;
+        while (prev && prev.tagName !== 'SECTION') prev = prev.previousElementSibling;
+        if (prev) prev.classList.add('flush-bottom');
 
         /* First section on the page means this band is directly beneath the
            hero. Swap the four-edge fade for the downward one. */
@@ -444,14 +454,129 @@ var GALLERY = [
 
     function noteFor(i) { return (notes[i] || label).trim(); }
 
-    function show(n) {
+    /* ── THE SLIDE ────────────────────────────────────────────────────────
+       Until 2026-08-12 this called paint() on the stage, which replaced the
+       photograph outright. On a slider that advances itself every three
+       seconds that is a hard cut, and Mehdi's word for it was "harsh" - a
+       picture simply becomes a different picture with nothing in between.
+
+       So a change now moves. The outgoing photograph slides out and the new
+       one slides in behind it, in the direction you are travelling: forward
+       goes right to left, back goes left to right, and a dot jumps whichever
+       way is shorter. Direction matters more than the animation itself -
+       motion that contradicts the gesture reads worse than no motion.
+
+       Two layers on top of each other, not a track of all of them: a track
+       would have to hold eighteen photographs for the food slider and decide
+       what to load when. Two layers cost two images and the loop is free.
+
+       The incoming layer is only moved once the file has actually decoded.
+       Animating an <img> that has not loaded slides an empty rectangle in
+       and pops the photograph into it a moment later, which is worse than
+       the cut this replaces.
+
+       Under prefers-reduced-motion it goes straight back to being a swap -
+       the auto-advance is already switched off there, so this only affects
+       somebody pressing an arrow. */
+    var SLIDE_MS = 620;
+    var EASE = 'cubic-bezier(0.22, 0.61, 0.36, 1)';
+    var busy = false;
+    var layer = null;                       // the photograph currently shown
+
+    /* The stage carries the shape, because nothing else can any more: every
+       photograph is now an absolutely positioned layer inside it and
+       contributes no height of its own. Set once, here. */
+    if (ratio) stage.style.aspectRatio = String(ratio).replace('/', ' / ');
+
+    /* Every photograph gets its own <div> that this function owns.
+
+       The first attempt at the slide painted straight into the stage and then
+       tagged whatever was inside it. That never worked: paint() empties the
+       host immediately and only fills it when the file has decoded, so at the
+       moment of tagging the stage was empty and the class went nowhere. Every
+       change stayed a hard cut and nothing said so.
+
+       A wrapper this function creates is not subject to paint()'s timing -
+       paint only ever touches what is inside it. */
+    function makeLayer(file, alt) {
+      var el = document.createElement('div');
+      el.className = 'sl-layer';
+      stage.appendChild(el);
+      paint(el, file, alt, null);           // ratio belongs to the stage now
+      return el;
+    }
+
+    function show(n, dir) {
+      var from = at;
       at = n;
-      paint(stage, files[n], noteFor(n) + ' (' + (n + 1) + ' of ' + files.length + ')', ratio);
       dots.querySelectorAll('button').forEach(function (b, i) {
         b.setAttribute('aria-current', i === n ? 'true' : 'false');
       });
+
+      var alt = noteFor(n) + ' (' + (n + 1) + ' of ' + files.length + ')';
+
+      /* First photograph, reduced motion, or no actual change: just place it. */
+      if (!layer || reducedMotion || from === n) {
+        if (layer && layer.parentNode) layer.parentNode.removeChild(layer);
+        layer = makeLayer(files[n], alt);
+        return;
+      }
+      if (busy) return;                     // one slide at a time
+      busy = true;
+
+      var outgoing = layer;
+      var incoming = makeLayer(files[n], alt);
+      layer = incoming;
+
+      /* Forward travels right to left. A dot jump takes the shorter way
+         round, so pressing dot 2 from dot 8 moves the way you would expect. */
+      var forward = dir === undefined
+        ? ((n - from + files.length) % files.length) <= (files.length / 2)
+        : dir > 0;
+      incoming.style.transform = 'translateX(' + (forward ? '100%' : '-100%') + ')';
+
+      function go() {
+        /* Force the browser to accept the start position by reading a layout
+           property, then set the end position. The read is the whole trick:
+           without it both transforms land in the same batch and the layer is
+           simply already there, with nothing to animate.
+
+           This was two nested requestAnimationFrame calls until 2026-08-12,
+           which is the usual way to do it and was wrong here. rAF does not
+           fire in a background tab, so a rotation that ticked over while
+           somebody was reading another tab set itself up and then froze
+           mid-slide - a photograph stuck off to one side, permanently, with
+           no error anywhere. A forced reflow runs whatever the tab is doing. */
+        void incoming.offsetWidth;                                  // eslint-disable-line
+
+        incoming.style.transition = 'transform ' + SLIDE_MS + 'ms ' + EASE;
+        outgoing.style.transition = 'transform ' + SLIDE_MS + 'ms ' + EASE;
+        incoming.style.transform  = 'translateX(0)';
+        outgoing.style.transform  = 'translateX(' + (forward ? '-100%' : '100%') + ')';
+
+        window.setTimeout(function () {
+          if (outgoing.parentNode) outgoing.parentNode.removeChild(outgoing);
+          incoming.style.transition = '';
+          incoming.style.transform  = '';
+          busy = false;
+        }, SLIDE_MS + 40);
+      }
+
+      /* Wait for the file to decode. Sliding in an empty rectangle and
+         popping the photograph into it afterwards is worse than the cut this
+         replaces. The 1.2s ceiling stops a slow file freezing the rotation. */
+      var img = incoming.querySelector('img');
+      if (img && !img.complete) {
+        var done = false;
+        var once = function () { if (!done) { done = true; go(); } };
+        img.addEventListener('load',  once, { once: true });
+        img.addEventListener('error', once, { once: true });
+        window.setTimeout(once, 1200);
+      } else {
+        window.setTimeout(go, 30);          // paint() fills on load, so give it a tick
+      }
     }
-    function step(d) { show((at + d + files.length) % files.length); }
+    function step(d) { show((at + d + files.length) % files.length, d); }
 
     function start() { if (!stopped && !reducedMotion && auto && !timer) timer = window.setInterval(function () { step(1); }, auto); }
     function pause() { if (timer) { window.clearInterval(timer); timer = null; } }
