@@ -1140,6 +1140,109 @@ body.light .ph {
 .foot-map svg { width: 16px; height: 16px; }
 .foot-map:hover { color: var(--white); }
 
+/* ── THE BLOG ─────────────────────────────────────────────────────────────
+   Two things only: the cards on /blog/, and the article layout on a post.
+   Both live here rather than in the pages, for the same reason as everything
+   else in this file - a rule written into a page is invisible from anywhere
+   else, and the next post copied from the template would not have it.
+
+   A post page carries no <style> block and no colour of its own. The
+   template says so; this is what makes that possible. */
+
+/* The waiting message, shown while POSTS in /posts.js is empty. */
+.bl-empty {
+  border: 1px dashed var(--hairline); border-radius: 8px;
+  padding: 54px 30px; text-align: center; margin-top: 34px;
+}
+.bl-empty p { color: var(--dim); font-weight: 300; margin: 0; }
+
+/* ── THE INDEX: one card per post ── */
+.bl-grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px; margin-top: 40px;
+}
+@media (max-width: 900px) { .bl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .bl-grid { grid-template-columns: 1fr; } }
+
+.bl-card {
+  display: flex; flex-direction: column; min-width: 0;
+  background: var(--ink-2); border: 1px solid var(--hairline); border-radius: 8px;
+  overflow: hidden; text-decoration: none;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.bl-card:hover, .bl-card:focus-visible { border-color: var(--teal); transform: translateY(-3px); }
+.bl-card-media { aspect-ratio: 3 / 2; overflow: hidden; background: var(--ink-3); }
+.bl-card-media img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.bl-card:hover .bl-card-media img { transform: scale(1.04); }
+.bl-card-body { padding: 24px 24px 26px; display: flex; flex-direction: column; gap: 10px; }
+.bl-card-body h3 {
+  font-family: var(--serif); font-weight: 300; font-size: 1.45rem; line-height: 1.2;
+  color: var(--white);
+}
+.bl-card-body p { color: var(--dim); font-size: 0.94rem; font-weight: 300; line-height: 1.7; }
+.bl-more {
+  margin-top: 4px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--teal-light);
+}
+
+/* The date, on a card and at the head of a post. */
+.bl-date {
+  display: block; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--teal-light);
+}
+
+/* ── A POST ──
+   Measure first. One column, capped at 68ch, which is the same measure the
+   prose blocks on the About page settled on. It is what makes the template
+   read correctly at 200 words and at 2000: a short post is a short column
+   rather than a wide banner, and a long one never runs past the eye. */
+.bl-article { max-width: 68ch; margin: 0 auto; }
+
+.bl-back {
+  display: inline-block; font-family: var(--mono); font-size: 0.64rem;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal-light);
+  text-decoration: none; margin-bottom: 26px;
+  border-bottom: 1px solid transparent; transition: border-color 0.2s;
+}
+.bl-back:hover, .bl-back:focus-visible { border-color: var(--teal-light); }
+.bl-back-foot { margin: 44px 0 0; padding-top: 26px; border-top: 1px solid var(--hairline); }
+
+.bl-article h1 {
+  font-family: var(--serif); font-weight: 300; line-height: 1.1;
+  font-size: clamp(2rem, 4.4vw, 3rem); color: var(--white); margin: 14px 0 0;
+}
+.bl-standfirst {
+  font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--mist);
+  line-height: 1.55; margin: 20px 0 0;
+}
+.bl-article h2 {
+  font-family: var(--serif); font-weight: 400; font-size: 1.6rem; line-height: 1.25;
+  color: var(--white); margin: 40px 0 14px;
+}
+.bl-article p {
+  color: var(--dim); font-size: 0.98rem; font-weight: 300; line-height: 1.85;
+  margin-bottom: 16px;
+}
+.bl-article a { color: var(--teal-light); }
+.bl-article blockquote {
+  margin: 30px 0; padding-left: 22px; border-left: 2px solid var(--teal);
+}
+.bl-article blockquote p {
+  font-family: var(--serif); font-size: 1.18rem; font-style: italic;
+  color: var(--mist); margin: 0;
+}
+.bl-article figure { margin: 34px 0; }
+.bl-article figure img {
+  width: 100%; height: auto; display: block; border-radius: 6px;
+}
+.bl-article figcaption {
+  margin-top: 10px; font-size: 0.82rem; font-weight: 300; color: var(--dim);
+}
+.bl-hero { margin-top: 34px; }
+
 /* ── FOOTER ── */
 footer {
   position: relative; border-top: 1px solid var(--hairline);

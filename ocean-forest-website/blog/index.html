@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From the Lodge · Ocean Forest Ecolodge</title>
+<meta name="description" content="Field notes from Ocean Forest Ecolodge: biodiversity, conservation, and life on the Osa Peninsula, Costa Rica.">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shell.css">
+</head>
+<body class="light">
+
+<!-- The header. Built by shell.js from its NAV list - see "HEADER: built
+     here, once" in that file. To change the menu, edit NAV in shell.js. -->
+<div data-shell="header"></div>
+
+<main id="main">
+
+  <section id="posts" style="padding-top: 70px;">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">The Blog</span>
+        <h2>From <span class="grad-text">the lodge</span></h2>
+        <hr class="grad-bar">
+        <p class="lead">Field notes from the lodge, on biodiversity, conservation, and life on the Osa Peninsula.</p>
+      </div>
+
+      <!-- Filled by the script at the foot of this page from POSTS in
+           /posts.js. Nothing is written here by hand. -->
+      <div id="blogList"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-bar" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Ocean Forest Ecolodge</div>
+        <p>Playa Rincón de San Josecito · Drake Bay · Osa Peninsula · Costa Rica<br>Six kilometers from Corcovado National Park</p>
+        <a class="foot-map" href="https://www.google.com/maps/dir/?api=1&amp;destination=8.6957%2C-83.675" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>
+          How to get there
+        </a>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="/arriving.html">Arriving</a></li>
+          <li><a href="/lodging.html">Lodging</a></li>
+          <li><a href="/experiences.html">Experiences</a></li>
+          <li><a href="/retreats.html">Retreats</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Blog</h3>
+        <ul>
+          <li><a href="/blog/">From the lodge</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Book your stay</h3>
+        <ul>
+          <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>
+          <li><a href="https://www.instagram.com/ocean_forest_ecolodge" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ocean Forest Ecolodge · Drake Bay, Osa Peninsula, Costa Rica</span>
+      <span>Crafted by <a href="https://pxnproductions.com" rel="noopener">PxN Productions</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- The list of posts. Loaded before the builder below, which reads it. -->
+<script src="/posts.js"></script>
+<script>
+/* The blog index, built from POSTS.
+   ─────────────────────────────────────────────────────────────────────────
+   Runs before shell.js on purpose: shell.js collects .reveal elements once
+   at start-up, so the cards have to be in the document before it looks. */
+(function () {
+  'use strict';
+
+  var list = document.getElementById('blogList');
+  if (!list) return;
+
+  var posts = (window.OF_POSTS || []).slice();
+
+  /* Newest first, computed from the date rather than from the order of the
+     array - so an entry added to the bottom of posts.js still lands in the
+     right place, which is what somebody adding one by hand will do. */
+  posts.sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+
+  /* Parsed by hand rather than with new Date(): a date-only string is read as
+     UTC and printed in the reader's own zone, which puts every post one day
+     early for anybody west of Greenwich - Costa Rica included. */
+  function readableDate(iso) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''));
+    if (!m) return String(iso || '');
+    return Number(m[3]) + ' ' + MONTHS[Number(m[2]) - 1] + ' ' + m[1];
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* Root-absolute or not at all. A hero path written without its leading
+     slash resolves against /blog/ in production and 404s, and the card would
+     show a broken picture rather than no picture, which is the worse of the
+     two failures and the harder one to spot. So the card simply goes out
+     without its photograph and the post is still reachable. */
+  function rootAbsolute(u) { return typeof u === 'string' && u.charAt(0) === '/'; }
+
+  if (!posts.length) {
+    list.innerHTML =
+      '<div class="bl-empty reveal"><p>The first post is on its way.</p></div>';
+    return;
+  }
+
+  list.className = 'bl-grid';
+  list.innerHTML = posts.map(function (p) {
+    /* The leading slash is written here, in the markup, rather than trusted
+       to arrive inside the value. Every src and href this file emits then
+       begins with one no matter what posts.js says, and a reader checking
+       the rule can see it without running anything. */
+    var media = rootAbsolute(p.hero)
+      ? '<div class="bl-card-media"><img src="/' + esc(p.hero.replace(/^\/+/, '')) + '" alt="' + esc(p.alt) + '" loading="lazy"></div>'
+      : '';
+    /* The .html is deliberate and must stay. Every other link on this site
+       carries it, and Vercel's cleanUrls turns it into the tidy address
+       /blog/<slug> for visitors. Without it the card is unopenable on the
+       local preview server, which means no post can ever be checked before
+       it goes live. Found 2026-08-13, on the first real post. */
+    return '<a class="bl-card reveal" href="/blog/' + esc(p.slug) + '.html">' +
+             media +
+             '<div class="bl-card-body">' +
+               '<time class="bl-date" datetime="' + esc(p.date) + '">' + esc(readableDate(p.date)) + '</time>' +
+               '<h3>' + esc(p.title) + '</h3>' +
+               '<p>' + esc(p.excerpt) + '</p>' +
+               '<span class="bl-more">Read this post</span>' +
+             '</div>' +
+           '</a>';
+  }).join('');
+})();
+</script>
+
+<!-- The gallery photographs. Loaded before shell.js because shell.js
+     reads the list at start-up. -->
+<script src="/photos.js"></script>
+<script src="/shell.js"></script>
+</body>
+</html>

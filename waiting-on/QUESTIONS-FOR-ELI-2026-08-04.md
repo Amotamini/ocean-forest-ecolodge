@@ -95,11 +95,13 @@ answered differently, or a place her own materials contradict each other.
   22 guests. oceanforestecolodge.com says 10 rooms and 30 guests. The retreat page says 11
   units and 32 guests. Booking.com says 11. The retreat calculator says 12 units with two
   held back. Guests will notice this one on arrival.
-  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer A):** Eleven rooms, 32 guests maximum.
-    Fixed everywhere it was wrong (seven lines across four pages).
+  - ✅ **ANSWERED, and corrected 2026-08-13 (Eli, final):** Ten rooms, 32 guests maximum. The
+    2026-08-09 answer here said eleven; that was Mehdi's Phase 0 note, not Eli's, and it was
+    wrong. The pages themselves were never changed and have said ten throughout.
 - Are Lapa Lapa West and East bookable, or held for retreat facilitators?
-  - ✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answer B):** Bookable, not held back for
-    facilitators. Corrected on the Retreats page and in the retreat calculator.
+  - ✅ **ANSWERED, and corrected 2026-08-13 (Eli, final):** Held for retreat facilitators, not
+    bookable guest rooms. The 2026-08-09 answer here said the opposite and came from the same
+    incorrect note.
 - ⚠️ Rates. On 3 August you gave "from $120, $140, $150" for the three room types, and I
   asked for an all-inclusive rate per room per season. Is the "from" price the final answer,
   or are we still getting the full table?

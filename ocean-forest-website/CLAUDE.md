@@ -25,7 +25,7 @@ request costs a message. A broken layout costs a call to Scott.
 
 ### Words
 
-Any visible text inside the six pages in ``:
+Any visible text inside the seven pages of the site:
 
 | Page | File |
 |---|---|
@@ -35,6 +35,7 @@ Any visible text inside the six pages in ``:
 | Experiences | `experiences.html` |
 | Retreats | `retreats.html` |
 | About | `about.html` |
+| Blog | `blog/index.html`, and one file per post at `blog/<slug>.html` |
 
 Some text lives in `shared-sections.js` instead, because it appears on more than one page: the
 tour descriptions and the three ways of getting here. **Changing it there changes it everywhere it
@@ -84,24 +85,119 @@ Do not edit these files for her under any circumstances:
 - `vercel.json`, `package.json`, `serve.py`
 - Any file at the root that is not one of the seven pages
 
+One exception, and only one: **`posts.js` is yours to edit.** It is the list of blog posts and
+nothing else, and the publishing recipe below is the only way it is ever touched.
+
 **There is no V1 any more.** Until 2026-08-11 the old site lived at the root and the new one in a
 `v2/` folder, and this file used to warn about editing the wrong one. That risk is gone: V2 moved
 to the root and replaced V1 outright, so there is exactly one set of pages and no way to edit the
 wrong copy. The old site survives in git history and as a frozen capture in Redline. Old `/v2/…`
 links still work — `vercel.json` redirects them.
 
-The seven pages, all at the root: `index.html`, `arriving.html`, `lodging.html`,
-`experiences.html`, `retreats.html`, `about.html`, `blog.html`.
+Six pages at the root: `index.html`, `arriving.html`, `lodging.html`, `experiences.html`,
+`retreats.html`, `about.html`. The seventh is the blog, which is a folder rather than a page:
+`blog/index.html` is the list, and each post is its own file at `blog/<slug>.html`. It is read
+at `/blog/`. There is no `blog.html`, and there must never be one again: Vercel serves clean
+URLs, so a `blog.html` file and a `blog/` folder would both claim the address `/blog` and one of
+them would win silently.
 
 Also refuse, and route to Scott:
 
 - Moving, adding, removing or reordering **sections**
 - Changing colours, fonts, sizes, spacing or layout
-- Anything about the retreat price calculator's numbers, rooms or maths
 - Anything that mentions CSS, JavaScript, HTML tags, classes or deployment
 
 **One shared component now serves several pages.** That was deliberate, and it means a change in
 the wrong place changes six pages at once. This is exactly why the list above is absolute.
+
+---
+
+## The four recipes
+
+These are the four jobs Eli will ask for that have more than one step. Each is numbered, and you
+follow it in the same order every time. Improvising one of these is how the site breaks, and the
+kind of break it produces is the kind nobody notices for a week.
+
+Every recipe ends by writing one line to `CHANGES.md`, exactly as described further down.
+
+---
+
+### Recipe 1 — Publish a post
+
+1. Agree the headline, the date and the slug with her first. The **slug** is lowercase with
+   hyphens and no spaces, it is taken from the headline, and it becomes both the filename and the
+   web address. "The turtles of San Josecito" gives `turtles-of-san-josecito`, which lives at
+   `blog/turtles-of-san-josecito.html` and is read at `/blog/turtles-of-san-josecito`.
+2. Copy `blog/_template.html` to `blog/<slug>.html`. Copy it. Never write a post from memory, and
+   never start from another post.
+3. Fill the copy in, replacing only the parts the template's own comment block names. Then delete
+   that comment block, and delete the `noindex` line the template carries. **Every local path in
+   the post begins with a slash**: `/shell.css`, `/media/blog/<slug>/hero.webp`. Never a bare
+   filename, never a `../` climb.
+4. Put the photographs in `media/blog/<slug>/`, one folder per post. Resize every one to **1600px
+   on the long edge and save it as `.webp`** before it goes in. Do this without being asked. A
+   photograph straight off a phone is often 5MB, which makes the page slow to load in a way she
+   would have no way of connecting back to the picture.
+5. Add one entry to `POSTS` in `posts.js`, with all six fields: `slug`, `title`, `date`,
+   `excerpt`, `hero`, `alt`. The date is `YYYY-MM-DD`. `hero` is `""` if the post has no
+   photograph.
+6. **If this is the first post ever**, remove the `<meta name="robots" content="noindex">` line
+   and the comment above it from `blog/index.html`. That line is there so Google does not index an
+   empty blog; left in place, the blog will never rank.
+7. Write the `CHANGES.md` line.
+
+### Recipe 2 — Edit or remove a post
+
+**To edit one**, change `blog/<slug>.html` in place. If the headline, the date or the summary
+changed, change the matching entry in `POSTS` in `posts.js` as well, so the card and the post
+agree. Never change a slug: the address is what somebody has already sent to a friend. If she
+truly wants a new address, that is a new post.
+
+**To remove one**, delete its entry from `POSTS` in `posts.js` and stop there. The post file and
+its photographs stay exactly where they are, so putting the entry back restores the post whole.
+Do not delete the file. Do not touch `media/`.
+
+Write the `CHANGES.md` line.
+
+### Recipe 3 — Change a price
+
+**Establish first which of the two prices she means.** There are two unrelated sets of "room
+prices" on this site and they will be confused. Ask, and say back which one you are about to
+change, before you touch anything.
+
+**A nightly rate**, the "from $120 a night" kind. It lives in three places:
+
+1. `index.html`
+2. `lodging.html`
+3. the settled-facts list further down this file
+
+**A seven-night retreat rate**, the per-room price in the retreat calculator. It lives in three
+places:
+
+1. `CALC_ROOMS` in `retreats.html`
+2. `DEFAULT_ROOMS` in `../Retreat calculator/retreat calculator.html`
+3. `../Retreat calculator/retreat-prices.csv`
+
+Then, whichever set it is:
+
+1. Search for the old number and show her **every place it appears**, as a list, before changing
+   anything.
+2. Change them **all together, or none at all.** A price changed in two places out of three is
+   worse than a price not changed, because the site then quotes two different numbers and nobody
+   knows which is real.
+3. Search again for the old number afterwards and confirm nothing is left behind.
+4. Write the `CHANGES.md` line, naming every file you changed.
+
+### Recipe 4 — Remove a photograph from a page
+
+"Remove a photograph" always means **take it off the page**, never take it off the disk.
+
+1. Change the page so it no longer points at the file.
+2. **Never rename, move or delete anything in `media/`.** Another page is probably using it, and
+   you cannot see that from the page in front of you.
+3. If the spot should now be empty rather than filled, say so plainly: the page may show a dashed
+   "Photo to come" box, which is the site waiting rather than a fault.
+4. Write the `CHANGES.md` line, naming the file that is no longer shown and the page it left.
 
 ---
 
@@ -163,9 +259,18 @@ list of forty commits all saying "update" is useless to him.
 Every change is recorded twice: in `CHANGES.md` in plain English, and in the repository's own
 history in full technical detail. Nothing is ever permanently lost.
 
-If something looks wrong, tell her: **"Ask Scott to revert the last change."** He can put the site
-back exactly as it was in under a minute, and `CHANGES.md` will tell him what to look for. Do not
-attempt complicated recovery yourself.
+**She can undo her own last change, and she does not need anybody.** If something looks wrong,
+tell her, in these words and no more technical than this:
+
+> Open GitHub Desktop, click **History** at the top left, right-click the change at the top of the
+> list, choose **Revert changes in commit**, then press **Push**. The site goes back to how it was
+> about a minute later.
+
+That is the whole recovery. It works whether the change was hers or not, and it can itself be
+undone the same way.
+
+Only if that does not put it right: **"Ask Scott to look at it."** `CHANGES.md` tells him what to
+look for. Do not attempt complicated recovery yourself, and do not offer her a second one.
 
 ---
 
@@ -175,6 +280,9 @@ These were settled with the owner and are correct. If a request conflicts with o
 before changing anything.
 
 - **Ten rooms**, 32 guests maximum
+- **Ten bookable guest rooms. Twelve units exist; Lapa Lapa West and East are facilitator space.
+  Settled with Eli, do not re-open** — every contrary source in this folder descends from a single
+  incorrect note dated 2026-08-09.
 - Rates: **$120** beach bungalow, **$140** jungle suite, **$150** family bungalow
 - Boat from Sierpe **$30** morning / **$40** afternoon; the fly-in 4x4 transfer **$60**
 - Every route ends with a **20 minute** walk along the beach

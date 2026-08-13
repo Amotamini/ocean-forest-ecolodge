@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ═══════════════════════════════════════════════════════════════════════
+     THE POST TEMPLATE. This file is not a post and is never linked from
+     anywhere. Claude copies it to blog/<slug>.html and fills it in, following
+     "Publish a post" in CLAUDE.md.
+
+     The leading underscore in the filename is deliberate: it sorts this file
+     to the top of the folder and reads as "not a post".
+
+     WHAT TO REPLACE, and nothing else:
+       · the <title>, which is "<the headline> · Ocean Forest Ecolodge"
+       · the <meta name="description">, one sentence
+       · the <time> element, both its datetime attribute and its wording
+       · the <h1>
+       · the standfirst paragraph under the h1
+       · the hero <figure>, or delete it whole if the post has no photograph
+       · everything between BODY STARTS and BODY ENDS
+
+     EVERY LOCAL PATH IN A POST BEGINS WITH A SLASH. /shell.css, never a bare
+     shell.css; /media/blog/<slug>/hero.webp, never a climb up out of this
+     folder with two dots. This site is served at clean URLs with no trailing
+     slash, so a relative path resolves to the wrong place in production while
+     looking perfectly correct on the local server. It has broken this site
+     three separate times.
+
+     The layout below reads correctly at 200 words and at 2000. Do not add a
+     stylesheet, a <style> block or a colour to a post: the .bl- rules in
+     shell.css are the whole design and they serve every post.
+
+     No byline. The date only.
+     ═══════════════════════════════════════════════════════════════════════ -->
+
+<title>Post title · Ocean Forest Ecolodge</title>
+<meta name="description" content="One sentence saying what this post is about.">
+
+<!-- This template is not a post. Any copy of it made into a real post must
+     lose the line below, or the post will not be indexed. -->
+<meta name="robots" content="noindex">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shell.css">
+</head>
+<body class="light">
+
+<!-- The header. Built by shell.js from its NAV list. To change the menu,
+     edit NAV in shell.js. Do not put menu markup in here. -->
+<div data-shell="header"></div>
+
+<main id="main">
+
+  <section class="bl-post" style="padding-top: 70px;">
+    <div class="wrap">
+
+      <article class="bl-article reveal">
+
+        <a class="bl-back" href="/blog/">
+          <span aria-hidden="true">&#8592;</span> All posts
+        </a>
+
+        <time class="bl-date" datetime="2026-01-01">1 January 2026</time>
+
+        <h1>Post title</h1>
+
+        <p class="bl-standfirst">One or two sentences that carry the reader into the
+        piece. This is the only paragraph on the page written in the serif face, so it
+        does the work an image would do on a page that has none.</p>
+
+        <!-- The hero photograph. Delete this whole figure if the post has none.
+             The file lives in /media/blog/<slug>/ and is 1600px on the long edge,
+             saved as .webp. -->
+        <figure class="bl-hero">
+          <img src="/media/blog/example-slug/hero.webp" alt="What the photograph shows.">
+          <figcaption>An optional line about the photograph. Delete the figcaption if
+          there is nothing to say.</figcaption>
+        </figure>
+
+        <!-- ── BODY STARTS ──────────────────────────────────────────────────
+             Paragraphs, subheadings and photographs, in whatever order the
+             piece needs. The four things available, and only these four:
+
+               <p>text</p>
+               <h2>A subheading</h2>
+               <blockquote><p>A quoted line.</p></blockquote>
+               <figure><img src="/media/blog/<slug>/name.webp" alt="..."><figcaption>…</figcaption></figure>
+
+             House style: no em dashes and no en dashes. Commas or full stops.
+             ─────────────────────────────────────────────────────────────── -->
+
+        <p>The first paragraph of the post.</p>
+
+        <h2>A subheading, if the piece is long enough to want one</h2>
+
+        <p>More of the post.</p>
+
+        <!-- ── BODY ENDS ─────────────────────────────────────────────────── -->
+
+        <a class="bl-back bl-back-foot" href="/blog/">
+          <span aria-hidden="true">&#8592;</span> All posts
+        </a>
+
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-bar" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand">Ocean Forest Ecolodge</div>
+        <p>Playa Rincón de San Josecito · Drake Bay · Osa Peninsula · Costa Rica<br>Six kilometers from Corcovado National Park</p>
+        <a class="foot-map" href="https://www.google.com/maps/dir/?api=1&amp;destination=8.6957%2C-83.675" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 10-14 0c0 5.4 7 11 7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6"/></svg>
+          How to get there
+        </a>
+      </div>
+      <div>
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="/arriving.html">Arriving</a></li>
+          <li><a href="/lodging.html">Lodging</a></li>
+          <li><a href="/experiences.html">Experiences</a></li>
+          <li><a href="/retreats.html">Retreats</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">Book now</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Blog</h3>
+        <ul>
+          <li><a href="/blog/">From the lodge</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Book your stay</h3>
+        <ul>
+          <li><a href="https://wa.me/50687379416" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:eli@oceanforest.org">eli@oceanforest.org</a></li>
+          <li><a href="https://www.instagram.com/ocean_forest_ecolodge" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Ocean Forest Ecolodge · Drake Bay, Osa Peninsula, Costa Rica</span>
+      <span>Crafted by <a href="https://pxnproductions.com" rel="noopener">PxN Productions</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="/photos.js"></script>
+<script src="/shell.js"></script>
+</body>
+</html>

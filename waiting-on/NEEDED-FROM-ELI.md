@@ -43,9 +43,14 @@ Where to change it: `stay.html`, the `ROOMS` array near the top of the script bl
 
 ## 2. How many rooms are there, actually (blocking)
 
-✅ **ANSWERED 2026-08-09 (Mehdi, Phase 0 answers A and B):** Eleven rooms, 32 guests maximum.
-Lapa Lapa West and East are bookable, not held back for facilitators — the note below saying
-otherwise is superseded.
+✅ **ANSWERED, and corrected 2026-08-13 (Eli, final):** Ten rooms, 32 guests maximum. Lapa Lapa
+West and East are facilitator space, not bookable guest rooms, so the note below is right and was
+right all along.
+
+The 2026-08-09 answer that used to sit here said eleven and said Lapa Lapa was bookable. It was
+Mehdi's Phase 0 note rather than Eli's answer, it was wrong, and it was copied into three other
+files before anyone checked. Ten is corroborated by her channel manager billing per room for ten,
+by the ten-room price table above, and by the old main site.
 
 Three sources, three answers.
 

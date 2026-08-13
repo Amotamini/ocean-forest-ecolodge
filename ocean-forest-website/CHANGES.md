@@ -10,6 +10,64 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-08-13 · Mehdi · First blog post published
+
+"See~diii: a 9th dimensional goddess protects the Osa Peninsula" is now live at
+/blog/seediii-goddess-of-the-osa. It is Jonathon's account, brought across from the old
+oceanforest.org site where it was published on 12 April 2021, and it keeps that date.
+
+The blog index no longer carries the line that told Google to ignore it. That line was
+there only while the blog was empty and it comes off with the first post, as planned.
+
+Its photograph is the lodge's own wide shot of the Pacific off San Josecito. The two
+photographs of the stone spheres from the original article could not be copied across
+automatically. The markup for both is already written into the post and commented out,
+and media/blog/seediii-goddess-of-the-osa/README.txt says exactly what is needed.
+
+Files: blog/seediii-goddess-of-the-osa.html (new), posts.js, blog/index.html,
+media/blog/seediii-goddess-of-the-osa/
+
+## 2026-08-13 · Eli · Ten rooms, settled
+
+The lodge has ten bookable guest rooms. Twelve units exist on the property, and two of them,
+Lapa Lapa West and East beside the shala, are facilitator space rather than rooms sold to guests.
+This is Eli's own answer and it is final.
+
+Four documents said eleven. All four traced back to one note written on 2026-08-09 that was not
+hers, and it had been copied from file to file since. They now say ten, each with a line saying
+where the wrong number came from, so nobody re-opens it in a year.
+
+On the Retreats page the three accommodation cards added up to twelve, because the Gardens and
+stream card counted five by including Lapa Lapa West and East. It now reads three, so the cards
+total ten and agree with the line above them. No other visible wording changed anywhere: every
+page already said ten and every page was right. The retreat calculator still lists all twelve
+units, which is correct, because it allocates beds for a retreat rather than selling rooms.
+
+Files: `retreats.html`, `CLAUDE.md`, `HANDOVER.md`, `../WHAT-WE-AGREED.md`,
+`../waiting-on/NEEDED-FROM-ELI.md`, `../waiting-on/QUESTIONS-FOR-ELI-2026-08-04.md`,
+`../specs/of-v2-retreats.md`.
+
+---
+
+## 2026-08-13 · Mehdi · The blog is real, and the guides were repaired
+
+The blog is no longer a placeholder. It lives at `/blog/`, each post gets its own web address
+that can be sent to somebody, and the list of what appears there is `posts.js`. The old
+placeholder page `blog.html` was removed, and every footer link on the site now points at
+`/blog/` instead. No post has been published yet, so the blog shows its waiting message.
+
+`CLAUDE.md` gained the four recipes: publishing a post, editing or removing one, changing a
+price, and taking a photograph off a page. It no longer refuses to change the retreat
+calculator's prices. `EDITING-YOUR-WEBSITE.md` was rewritten to cover blogging, prices and
+undoing, in plain language. `HANDOVER.md` and `START-HERE.md` were describing a two-site layout
+that ended on 2026-08-11 and have been corrected.
+
+Files: `blog/index.html`, `blog/_template.html`, `posts.js`, `shell.css`, `shell.js`,
+`media/blog/`, `CLAUDE.md`, `EDITING-YOUR-WEBSITE.md`, `HANDOVER.md`, `../START-HERE.md`, and
+the footer link in all six root pages.
+
+---
+
 ## 2026-08-09 · Mehdi · Handover
 
 Website handed over to Eli. Editing with Claude set up. This log starts here.

@@ -54,7 +54,14 @@ var GALLERY = (typeof window !== 'undefined' && window.GALLERY) || [];
        only opens a menu strands anyone who wanted the page itself. */
     { href: '/about.html', label: 'About', children: [
       { href: '/about.html', label: 'About the lodge' },
-      { href: '/blog.html',  label: 'Blog' },
+      /* The blog is a folder with an index inside it, not a blog.html page.
+         Vercel runs cleanUrls, so blog.html and blog/ would both claim the
+         address /blog and one of them would win silently.
+
+         under: every post lives at /blog/<slug>, so the Blog link and the
+         About item above it stay marked while the reader is on a post. A
+         plain href test only ever matched the index itself. */
+      { href: '/blog/', label: 'Blog', under: '/blog' },
       { href: 'https://rainforest-medicine-gatherings.vercel.app/',
         label: 'Rainforest Medicine', external: true }
     ] }
@@ -86,8 +93,20 @@ var GALLERY = (typeof window !== 'undefined' && window.GALLERY) || [];
       .replace(/\/$/, '') || '/';
   }
 
+  /* Is this nav item the page we are on? Normally the stems match. An item
+     that carries `under` also matches anything below that path, which is how
+     a blog post at /blog/<slug> keeps the Blog link, and the About item it
+     hangs from, marked as current. */
+  function isHere(item, here) {
+    if (item.external) return false;
+    if (stem(item.href) === here) return true;
+    if (!item.under) return false;
+    var root = stem(item.under);
+    return here === root || here.indexOf(root + '/') === 0;
+  }
+
   function navLinkHTML(item, here) {
-    var on = stem(item.href) === here;
+    var on = isHere(item, here);
     return '<a href="' + item.href + '"' +
            (item.external ? ' target="_blank" rel="noopener"' : '') +
            (on ? ' class="current" aria-current="page"' : '') + '>' +
@@ -104,7 +123,7 @@ var GALLERY = (typeof window !== 'undefined' && window.GALLERY) || [];
       /* One <a> plus a panel. The panel is a sibling of the link, not inside
          it: an <a> may not contain other <a>s, and a browser that repairs
          that markup will move the children out from under you. */
-      var childOn = item.children.some(function (c) { return !c.external && stem(c.href) === here; });
+      var childOn = item.children.some(function (c) { return isHere(c, here); });
       return '<span class="nav-drop">' +
                '<a href="' + item.href + '" class="nav-drop-top' +
                  (childOn ? ' current' : '') + '"' +

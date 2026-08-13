@@ -6,8 +6,12 @@ via an "18 years ago" line in a 2020-dated post), **resolved 2026-08-09: 2003 is
 0 answer E). No page change was needed, since the page already used 2003. Two link forms differ
 from the literal Contract wording and were reconciled to
 the shell's established, Finder-working convention rather than deploy-time routes: the Tours FAQ
-links to `experiences.html` (spec said `/experiences`), and the Jonathon and Blog links point to
-`../blog.html`, matching every other v2 page's footer (spec said `/blog`).
+links to `experiences.html` (spec said `/experiences`), and the Jonathon and Blog links pointed at
+the blog page that then sat at the site root (spec said `/blog`).
+
+**REVISED 2026-08-13.** The blog stopped being a page and became a folder, so both of those links
+are now `/blog/`, which is what this spec asked for in the first place. The page is otherwise
+untouched. See `specs/of-handover-ready.md` at the root of `~/Work`.
 
 **REVISED 2026-08-09.** One correction landed after this spec shipped, recorded only in
 `of-v2-revisions.md` (C18): the first photograph after the hero gains the `.media-band .media-fade`

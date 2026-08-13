@@ -158,11 +158,17 @@ arrive they drop straight in.
 
 These were open questions for a while. They are answered now and the site matches.
 
-**Eleven rooms, 32 guests maximum.** Five different sources gave five different room counts; eleven
-is the correct one, and every page now says so.
+**Ten rooms, 32 guests maximum.** Five different sources gave five different room counts. Ten is
+the correct one, and every page says so.
 
-**Lapa Lapa West and East are bookable**, the same as any other room. They are not held back for
-retreat facilitators only.
+*Corrected 2026-08-13.* This section said eleven from 2026-08-09 until then. That figure was
+Mehdi's own Phase 0 note, not Eli's answer, and it was wrong. Ten is Eli's answer and it is final,
+corroborated by her channel manager billing per room for ten, by the ten-room price table she was
+sent, and by the old main site.
+
+**Lapa Lapa West and East are facilitator space**, not bookable guest rooms. Twelve units exist on
+the property; ten of them are sold to guests. The line here saying they were bookable came from the
+same incorrect 2026-08-09 note and is withdrawn.
 
 **Rates are final: $120, $140, $150** for beach bungalow, jungle suite and family bungalow. There is
 no separate per-room, per-season table coming.

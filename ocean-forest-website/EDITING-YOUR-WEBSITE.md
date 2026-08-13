@@ -6,22 +6,26 @@ Written for Eli. You do not need to know anything about code to use this.
 
 ## What you can change yourself
 
-**Any words on the site.** Headings, paragraphs, room descriptions, prices, the FAQ.
+**Any words on the site.** Headings, paragraphs, room descriptions, the questions and answers.
 
-**Any photograph.** Swap one for another, or fill a slot that is waiting for a picture.
+**Any photograph.** Swap one for another, fill a slot that is waiting for a picture, or take one
+off a page.
 
-That is the list. Everything else — where things sit on the page, colours, fonts, adding or
-removing a whole section — goes to Scott. There is a good reason for that, further down.
+**Any price.**
+
+**The blog.** Write a post, change a post, take a post down.
+
+That is the list. Everything else, meaning where things sit on the page, colours, fonts, adding or
+removing a whole section, goes to Scott. There is a good reason for that, further down.
 
 ---
 
-## The three things on your computer
+## The two things you open
 
-1. **GitHub Desktop** — a small app with a Push button. This is what makes a change go live.
-2. **Claude** — where you type what you want changed.
-3. **The website folder** — everything the site is made of, sitting on your Mac.
+1. **Claude.** Where you say what you want changed. It does the work.
+2. **GitHub Desktop.** A small app with a Push button. This is what makes a change go live.
 
-Scott sets these up once. After that you only ever open Claude and GitHub Desktop.
+Scott sets both up once. After that you never open anything else.
 
 ---
 
@@ -45,52 +49,127 @@ say yes.**
 
 > [drag the photo in] Use this as the big photo at the top of the Experiences page.
 
-That is the whole thing. Claude works out which folder it belongs in, renames it properly, converts
-it if your phone saved it in a format the web cannot show, resizes it if it is enormous, and puts
-it on the page. It will tell you the filename it chose.
+That is the whole thing. Claude works out where it belongs, names it properly, converts it if your
+phone saved it in a format the web cannot show, makes it the right size, and puts it on the page.
 
-You do not need to find a folder, rename anything, or know what a file format is.
-
-Photos straight off a phone or camera are fine. Bigger is better than smaller.
+You do not need to find a folder, rename anything, or know what a file format is. Photographs
+straight off a phone or a camera are fine, and bigger is better than smaller.
 
 **A dashed box saying "Photo to come" is not a fault.** It is the site telling you it is waiting
 for a picture in that spot. Drag one in and say "use this for that box".
 
-**If you see a dashed box saying "Photo to come" with a filename in it** — that is the site telling
-you exactly which picture it is waiting for. Put a file with that name in that folder and the box
-becomes the photograph. Nothing else to do.
+---
+
+## Taking a photograph off a page
+
+Say which page and which picture:
+
+> On the Experiences page, take the photograph of the waterfall off. Nothing in its place.
+
+Claude changes the page so the picture is no longer shown. **The picture itself is never deleted.**
+It stays exactly where it is, because another page may well be using it too, and because you may
+want it back next month. Nothing is ever thrown away here.
+
+If you want a different picture instead of the old one, do not ask for the old one to be removed
+first. Just drag the new one in and say "use this instead". That is one step rather than two.
+
+---
+
+## Changing a price
+
+Say the new number and which price you mean:
+
+> Put the beach bungalow up from $120 a night to $130.
+
+> Put Coco Solo's high season week up from $1,250 to $1,300.
+
+**There are two different kinds of price on this site, and Claude will ask you which one you mean
+before it changes anything.** They are:
+
+- **The nightly rates.** The "from $120 a night" kind, on the Home page and the Lodging page.
+- **The retreat week rates.** The price of one named room for seven nights, which the retreat
+  calculator adds up.
+
+They are not connected, and changing one does not change the other.
+
+Each price is written down in more than one place, because more than one page quotes it. Claude
+will show you **every place the number appears** and change them all at once, or not at all. A
+price changed in only some places is worse than a price not changed, because the site would then
+quote two different numbers and nobody could tell which was real.
+
+---
+
+## Writing a blog post
+
+Say what the post is called, when it should be dated, and then write it or paste it in:
+
+> New blog post, called "The turtles of San Josecito", dated today. Here is what it says.
+> [paste or type the piece]
+
+Then drag in any photographs you want in it, saying which goes at the top and where the others sit.
+
+Claude does everything else: it makes the post, gives it its own web address that you can send to
+somebody, resizes the photographs so the page stays quick to open, and adds the post to the top of
+the blog list so it appears the moment you publish.
+
+**Photographs first, then the words.** If you send both together it is faster still.
+
+**To change a post that is already up**, say which one and what to change. It works exactly like
+changing words on any other page.
+
+**To take a post down**, say so:
+
+> Take the turtles post off the blog.
+
+It disappears from the blog immediately. The writing and the photographs are kept, so if you change
+your mind you can say "put the turtles post back" and it returns exactly as it was.
 
 ---
 
 ## Making it go live
 
+Nothing you do in Claude is on the internet until you do this.
+
 1. Open **GitHub Desktop**.
 2. You will see your changes listed on the left.
-3. Type a short note in the box — "new beach photo" is plenty.
+3. Type a short note in the box, "new beach photo" is plenty.
 4. Press **Commit**, then press **Push**.
 5. Wait about a minute. The live site updates itself.
 
 ---
 
-## If something looks wrong
+## Undoing your last change
 
-**Do not try to fix it.** Message Scott and say: *"Please revert the last change."*
+**You can put the site back yourself, and you do not need to ask anybody.**
 
-Every change you make is recorded, and he can put the site back exactly as it was in under a
-minute. Nothing you do is permanent and nothing can be lost. This is worth remembering, because it
-means you can experiment without fear — the worst case is one message to Scott.
+1. Open **GitHub Desktop**.
+2. Click **History** at the top left. This is the list of everything that has ever been changed,
+   newest at the top.
+3. Right-click the top one, the change you just made.
+4. Choose **Revert changes in commit**.
+5. Press **Push**.
+
+About a minute later the site is back exactly as it was. Undoing is itself just another change, so
+if you undo the wrong thing you can undo that too.
+
+**Nothing you do can be permanently lost.** Every version of this site is kept forever. This is
+worth remembering, because it means you can experiment without fear.
+
+If reverting does not put it right, that is the point to message Scott. Tell him which page looks
+wrong. He has everything he needs.
 
 ---
 
 ## Why some things need Scott
 
 The site is built so that one change can update several pages at once. Change the way a room is
-displayed, and it changes on the home page, the Lodging page and the Retreats page together.
+shown, and it changes on the Home page, the Lodging page and the Retreats page together.
 
 That is deliberate and it is what keeps the site consistent. It also means a change in the wrong
 place goes wrong in six places instead of one. So the rule is simple:
 
-**Words and pictures: you. Anything about how it looks or how it is laid out: Scott.**
+**Words, pictures, prices and the blog: you. Anything about how it looks or how it is laid out:
+Scott.**
 
 Claude has been given the same rule in writing and will tell you when something is his job rather
 than yours.
@@ -99,14 +178,14 @@ than yours.
 
 ## Things the site is deliberately waiting for
 
-These are not faults. Do not try to fill them with made-up content:
+These are not faults. Please do not fill them with made-up content:
 
 - **The newsletter signup does not work yet.** It needs a mailing service to be chosen first.
 - **"Watch the full film" goes nowhere.** It needs the real video link.
 - **The guest reviews section is an empty box.** No review has been invented. It needs your Google
   Business login to connect properly.
 - **The yoga shala video** has not been delivered yet.
-- **Some phone numbers on the Arriving page say "unconfirmed"** — they were last checked in 2018
-  and need a call to verify.
+- **Some phone numbers on the Arriving page say "unconfirmed".** They were last checked in 2018 and
+  need a call to verify.
 
-The full list, and who owes what, is in `Last-little-things.md`.
+The full list, and who owes what, is in the note called Last little things, alongside this one.

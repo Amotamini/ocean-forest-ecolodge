@@ -2,6 +2,16 @@ STATUS: SHIPPED 2026-08-06
 
 Built and verified as commit `ce9dc1b`.
 
+**REVISED 2026-08-13.** The accommodation section on the live page is three cards, not the five
+described below, and they now total TEN rooms, not eleven: Beach Bungalows 3, Jungle Suites 4,
+Gardens and stream 3. The three-card layout was Mehdi's call on 2026-08-09 and was never written
+back here; the count was corrected on 2026-08-13 to Eli's own final answer of ten. Lapa Lapa West
+and East are facilitator space beside the shala, not bookable guest rooms, so they are outside the
+count. Twelve units exist on the property and the calculator on this page still lists all twelve,
+which is correct: it allocates beds for a retreat rather than selling rooms. Every "eleven" that
+used to appear below descended from a single incorrect note dated 2026-08-09. Settled with Eli, do
+not re-open.
+
 **REVISED 2026-08-09.** Three corrections landed in `v2/retreats.html` after this spec shipped and
 were recorded only in `of-v2-revisions-2.md` (D5, D6, D8). Folded in below, so this spec now
 describes the page as it actually stands. What changed: the hero is no longer an empty slot behind
@@ -128,10 +138,10 @@ them.
    grid (Height 46 feet / 3 levels · Dharma Hall 1,614 sq ft · Floor Hardwood, polished · Equipment
    Full props included).
 2. **`#accommodation`** (`.alt`) — eyebrow "Accommodation", `h2` "Accommodation for up to 32 guests",
-   lead, five `accom-card`s (Beach Bungalows · Jungle Suites · Cachimbo Rooms · Garden Bungalow ·
-   Lapa Lapa Rooms), each with its photograph behind the text per D6 above, plus the `accom-total`
-   card "Eleven rooms, 32 guests" (corrected 2026-08-09, Phase 0 answer A — the eleven-rooms /
-   32-guests figures are now the client-final numbers).
+   lead, and the accommodation cards, each with its photograph behind the text per D6 above. As
+   built these are three cards, not five (Beach Bungalows 3 rooms · Jungle Suites 4 rooms · Gardens
+   and stream 3 rooms), and the named rooms are folded into the line under the grid. They total ten
+   rooms, 32 guests, which is the client-final figure — see the REVISED note at the top.
 3. **`#food`** — eyebrow "Retreat package · full board", `h2` "Everything covered. Nothing to
    manage.", lead, the `food-quote` plus `lodge-breakfast.jpg` photo, the six-item `included-grid`
    (Full Accommodation · 3 Meals Daily + Beverages · Exclusive Yoga Shala Use · Guided Río Claro Tour
@@ -201,8 +211,8 @@ place to get this wrong:
 ## 4. Acceptance checks
 
 1. Every section of body copy on the current `retreats.html` appears on `v2/retreats.html` unedited:
-   the shala copy, pull-quote and specs; the five accommodation cards, each with its D6 photograph
-   behind the text, and the "Eleven rooms, 32 guests" total; the food quote, the six included-package
+   the shala copy, pull-quote and specs; the accommodation cards, each with its D6 photograph
+   behind the text, totalling ten rooms for 32 guests; the food quote, the six included-package
    items and the leader banner; the calculator; the kit box; and the seven-item fit list, two side
    notes, four process steps and close box.
 2. The header is the A0 five-page nav (Arriving, Lodging, Experiences, Retreats, About) with Retreats

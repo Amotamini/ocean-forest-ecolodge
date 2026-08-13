@@ -116,3 +116,22 @@ in the spec only repoints a link.
 whole set showing people enjoying themselves, and the site currently sells a $2,700 retreat
 without one. Deliberately left out of the notes-fix spec because it changes a section
 Jonathon did not raise. Should go somewhere in the next pass.
+
+## 2026-08-13 — what the handover does and does not cover
+
+Recorded so nobody later mistakes a decision for an oversight. Both Mehdi's calls.
+
+- **Rainforest Medicine Gatherings is in.** The site is left exactly as it is — no blog, no
+  migration of the eight old WordPress articles — and made editable by Eli for words,
+  photographs and gathering prices. Spec: `~/Work/specs/rfm-eli-editable.md`.
+  `rfm-blog-migration.md` stays DRAFT and unbuilt.
+- **Living Bridges Foundation is out**, entirely.
+
+Two things left standing on Rainforest Medicine, for Mehdi and Scott rather than Eli: the
+site still declares `rainforestmedicine.net` as the true address of every page, which tells
+Google the old WordPress site is the real one; and the Vercel project needs confirming as
+Eli's and as publishing automatically on push.
+
+Proved along the way and worth keeping: that site's photograph treatment can be reproduced
+in Python with nothing installed on anyone's machine — tested 2026-08-13, roughly ninety
+percent of the real thing on a first attempt. That is what `rfm-eli-editable.md` builds on.

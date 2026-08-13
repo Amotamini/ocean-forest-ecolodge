@@ -6,6 +6,8 @@ Everything about the Ocean Forest Ecolodge website, in one place.
 **Part 2 is for Scott**, the developer. Eli does not need to read it.
 
 Handed over 2026-08-09 by Mehdi, PxN Productions.
+Repaired 2026-08-13: the addresses in Part 2 described a layout the site left behind on
+2026-08-11, and the blog and undoing were missing from Part 1.
 
 ---
 
@@ -27,9 +29,11 @@ can see exactly what happened and put it back.
 | You | Scott |
 |---|---|
 | Any words on any page | Layout and spacing |
-| Any photograph | Colours and fonts |
+| Any photograph, including taking one off a page | Colours and fonts |
 | Prices and descriptions | Adding or removing a section |
 | Filling in a "photo to come" box | Anything that mentions code |
+| The blog: writing a post, changing one, taking one down | |
+| Undoing your own last change | |
 
 **Why the split?** The site is built so one change updates several pages at once. Change how a room
 is displayed and it changes on the home page, the Lodging page and the Retreats page together. That
@@ -92,23 +96,30 @@ asked, what changed and on which page. You can open it and read it like a diary.
 **The repository history** — the full technical record behind it. Scott reads this one.
 
 **This is the safety net.** If anything looks wrong, you do not need to explain what you did or
-remember when. Message Scott and say:
-
-> Something looks wrong on the [page name]. Please check CHANGES.md and revert the last change.
-
-He can see exactly what happened and put the site back as it was in under a minute.
+remember when. The history is complete and Scott can read it.
 
 ---
 
 ## If something goes wrong
 
-**Do not try to fix it.** That is not caution for its own sake — attempting a fix on top of a
-problem is what turns a one-minute revert into an afternoon.
+**Put it back yourself. It takes four clicks and you do not need anybody.**
 
-Message Scott. Tell him what page looks wrong. He has everything he needs.
+1. Open **GitHub Desktop**.
+2. Click **History** at the top left. Everything ever changed is listed there, newest at the top.
+3. Right-click the change at the top and choose **Revert changes in commit**.
+4. Press **Push**.
+
+About a minute later the site is back exactly as it was. Undoing is itself just another change, so
+if you undo the wrong one you can undo that too.
+
+**Do not try to fix it by editing.** That is not caution for its own sake, attempting a fix on top
+of a problem is what turns a one-minute revert into an afternoon. Revert first, then decide.
+
+If reverting does not put it right, message Scott and tell him which page looks wrong. He has
+everything he needs.
 
 **Nothing you do can be permanently lost.** Every version of this site is kept forever. The worst
-possible outcome of any change you make is one message to Scott. Experiment freely.
+possible outcome of any change you make is one revert. Experiment freely.
 
 ---
 
@@ -166,8 +177,13 @@ the single most common way small sites disappear.
 
 ## What this is
 
-Six-page static site, hand-written HTML, no framework and no build step. It sits in ``.
-Deployed on Vercel from GitHub; push to `main` and it goes live.
+Seven-page static site, hand-written HTML, no framework and no build step. It sits in
+`ocean-forest-website/`. Deployed on Vercel from GitHub; push to `main` and it goes live.
+
+Six of the pages are files at the root: `index.html`, `arriving.html`, `lodging.html`,
+`experiences.html`, `retreats.html`, `about.html`. The seventh is the blog, which is a folder:
+`blog/index.html` lists the posts and each post is its own file at `blog/<slug>.html`, read at
+`/blog/`. What appears on the blog is decided by `posts.js` at the root, one entry per post.
 
 Serve it locally with `python3 serve.py` from `ocean-forest-website/`. That script disables caching
 deliberately — plain `python3 -m http.server` will serve you stale files and cost you an hour
@@ -181,27 +197,37 @@ every page.
 
 This was consolidated on 2026-08-09 from a mess of duplicates — four sliders, five expanders, two
 lightboxes, three room cards. The full component contract, with the reasoning, is in
-`../specs/of-v2-shell.md`. **Read that section before adding anything.** If a pattern exists, use
+`specs/of-v2-shell.md`. **Read that section before adding anything.** If a pattern exists, use
 it. If it does not, add it to the shell — not to a page.
 
-`../HANDOVER.md` is the deeper technical document: the three rules that have broken this project
+`ocean-forest-website/HANDOVER.md` is the deeper technical document: the three rules that have broken this project
 before, how the media placeholder system works, and what is still outstanding. Read it once.
 
 ## Standing rules that have each broken this site already
 
-1. **Every local reference in `` must be root-absolute** — `/shell.css`, `/media/x.jpg`.
-   Never relative, never `../`. Vercel serves clean URLs with `trailingSlash: false`, so a relative
-   path resolves wrong in production while looking fine locally. This has broken the site three
-   separate times.
-2. **V2 never shares a file with V1.** The root `index.html`, `retreats.html` and friends are the
-   OLD live site. `` has its own copy of `shared-sections.js` on purpose.
+1. **Every local reference must be root-absolute** — `/shell.css`, `/media/x.jpg`,
+   `/media/blog/<slug>/hero.webp`. Never relative, never `../`. Vercel serves clean URLs with
+   `trailingSlash: false`, so a relative path resolves wrong in production while looking fine
+   locally. This has broken the site three separate times.
+2. **A shared file changes every page at once.** `shell.css`, `shell.js` and `shared-sections.js`
+   hold one definition each of the header, the menu, the room card, the tours and the arrival
+   routes. There is no page-level copy of any of it. A change made because one page needs it lands
+   on all seven.
 3. **`media/` is additive only.** Never rename, move or delete a file already there.
 
 ## Eli's editing setup
 
 She edits with Claude, constrained by `ocean-forest-website/CLAUDE.md`. That file tells Claude to
-change words and photographs only, to refuse anything structural and route it to you, to confirm
-before writing, and to append a line to `CHANGES.md` after every edit.
+change words, photographs, prices and the blog only, to refuse anything structural and route it to
+you, to confirm before writing, and to append a line to `CHANGES.md` after every edit. It also
+holds the four recipes she will need more than once: publish a post, edit or remove a post, change
+a price, take a photograph off a page.
+
+`ocean-forest-website/EDITING-YOUR-WEBSITE.md` is the same ground in her language, with no
+filenames in it at all. That is deliberate, so do not add one.
+
+**She can revert her own last change** from GitHub Desktop's History pane. She has been told to do
+that before messaging you, so a report reaching you means reverting did not fix it.
 
 **If you change the architecture, update `CLAUDE.md` too.** It names specific files as
 off-limits. Out of date, it stops protecting anything.
@@ -211,7 +237,7 @@ when, newest first. The git log behind it has the detail.
 
 ## Specs
 
-`../specs/` holds one document per page, each ending in numbered acceptance checks describing what
+`specs/` holds one document per page, each ending in numbered acceptance checks describing what
 "done" looks like. They were verified against the live code on 2026-08-09 and are accurate.
 
 **A correction is not finished until it is written back into the spec it corrects.** This project
@@ -220,4 +246,4 @@ reapplied. Do not repeat it.
 
 ## Still outstanding
 
-See `../Last-little-things.md` — five items, each with a named owner. None is a bug.
+See `Last-little-things.md` — five items, each with a named owner. None is a bug.
