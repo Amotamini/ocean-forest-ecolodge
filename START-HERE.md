@@ -46,7 +46,12 @@ Claude has been given this same rule in writing. It will tell you when something
 
 ## Making a change
 
-**1. Open Claude on the website folder.**
+**1. Open Claude on the whole Ocean Forest folder.**
+
+Point it at the folder called Ocean Forest Ecolodge, the same one GitHub Desktop shows you. Not the
+website folder inside it. Things live alongside the website as well as in it, the retreat price
+calculator above all, and Claude cannot change what it cannot see. Point it somewhere narrower and
+a price change will quietly only half happen, with no warning.
 
 **2. Say what you want, in normal English.**
 
@@ -216,6 +221,12 @@ before, how the media placeholder system works, and what is still outstanding. R
 3. **`media/` is additive only.** Never rename, move or delete a file already there.
 
 ## Eli's editing setup
+
+**She connects Claude to the client folder, not to `ocean-forest-website/`.** That is where the
+git repository begins, so it is what GitHub Desktop shows her, and it is the only scope from which
+a price change can reach every place a price lives: `retreats.html` inside the website, and both
+`Retreat calculator/retreat calculator.html` and `Retreat calculator/retreat-prices.csv` outside
+it. Connected one level in, a price change half succeeds and says nothing.
 
 She edits with Claude, constrained by `ocean-forest-website/CLAUDE.md`. That file tells Claude to
 change words, photographs, prices and the blog only, to refuse anything structural and route it to

@@ -27,11 +27,25 @@ removing a whole section, goes to Scott. There is a good reason for that, furthe
 
 Scott sets both up once. After that you never open anything else.
 
+### The folder you point Claude at
+
+**Point Claude at the whole Ocean Forest folder, the one called Ocean Forest Ecolodge.** It is the
+same folder GitHub Desktop shows you, so if the two ever look different, you are in the wrong one.
+
+The website sits in a folder inside that one, and it is tempting to point Claude straight at the
+website instead. Do not. Some things live alongside the website rather than inside it, the retreat
+price calculator most of all. Point Claude at the website folder alone and a price change will
+quietly only half happen: the website will say the new number and the calculator will still say the
+old one, and nothing will warn you.
+
+If you are ever unsure, ask Claude "can you see the retreat calculator?" before asking for a price
+change. It will tell you.
+
 ---
 
 ## Changing some words
 
-Open Claude, point it at the website folder, and just say what you want:
+Open Claude, point it at the Ocean Forest folder as above, and just say what you want:
 
 > On the Lodging page, change "Choose Your Perfect Room" to "Find Your Room".
 

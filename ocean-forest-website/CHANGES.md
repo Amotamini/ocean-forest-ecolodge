@@ -10,6 +10,34 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-08-13 · Mehdi · Which folder to open, and no more Google Sheet
+
+Two things that would have caught Eli out.
+
+**Which folder to open in Claude.** Nothing told her. It has to be the whole Ocean Forest folder,
+the one GitHub Desktop shows her, not the website folder inside it, because the retreat price
+calculator sits alongside the website rather than in it. Open the narrower one and a price change
+would half succeed in silence. This is now said in both guides, and Claude checks it can reach the
+calculator before touching any price and explains itself plainly if it cannot.
+
+**The Google Sheet is gone.** The standalone retreat calculator carried a note saying Eli edits
+prices in a Google Sheet and the page reads it. That sheet was never set up, the address for it
+was empty from the day it was written, and the prices in the file are what has been running the
+calculator all along. It contradicted the way prices are really changed, which is by saying so to
+Claude, so the note and the unused machinery behind it are removed. No price changed, and the
+calculator was checked afterwards: it opens, lists all twelve units, and adds up correctly.
+
+Files: EDITING-YOUR-WEBSITE.md, CLAUDE.md, ../START-HERE.md,
+../Retreat calculator/retreat calculator.html
+
+## 2026-08-13 · Mehdi · Blog posts open again
+
+A blog card was pointing at an address the local preview server cannot serve, so a post could be
+written and listed but never opened to check before publishing. The card now points at the post
+file itself, which the live site still shows at the tidy short address. Nothing visible changed.
+
+File: blog/index.html
+
 ## 2026-08-13 · Mehdi · First blog post published
 
 "See~diii: a 9th dimensional goddess protects the Osa Peninsula" is now live at

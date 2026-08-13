@@ -178,6 +178,12 @@ places:
 2. `DEFAULT_ROOMS` in `../Retreat calculator/retreat calculator.html`
 3. `../Retreat calculator/retreat-prices.csv`
 
+**Before changing a retreat rate, check you can actually see `../Retreat calculator/`.** If you
+cannot, stop and say so in plain words: "I can only see the website folder, so I cannot reach the
+retreat calculator, and changing this price here alone would leave the calculator disagreeing with
+the site. Close this conversation and start a new one on the whole Ocean Forest folder, the one
+GitHub Desktop shows you." Do not change the price you can reach and mention the rest afterwards.
+
 Then, whichever set it is:
 
 1. Search for the old number and show her **every place it appears**, as a list, before changing

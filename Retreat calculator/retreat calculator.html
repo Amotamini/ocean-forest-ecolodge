@@ -585,23 +585,22 @@
 <div class="page-footer">San Josecito Beach, Drake Bay, Osa Peninsula. Costa Rica</div>
 
 <script>
-// ─── PRICES FROM THE PUBLISHED SHEET (D8) ────────────────────────────
-// Eli edits prices in a Google Sheet; this page reads the published CSV.
+// ─── THE ROOM DATA ───────────────────────────────────────────────────
+// The prices below are the only source. There is no second one.
 //
-// SERVE THIS FILE OVER HTTP. Opened straight off disk as file:// the browser
-// blocks the fetch, the sheet is never read, and the built-in prices below are
-// used instead. Locally:  python3 -m http.server
+// A half-built Google Sheet reader used to sit above this list: an empty
+// PRICE_SHEET_URL, a fetch that read a published CSV, and a comment telling
+// Eli she edited prices in a sheet. The URL was never filled in, so the sheet
+// was never read and these numbers have run the calculator from the first day.
+// Removed 2026-08-13, because it contradicted the way prices are actually
+// changed: Eli says the new number to Claude, and Claude changes it in all
+// three places at once, following "Recipe 3 — Change a price" in
+// ocean-forest-website/CLAUDE.md. Two ways to change a price is one too many.
 //
-// Google caches a published CSV for a few minutes, so a price change here
-// appears in about five minutes rather than instantly. That is expected and it
-// protects the sheet from load. Do not add a cache-buster to fight it.
-//
-// One line to change if the sheet ever moves. Empty until Mehdi publishes it,
-// which makes the fetch fail and the fallback engage — the correct behaviour.
-const PRICE_SHEET_URL = '';
-
-// ─── DEFAULT ROOM DATA ───────────────────────────────────────────────
-// Not dead code: this is the fallback whenever the sheet cannot be read.
+// THE THREE PLACES, and a price is changed in all of them or in none:
+//   1. CALC_ROOMS in ocean-forest-website/retreats.html   (the live calculator)
+//   2. DEFAULT_ROOMS below                                (this standalone one)
+//   3. retreat-prices.csv beside this file
 const DEFAULT_ROOMS = [
   { name:"Coco Solo", location:"Beach Bungalow · Garden-facing", beds:"1 Double + 1 Single", maxGuests:3, highSeason7n:1250, greenSeason7n:1100 },
   { name:"Palmiche",  location:"Beach Bungalow · Ocean view",    beds:"1 Double",           maxGuests:2, highSeason7n:1250, greenSeason7n:1100 },
@@ -870,89 +869,9 @@ function calculate() {
   document.getElementById('resultsContent').innerHTML = html;
 }
 
-// ─── PRICE SHEET: FETCH AND PARSE (D8) ───────────────────────────────
-// Columns are matched by HEADER NAME, never by position, so Eli can reorder
-// or add columns in the sheet without breaking the page. The contract is the
-// header row:  room,location,beds,max_guests,high_season_7n,green_season_7n
-
-function parsePriceCSV(text) {
-  const lines = String(text).split(/\r?\n/).filter(l => l.trim() !== '');
-  if (lines.length < 2) return { rooms: [], skipped: 0 };
-
-  const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-  const col = name => headers.indexOf(name);
-  const iRoom  = col('room');
-  const iLoc   = col('location');
-  const iBeds  = col('beds');
-  const iMax   = col('max_guests');
-  const iHigh  = col('high_season_7n');
-  const iGreen = col('green_season_7n');
-
-  // Without these three there is nothing usable, whatever else the sheet holds.
-  if (iRoom < 0 || iHigh < 0 || iGreen < 0) return { rooms: [], skipped: lines.length - 1 };
-
-  const out = [];
-  let skipped = 0;
-
-  for (let n = 1; n < lines.length; n++) {
-    const cells = lines[n].split(',').map(c => c.trim());
-    const name  = iRoom < cells.length ? cells[iRoom] : '';
-    const high  = Number(cells[iHigh]);
-    const green = Number(cells[iGreen]);
-
-    // A row counts only if it is named and both prices are real numbers.
-    // Anything else is skipped and counted, never guessed at.
-    if (!name || !Number.isFinite(high) || !Number.isFinite(green)) { skipped++; continue; }
-
-    const maxGuests = Number(cells[iMax]);
-    out.push({
-      name,
-      location: iLoc  >= 0 ? (cells[iLoc]  || '') : '',
-      beds:     iBeds >= 0 ? (cells[iBeds] || '') : '',
-      maxGuests: Number.isFinite(maxGuests) && maxGuests > 0 ? maxGuests : 2,
-      highSeason7n:  high,
-      greenSeason7n: green
-    });
-  }
-
-  return { rooms: out, skipped };
-}
-
-function loadPrices() {
-  if (!PRICE_SHEET_URL) {
-    console.info('[prices] PRICE_SHEET_URL is empty — using the built-in prices.');
-    return;
-  }
-
-  // 5 second ceiling. A slow sheet must not hold the calculator hostage.
-  const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-  const timer = setTimeout(() => { if (controller) controller.abort(); }, 5000);
-
-  fetch(PRICE_SHEET_URL, controller ? { signal: controller.signal } : undefined)
-    .then(res => {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.text();
-    })
-    .then(text => {
-      const { rooms: fetched, skipped } = parsePriceCSV(text);
-      if (!fetched.length) throw new Error('no valid rows in the sheet');
-      if (skipped) console.warn('[prices] ' + skipped + ' row(s) skipped as unusable.');
-      rooms = fetched;
-      renderDB();
-      console.info('[prices] Loaded ' + fetched.length + ' room(s) from the sheet.');
-    })
-    .catch(err => {
-      // Silent to the visitor by design: slightly old numbers beat none.
-      console.warn('[prices] Could not read the sheet, keeping the built-in prices.', err);
-    })
-    .finally(() => clearTimeout(timer));
-}
-
 // ─── INIT ────────────────────────────────────────────────────────────
-// Render the built-in prices first, so the table is never empty, then try the
-// sheet and re-render only if it yields something usable.
+// One render, from the room data above. Nothing is fetched.
 renderDB();
-loadPrices();
 </script>
 
 </body>
