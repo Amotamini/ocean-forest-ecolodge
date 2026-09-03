@@ -49,6 +49,72 @@ folder inside it. `START-HERE.md` explains why that distinction matters.
 
 ---
 
+## What to say to Claude
+
+Claude is where the work happens. There are no commands to learn — you talk to it in normal
+English. But you will get far better results by being specific about three things: **which page**,
+**what it says now**, and **what you want instead**.
+
+**Your very first message, copied exactly:**
+
+> I've just taken over this project. Read START-HERE.md and ocean-forest-website/CLAUDE.md, then
+> tell me in plain English what this site is, what I'm allowed to change myself, and what I'm not.
+
+That one message gets Claude to teach you the project rather than you having to learn it first.
+
+**Then, the things you'll actually want:**
+
+Change some words —
+
+> On the Lodging page, change "Choose Your Perfect Room" to "Find Your Room". Show me the change
+> before you make it.
+
+Add a photograph — drag the picture straight into the conversation, then —
+
+> Use this as the main photo at the top of the Experiences page.
+
+Change a price —
+
+> The jungle suite is now $150 a night. Change it everywhere it appears, and list every place you
+> changed it.
+
+*Always ask for the list.* A price lives in more than one file, and the list is how you know it
+reached all of them.
+
+Publish a blog post —
+
+> I want to publish a blog post about the turtle nesting season. Ask me whatever you need to know,
+> then write it and show me before publishing.
+
+Take a photograph off a page —
+
+> Take the second photo off the Retreats page. Don't delete the file itself.
+
+When you're not sure you're allowed —
+
+> Is this something I can do myself, or does it need a developer?
+
+Claude has been given the rules in writing and will refuse anything structural. **A refusal is it
+working properly, not failing you.**
+
+**Two habits, from day one**
+
+**Make it show you before it writes.** Add "show me the change before you make it" to every
+request until you trust it. It costs one extra message and saves you reverting.
+
+**One thing at a time.** Six changes in a single message is how a mistake gets buried in the
+middle. Ask for one, look at it, then ask for the next.
+
+**If something looks broken**
+
+> Something looks wrong on the Arriving page. Don't try to fix it — tell me how to revert my last
+> change.
+
+Reverting is four clicks in GitHub Desktop and it always works. Patching on top of a problem is
+what turns one minute into an afternoon.
+
+---
+
 ## Three things nobody has answered yet
 
 These block your launch, and none of them is a technical problem. They need a person to find out.
