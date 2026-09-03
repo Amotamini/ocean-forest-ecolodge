@@ -1,14 +1,13 @@
-This folder is the client engagement that runs Ocean Forest Ecolodge's website, its retreat
-price calculator, and the written record behind both.
-
 # Ocean Forest Ecolodge
 
-It holds every decision, every spec, and everything still outstanding — including
-`waiting-on/`, which says what is blocked and on whom. **Read that folder first when picking
-this engagement up.**
+This repository holds the Ocean Forest Ecolodge website, the retreat price calculator, and the
+written record behind both — every decision, every spec, and everything still outstanding.
 
 **New here? Open `START-HERE.md` first.** Part 1 is written for Jonas in plain language. Part 2 is
 for a developer.
+
+**Then open `waiting-on/`.** It says what is still blocked and on whom. It is the fastest way to
+know where the project actually stands.
 
 ## What is in here
 
@@ -19,14 +18,15 @@ for a developer.
 | `specs/` | One document per page, each ending in numbered checks describing what "done" means. Verified against the live code on 2026-08-09 |
 | `source-copy/` | The original `.com` and `.org` copy, kept out of the deployed folder on purpose |
 | `audits/` | Dated review passes and the feedback backup. History, not instructions |
-| `waiting-on/` | Questions sent to the client side and the answers that came back. Dated records |
+| `waiting-on/` | What is blocked and on whom, plus the questions sent and the answers that came back |
 | `photo-originals/` | Full-resolution originals. The web-sized copies live in `ocean-forest-website/media/` |
 
 Root documents worth knowing:
 
 | File | What it is |
 |---|---|
-| `START-HERE.md` | The front door. Read this one first |
+| `FIRST-DAY.md` | The handover itself: what moved, what it costs, what to do this week. Read once, then delete |
+| `START-HERE.md` | The front door. Part 1 for Jonas, Part 2 for a developer |
 | `DEPLOYING.md` | How the site goes live, and the one command never to run |
 | `Last-little-things.md` | What is still outstanding, with who owes what |
 | `WHAT-WE-AGREED.md` | Every decision made about the site, in plain language, with dates |
