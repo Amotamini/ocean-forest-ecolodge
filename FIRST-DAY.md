@@ -1,4 +1,8 @@
-# Jonas — read this once, then delete it
+# Jonas — start here
+
+**This document is yours and it is not going anywhere.** It lives in the project folder
+permanently, alongside the website. Take as long as you like with it. Once you are set up you
+simply will not need it any more — everything ongoing is in `START-HERE.md`.
 
 The handover, in order. Nothing here needs any technical knowledge. Follow it top to bottom.
 
@@ -30,6 +34,11 @@ your undo button for the whole site.*
 
 *This is a small app that copies the website onto your computer, and sends your changes back. It
 is the only app with a "publish" button.*
+
+> **You do not need to learn Git, and you do not need to install it.** If you land on
+> `git-scm.com`, or on a tutorial about the command line, close it — that is for programmers and
+> you will never open it. GitHub Desktop is the whole of it: three buttons, and this document tells
+> you which three.
 
 - Go to **desktop.github.com** and download it. Install it.
 - Open it. Choose **Sign in to GitHub.com** and sign in with the account from Step 1.
