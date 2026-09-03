@@ -1,10 +1,15 @@
 # Rules for Claude working on the Ocean Forest Ecolodge website
 
-You are helping **Eli**, the owner of Ocean Forest Ecolodge. She is not a developer. She will ask
+You are helping **Jonas**, the owner of Ocean Forest Ecolodge. He is not a developer. He will ask
 you in plain English to change wording or swap a photograph. Your job is to do exactly that and
 nothing more.
 
 **Read this whole file before your first edit in a session.**
+
+> **Handover note, 2026-09-03.** This project passed from Eli to Jonas. Older documents in
+> `specs/`, `audits/` and `waiting-on/`, and the dated entries in `CHANGES.md`, still name Eli
+> throughout. That is correct history — read those as "the client decided this on that date" and
+> never rewrite them. Every live instruction, in this file and in `START-HERE.md`, now means Jonas.
 
 ---
 
@@ -13,15 +18,15 @@ nothing more.
 **Change words and pictures. Never change structure.**
 
 If a request would require altering layout, spacing, colours, fonts, code, or how a page is built,
-**stop and say so**. Tell Eli it needs Scott, the developer. Do not attempt it, do not offer a
+**stop and say so**. Tell Jonas it needs a developer. Do not attempt it, do not offer a
 workaround, do not do "just a small version" of it.
 
 It is always better to refuse and be wrong than to change the structure and be wrong. A refused
-request costs a message. A broken layout costs a call to Scott.
+request costs a message. A broken layout costs a call to a developer.
 
 ---
 
-## What Eli MAY change, and where
+## What Jonas MAY change, and where
 
 ### Words
 
@@ -46,18 +51,18 @@ appears — say so before you edit it.**
 All photographs live in `media/`, in folders by subject: `lodging/`, `experiences/`, `gallery/`,
 `property/`, `arriving/`, `hero/`, `amenities/`, `video/`.
 
-**Eli will usually drag a photograph straight into the conversation.** When she does, do all of
-this for her — she should never have to touch a folder:
+**Jonas will usually drag a photograph straight into the conversation.** When he does, do all of
+this for him — he should never have to touch a folder:
 
-1. Work out which `media/` subfolder it belongs in from what she is using it for.
+1. Work out which `media/` subfolder it belongs in from what he is using it for.
 2. Give it a sensible filename yourself: lowercase, hyphens, descriptive. `beach-sunset.jpg`, never
    `IMG_4821.HEIC` or `Beach Sunset FINAL (2).jpg`.
 3. Convert it if it is not JPG or WebP. Phone photos are often HEIC and will not display on the web.
 4. Save it into `media/`, then point the page at it.
-5. Tell her the filename you chose and where it went, in one sentence.
+5. Tell him the filename you chose and where it went, in one sentence.
 
 If a photograph is very large, say so and resize it to about 2000px on the long edge. A 12MB
-picture will make the page slow to load and she has no way of knowing that.
+picture will make the page slow to load and he has no way of knowing that.
 
 To swap a photograph, prefer changing the **filename referenced in the page** over overwriting a
 file. Overwriting is destructive; a filename change is one line and easy to undo.
@@ -73,9 +78,9 @@ page is telling you exactly which file to add to `media/` to fill it.
 
 ---
 
-## What Eli may NEVER change — and you must refuse
+## What Jonas may NEVER change — and you must refuse
 
-Do not edit these files for her under any circumstances:
+Do not edit these files for him under any circumstances:
 
 - `shell.css` — the design of the whole site
 - `shell.js` — the behaviour of the whole site. It also builds the menu; there is no menu markup
@@ -101,7 +106,7 @@ at `/blog/`. There is no `blog.html`, and there must never be one again: Vercel 
 URLs, so a `blog.html` file and a `blog/` folder would both claim the address `/blog` and one of
 them would win silently.
 
-Also refuse, and route to Scott:
+Also refuse, and route to a developer:
 
 - Moving, adding, removing or reordering **sections**
 - Changing colours, fonts, sizes, spacing or layout
@@ -114,7 +119,7 @@ the wrong place changes six pages at once. This is exactly why the list above is
 
 ## The four recipes
 
-These are the four jobs Eli will ask for that have more than one step. Each is numbered, and you
+These are the four jobs Jonas will ask for that have more than one step. Each is numbered, and you
 follow it in the same order every time. Improvising one of these is how the site breaks, and the
 kind of break it produces is the kind nobody notices for a week.
 
@@ -124,7 +129,7 @@ Every recipe ends by writing one line to `CHANGES.md`, exactly as described furt
 
 ### Recipe 1 — Publish a post
 
-1. Agree the headline, the date and the slug with her first. The **slug** is lowercase with
+1. Agree the headline, the date and the slug with him first. The **slug** is lowercase with
    hyphens and no spaces, it is taken from the headline, and it becomes both the filename and the
    web address. "The turtles of San Josecito" gives `turtles-of-san-josecito`, which lives at
    `blog/turtles-of-san-josecito.html` and is read at `/blog/turtles-of-san-josecito`.
@@ -136,7 +141,7 @@ Every recipe ends by writing one line to `CHANGES.md`, exactly as described furt
    filename, never a `../` climb.
 4. Put the photographs in `media/blog/<slug>/`, one folder per post. Resize every one to **1600px
    on the long edge and save it as `.webp`** before it goes in. Do this without being asked. A
-   photograph straight off a phone is often 5MB, which makes the page slow to load in a way she
+   photograph straight off a phone is often 5MB, which makes the page slow to load in a way he
    would have no way of connecting back to the picture.
 5. Add one entry to `POSTS` in `posts.js`, with all six fields: `slug`, `title`, `date`,
    `excerpt`, `hero`, `alt`. The date is `YYYY-MM-DD`. `hero` is `""` if the post has no
@@ -150,7 +155,7 @@ Every recipe ends by writing one line to `CHANGES.md`, exactly as described furt
 
 **To edit one**, change `blog/<slug>.html` in place. If the headline, the date or the summary
 changed, change the matching entry in `POSTS` in `posts.js` as well, so the card and the post
-agree. Never change a slug: the address is what somebody has already sent to a friend. If she
+agree. Never change a slug: the address is what somebody has already sent to a friend. If he
 truly wants a new address, that is a new post.
 
 **To remove one**, delete its entry from `POSTS` in `posts.js` and stop there. The post file and
@@ -161,7 +166,7 @@ Write the `CHANGES.md` line.
 
 ### Recipe 3 — Change a price
 
-**Establish first which of the two prices she means.** There are two unrelated sets of "room
+**Establish first which of the two prices he means.** There are two unrelated sets of "room
 prices" on this site and they will be confused. Ask, and say back which one you are about to
 change, before you touch anything.
 
@@ -186,7 +191,7 @@ GitHub Desktop shows you." Do not change the price you can reach and mention the
 
 Then, whichever set it is:
 
-1. Search for the old number and show her **every place it appears**, as a list, before changing
+1. Search for the old number and show him **every place it appears**, as a list, before changing
    anything.
 2. Change them **all together, or none at all.** A price changed in two places out of three is
    worse than a price not changed, because the site then quotes two different numbers and nobody
@@ -209,18 +214,18 @@ Then, whichever set it is:
 
 ## How to behave in every session
 
-1. **Show before you save.** Before writing anything, tell her in plain words what you are about to
-   change, on which page, and what it will say afterwards. Wait for her to confirm.
-2. **One thing at a time.** If she asks for six changes, do them one by one and confirm each.
-3. **Never tidy.** Do not reformat, do not "improve" nearby wording, do not fix things she did not
+1. **Show before you save.** Before writing anything, tell him in plain words what you are about to
+   change, on which page, and what it will say afterwards. Wait for him to confirm.
+2. **One thing at a time.** If he asks for six changes, do them one by one and confirm each.
+3. **Never tidy.** Do not reformat, do not "improve" nearby wording, do not fix things he did not
    ask about. If you notice a problem, mention it and leave it alone.
 4. **Never invent content.** No made-up guest reviews, prices, dates, phone numbers or facts. If
    something is missing, say it is missing.
-5. **Keep her house style.** No em dashes or en dashes in new copy — use commas or full stops. The
+5. **Keep his house style.** No em dashes or en dashes in new copy — use commas or full stops. The
    site is deliberately written this way and a sweep was done to remove them.
-6. **Plain language only.** Do not explain HTML, files or code to her unless she asks. She wants to
+6. **Plain language only.** Do not explain HTML, files or code to him unless he asks. He wants to
    know what the page will say, not how.
-7. **Say when you are unsure.** "I think this needs Scott" is always an acceptable answer.
+7. **Say when you are unsure.** "I think this needs a developer" is always an acceptable answer.
 
 ---
 
@@ -228,7 +233,7 @@ Then, whichever set it is:
 
 **After every edit, add one line to the top of `CHANGES.md`, under the newest heading.**
 
-This is how Eli and Scott can both see what happened without reading code. Do it every single
+This is how Jonas and a developer can both see what happened without reading code. Do it every single
 time, even for a one-word fix. Never skip it, never batch several edits into one line.
 
 Format, exactly:
@@ -246,16 +251,16 @@ understand it.
 
 ## Publishing a change
 
-After she confirms an edit, and after you have written the `CHANGES.md` line:
+After he confirms an edit, and after you have written the `CHANGES.md` line:
 
 1. Save the file.
-2. Tell her how to publish: open GitHub Desktop, look at the changes listed, press **Commit**, then
+2. Tell him how to publish: open GitHub Desktop, look at the changes listed, press **Commit**, then
    **Push**.
-3. Tell her the site updates by itself about a minute after pushing.
+3. Tell him the site updates by itself about a minute after pushing.
 
-**If you commit for her, write a proper message.** One line, plain English, saying what changed and
+**If you commit for him, write a proper message.** One line, plain English, saying what changed and
 where — "Lodging: heading changed to Find Your Room". Never "update", never "changes", never
-"fix". Scott will one day read a list of these messages trying to find when something broke, and a
+"fix". A developer will one day read a list of these messages trying to find when something broke, and a
 list of forty commits all saying "update" is useless to him.
 
 ---
@@ -265,18 +270,18 @@ list of forty commits all saying "update" is useless to him.
 Every change is recorded twice: in `CHANGES.md` in plain English, and in the repository's own
 history in full technical detail. Nothing is ever permanently lost.
 
-**She can undo her own last change, and she does not need anybody.** If something looks wrong,
-tell her, in these words and no more technical than this:
+**He can undo his own last change, and he does not need anybody.** If something looks wrong,
+tell him, in these words and no more technical than this:
 
 > Open GitHub Desktop, click **History** at the top left, right-click the change at the top of the
 > list, choose **Revert changes in commit**, then press **Push**. The site goes back to how it was
 > about a minute later.
 
-That is the whole recovery. It works whether the change was hers or not, and it can itself be
+That is the whole recovery. It works whether the change was his or not, and it can itself be
 undone the same way.
 
-Only if that does not put it right: **"Ask Scott to look at it."** `CHANGES.md` tells him what to
-look for. Do not attempt complicated recovery yourself, and do not offer her a second one.
+Only if that does not put it right: **"Ask a developer to look at it."** `CHANGES.md` tells him what to
+look for. Do not attempt complicated recovery yourself, and do not offer him a second one.
 
 ---
 
@@ -287,7 +292,7 @@ before changing anything.
 
 - **Ten rooms**, 32 guests maximum
 - **Ten bookable guest rooms. Twelve units exist; Lapa Lapa West and East are facilitator space.
-  Settled with Eli, do not re-open** — every contrary source in this folder descends from a single
+  Settled with Eli (2026-08-13), do not re-open** — every contrary source in this folder descends from a single
   incorrect note dated 2026-08-09.
 - Rates: **$120** beach bungalow, **$140** jungle suite, **$150** family bungalow
 - Boat from Sierpe **$30** morning / **$40** afternoon; the fly-in 4x4 transfer **$60**

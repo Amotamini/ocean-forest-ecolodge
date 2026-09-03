@@ -6,6 +6,11 @@ and you are going to be changing it without us in the room. This document is the
 Repaired 2026-08-13: the addresses in it were describing a layout the site left behind on
 2026-08-11. The rules, the reasoning and the history are unchanged.
 
+Reissued 2026-09-03: the project passed from Eli to Jonas, and the repository moved with it. It now
+lives at `github.com/Amotamini/ocean-forest-ecolodge`, and Vercel's Root Directory for it must be
+`ocean-forest-website`. Documents in `specs/`, `audits/` and `waiting-on/` still name Eli
+throughout — that is correct history and was deliberately not rewritten.
+
 ## How the site is laid out
 
 One site, at the root of this folder. There is nothing else here.
@@ -91,7 +96,7 @@ They live in `specs/`, one level above `ocean-forest-website/`, one file per pag
 `of-v2-home.md` and `of-v2-assets.md`. Each one ends in a numbered list of acceptance checks
 describing exactly what "done" looks like for that page: markup, behaviour, copy, everything.
 
-The blog and the handover documents are covered by `~/Work/specs/of-handover-ready.md`.
+The blog and the handover documents were covered by a spec held on PxN's machine, which is not part of this repository. Everything it required is already built and described here.
 
 **As of 2026-08-09, every one of these specs is true.** They were re-read against the live code
 during that pass and corrected wherever the two had drifted apart, so a rebuild from any spec
@@ -136,15 +141,19 @@ on 2026-08-09, except the room count, which is Eli's own answer and was correcte
 
 ## Who edits what
 
-Eli edits words, photographs, prices and the blog, by talking to Claude, constrained by
-`ocean-forest-website/CLAUDE.md`. That file holds the four recipes she will need more than once
+Jonas edits words, photographs, prices and the blog, by talking to Claude, constrained by
+`ocean-forest-website/CLAUDE.md`. That file holds the four recipes he will need more than once
 (publish a post, edit or remove a post, change a price, take a photograph off a page), tells
-Claude to refuse anything structural and route it to the developer, and requires one line in
-`CHANGES.md` after every edit. `CHANGES.md` is your first stop when she reports a problem: a
+Claude to refuse anything structural and route it to a developer, and requires one line in
+`CHANGES.md` after every edit. `CHANGES.md` is your first stop when he reports a problem: a
 plain-English list of what changed and when, newest first, with the git log behind it.
 
-She can also revert her own last change from GitHub Desktop's History pane without anybody's help.
-`EDITING-YOUR-WEBSITE.md` is the same ground in her language, with no filenames in it at all.
+He can also revert his own last change from GitHub Desktop's History pane without anybody's help.
+`EDITING-YOUR-WEBSITE.md` is the same ground in his language, with no filenames in it at all.
+
+There is no developer on retainer. PxN built the site and handed it over on 2026-09-03; if you are
+reading this, you are probably the person Jonas brought in. Everything you need is in this file and
+in `specs/`.
 
 **If you change the architecture, update `CLAUDE.md` too.** It names specific files as off-limits.
 Out of date, it stops protecting anything.
@@ -153,17 +162,17 @@ Out of date, it stops protecting anything.
 
 - **Redirect list from oceanforest.org.** Every page live on the old site needs its new-site
   target before the domain switches, or existing links and Google rankings break on launch day.
-  Owed by Eli.
+  Owed by Jonas.
 - **Group Travel section copy on Arriving.** The only piece of writing on the site with no source
-  anywhere yet. Owed by Eli.
+  anywhere yet. Owed by Jonas.
 - **Confirming the Helpful Contacts are still current.** Other people's personal numbers, last
-  checked in 2018, currently marked "unconfirmed" on the page. Owed by Eli.
+  checked in 2018, currently marked "unconfirmed" on the page. Owed by Jonas.
 - **Ryan's per-page hero video cuts.** Every page runs the same full aerial film meanwhile; the
   Retreats page's shala video slot is also waiting on him (see below). Owed by Ryan.
 - **The newsletter.** Which email service, and the signup code from it. The form isn't wired to
-  anything yet. Owed by Eli.
-- **Google reviews.** Needs Eli's own Google Business Profile login so the review widget is set up
-  on her account, not ours. Owed by Eli.
+  anything yet. Owed by Jonas.
+- **Google reviews.** Needs the lodge's own Google Business Profile login so the review widget is set up
+  on his own Google account, not PxN's. Owed by Jonas.
 
 ## Found during earlier passes, not fixed
 

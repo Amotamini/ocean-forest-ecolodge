@@ -3,7 +3,7 @@
 Every edit made to this website, newest at the top.
 
 **Claude adds a line here automatically each time it changes something.** Nobody has to remember to
-write it. If Scott ever needs to work out what happened and when, this is the first place he looks,
+write it. If a developer ever needs to work out what happened and when, this is the first place they look,
 and the full technical record sits behind it in the repository's own history.
 
 Format: date, who asked, what changed, which page.

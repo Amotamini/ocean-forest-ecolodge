@@ -1,36 +1,55 @@
-This folder is the largest client engagement PxN runs — the Ocean Forest Ecolodge site plus three related builds, their shared knowledge base, and everything currently blocked on the client.
+This folder is the client engagement that runs Ocean Forest Ecolodge's website, its retreat
+price calculator, and the written record behind both.
 
-Eli and Jonathon are the two people on the client side. Eli is also customer #1 for
-`/DOG/Sanctuary/`, so work here and work there touch the same business.
+# Ocean Forest Ecolodge
 
-## The four builds
+It holds every decision, every spec, and everything still outstanding — including
+`waiting-on/`, which says what is blocked and on whom. **Read that folder first when picking
+this engagement up.**
 
-| Path | What it is |
-|---|---|
-| `ocean-forest-website/` | The main site. **This is what Vercel deploys** |
-| `Rainforest Medicine Gatherings/` | Next.js, GitHub-backed. Its specs are prefixed `rfm-` |
-| `Living bridges foundation/` | Next.js. Its `out/` and `public/images/` hold near-duplicate image sets |
-| `Retreat calculator/` | Standalone |
+**New here? Open `START-HERE.md` first.** Part 1 is written for Jonas in plain language. Part 2 is
+for a developer.
 
-`Rainforest Medicine Gatherings/` and `/PxN/Workshop/rainforest-medicine/` are **different
-work, not duplicates** — that was settled in `work-restructure.md` §2 and it is easy to
-get wrong. Both survive on purpose.
-
-## Everything else
+## What is in here
 
 | Path | What it is |
 |---|---|
-| `waiting-on/` | **Blocked on the client.** What is needed from Eli and from Jonathon, and the questions sent to them. Look here first to know what is stalled and on whom |
-| `audits/` | Dated review passes and the Redline feedback backup. History, not instructions |
-| `specs/` | Client-scoped specs, prefixed `of-` (the ecolodge) and `rfm-` (the gatherings) |
-| `knowledge/` | Captured material — `START-HERE.md`, the build brief, the capture method, the playbook. Has its own git repo |
-| `source-copy/` | The `.com` and `.org` copy, kept out of the deployed folder on purpose |
-| `DEPLOYING.md` | How the site goes live. Push to `main` on `primalbynaturepro-lgtm/Ocean-forest` — the only way |
-| `IDEAS.md` | Things that surfaced during the work and are real, but are not the build in front of us |
+| `ocean-forest-website/` | The main site. **This is what Vercel deploys** — its Root Directory setting must be exactly this folder |
+| `Retreat calculator/` | The retreat price calculator. Standalone, but its prices must stay in step with the Retreats page |
+| `specs/` | One document per page, each ending in numbered checks describing what "done" means. Verified against the live code on 2026-08-09 |
+| `source-copy/` | The original `.com` and `.org` copy, kept out of the deployed folder on purpose |
+| `audits/` | Dated review passes and the feedback backup. History, not instructions |
+| `waiting-on/` | Questions sent to the client side and the answers that came back. Dated records |
+| `photo-originals/` | Full-resolution originals. The web-sized copies live in `ocean-forest-website/media/` |
 
-**Nothing private goes inside `ocean-forest-website/`.** Everything in that folder becomes
-a public web address. Specs, notes and source copy live one level up, which is why they
-sit here rather than in the build. `DEPLOYING.md` states this and it is worth honouring.
+Root documents worth knowing:
 
-One unresolved item carried over from `work-restructure.md` §5: the two Ocean Forest sites
-share Vercel project `prj_oSmMFTzSa6oqmCDyAac7K4wD4vfX`.
+| File | What it is |
+|---|---|
+| `START-HERE.md` | The front door. Read this one first |
+| `DEPLOYING.md` | How the site goes live, and the one command never to run |
+| `Last-little-things.md` | What is still outstanding, with who owes what |
+| `WHAT-WE-AGREED.md` | Every decision made about the site, in plain language, with dates |
+| `IDEAS.md` | Real ideas that surfaced during the work but were not part of the build |
+
+## Two rules that matter
+
+**Nothing private goes inside `ocean-forest-website/`.** Everything in that folder becomes a public
+web address. Specs, notes and source copy live one level up, which is why they sit here rather
+than in the build.
+
+**Point Claude at this folder, not at `ocean-forest-website/`.** A price lives in more than one
+place — the Retreats page inside the website, and the calculator outside it. Connected one level
+in, a price change half succeeds and says nothing.
+
+## Related sites, not in this repository
+
+**Rainforest Medicine Gatherings** is its own repository and its own Vercel project. It is a
+Next.js site, built differently, with its own `CLAUDE.md` and `CHANGES.md`.
+
+---
+
+**Handover, 2026-09-03.** This project passed from Eli to Jonas. The code, the hosting and the
+accounts moved with it — see the accounts table in `START-HERE.md`. Documents in `specs/`,
+`audits/` and `waiting-on/` still name Eli throughout, because she was the client when those
+decisions were made. That is correct history and was deliberately left as written.

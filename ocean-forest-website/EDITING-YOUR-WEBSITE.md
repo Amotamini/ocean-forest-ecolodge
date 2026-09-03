@@ -1,6 +1,6 @@
 # Editing your website
 
-Written for Eli. You do not need to know anything about code to use this.
+Written for Jonas. You do not need to know anything about code to use this.
 
 ---
 
@@ -16,7 +16,7 @@ off a page.
 **The blog.** Write a post, change a post, take a post down.
 
 That is the list. Everything else, meaning where things sit on the page, colours, fonts, adding or
-removing a whole section, goes to Scott. There is a good reason for that, further down.
+removing a whole section, needs a developer. There is a good reason for that, further down.
 
 ---
 
@@ -25,7 +25,7 @@ removing a whole section, goes to Scott. There is a good reason for that, furthe
 1. **Claude.** Where you say what you want changed. It does the work.
 2. **GitHub Desktop.** A small app with a Push button. This is what makes a change go live.
 
-Scott sets both up once. After that you never open anything else.
+Both are set up once. After that you never open anything else.
 
 ### The folder you point Claude at
 
@@ -169,12 +169,12 @@ if you undo the wrong thing you can undo that too.
 **Nothing you do can be permanently lost.** Every version of this site is kept forever. This is
 worth remembering, because it means you can experiment without fear.
 
-If reverting does not put it right, that is the point to message Scott. Tell him which page looks
-wrong. He has everything he needs.
+If reverting does not put it right, that is the point to bring in a developer. Tell them which page looks
+wrong, and point them at START-HERE.md. They will have everything they need.
 
 ---
 
-## Why some things need Scott
+## Why some things need a developer
 
 The site is built so that one change can update several pages at once. Change the way a room is
 shown, and it changes on the Home page, the Lodging page and the Retreats page together.
@@ -183,9 +183,9 @@ That is deliberate and it is what keeps the site consistent. It also means a cha
 place goes wrong in six places instead of one. So the rule is simple:
 
 **Words, pictures, prices and the blog: you. Anything about how it looks or how it is laid out:
-Scott.**
+a developer.**
 
-Claude has been given the same rule in writing and will tell you when something is his job rather
+Claude has been given the same rule in writing and will tell you when something is a developer's job rather
 than yours.
 
 ---

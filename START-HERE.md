@@ -2,31 +2,33 @@
 
 Everything about the Ocean Forest Ecolodge website, in one place.
 
-**Part 1 is for Eli.** It is written in plain language and assumes you know nothing about websites.
-**Part 2 is for Scott**, the developer. Eli does not need to read it.
+**Part 1 is for Jonas.** It is written in plain language and assumes you know nothing about
+websites. **Part 2 is for a developer.** Jonas does not need to read it.
 
 Handed over 2026-08-09 by Mehdi, PxN Productions.
 Repaired 2026-08-13: the addresses in Part 2 described a layout the site left behind on
 2026-08-11, and the blog and undoing were missing from Part 1.
+**Reissued 2026-09-03: the project passed from Eli to Jonas. Ownership of the code, the hosting
+and the accounts moved with it. Every instruction below is now addressed to Jonas.**
 
 ---
 
-# Part 1 — For Eli
+# Part 1 — For Jonas
 
 ## The short version
 
 You own this website completely. You can change any words and any photograph yourself, using
 Claude, and see it live a minute later. Anything about how the site *looks* — layout, colours,
-adding whole new sections — goes to Scott.
+adding whole new sections — needs a developer.
 
-Everything you do is recorded automatically, in plain English, so if anything ever goes wrong Scott
-can see exactly what happened and put it back.
+Everything you do is recorded automatically, in plain English, so if anything ever goes wrong a
+developer can see exactly what happened and put it back.
 
 ---
 
-## What you can change, and what you cannot
+## What you can change, and what needs a developer
 
-| You | Scott |
+| You | A developer |
 |---|---|
 | Any words on any page | Layout and spacing |
 | Any photograph, including taking one off a page | Colours and fonts |
@@ -40,7 +42,7 @@ is displayed and it changes on the home page, the Lodging page and the Retreats 
 is what keeps it consistent — and it is also why a change in the wrong place goes wrong in six
 places instead of one.
 
-Claude has been given this same rule in writing. It will tell you when something is Scott's job.
+Claude has been given this same rule in writing. It will tell you when something needs a developer.
 
 ---
 
@@ -98,10 +100,10 @@ Two records, kept automatically. You do not have to do anything to maintain them
 **`CHANGES.md`** — a plain-English list, newest at the top. Every edit gets one line: the date, who
 asked, what changed and on which page. You can open it and read it like a diary.
 
-**The repository history** — the full technical record behind it. Scott reads this one.
+**The repository history** — the full technical record behind it. A developer reads this one.
 
 **This is the safety net.** If anything looks wrong, you do not need to explain what you did or
-remember when. The history is complete and Scott can read it.
+remember when. The history is complete and anyone technical can read it.
 
 ---
 
@@ -120,8 +122,8 @@ if you undo the wrong one you can undo that too.
 **Do not try to fix it by editing.** That is not caution for its own sake, attempting a fix on top
 of a problem is what turns a one-minute revert into an afternoon. Revert first, then decide.
 
-If reverting does not put it right, message Scott and tell him which page looks wrong. He has
-everything he needs.
+If reverting does not put it right, that is the point to bring in a developer. Tell them which page
+looks wrong and point them at Part 2 of this document. They will have everything they need.
 
 **Nothing you do can be permanently lost.** Every version of this site is kept forever. The worst
 possible outcome of any change you make is one revert. Experiment freely.
@@ -146,39 +148,43 @@ something real. The full list, with who owes what, is in `Last-little-things.md`
 | What | Who |
 |---|---|
 | Words and photographs | You, with Claude |
-| Anything that looks broken | Scott |
-| Layout, colours, new sections | Scott |
+| Anything that looks broken | Revert it first (above), then a developer |
+| Layout, colours, new sections | A developer |
 | Hosting, domain, billing | You — see the accounts list below |
 
 ---
 
 ## Your accounts
 
-Everything below is in **your name**. Nobody else has access. Fill in and keep somewhere safe.
+**Everything below is in your own name.** That is the whole point of the handover: nothing is
+stranded with anyone else, and nobody has to be chased for a password.
 
-Four accounts, that is all. Everything below is in **your name** — Scott administers some of them,
-but you own them.
-
-| Service | What it does | Who runs it | Cost |
+| Service | What it does | Whose account | Cost |
 |---|---|---|---|
-| **Claude** | How you edit the site | You | Your subscription |
-| **GitHub** | Stores the site and its full history | Scott | Free |
-| **Vercel** | Puts the site on the internet | Scott | Free at this size |
-| **Domain + DNS** | Owns oceanforestecolodge.com | Scott | Renews yearly |
+| **Claude** | How you edit the site | Yours | Your subscription |
+| **GitHub** | Stores the site and its full history | Yours (`Amotamini`) | Free |
+| **Vercel** | Puts the site on the internet | Yours | **$20/month — see below** |
+| **Domain + DNS** | Owns oceanforestecolodge.com | **Unconfirmed — find out who holds this** | Renews yearly |
 
 Also yours, not part of editing: the **Secure Bookings** booking engine, and your **Google Business
 Profile** once the reviews section is connected.
 
-**Owned by you, administered by Scott** is the important distinction. He does the technical work,
-but the accounts are in your name and your email. If you and Scott ever part ways, nothing is
-stranded and nobody has to be chased for a password.
+**On the Vercel cost.** Vercel's free tier does not permit commercial use, and this is a business
+website. The Pro plan is $20 per month. It was previously being carried on PxN's account; it is now
+on yours.
 
-**Set a calendar reminder for the domain renewal.** If it lapses the website goes down, and it is
-the single most common way small sites disappear.
+**Two things to settle before launch day:**
+
+- **Find out who holds the domain.** `oceanforestecolodge.com` is not yet pointed at this site, and
+  nobody has confirmed which account it renews from. If it lapses the website disappears, and that
+  is the single most common way small sites die. Set a calendar reminder once you know.
+- **Get the redirect list from the old site.** Every page live on `oceanforest.org` needs its
+  new-site address recorded before the domain switches, or existing links and Google rankings break
+  on the day you go live.
 
 ---
 
-# Part 2 — For Scott
+# Part 2 — For a developer
 
 ## What this is
 
@@ -193,6 +199,9 @@ Six of the pages are files at the root: `index.html`, `arriving.html`, `lodging.
 Serve it locally with `python3 serve.py` from `ocean-forest-website/`. That script disables caching
 deliberately — plain `python3 -m http.server` will serve you stale files and cost you an hour
 before you notice.
+
+**Vercel's Root Directory for this project must be `ocean-forest-website`.** The repository root is
+one level above it and holds specs, notes and source copy that must never be published.
 
 ## The one thing to understand before you change anything
 
@@ -220,30 +229,30 @@ before, how the media placeholder system works, and what is still outstanding. R
    on all seven.
 3. **`media/` is additive only.** Never rename, move or delete a file already there.
 
-## Eli's editing setup
+## Jonas's editing setup
 
-**She connects Claude to the client folder, not to `ocean-forest-website/`.** That is where the
-git repository begins, so it is what GitHub Desktop shows her, and it is the only scope from which
+**He connects Claude to the client folder, not to `ocean-forest-website/`.** That is where the
+git repository begins, so it is what GitHub Desktop shows him, and it is the only scope from which
 a price change can reach every place a price lives: `retreats.html` inside the website, and both
 `Retreat calculator/retreat calculator.html` and `Retreat calculator/retreat-prices.csv` outside
 it. Connected one level in, a price change half succeeds and says nothing.
 
-She edits with Claude, constrained by `ocean-forest-website/CLAUDE.md`. That file tells Claude to
+He edits with Claude, constrained by `ocean-forest-website/CLAUDE.md`. That file tells Claude to
 change words, photographs, prices and the blog only, to refuse anything structural and route it to
-you, to confirm before writing, and to append a line to `CHANGES.md` after every edit. It also
-holds the four recipes she will need more than once: publish a post, edit or remove a post, change
-a price, take a photograph off a page.
+a developer, to confirm before writing, and to append a line to `CHANGES.md` after every edit. It
+also holds the four recipes he will need more than once: publish a post, edit or remove a post,
+change a price, take a photograph off a page.
 
-`ocean-forest-website/EDITING-YOUR-WEBSITE.md` is the same ground in her language, with no
+`ocean-forest-website/EDITING-YOUR-WEBSITE.md` is the same ground in his language, with no
 filenames in it at all. That is deliberate, so do not add one.
 
-**She can revert her own last change** from GitHub Desktop's History pane. She has been told to do
-that before messaging you, so a report reaching you means reverting did not fix it.
+**He can revert his own last change** from GitHub Desktop's History pane. He has been told to do
+that before asking anyone, so a report reaching you means reverting did not fix it.
 
 **If you change the architecture, update `CLAUDE.md` too.** It names specific files as
 off-limits. Out of date, it stops protecting anything.
 
-`CHANGES.md` is your first stop when she reports a problem: plain-English list of what changed and
+`CHANGES.md` is your first stop when he reports a problem: plain-English list of what changed and
 when, newest first. The git log behind it has the detail.
 
 ## Specs
@@ -254,6 +263,10 @@ when, newest first. The git log behind it has the detail.
 **A correction is not finished until it is written back into the spec it corrects.** This project
 has already had a fix applied, silently reverted by a later build that only read the spec, then
 reapplied. Do not repeat it.
+
+**The specs are a historical record as well as a contract.** They name Eli throughout, because she
+was the client when the decisions were made. Those names are correct history and were deliberately
+not rewritten during the 2026-09-03 handover. Read them as "the client decided this on that date".
 
 ## Still outstanding
 
