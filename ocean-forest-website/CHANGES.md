@@ -10,6 +10,12 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-09-14 · Jonas · Changed the Home page "I want to stay" box title
+
+"I want to stay" is now "I want to stay in Paradise". File: index.html
+
+---
+
 ## 2026-08-13 · Mehdi · Which folder to open, and no more Google Sheet
 
 Two things that would have caught Eli out.
