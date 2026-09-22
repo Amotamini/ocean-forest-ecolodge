@@ -10,6 +10,23 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-09-22 · Jonathon · Site review fixes
+
+The Retreats page can now be found on Google. It still carried a "noindex" line left over from
+when the new site was being tested in a separate folder. Files: retreats.html
+
+The room photo galleries on the Lodging page no longer point at eighteen photographs that were
+never added (numbers 05 to 10 for each room type). Each gallery now shows the four photos that
+exist. Files: lodging.html
+
+Five food photographs were made smaller so pages load faster on phones: food-02, food-03,
+food-06, food-07 and food-08 went from 6 to 19 MB each to under 0.5 MB, 2000px on the long edge.
+Same filenames, same pictures. Files: media/food/
+
+A leftover empty test file, __probe.txt, was removed from the public site.
+
+---
+
 ## 2026-09-14 · Jonas · Changed the Home page "I want to stay" box title
 
 "I want to stay" is now "I want to stay in Paradise". File: index.html

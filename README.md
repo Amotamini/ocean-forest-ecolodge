@@ -25,7 +25,7 @@ Root documents worth knowing:
 
 | File | What it is |
 |---|---|
-| `FIRST-DAY.md` | The handover itself: what moved, what it costs, what to do this week. Read once, then delete |
+| `1st-DAY.md` | The handover itself: what moved, what it costs, what to do this week. Read once, then delete |
 | `START-HERE.md` | The front door. Part 1 for Jonas, Part 2 for a developer |
 | `DEPLOYING.md` | How the site goes live, and the one command never to run |
 | `Last-little-things.md` | What is still outstanding, with who owes what |
