@@ -10,6 +10,12 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-09-22 · Jonathon · Changed the Home page "Staying longer?" title
+
+"Staying longer?" is now "Long-term stays". File: index.html
+
+---
+
 ## 2026-09-22 · Jonathon · Site review fixes
 
 The Retreats page can now be found on Google. It still carried a "noindex" line left over from
