@@ -229,7 +229,7 @@
       recommended: true,
       summary: 'Get to Sierpe: private taxi <b>$70</b> (~6 h from San José) or public bus <b>$20</b> (~7 h). Boat Sierpe → San Josecito beach: <b>$30</b> at 11:30 am or <b>$40</b> at 4:00 pm, about 1.5 hours. Then a 20-minute walk along the beach.',
       body: [
-        'Arriving by boat is not only the most affordable and effortless way to reach us year-round, but it’s especially delightful during the green season (May to November). Simply sit back, relax, and let the stunning river and ocean scenery unfold as your journey becomes an unforgettable tour in itself.',
+        'Arriving by boat is not only the most affordable and effortless way to reach us year-round, but it’s especially delightful during the green season (May to August, and November). Simply sit back, relax, and let the stunning river and ocean scenery unfold as your journey becomes an unforgettable tour in itself.',
         'Your adventure to Ocean Forest Ecolodge begins with a breathtaking 1.5-hour boat ride from Sierpe, an unforgettable wildlife tour through Central America’s largest mangrove forest. Glide along the tranquil Sierpe River, spot monkeys, caimans, crocodiles, vibrant birds, and more, before the river opens to the Pacific Ocean for a thrilling coastal ride to San Josecito Beach, one of the area’s most stunning shores.',
         'Arrive 30 minutes early to secure your spot. Pack light (a backpack with max 15 kg / 33 lbs), protect electronics in waterproof bags, and wear water sandals for the beach landing. Find Sierpe Dock next to Donde Jorge Restaurant, and always tell the boat operator to drop you at San Josecito Beach for Ocean Forest Ecolodge.'
       ]
@@ -912,7 +912,7 @@
     { topics: ['booking'],
       q: 'How do I book rooms?',
       a: '<p>Use <a href="https://book.securebookings.net/roomrate?id=6f26c974-1ec9-1696435169-45ec-8406-383fd87820a3" rel="noopener">this link</a> ' +
-         'to choose and reserve your room.</p>' },
+         'to choose and reserve your room. Please note the lodge is closed from 1 September to 31 October.</p>' },
 
     { topics: ['booking'],
       q: 'How do I book tours?',
@@ -920,8 +920,8 @@
          'page and use the provided links. Full payment is required to confirm your tour dates.</p>' },
 
     { topics: ['planning'],
-      q: 'When is green season and dry season?',
-      a: '<p>Green season runs from May to November. Dry season runs from December to April.</p>' }
+      q: 'When are you open, and when is green season?',
+      a: '<p>The lodge is closed from 1 September to 31 October every year. Green season runs from May to August, and again in November. Dry season runs from December to April.</p>' }
   ];
 
   function buildFaq(mount) {

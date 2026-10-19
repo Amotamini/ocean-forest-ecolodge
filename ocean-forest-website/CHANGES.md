@@ -10,6 +10,30 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-10-19 · Elizabeth Guevara (web audit) · Closing months and green season corrected
+
+The FAQ now says the lodge is closed from 1 September to 31 October. Before, it said nothing
+about closing, so a guest could try to book those months. "When is green season and dry season?"
+is now "When are you open, and when is green season?". Green season was "May to November" and is
+now "May to August, and again in November". The "How do I book rooms?" answer also mentions the
+closure. The boat route text and the Retreat Host Kit's seasons slide carry the same months.
+Files: shared-sections.js, retreat-host-kit.html
+
+## 2026-10-19 · Elizabeth Guevara (web audit) · One wording for biodiversity
+
+"The most biodiverse place on Earth" is now "One of the most biodiverse places on Earth" on the
+Home page and the Experiences page. The Host Kit already said Osa holds about 2.5% of the
+world's biodiversity, and the stronger claim contradicted it. Files: index.html, experiences.html
+
+## 2026-10-19 · Elizabeth Guevara (web audit) · Google descriptions added
+
+Home, Arriving, Lodging, Experiences and About had no description for Google, which then makes
+up its own from the menu. Each now has a short one written from what the page already says.
+Retreats and the Blog already had one. Files: index.html, arriving.html, lodging.html,
+experiences.html, about.html
+
+---
+
 ## 2026-09-22 · Jonathon · Changed the Home page "Staying longer?" title
 
 "Staying longer?" is now "Long-term stays". File: index.html
