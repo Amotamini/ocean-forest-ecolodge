@@ -10,6 +10,14 @@ Format: date, who asked, what changed, which page.
 
 ---
 
+## 2026-11-05 · Website owner · Added an original mangrove illustration
+
+New picture added for future use: a painted-style illustration of mangroves over still water,
+drawn from scratch so there are no copyright concerns. It is not yet shown on any page.
+2000 x 1333px, 0.5 MB or less. File: media/experiences/mangrove-illustration-01.webp
+
+---
+
 ## 2026-09-22 · Jonathon · Changed the Home page "Staying longer?" title
 
 "Staying longer?" is now "Long-term stays". File: index.html
