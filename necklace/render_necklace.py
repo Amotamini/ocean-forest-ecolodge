@@ -582,7 +582,7 @@ if FLAT and V2:
             for _o in (TOUR_D + 1.5, TOUR_D + 4.5):
                 p, j = _pt(_cc + _sg * _o)
                 beads_in.append(((inner[j][0], inner[j][1], tang[j][0], tang[j][1], j, p), 1))
-                SPLIT[(1, round(p, 4))] = 3
+                SPLIT[(1, round(p, 4))] = 2           # red spiny oyster beside the black tourmaline
             # refill lapis evenly up to the next bead on this side
             _nb = [(_sg * (_sd(b[0][5]) - _cc)) - 1.5 for b in beads_in if _sg * (_sd(b[0][5]) - _cc) > _half]
             _nt = [(_sg * (_sd(t[4]) - _cc)) - tsize(t) / 2 for t in tourm[1] if _sg * (_sd(t[4]) - _cc) > _half]
