@@ -320,7 +320,7 @@ for n in range(1, 42):
             else:
                 # version 2: the chrysoprase beside each yellow round becomes a 10 mm white opal
                 if V2 and (n, strand) in {(20, 1), (22, 1)}:
-                    jaspers[strand].append(entry[:5] + ("rose",))     # bottom: 9 mm swirled rose quartz
+                    jaspers[strand].append(entry[:5] + ("rose11",))   # bottom inner: 11 mm swirled rose quartz (swapped down)
                     continue
                 _op = V2 and ASSIGN.get((n, 1 - strand)) == "bicone_lime"
                 barrels[strand].append(entry[:5] + (("conch_pink" if V2 else "opal") if _op else ("conch_pink" if V2 else "white"),))
@@ -375,7 +375,7 @@ if V2:
         _ks = sorted([k for k, b in enumerate(barrels[0]) if b[5] == "conch_pink" and (b[0] < 0) == _side
                       and not orig_hidden(b[0], b[1])], key=lambda k: barrels[0][k][1])
         if len(_ks) >= 2:
-            barrels[0][_ks[0]] = barrels[0][_ks[0]][:5] + ("rose11b",)    # upper: 11 mm swirled rose quartz
+            barrels[0][_ks[0]] = barrels[0][_ks[0]][:5] + ("rose9b",)     # upper: 9 mm swirled rose quartz (swapped up)
             barrels[0][_ks[-1]] = barrels[0][_ks[-1]][:5] + ("opal10",)   # lower: 10 mm milky white opal
 
 if V2:
@@ -444,7 +444,7 @@ if not EXTRAS:
     rondelles = {0: [], 1: []}
 
 def clear_of_barrel(strand, pos):
-    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 5.5 if b[5] == "rose11b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
+    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 5.5 if b[5] == "rose11b" else 4.5 if b[5] == "rose9b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
             all(abs(pos - b[4]) > ROUND_D[b[5]] / 2 + 0.4 for b in jaspers[strand]) and
             all(abs(pos - r[4]) > RON_T / 2 + 0.4 for r in rondelles[strand]) and
             all(abs(pos - t[4]) > tsize(t) / 2 + 0.3 for t in tourm[strand]))
@@ -638,13 +638,35 @@ if V2:
     _bic = [t for t in tourm[1] if t[5] == "bicone8" and abs(t[0]) < 15 and t[1] > 0]
     if _bic:
         _bp = _bic[0][4]
-        for _rq in [t for t in tourm[1] if t[5] == "rose" and abs(t[4] - _bp) < 40]:
-            _sg = 1 if _bp > _rq[4] else -1                     # direction toward the bicone
-            _a = _rq[4] + _sg * tsize(_rq) / 2                    # rose quartz edge facing the bicone
-            beads_in = [b for b in beads_in if not (0 <= _sg * (b[0][5] - _a) < 4.0 + 1.4)]
-            _p = _a + _sg * PER_L_ / 2
-            _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
-            tourm[1].append((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _p, "peridot"))
+        _rqs = [t for t in tourm[1] if t[5] in ("rose", "rose11") and abs(t[4] - _bp) < 40]
+        if len(_rqs) == 2:
+            # rebuild symmetrically: glass | turquoise | diopside | rose quartz, mirrored about the centre
+            _d = sum(abs(t[4] - _bp) for t in _rqs) / 2
+            _rsz = tsize(_rqs[0])
+            _outer = _d + _rsz / 2
+            tourm[1] = [t for t in tourm[1] if t not in _rqs]
+            beads_in = [b for b in beads_in if not (abs(b[0][5] - _bp) < _outer + 0.6 and abs(b[0][5] - _bp) > 4.0 - 0.1)]
+            _kind = _rqs[0][5]
+            # nudge the whole group so the leftover space either side is equal
+            _gl = min(_bp - b[0][5] for b in beads_in if b[0][5] < _bp) - 1.5 - _outer
+            _gr = min(b[0][5] - _bp for b in beads_in if b[0][5] > _bp) - 1.5 - _outer
+            _bp += (_gr - _gl) / 2
+            for _k2, _t2 in enumerate(tourm[1]):
+                if _t2 is _bic[0] or (_t2[5] == "bicone8" and abs(_t2[0]) < 15 and _t2[1] > 0):
+                    _j = min(int(np.searchsorted(s_in, _bp)), len(inner) - 1)
+                    tourm[1][_k2] = (inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _bp, "bicone8")
+            for _sg in (-1, 1):
+                for _p, _k in ((_bp + _sg * _d, _kind), (_bp + _sg * (_d - _rsz / 2 - PER_L_ / 2), "peridot")):
+                    _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
+                    tourm[1].append((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _p, _k))
+                _span = (_d - _rsz / 2 - PER_L_) - 4.0
+                _nf = max(1, int(round(_span / 3.0)))
+                for _q in range(_nf):
+                    _p = _bp + _sg * (4.0 + _span / _nf * (_q + 0.5))
+                    _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
+                    beads_in.append(((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _j, _p), 1))
+                    SPLIT[(1, round(_p, 4))] = 0
+                    TURQ_T[(1, round(_p, 4))] = _span / _nf
 
 # red 8 mm glass rondelle wherever a red spondylus section touches a white nephrite barrel
 REDR_N = 0
@@ -1096,8 +1118,8 @@ for st in (0, 1):
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
-        if _stone == "rose11b":
-            ROSE_LATE.append((x, y, bseed))        # 11 mm swirled rose quartz, drawn with the other rose quartz
+        if _stone in ("rose11b", "rose9b"):
+            ROSE_LATE.append((x, y, bseed, 11.0 if _stone == "rose11b" else 9.0))        # 11 mm swirled rose quartz, drawn with the other rose quartz
             continue
         if _stone == "conch_pink":
             spr = milky_opal_sprite(bseed, 10.0)   # 10 mm milky matte white opal round
@@ -1600,8 +1622,8 @@ def pearl_sprite(seed, diam=8.0, base_rgb=(228, 220, 150), rim_rgb=(150, 140, 80
     alpha = np.clip((1 - rr) * n / 2, 0, 1) * 255
     return Image.fromarray(np.dstack([np.clip(col, 0, 255), alpha]).astype(np.uint8), "RGBA")
 
-for _x, _y, _sd in ROSE_LATE:
-    _spr = rose_sprite(_sd, 11.0)
+for _x, _y, _sd, _dia in ROSE_LATE:
+    _spr = rose_sprite(_sd, _dia)
     _px, _py = P(_x, _y)
     layer.paste(_spr, (int(_px - _spr.width / 2), int(_py - _spr.height / 2)), _spr)
 
