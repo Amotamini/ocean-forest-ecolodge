@@ -1738,7 +1738,7 @@ for st in (0, 1):
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
         if len(t) > 5 and t[5] == "abgreen8":
-            spr = abglass_sprite(tseed, base_rgb=(150, 212, 170), deep_rgb=(70, 160, 110))
+            spr = green_jade_sprite(tseed) if (V2 and y < 280) else abglass_sprite(tseed, base_rgb=(150, 212, 170), deep_rgb=(70, 160, 110))   # v2: 7.3 mm green jade
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
