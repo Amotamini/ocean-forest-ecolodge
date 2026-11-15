@@ -562,12 +562,13 @@ if V2:
             _t0 = _h + TOUR_D / 2 - TOUR_D / 4
             _e = _t0 + TOUR_D / 2                     # outer edge of the tourmaline
             _gap = 3.1 if V3 else 6.2                 # v3: one orange disc; v2: two turquoise
+            _gk, _gw = ("conch8", 8.0) if V3 else ("rose11", 11.0)   # v2: 11 mm rose quartz in place of blue glass
             if not V3:
                 _e = _h                               # v2: no tourmaline, turquoise touches the barrel
             _layout = ([(_t0, "tour_ybright")] if V3 else []) + [(_e + 1.55, "spondy_or" if V3 else "orange")] + \
                       ([] if V3 else [(_e + 4.65, "lapis")]) + \
-                      [(_e + _gap + 6.05, "peridot3"), (_e + _gap + 12.1 + 4.05, "conch8")]
-            _reach = _e + _gap + 12.1 + 8.1 + 0.9
+                      [(_e + _gap + 6.05, "peridot3"), (_e + _gap + 12.1 + _gw / 2 + 0.05, _gk)]
+            _reach = _e + _gap + 12.1 + _gw + 0.1 + 0.9
             beads_out = [b for b in beads_out if abs(b[0][5] - _cp) >= _reach]
             tourm[0] = [t for t in tourm[0] if not (t[5] in ("peridot3", "conch8") and abs(t[4] - _cp) < 35)]
             for _sg in (-1, 1):
@@ -588,7 +589,7 @@ if V2:
                     else:
                         tourm[0].append((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _p, _kind))
                 # close the gap between the blue glass and the remaining heishi with evenly spaced turquoise
-                _start = _e + _gap + 12.1 + 8.1
+                _start = _e + _gap + 12.1 + _gw + 0.1
                 _nxt = sorted(_sg * (t[4] - _cp) - tsize(t) / 2 for t in tourm[0] if _sg * (t[4] - _cp) > _reach)
                 _rest = [_nxt[0]] if _nxt else []
                 if _rest:
@@ -646,7 +647,8 @@ if V2:
             _outer = _d + _rsz / 2
             tourm[1] = [t for t in tourm[1] if t not in _rqs]
             beads_in = [b for b in beads_in if not (abs(b[0][5] - _bp) < _outer + 0.6 and abs(b[0][5] - _bp) > 4.0 - 0.1)]
-            _kind = _rqs[0][5]
+            _kind = "conch8"                          # v2: blue faceted glass in place of the rose quartz
+            _outer_fixed = _outer
             # nudge the whole group so the leftover space either side is equal
             _gl = min(_bp - b[0][5] for b in beads_in if b[0][5] < _bp) - 1.5 - _outer
             _gr = min(b[0][5] - _bp for b in beads_in if b[0][5] > _bp) - 1.5 - _outer
@@ -656,10 +658,11 @@ if V2:
                     _j = min(int(np.searchsorted(s_in, _bp)), len(inner) - 1)
                     tourm[1][_k2] = (inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _bp, "bicone8")
             for _sg in (-1, 1):
-                for _p, _k in ((_bp + _sg * _d, _kind), (_bp + _sg * (_d - _rsz / 2 - PER_L_ / 2), "peridot")):
+                _gc = _outer_fixed - 4.0                  # 8 mm glass keeps the same outer edge
+                for _p, _k in ((_bp + _sg * _gc, _kind), (_bp + _sg * (_gc - 4.0 - PER_L_ / 2), "peridot")):
                     _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
                     tourm[1].append((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _p, _k))
-                _span = (_d - _rsz / 2 - PER_L_) - 4.0
+                _span = (_gc - 4.0 - PER_L_) - 4.0
                 _nf = max(1, int(round(_span / 3.0)))
                 for _q in range(_nf):
                     _p = _bp + _sg * (4.0 + _span / _nf * (_q + 0.5))
