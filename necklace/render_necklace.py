@@ -898,6 +898,18 @@ if V2 and not V3:
         for (bb, st) in beads_out:
             if _lo < bb[5] < _hi:
                 SPLIT[(0, round(bb[5], 4))] = 2
+        # one more red disc: push the jasper 3 mm outward and drop the first turquoise beyond it
+        _d = 1 if _a[4] > _r[4] else -1
+        _far = sorted([bb for (bb, st) in beads_out if 0 < _d * (bb[5] - _a[4]) < 12], key=lambda b: abs(b[5] - _a[4]))
+        if _far:
+            beads_out = [b for b in beads_out if b[0] is not _far[0]]
+        _na = _a[4] + _d * 3.0
+        _j = min(int(np.searchsorted(s_out, _na)), len(outer) - 1)
+        tourm[0] = [(outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _na, "ajas_t") if t is _a else t for t in tourm[0]]
+        _p = _na - _d * (5.0 + 1.5)
+        _j = min(int(np.searchsorted(s_out, _p)), len(outer) - 1)
+        beads_out.append(((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _j, _p), 0))
+        SPLIT[(0, round(_p, 4))] = 2
 
 allbeads = beads_out + beads_in
 for (x, y, tx, ty, i, _p), strand in allbeads:
