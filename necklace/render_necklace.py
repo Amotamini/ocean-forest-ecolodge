@@ -443,7 +443,7 @@ if not EXTRAS:
     rondelles = {0: [], 1: []}
 
 def clear_of_barrel(strand, pos):
-    return (all(abs(pos - b[4]) > (6.0 if b[5] == "conch_pink" else 5.5 if b[5] == "rose11b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
+    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 5.5 if b[5] == "rose11b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
             all(abs(pos - b[4]) > ROUND_D[b[5]] / 2 + 0.4 for b in jaspers[strand]) and
             all(abs(pos - r[4]) > RON_T / 2 + 0.4 for r in rondelles[strand]) and
             all(abs(pos - t[4]) > tsize(t) / 2 + 0.3 for t in tourm[strand]))
@@ -1084,7 +1084,7 @@ for st in (0, 1):
             ROSE_LATE.append((x, y, bseed))        # 11 mm swirled rose quartz, drawn with the other rose quartz
             continue
         if _stone == "conch_pink":
-            spr = milky_opal_sprite(bseed)         # 12 mm milky matte white opal round
+            spr = milky_opal_sprite(bseed, 10.0)   # 10 mm milky matte white opal round
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
