@@ -549,8 +549,51 @@ if FLAT:
     for _lst, _st in ((beads_out, 0), (beads_in, 1)):
         _top = sorted([bb for (bb, st) in _lst if block_kind(bb[4], st) == 1], key=lambda b: b[5])
         for bb in _top[:2] + _top[-2:]:
-            SPLIT[(_st, round(bb[5], 4))] = 0
-            TURQ_T[(_st, round(bb[5], 4))] = LAP_PITCH
+            if V2 and _st == 1:
+                SPLIT[(_st, round(bb[5], 4))] = 3         # v2: inner strand top centre -> orange spiny oyster
+            else:
+                SPLIT[(_st, round(bb[5], 4))] = 0
+                TURQ_T[(_st, round(bb[5], 4))] = LAP_PITCH
+if FLAT and V2:
+    # inner strand top centre, laid out evenly: lapis.. orange orange BLACK BLACK orange orange ..lapis
+    _Ls = s_in[-1]
+    def _sd(p):
+        return p if p < _Ls / 2 else p - _Ls
+    def _pt(d):
+        p = d % _Ls
+        j = min(int(np.searchsorted(s_in, p)), len(inner) - 1)
+        return p, j
+    _blk = [t for t in tourm[1] if t[5] == "tour_black" and abs(_sd(t[4])) < 15]
+    if len(_blk) == 2:
+        _cc = sum(_sd(t[4]) for t in _blk) / 2
+        _core = TOUR_D + 2 * 3.0                       # black pair + one orange each side, then a second orange
+        _half = TOUR_D + 6.0
+        tourm[1] = [t for t in tourm[1] if t not in _blk]
+        beads_in = [b for b in beads_in if abs(_sd(b[0][5]) - _cc) > _half - 0.01 or False] 
+        beads_in = [b for b in beads_in if abs(_sd(b[0][5]) - _cc) >= _half]
+        for _sg in (-1, 1):
+            p, j = _pt(_cc + _sg * TOUR_D / 2)
+            tourm[1].append((inner[j][0], inner[j][1], tang[j][0], tang[j][1], p, "tour_black"))
+            for _o in (TOUR_D + 1.5, TOUR_D + 4.5):
+                p, j = _pt(_cc + _sg * _o)
+                beads_in.append(((inner[j][0], inner[j][1], tang[j][0], tang[j][1], j, p), 1))
+                SPLIT[(1, round(p, 4))] = 3
+            # refill lapis evenly up to the next bead on this side
+            _nb = [(_sg * (_sd(b[0][5]) - _cc)) - 1.5 for b in beads_in if _sg * (_sd(b[0][5]) - _cc) > _half]
+            _nt = [(_sg * (_sd(t[4]) - _cc)) - tsize(t) / 2 for t in tourm[1] if _sg * (_sd(t[4]) - _cc) > _half]
+            _edge = min(_nb + _nt) if (_nb + _nt) else _half
+            _span = _edge - _half
+            if _span > 1.0:
+                _rm = [b for b in beads_in if _half <= _sg * (_sd(b[0][5]) - _cc) < _edge + 1.4]
+                beads_in = [b for b in beads_in if b not in _rm]
+                _nb = [(_sg * (_sd(b[0][5]) - _cc)) - 1.5 for b in beads_in if _sg * (_sd(b[0][5]) - _cc) > _half]
+                _edge = min(_nb + _nt) if (_nb + _nt) else _half
+                _span = _edge - _half
+                _nf = max(1, int(round(_span / 3.0)))
+                for _q in range(_nf):
+                    p, j = _pt(_cc + _sg * (_half + _span / _nf * (_q + 0.5)))
+                    beads_in.append(((inner[j][0], inner[j][1], tang[j][0], tang[j][1], j, p), 1))
+                    SPLIT[(1, round(p, 4))] = 1
 # bottom-centre override sections: split by count, orange half next to the rose quartz, red outward
 _ov = {}
 for (bb, strand) in beads_out:
