@@ -386,6 +386,14 @@ if V2:
             if b[5] == "jade" and any(math.hypot(b[0] - yx, b[1] - yy) < 16 for yx, yy in _yel):
                 barrels[st][k] = b[:5] + ("applejasper",)
 
+if V2:
+    # the two highest Russian jade per side on the inner strand -> 7.3 mm light green jade
+    for _side in (True, False):
+        _ks = sorted([k for k, b in enumerate(barrels[1]) if b[5] == "jade" and (b[0] < 0) == _side
+                      and not orig_hidden(b[0], b[1])], key=lambda k: barrels[1][k][1])
+        for k in _ks[:2]:
+            barrels[1][k] = barrels[1][k][:5] + ("gjade7",)
+
 # 8 x 3 mm spondylus rondelles flank every white barrel: red on one side, orange on the other
 RON_D, RON_T = 8.0, 3.0
 rondelles = {0: [], 1: []}
@@ -444,7 +452,7 @@ if not EXTRAS:
     rondelles = {0: [], 1: []}
 
 def clear_of_barrel(strand, pos):
-    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 5.5 if b[5] == "rose11b" else 4.5 if b[5] == "rose9b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
+    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 3.65 if b[5] == "gjade7" else 5.5 if b[5] == "rose11b" else 4.5 if b[5] == "rose9b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
             all(abs(pos - b[4]) > ROUND_D[b[5]] / 2 + 0.4 for b in jaspers[strand]) and
             all(abs(pos - r[4]) > RON_T / 2 + 0.4 for r in rondelles[strand]) and
             all(abs(pos - t[4]) > tsize(t) / 2 + 0.3 for t in tourm[strand]))
@@ -1040,6 +1048,28 @@ def milky_opal_sprite(seed, diam=12.0):
     return Image.fromarray(np.dstack([np.clip(col, 0, 255), alpha]).astype(np.uint8), "RGBA")
 
 
+def green_jade_sprite(seed, diam=7.3):
+    """7.3 mm green jade round: translucent apple-to-spring green, soft milky clouds, a few dark specks, waxy gloss."""
+    rng = np.random.default_rng(seed + 83000)
+    n = int(diam * S)
+    yy_, xx_ = np.mgrid[0:n, 0:n]
+    c = (n - 1) / 2
+    nx_ = (xx_ - c) / (n / 2); ny_ = (yy_ - c) / (n / 2)
+    rr = np.hypot(nx_, ny_)
+    z = np.sqrt(np.clip(1 - rr ** 2, 0, 1))
+    cl = np.array(Image.fromarray((rng.random((5, 5)) * 255).astype(np.uint8)).resize((n, n), Image.BICUBIC), float) / 255
+    tone = rng.uniform(0.92, 1.08)
+    base = np.array([110, 190, 70]) * tone * (1 - 0.3 * cl[..., None]) + np.array([170, 215, 140]) * 0.3 * cl[..., None]
+    sp = rng.random((n, n)) > 0.994
+    base[sp] = [30, 50, 30]
+    L = np.array([-0.45, -0.55, 0.70]); L /= np.linalg.norm(L)
+    ndl = np.clip(nx_ * L[0] + ny_ * L[1] + z * L[2], 0, 1)
+    wrap = np.clip((ndl + 0.5) / 1.5, 0, 1)
+    col = base * (0.55 + 0.50 * wrap[..., None]) + 255 * 0.45 * (ndl ** 30)[..., None]
+    alpha = np.clip((1 - rr) * n / 2, 0, 1) * 255
+    return Image.fromarray(np.dstack([np.clip(col, 0, 255), alpha]).astype(np.uint8), "RGBA")
+
+
 def chalk_sprite(seed, diam=10.0):
     """10 mm matte chalk-white round: rich bright white, no gloss, very fine powdery texture."""
     rng = np.random.default_rng(seed + 67000)
@@ -1116,6 +1146,11 @@ for st in (0, 1):
         if hidden(x, y):
             continue
         _stone = b[5] if len(b) > 5 else "white"
+        if _stone == "gjade7":
+            spr = green_jade_sprite(bseed)         # 7.3 mm translucent light green jade
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
         if _stone == "opal10":
             spr = milky_opal_sprite(bseed, 10.0)   # 10 mm milky matte white opal
             px, py = P(x, y)
