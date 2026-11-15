@@ -393,6 +393,11 @@ if V2:
                       and not orig_hidden(b[0], b[1])], key=lambda k: barrels[1][k][1])
         for k in _ks[:2]:
             barrels[1][k] = barrels[1][k][:5] + ("gjade7",)
+    # and now every Russian jade round on both strands -> 7.3 mm green jade
+    for _st in (0, 1):
+        for k, b in enumerate(barrels[_st]):
+            if b[5] == "jade":
+                barrels[_st][k] = b[:5] + ("gjade7",)
 
 # 8 x 3 mm spondylus rondelles flank every white barrel: red on one side, orange on the other
 RON_D, RON_T = 8.0, 3.0
@@ -432,7 +437,7 @@ if not EXTRAS:
     tourm = {st: [e[:5] + (e[5],) for e in jaspers[st]] for st in (0, 1)}
     if V2:
         # outer-strand 9 mm rose quartz sitting beside a Russian jade -> three 8 mm chrome diopside
-        _jd = [(b[0], b[1]) for b in barrels[1] if b[5] == "jade"]
+        _jd = [(b[0], b[1]) for b in barrels[1] if b[5] in ("jade", "gjade7")]
         for _k, _t in enumerate(tourm[0]):
             if _t[5] == "rose" and any(math.hypot(_t[0] - jx, _t[1] - jy) < 16 for jx, jy in _jd):
                 tourm[0][_k] = _t[:5] + ("peridot3",)
