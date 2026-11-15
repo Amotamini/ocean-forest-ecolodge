@@ -576,7 +576,8 @@ if V2:
                         SPLIT[(0, round(_p, 4))] = 3          # orange spondylus beside the tourmaline
                     elif _kind == "lapis":
                         beads_out.append(((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _j, _p), 0))
-                        SPLIT[(0, round(_p, 4))] = 1          # royal lapis heishi, between turquoise and diopside
+                        SPLIT[(0, round(_p, 4))] = 0          # second turquoise heishi (was lapis)
+                        TURQ_T[(0, round(_p, 4))] = 3.0
                     elif _kind == "orange":
                         beads_out.append(((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _j, _p), 0))
                         SPLIT[(0, round(_p, 4))] = 0          # turquoise heishi each side of the barrel
