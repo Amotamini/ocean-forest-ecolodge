@@ -1161,6 +1161,11 @@ for st in (0, 1):
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
+        if _stone == "rose9b":
+            spr = milky_opal_sprite(bseed, 9.0)    # top outer: 9 mm milky white opal beside the yellow bead
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
         if _stone in ("rose11b", "rose9b"):
             ROSE_LATE.append((x, y, bseed, 11.0 if _stone == "rose11b" else 9.0))        # 11 mm swirled rose quartz, drawn with the other rose quartz
             continue
