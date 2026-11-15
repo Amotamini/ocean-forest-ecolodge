@@ -1725,7 +1725,7 @@ for st in (0, 1):
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
         if V2 and st == 1 and len(t) > 5 and t[5] == "bicone8" and abs(x) < 15 and y > 0:
-            spr = abglass_sprite(tseed)            # bottom inner centre: blue opal AB faceted glass (was rose bicone)
+            spr = green_jade_sprite(tseed)         # bottom inner centre: 7.3 mm green jade
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
