@@ -657,9 +657,10 @@ if V2:
             # rebuild symmetrically: glass | turquoise | diopside | rose quartz, mirrored about the centre
             _d = sum(abs(t[4] - _bp) for t in _rqs) / 2
             _rsz = tsize(_rqs[0])
+            _bh = 4.5                                 # centre bead is now a 9 mm rose quartz
             _outer = _d + _rsz / 2
             tourm[1] = [t for t in tourm[1] if t not in _rqs]
-            beads_in = [b for b in beads_in if not (abs(b[0][5] - _bp) < _outer + 0.6 and abs(b[0][5] - _bp) > 4.0 - 0.1)]
+            beads_in = [b for b in beads_in if not (abs(b[0][5] - _bp) < _outer + 0.6 and abs(b[0][5] - _bp) > _bh - 0.1)]
             _kind = "conch8"                          # v2: blue faceted glass in place of the rose quartz
             _outer_fixed = _outer
             # nudge the whole group so the leftover space either side is equal
@@ -675,10 +676,10 @@ if V2:
                 for _p, _k in ((_bp + _sg * _gc, _kind), (_bp + _sg * (_gc - 4.0 - PER_L_ / 2), "peridot")):
                     _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
                     tourm[1].append((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _p, _k))
-                _span = (_gc - 4.0 - PER_L_) - 4.0
+                _span = (_gc - 4.0 - PER_L_) - _bh
                 _nf = max(1, int(round(_span / 3.0)))
                 for _q in range(_nf):
-                    _p = _bp + _sg * (4.0 + _span / _nf * (_q + 0.5))
+                    _p = _bp + _sg * (_bh + _span / _nf * (_q + 0.5))
                     _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
                     beads_in.append(((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _j, _p), 1))
                     SPLIT[(1, round(_p, 4))] = 0
@@ -1730,7 +1731,7 @@ for st in (0, 1):
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
         if V2 and st == 1 and len(t) > 5 and t[5] == "bicone8" and abs(x) < 15 and y > 0:
-            spr = green_jade_sprite(tseed)         # bottom inner centre: 7.3 mm green jade
+            spr = rose_sprite(tseed, 9.0)          # bottom inner centre: 9 mm swirled rose quartz
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
