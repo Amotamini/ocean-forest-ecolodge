@@ -283,6 +283,7 @@ if V2:
             ASSIGN[(_lo, _st)], ASSIGN[(_hi, _st)] = ASSIGN[(_hi, _st)], ASSIGN[(_lo, _st)]
     # top portion: the two apple jasper beside the diopside become Russian green jade
     ASSIGN[(7, 0)] = ASSIGN[(35, 0)] = "jade"
+    ASSIGN[(9, 1)] = ASSIGN[(33, 1)] = "tour_pink"   # tan tourmaline above the middle white opals -> pink
     ASSIGN[(21, 0)] = "wjade"          # very bottom centre: 14 x 15 mm frosted white jade
 from collections import Counter as _C
 print("junction stones (full necklace):", dict(_C(ASSIGN.values())), "white:", sum(1 for v in CLS.values() if v == "W"))
