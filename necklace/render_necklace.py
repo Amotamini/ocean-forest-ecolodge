@@ -664,7 +664,7 @@ if V2:
     # an 8 mm red glass rondelle directly under (below, as worn) every 12.5 mm pink conch
     for _lst, _st in ((beads_out, 0), (beads_in, 1)):
         for _b in barrels[_st]:
-            if _b[5] != "conch_pink":
+            if _b[5] not in ("conch_pink", "opal10"):
                 continue
             _cand = []
             for _sgn in (-1, 1):
