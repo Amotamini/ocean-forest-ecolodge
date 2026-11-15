@@ -872,6 +872,33 @@ def quad(x, y, tx, ty, a0, a1, along):
             P(x + nx * a1 + tx * along, y + ny * a1 + ty * along),
             P(x + nx * a0 + tx * along, y + ny * a0 + ty * along)]
 
+if V2 and not V3:
+    def _kind_of(st, b):
+        return SPLIT.get((st, round(b[5], 4)), block_kind(b[4], st))
+    # inner strand: spondylus between each bottom blue glass and the green jade -> turquoise
+    _bgl = [t for t in tourm[1] if t[5] == "conch8"]
+    _gjb = [b for b in barrels[1] if b[5] == "gjade7"]
+    for _g in _bgl:
+        _jd = min(_gjb, key=lambda b: abs(b[4] - _g[4]), default=None)
+        if _jd is None or abs(_jd[4] - _g[4]) > 40:
+            continue
+        _lo, _hi = sorted((_g[4], _jd[4]))
+        for (bb, st) in beads_in:
+            if _lo < bb[5] < _hi and _kind_of(1, bb) in (2, 3):
+                SPLIT[(1, round(bb[5], 4))] = 0
+                TURQ_T[(1, round(bb[5], 4))] = 3.0
+    # lower strand: the short turquoise run between the moved apple jasper and the 11 mm rose quartz -> red spiny oyster
+    _aj = [t for t in tourm[0] if t[5] == "ajas_t"]
+    _rq = [t for t in tourm[0] if t[5] == "rose11"]
+    for _a in _aj:
+        _r = min(_rq, key=lambda t: abs(t[4] - _a[4]), default=None)
+        if _r is None or abs(_r[4] - _a[4]) > 25:
+            continue
+        _lo, _hi = sorted((_a[4], _r[4]))
+        for (bb, st) in beads_out:
+            if _lo < bb[5] < _hi:
+                SPLIT[(0, round(bb[5], 4))] = 2
+
 allbeads = beads_out + beads_in
 for (x, y, tx, ty, i, _p), strand in allbeads:
     if hidden(x, y):
