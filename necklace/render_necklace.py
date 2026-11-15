@@ -5,6 +5,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageChops
 
 random.seed(11)
 FLAT = "--flat" in sys.argv
+PER_L_ = 4.0
 V3 = "--v3" in sys.argv          # version 3: v2 with the 15.6 x 10.5 white rondelle + orange at the bottom
 V2 = "--v2" in sys.argv or V3          # version 2: greener accents up top, red accents lower   # laid flat on black, no mannequin, full loop visible
 S = 8                               # px per mm (supersampled)
@@ -631,6 +632,19 @@ for _t in tourm[1]:
                 SPLIT[(1, round(bb[5], 4))] = 0 if V2 else (3 if _k == 1 else 5)   # v1: red glass + orange; v2: turquoise
                 if V2:
                     TURQ_T[(1, round(bb[5], 4))] = 3.0
+
+if V2:
+    # bottom inner strand: one chrome diopside rondelle on the centre side of each 9 mm rose quartz
+    _bic = [t for t in tourm[1] if t[5] == "bicone8" and abs(t[0]) < 15 and t[1] > 0]
+    if _bic:
+        _bp = _bic[0][4]
+        for _rq in [t for t in tourm[1] if t[5] == "rose" and abs(t[4] - _bp) < 40]:
+            _sg = 1 if _bp > _rq[4] else -1                     # direction toward the bicone
+            _a = _rq[4] + _sg * tsize(_rq) / 2                    # rose quartz edge facing the bicone
+            beads_in = [b for b in beads_in if not (0 <= _sg * (b[0][5] - _a) < 4.0 + 1.4)]
+            _p = _a + _sg * PER_L_ / 2
+            _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
+            tourm[1].append((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _p, "peridot"))
 
 # red 8 mm glass rondelle wherever a red spondylus section touches a white nephrite barrel
 REDR_N = 0
@@ -1642,6 +1656,11 @@ for st in (0, 1):
         if len(t) > 5 and t[5] == "bicone_lime":
             # 8 mm faceted golden-yellow crystal round (replaces the yellow-green bicone)
             spr = yellow_sprite(tseed)             # 8 mm bright opaque yellow glass round
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if V2 and st == 1 and len(t) > 5 and t[5] == "bicone8" and abs(x) < 15 and y > 0:
+            spr = abglass_sprite(tseed)            # bottom inner centre: blue opal AB faceted glass (was rose bicone)
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
