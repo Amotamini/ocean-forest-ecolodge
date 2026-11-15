@@ -910,6 +910,17 @@ if V2 and not V3:
         _j = min(int(np.searchsorted(s_out, _p)), len(outer) - 1)
         beads_out.append(((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _j, _p), 0))
         SPLIT[(0, round(_p, 4))] = 2
+        # trial: the red discs here become 8 x 4 mm chrome diopside rondelles, as many as fit, centred
+        _e1 = _na - _d * 5.0                                   # jasper edge facing the rose quartz
+        _e2 = _r[4] + _d * tsize(_r) / 2                       # rose quartz edge facing the jasper
+        beads_out = [b for b in beads_out if not (min(_e1, _e2) - 0.2 < b[0][5] < max(_e1, _e2) + 0.2)]
+        _gap = abs(_e1 - _e2)
+        _nd = max(1, int((_gap + 0.4) // PER_L_))
+        _c0 = (_e1 + _e2) / 2
+        for _q in range(_nd):
+            _p = _c0 + (_q - (_nd - 1) / 2) * PER_L_
+            _j = min(int(np.searchsorted(s_out, _p)), len(outer) - 1)
+            tourm[0].append((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _p, "peridot"))
 
 allbeads = beads_out + beads_in
 for (x, y, tx, ty, i, _p), strand in allbeads:
