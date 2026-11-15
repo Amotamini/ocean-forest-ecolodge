@@ -560,8 +560,10 @@ if V2:
             # 7 mm yellow tourmaline nestles 1/4 of its width into each concave end of the barrel
             _t0 = _h + TOUR_D / 2 - TOUR_D / 4
             _e = _t0 + TOUR_D / 2                     # outer edge of the tourmaline
-            _gap = 3.1 if V3 else 6.2                 # v3: one orange disc; v2: turquoise + lapis
-            _layout = [(_t0, "tour_ybright"), (_e + 1.55, "spondy_or" if V3 else "orange")] + \
+            _gap = 3.1 if V3 else 6.2                 # v3: one orange disc; v2: two turquoise
+            if not V3:
+                _e = _h                               # v2: no tourmaline, turquoise touches the barrel
+            _layout = ([(_t0, "tour_ybright")] if V3 else []) + [(_e + 1.55, "spondy_or" if V3 else "orange")] + \
                       ([] if V3 else [(_e + 4.65, "lapis")]) + \
                       [(_e + _gap + 6.05, "peridot3"), (_e + _gap + 12.1 + 4.05, "conch8")]
             _reach = _e + _gap + 12.1 + 8.1 + 0.9
