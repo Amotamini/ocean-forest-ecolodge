@@ -628,7 +628,9 @@ for _t in tourm[1]:
             _side = sorted([bb for (bb, st) in beads_in if 0 < _sgn * (bb[5] - _t[4]) < 15],
                            key=lambda b: abs(b[5] - _t[4]))
             for _k, bb in enumerate(_side[:2]):
-                SPLIT[(1, round(bb[5], 4))] = 3 if (V2 or _k == 1) else 5   # v1: red glass touching bicone; v2: all orange
+                SPLIT[(1, round(bb[5], 4))] = 0 if V2 else (3 if _k == 1 else 5)   # v1: red glass + orange; v2: turquoise
+                if V2:
+                    TURQ_T[(1, round(bb[5], 4))] = 3.0
 
 # red 8 mm glass rondelle wherever a red spondylus section touches a white nephrite barrel
 REDR_N = 0
