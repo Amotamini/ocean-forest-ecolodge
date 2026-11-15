@@ -399,6 +399,10 @@ if V2:
         for k, b in enumerate(barrels[_st]):
             if b[5] == "jade":
                 barrels[_st][k] = b[:5] + ("gjade7",)
+    # only 10 green jade available: the 4 nearest the top (behind the neck) -> dark tan-green tourmaline
+    _gj = sorted([(b[1], st, k) for st in (0, 1) for k, b in enumerate(barrels[st]) if b[5] == "gjade7"])
+    for _y, st, k in _gj[:4]:
+        barrels[st][k] = barrels[st][k][:5] + ("tour_olive",)
 
 # 8 x 3 mm spondylus rondelles flank every white barrel: red on one side, orange on the other
 RON_D, RON_T = 8.0, 3.0
@@ -458,7 +462,7 @@ if not EXTRAS:
     rondelles = {0: [], 1: []}
 
 def clear_of_barrel(strand, pos):
-    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 3.65 if b[5] == "gjade7" else 5.5 if b[5] == "rose11b" else 4.5 if b[5] == "rose9b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
+    return (all(abs(pos - b[4]) > (5.0 if b[5] == "conch_pink" else 3.65 if b[5] == "gjade7" else 3.5 if b[5] == "tour_olive" else 5.5 if b[5] == "rose11b" else 4.5 if b[5] == "rose9b" else (6.0 if (V2 and b[5] == "jade") else BAR_L / 2)) + 0.4 for b in barrels[strand]) and
             all(abs(pos - b[4]) > ROUND_D[b[5]] / 2 + 0.4 for b in jaspers[strand]) and
             all(abs(pos - r[4]) > RON_T / 2 + 0.4 for r in rondelles[strand]) and
             all(abs(pos - t[4]) > tsize(t) / 2 + 0.3 for t in tourm[strand]))
@@ -717,10 +721,10 @@ if V2:
                     tourm[1][_k2] = (inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _bp, "bicone8")
             for _sg in (-1, 1):
                 _gc = _outer_fixed - 4.0                  # 8 mm glass keeps the same outer edge
-                for _p, _k in ((_bp + _sg * _gc, _kind), (_bp + _sg * (_gc - 4.0 - PER_L_ / 2), "peridot")):
+                for _p, _k in ((_bp + _sg * _gc, _kind), (_bp + _sg * (_gc - 4.0 - PER_L_), "peridot2")):   # two diopside
                     _j = min(int(np.searchsorted(s_in, _p)), len(inner) - 1)
                     tourm[1].append((inner[_j][0], inner[_j][1], tang[_j][0], tang[_j][1], _p, _k))
-                _span = (_gc - 4.0 - PER_L_) - _bh
+                _span = (_gc - 4.0 - 2 * PER_L_) - _bh
                 _nf = max(1, int(round(_span / 3.0)))
                 for _q in range(_nf):
                     _p = _bp + _sg * (_bh + _span / _nf * (_q + 0.5))
@@ -1196,6 +1200,9 @@ for st in (0, 1):
         if hidden(x, y):
             continue
         _stone = b[5] if len(b) > 5 else "white"
+        if _stone == "tour_olive":
+            ROSE_LATE.append((x, y, bseed, "olive"))   # dark tan-green tourmaline, drawn later
+            continue
         if _stone == "gjade7":
             spr = green_jade_sprite(bseed)         # 7.3 mm translucent light green jade
             px, py = P(x, y)
@@ -1716,7 +1723,7 @@ def pearl_sprite(seed, diam=8.0, base_rgb=(228, 220, 150), rim_rgb=(150, 140, 80
     return Image.fromarray(np.dstack([np.clip(col, 0, 255), alpha]).astype(np.uint8), "RGBA")
 
 for _x, _y, _sd, _dia in ROSE_LATE:
-    _spr = rose_sprite(_sd, _dia)
+    _spr = tourmaline_sprite(_sd + 500, (124, 116, 64)) if _dia == "olive" else rose_sprite(_sd, _dia)
     _px, _py = P(_x, _y)
     layer.paste(_spr, (int(_px - _spr.width / 2), int(_py - _spr.height / 2)), _spr)
 
