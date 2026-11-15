@@ -409,6 +409,12 @@ if V2:
         if _y < 130:                           # the ones up behind the neck
             # inner strand: these moved down to the bottom; tan tourmaline here. outer: dark tan-green
             barrels[st][k] = barrels[st][k][:5] + ("tour_tan" if st == 1 else "tour_olive",)
+    # bottom swap: the inner-strand apple jasper nearest the bottom becomes green jade (its partner moves out)
+    for _side in (True, False):
+        _ks = sorted([k for k, b in enumerate(barrels[1]) if b[5] == "applejasper" and (b[0] < 0) == _side],
+                     key=lambda k: -_utop(1, barrels[1][k][4]))
+        if _ks:
+            barrels[1][_ks[0]] = barrels[1][_ks[0]][:5] + ("gjade7",)
 
 # 8 x 3 mm spondylus rondelles flank every white barrel: red on one side, orange on the other
 RON_D, RON_T = 8.0, 3.0
@@ -431,7 +437,7 @@ ROSE_D = 9.0
 PER_D, PER_L = 8.0, 4.0              # chrome diopside rondelle: 8 mm across, 4 mm along the strand
 def tsize(t):
     k = t[5] if len(t) > 5 else "tour"
-    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
+    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
 tourm = {0: [], 1: []}
 for n in range(0, 42):
     s_o = (n + 0.5) * INCH - HIDDEN_OUT / 2
@@ -656,7 +662,8 @@ if V2:
                     else:
                         tourm[0].append((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _p, _kind))
                 if not V3:
-                    tourm[0] = [t[:5] + ("gjade7t",) if (t[5] == "bicone8" and abs(t[4] - _cp) < 70) else t for t in tourm[0]]
+                    tourm[0] = [t[:5] + ("ajas_t",) if (t[5] == "bicone8" and abs(t[4] - _cp) < 70) else t for t in tourm[0]]
+
                 # close the gap between the blue glass and the remaining heishi with evenly spaced turquoise
                 _start = _e + _gap + 12.1 + _gw + 0.1
                 _nxt = sorted(_sg * (t[4] - _cp) - tsize(t) / 2 for t in tourm[0] if _sg * (t[4] - _cp) > _reach)
@@ -680,6 +687,34 @@ if V2:
             _j = min(int(np.searchsorted(s_out, _p)), len(outer) - 1)
             beads_out.append(((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _j, _p), 0))
             SPLIT[(0, round(_p, 4))] = 3          # orange spondylus each side of the bottom-centre bead
+
+if V2 and not V3:
+    # 10 mm apple jasper needs more room than the bicone: re-space the turquoise each side evenly
+    for _t in [t for t in tourm[0] if t[5] == "ajas_t"]:
+        for _sg2 in (-1, 1):
+            _items = [(_sg2 * (b[0][5] - _t[4]), "d", b) for b in beads_out if 0 < _sg2 * (b[0][5] - _t[4]) < 60]
+            _items += [(_sg2 * (u[4] - _t[4]), "t", u) for u in tourm[0] if u is not _t and 0 < _sg2 * (u[4] - _t[4]) < 60]
+            _items.sort(key=lambda z: z[0])
+            _run = []
+            for _d, _k, _o in _items:
+                if _k == "t":
+                    _stop = _d - tsize(_o) / 2
+                    break
+                _run.append(_o)
+            else:
+                continue
+            if not _run:
+                continue
+            for _o in _run:
+                beads_out.remove(_o)
+            _span = _stop - 5.0
+            _nf = max(1, int(round(_span / 3.0)))
+            for _q in range(_nf):
+                _p = _t[4] + _sg2 * (5.0 + _span / _nf * (_q + 0.5))
+                _j = min(int(np.searchsorted(s_out, _p)), len(outer) - 1)
+                beads_out.append(((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _j, _p), 0))
+                SPLIT[(0, round(_p, 4))] = 0
+                TURQ_T[(0, round(_p, 4))] = _span / _nf
 
 # 8 mm round denim lapis at the head (upper end, as worn) of lapis segments: 7 per side = 14
 if V2:
@@ -1786,6 +1821,9 @@ for st in (0, 1):
             spr = mook_sprite(tseed)
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if len(t) > 5 and t[5] == "ajas_t":
+            draw_barrel(layer, x, y, t[2], t[3], tseed, "applejasper")   # apple jasper moved out to the lower strand
             continue
         if len(t) > 5 and t[5] == "gjade7t":
             spr = green_jade_sprite(tseed)          # green jade moved down from the top
