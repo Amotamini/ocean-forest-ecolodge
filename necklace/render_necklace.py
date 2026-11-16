@@ -1002,8 +1002,13 @@ if V4:
             seq = list(seq); k = seq.index("rbic")
             return seq[:k] + ["orange", "orange"] + seq[k + 1:]
         BANDS[3] = (_swap_bic(BANDS[3][0]), _swap_bic(BANDS[3][1]))
+        _yi = list(BANDS[3][1]); _yi[_yi.index("redglass")] = "orange"       # inner: orange under the two yellow glass
+        BANDS[3] = (BANDS[3][0], _yi)
         _bo = list(BANDS[6][0]); _bo.pop(len(_bo) - 2); _bo.insert(len(_bo) - 1, "rbic")      # drop last mookaite, add bicone
         _bi = list(BANDS[6][1]); _bi.insert(len(_bi) - 1, "rbic")                               # inner: bicone at the bottom
+        _k = _bi.index("rbic")
+        if _bi[_k - 1] == "redglass":
+            _bi.pop(_k - 1)                                                                      # no red glass above it
         BANDS[6] = (_bo, _bi)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
