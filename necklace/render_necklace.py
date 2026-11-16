@@ -439,7 +439,7 @@ ROSE_D = 9.0
 PER_D, PER_L = 8.0, 4.0              # chrome diopside rondelle: 8 mm across, 4 mm along the strand
 def tsize(t):
     k = t[5] if len(t) > 5 else "tour"
-    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_mookred": 8.0, "v5_tblue": 7.0, "v5_mookyel": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
+    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_mookred": 8.0, "v5_tblue": 7.0, "v5_mookyel": 8.0, "v5_mookrd": 8.0, "v5_mookorg": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
 tourm = {0: [], 1: []}
 for n in range(0, 42):
     s_o = (n + 0.5) * INCH - HIDDEN_OUT / 2
@@ -931,7 +931,7 @@ if V4:
     SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
           "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
           "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
-          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0}
+          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0, "mookrd": 8.0, "mookorg": 8.0}
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
         return [flank] * a + core + [flank] * b
@@ -962,8 +962,15 @@ if V4:
         BANDS = [tuple([("tblue" if k == "sapph" else k) for k in x] for x in b) for b in BANDS]
         # the tan tourmaline below the yellow glass (outer strand) -> 8 mm golden-yellow mookaite
         _o = list(BANDS[3][0]); _o[_o.index("yellow") + 1] = "mookyel"
+        _o[_o.index("tan")] = "rbic"                        # top tan tourmaline -> rose glass bicone
         _i = list(BANDS[3][1]); _i[len(_i) - 1 - _i[::-1].index("yellow")] = "mookyel"   # lower yellow glass, inner
         BANDS[3] = (_o, _i)
+        # red-orange band: orange spondylus groups -> mookaite, going out from the maroon centre: red then orange;
+        # one red spondylus disc dropped at each end to make room
+        def _mookband(seq):
+            core = [k for k in seq if k == "mookred"]
+            return ["red", "mookorg", "mookrd"] + core + ["mookrd", "mookorg", "red"]
+        BANDS[6] = (_mookband(BANDS[6][0]), _mookband(BANDS[6][1]))
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
@@ -1002,7 +1009,7 @@ if V4:
     LAP_BUDGET = {0: 15, 1: 15}                # lapis heishi used as dark filler, from the top down (per side)
     KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
-              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel",
+              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel", "mookrd": "v5_mookrd", "mookorg": "v5_mookorg",
               "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "blueglass": "conch8", "focal": "wjade"}
     HEI = {"red": 2, "orange": 3, "redglass": 5}
     beads_out, beads_in = [], []
@@ -1717,7 +1724,7 @@ def conch_sprite(seed, diam=8.0):
 MOOK_SETS = [((92, 62, 44), (112, 78, 52)), ((84, 56, 42), (104, 70, 50)), ((98, 66, 46), (82, 54, 40)),
              ((88, 60, 46), (110, 74, 54))]   # dark matte brown mookaite only
 
-def mook_sprite(seed, diam=8.0, maroon=False, yellow=False):
+def mook_sprite(seed, diam=8.0, maroon=False, yellow=False, tone=None):
     """8 mm matte mookaite jasper: mustard, burgundy, plum and cream, softly mottled, frosted finish."""
     rng = np.random.default_rng(seed + 19000)
     n = int(diam * S)
@@ -1727,6 +1734,10 @@ def mook_sprite(seed, diam=8.0, maroon=False, yellow=False):
     rr = np.hypot(nx_, ny_)
     z = np.sqrt(np.clip(1 - rr ** 2, 0, 1))
     a, b = MOOK_SETS[rng.integers(len(MOOK_SETS))]
+    if tone == "red":                        # matte brick-red mookaite
+        a, b = [((170, 58, 44), (186, 76, 56)), ((158, 50, 42), (176, 66, 50))][rng.integers(2)]
+    if tone == "orange":                     # matte orange-ochre mookaite
+        a, b = [((206, 122, 50), (222, 146, 70)), ((196, 112, 46), (214, 136, 64))][rng.integers(2)]
     if yellow:                               # matte mustard / golden-yellow mookaite
         a, b = [((206, 160, 58), (222, 184, 92)), ((196, 150, 50), (214, 176, 84))][rng.integers(2)]
     if maroon:                               # matte maroon / reddish-plum mookaite
@@ -2045,6 +2056,11 @@ for st in (0, 1):
             continue
         if len(t) > 5 and t[5] == "v5_tblue":
             spr = tourmaline_sprite(tseed + 700, (36, 78, 120))   # 7 mm deep blue-teal tourmaline
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if len(t) > 5 and t[5] in ("v5_mookrd", "v5_mookorg"):
+            spr = mook_sprite(tseed, tone=("red" if t[5] == "v5_mookrd" else "orange"))
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
