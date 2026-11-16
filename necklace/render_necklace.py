@@ -1005,6 +1005,7 @@ if V4:
         _yi = list(BANDS[3][1]); _yi[_yi.index("redglass")] = "orange"       # inner: orange under the two yellow glass
         BANDS[3] = (BANDS[3][0], _yi)
         _bo = list(BANDS[6][0]); _bo.pop(len(_bo) - 2); _bo.insert(len(_bo) - 1, "rbic")      # drop last mookaite, add bicone
+        _bo.insert(1, "redglass")                                                                # red glass atop the mookaite (outer)
         _bi = list(BANDS[6][1]); _bi.insert(len(_bi) - 1, "rbic")                               # inner: bicone at the bottom
         _k = _bi.index("rbic")
         if _bi[_k - 1] == "redglass":
