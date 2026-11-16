@@ -1153,7 +1153,7 @@ if V4:
                            [Hs - (_st[-1] + widths[-1])]
                     first, mids = gaps[0], gaps[1:-1]
                 print(f"v5 strand {st}: gaps {[round(float(x), 1) for x in gaps]}")
-                gaps[-1] -= PER_L_                  # room for a chrome diopside beside the centre bead
+                gaps[-1] -= 2 * PER_L_              # room for two chrome diopside beside the centre bead
                 # equal turquoise runs between all coloured segments (lapis runs behind the neck unchanged)
                 _nl = 2 if st == 0 else 3
                 _avg = sum(gaps[_nl:]) / len(gaps[_nl:])
@@ -1172,7 +1172,7 @@ if V4:
                         _sx[1] = max(_sx[0] + widths[0] + 3.0, _sx[2] - 3.0 - widths[1])
                         _sx[2] = max(_sx[2], _sx[1] + widths[1] + 3.0)
                     gaps = [_sx[0]] + [_sx[i + 1] - (_sx[i] + widths[i]) for i in range(len(widths) - 1)] + \
-                           [Hs - PER_L_ - (_sx[-1] + widths[-1])]
+                           [Hs - 2 * PER_L_ - (_sx[-1] + widths[-1])]
                 print(f"v5 strand {st} pass gaps", [round(float(x),1) for x in gaps]) if V5_TARGET is not None else None
             g = 0.0
             lap = LAP_BUDGET[st]
@@ -1196,7 +1196,8 @@ if V4:
                         g += SZ[k]
             if V5:                                   # one chrome diopside touching the centre bead, each side
                 put(H2 - cz - PER_L_ / 2, "diop")
-                V4_USED["diop"] = V4_USED.get("diop", 0) + 2
+                put(H2 - cz - 1.5 * PER_L_, "diop")
+                V4_USED["diop"] = V4_USED.get("diop", 0) + 4
             # centre bead at the bottom (one only)
             sp = H2 - Hh / 2
             j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
@@ -1220,7 +1221,7 @@ if V4:
                 for j in range(_k - 1):
                     i = 3 + j; r = R(); r[j + 1] = _H; r[j] = -_H; r[im] = -1
                     _A.append(r); _b.append(_w[i + 1] / 2 + _w[i] / 2)
-                r = R(); r[_k - 1] = -_H; r[im] = -1; _A.append(r); _b.append(-_H + PER_L_ + _w[_nb - 1] / 2)
+                r = R(); r[_k - 1] = -_H; r[im] = -1; _A.append(r); _b.append(-_H + 2 * PER_L_ + _w[_nb - 1] / 2)
             _sol = np.linalg.lstsq(np.array(_A), np.array(_b), rcond=None)[0]
             V5_TARGET = list(V5_EQ[0][:3]) + list(_sol[:_k])
             V5_U = {0: _sol[_k], 1: _sol[_k + 1]}
