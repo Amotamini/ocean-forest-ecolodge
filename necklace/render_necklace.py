@@ -970,7 +970,7 @@ if V4:
                 seq[iy], seq[im] = seq[im], seq[iy]
             return seq
         _o, _i = _ysw(_o), _ysw(_i)
-        BANDS[3] = (_o + ["redglass", "orange", "orange"], _i + ["redglass", "orange", "orange"])   # one red glass under the yellow
+        BANDS[3] = (_o + ["redglass", "orange", "orange"], ["rbic"] + _i + ["redglass", "orange", "orange"])   # + rose bicone beside the outer one
         BANDS = [tuple([("opal8" if k in ("opal10", "opal9") else k) for k in x] for x in b) for b in BANDS]   # 8 mm white opal
         BANDS[4] = (list(BANDS[4][0]) + ["lapisH"],                                      # 1 lapis below the outer blue beads
                     ["lapisH", "lapisH", "lapisH"] + list(BANDS[4][1]))   # 3 lapis above the inner blue glass
@@ -984,7 +984,8 @@ if V4:
         BANDS[4] = (["lapisH"] * 2 + ["lapis8", "blueglass", "tblue", "lapis8"] + ["lapisH"] * 2,   # blue, outer ~43 mm;
                     # its blue glass sits just above (and beside) the inner blue glass
                     ["lapisH"] * 5 + ["blueglass"] + ["lapisH"] * 5)                         # blue, inner ~38 mm
-        BANDS[5] = (F(["jade", "gglass", "jade"], "diop", 6), F(["jade", "jade", "jade"], "diop", 6))   # green, 3 diopside each end
+        BANDS[5] = (["diop"] * 3 + ["jade", "gglass", "jade"] + ["diop"] * 5,     # outer green: 2 extra diopside underneath
+                    F(["jade", "jade", "jade"], "diop", 6))
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
@@ -1091,9 +1092,13 @@ if V4:
             last = Hs - (st0[-1] + w0[-1])
             widths = [sum(SZ[k] for k in stn) for stn in STN]
             first = Hs - sum(widths) - sum(mids) - last
+            if st == 0:                         # outer green's extra length goes downward, not into the top section
+                first += widths[4] - 52.6
             if st == 1:                         # inner strand: green band raised 4 mm
                 mids[3] -= 4.0
                 mids[4] += 4.0
+                mids[5] -= 8.0                      # inner rose bicone takes its room from the run just above it
+                first += 8.0
             if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
                 mids[0] -= 3.0 - first
                 first = 3.0
@@ -1111,6 +1116,9 @@ if V4:
                 for i in (3, 4, 5):                 # only the blue, green and brown bands move down to line up
                     _st[i] = V5_CEN[1][i] * Hs - widths[i] / 2
                 _st[3] += 17.0                      # outer blue band lowered so its blue glass sits just above the inner one
+                _st[4] += 4.0                       # outer green keeps its top; the extra diopside extends it downward
+                for i in (6, 7, 8):                 # bands below keep their places
+                    _st[i] -= widths[4] - 52.6
                 gaps = [_st[0]] + [_st[i + 1] - (_st[i] + widths[i]) for i in range(len(widths) - 1)] + \
                        [Hs - (_st[-1] + widths[-1])]
                 first, mids = gaps[0], gaps[1:-1]
