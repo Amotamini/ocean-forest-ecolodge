@@ -948,8 +948,14 @@ if V4:
             (["opal10", "rq11", "opal10"],                       ["opal9", "opal10"]),                   # white
             (["redglass", "pink", "rbic", "pink", "redglass", "rq9"], ["redglass", "pink", "rq9", "pink", "redglass"]),  # pink/rose
         ]
+        BANDS_RAW = [tuple(list(x) for x in b) for b in BANDS]
+        # reference layout = the previous version (frames on green, red-orange, white only); its turquoise runs are kept
+        BANDS_PREV = [tuple((["lapisH"] + list(x) + ["lapisH"]) if i in (5, 6, 7) else list(x) for x in b)
+                      for i, b in enumerate(BANDS_RAW)]
+        # room for the new borders comes from the top green band: fewer chrome diopside there
+        BANDS[1] = (F(["olive"], "diop", 3), F(["gtourm"], "diop", 3))
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
-        for _bi in (5, 6, 7):
+        for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
     OUTER = [
         F(["olive"], "diop", 6),                                   # G (dark)
@@ -1034,9 +1040,21 @@ if V4:
             for w in Wmax:
                 cen.append((acc + w / 2) / Hin); acc += w + gapc
             Hs = H2 - cz
+            # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
+            Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
+            gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
+            cen0, acc = [], gapc0 / 2
+            for w in Wmax0:
+                cen0.append((acc + w / 2) / Hin); acc += w + gapc0
+            raw = [b[st] for b in BANDS_PREV]
+            w0 = [sum(SZ[k] for k in r) for r in raw]
+            st0 = [c * Hs - w / 2 for c, w in zip(cen0, w0)]
+            mids = [st0[i + 1] - (st0[i] + w0[i]) for i in range(len(raw) - 1)]
+            last = Hs - (st0[-1] + w0[-1])
             widths = [sum(SZ[k] for k in stn) for stn in STN]
-            starts = [c * Hs - w / 2 for c, w in zip(cen, widths)]
-            gaps = [starts[0]] + [starts[i + 1] - (starts[i] + widths[i]) for i in range(len(STN) - 1)] + [Hs - (starts[-1] + widths[-1])]
+            first = Hs - sum(widths) - sum(mids) - last
+            print(f"v5 strand {st}: top gap {first:.1f} mm")
+            gaps = [first] + mids + [last]
         g = 0.0
         lap = LAP_BUDGET[st]
         for gi, gl in enumerate(gaps):
