@@ -980,6 +980,12 @@ if V4:
             core = [k for k in seq if k == "mookred"]
             return ["redglass", "mookorg", "mookrd"] + core + ["mookrd", "mookorg", "redglass"]   # red glass at each end
         BANDS[6] = (_mookband(BANDS[6][0]), _mookband(BANDS[6][1]))
+        # rebalance: thinner green and brown/red bands, thicker blue band (lapis heishi + 8 mm lapis rounds)
+        BANDS[4] = (["lapisH"] * 3 + ["lapis8", "tblue", "lapis8"] + ["lapisH"] * 3,       # blue, outer ~41 mm
+                    ["lapisH"] * 5 + ["blueglass"] + ["lapisH"] * 5)                         # blue, inner ~38 mm
+        BANDS[5] = (F(["jade", "gglass", "jade"], "diop", 4), F(["jade", "jade", "jade"], "diop", 4))   # green ~45 mm
+        BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd", "mookorg"],                  # brown/red, outer ~46 mm
+                    ["redglass", "mookrd", "mookred", "mookred", "mookrd", "redglass"])      # brown/red, inner ~44 mm
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
