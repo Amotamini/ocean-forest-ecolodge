@@ -6,7 +6,8 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageChops
 random.seed(11)
 FLAT = "--flat" in sys.argv
 PER_L_ = 4.0
-V4 = "--v4" in sys.argv          # version 4: same beads, colour-sequence redesign
+V5 = "--v5" in sys.argv          # version 5: aligned colour bands, calmer
+V4 = "--v4" in sys.argv or V5          # version 4: same beads, colour-sequence redesign
 V3 = "--v3" in sys.argv          # version 3: v2 with the 15.6 x 10.5 white rondelle + orange at the bottom
 V2 = "--v2" in sys.argv or V3 or V4          # version 2: greener accents up top, red accents lower   # laid flat on black, no mannequin, full loop visible
 S = 8                               # px per mm (supersampled)
@@ -934,6 +935,19 @@ if V4:
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
         return [flank] * a + core + [flank] * b
+    if V5:
+        BANDS = [   # (outer, inner) per band, top -> bottom; same band sits at the same height on both strands
+            (["black", "sapph", "black"],                       ["sapph", "lapis8", "sapph"]),          # deep blue
+            (F(["olive"], "diop", 7),                            F(["gtourm"], "diop", 7)),              # green
+            (F(["mook"], "red", 6),                              F(["mook"], "red", 6)),                 # red
+            (["tan", "yellow", "tan"],                           ["yellow", "yellow"]),                  # yellow
+            (["lapis8", "sapph", "lapis8"],                      ["blueglass"]),                         # blue
+            (F(["jade", "gglass", "jade"], "diop", 8),           F(["jade", "jade", "jade", "jade"], "diop", 9)),   # green
+            (["red", "red"] + F(["ajas"], "orange", 8) + ["red", "red"],
+                                                                 ["red", "red"] + F(["ajas", "ajas"], "orange", 8) + ["red", "red"]),  # red-orange
+            (["opal10", "rq11", "opal10"],                       ["opal9", "opal10"]),                   # white
+            (["redglass", "pink", "rbic", "pink", "redglass", "rq9"], ["redglass", "pink", "rq9", "pink", "redglass"]),  # pink/rose
+        ]
     OUTER = [
         F(["olive"], "diop", 6),                                   # G (dark)
         ["tan"],                                                   # Y
@@ -983,6 +997,8 @@ if V4:
         Lf = ss[-1] + Hh
         H2 = Lf / 2
         cz = SZ[CENTRE[st]] / 2
+        if V5:
+            STN = [b[st] for b in BANDS]
         T = sum(SZ[k] for stn in STN for k in stn)
         f = (H2 - cz - T) / (len(STN) + 0.5)
         if f < 2.4:
@@ -1006,6 +1022,18 @@ if V4:
                     tourm[st].append((x, y, tang[j][0], tang[j][1], sp, KIND_T[kind]))
         # gap filler: lapis heishi while the dark budget lasts, then turquoise
         gaps = [f / 2] + [f] * len(STN)
+        if V5:
+            # align band centres by height: use common fractions computed from the widest of each band pair
+            Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2
+            Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
+            gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
+            cen, acc = [], gapc / 2
+            for w in Wmax:
+                cen.append((acc + w / 2) / Hin); acc += w + gapc
+            Hs = H2 - cz
+            widths = [sum(SZ[k] for k in stn) for stn in STN]
+            starts = [c * Hs - w / 2 for c, w in zip(cen, widths)]
+            gaps = [starts[0]] + [starts[i + 1] - (starts[i] + widths[i]) for i in range(len(STN) - 1)] + [Hs - (starts[-1] + widths[-1])]
         g = 0.0
         lap = LAP_BUDGET[st]
         for gi, gl in enumerate(gaps):
