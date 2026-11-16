@@ -981,11 +981,12 @@ if V4:
             return ["redglass", "mookorg", "mookrd"] + core + ["mookrd", "mookorg", "redglass"]   # red glass at each end
         BANDS[6] = (_mookband(BANDS[6][0]), _mookband(BANDS[6][1]))
         # rebalance: thinner green and brown/red bands, thicker blue band (lapis heishi + 8 mm lapis rounds)
-        BANDS[4] = (["lapisH"] * 3 + ["lapis8", "tblue", "lapis8"] + ["lapisH"] * 3,       # blue, outer ~41 mm
+        BANDS[4] = (["lapisH"] * 2 + ["lapis8", "blueglass", "tblue", "lapis8"] + ["lapisH"] * 2,   # blue, outer ~43 mm;
+                    # its blue glass sits just above (and beside) the inner blue glass
                     ["lapisH"] * 5 + ["blueglass"] + ["lapisH"] * 5)                         # blue, inner ~38 mm
-        BANDS[5] = (F(["jade", "gglass", "jade"], "diop", 4), F(["jade", "jade", "jade"], "diop", 4))   # green ~45 mm
-        BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd", "mookorg"],                  # brown/red, outer ~46 mm
-                    ["redglass", "mookrd", "mookred", "mookred", "mookrd", "redglass"])      # brown/red, inner ~44 mm
+        BANDS[5] = (F(["jade", "gglass", "jade"], "diop", 6), F(["jade", "jade", "jade"], "diop", 6))   # green, 3 diopside each end
+        BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
+                    ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
@@ -1109,6 +1110,7 @@ if V4:
                 _st = list(_cur)
                 for i in (3, 4, 5):                 # only the blue, green and brown bands move down to line up
                     _st[i] = V5_CEN[1][i] * Hs - widths[i] / 2
+                _st[3] += 17.0                      # outer blue band lowered so its blue glass sits just above the inner one
                 gaps = [_st[0]] + [_st[i + 1] - (_st[i] + widths[i]) for i in range(len(widths) - 1)] + \
                        [Hs - (_st[-1] + widths[-1])]
                 first, mids = gaps[0], gaps[1:-1]
