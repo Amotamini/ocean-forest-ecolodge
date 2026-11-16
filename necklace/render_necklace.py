@@ -962,7 +962,8 @@ if V4:
         BANDS = [tuple([("tblue" if k == "sapph" else k) for k in x] for x in b) for b in BANDS]
         # the tan tourmaline below the yellow glass (outer strand) -> 8 mm golden-yellow mookaite
         _o = list(BANDS[3][0]); _o[_o.index("yellow") + 1] = "mookyel"
-        BANDS[3] = (_o, BANDS[3][1])
+        _i = list(BANDS[3][1]); _i[len(_i) - 1 - _i[::-1].index("yellow")] = "mookyel"   # lower yellow glass, inner
+        BANDS[3] = (_o, _i)
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
