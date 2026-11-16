@@ -983,6 +983,10 @@ if V4:
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
+        # yellow band moves down, between the mookaite (brown) band and the white band
+        _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
+        BANDS = [BANDS[i] for i in _ord]
+        BANDS_PREV = [BANDS_PREV[i] for i in _ord]
     OUTER = [
         F(["olive"], "diop", 6),                                   # G (dark)
         ["tan"],                                                   # Y
@@ -1079,9 +1083,9 @@ if V4:
             last = Hs - (st0[-1] + w0[-1])
             widths = [sum(SZ[k] for k in stn) for stn in STN]
             first = Hs - sum(widths) - sum(mids) - last
-            if st == 1:                         # inner strand: green band (index 5) raised 4 mm
-                mids[4] -= 4.0
-                mids[5] += 4.0
+            if st == 1:                         # inner strand: green band raised 4 mm
+                mids[3] -= 4.0
+                mids[4] += 4.0
             if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
                 mids[0] -= 3.0 - first
                 first = 3.0
