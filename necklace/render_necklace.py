@@ -989,7 +989,7 @@ if V4:
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # rose quartz band where the whites were (per side: 3 x 9 mm + 2 x 11 mm, so 6 + 4 in all)
-        BANDS[7] = (["rq9", "rq11", "rq9"], ["rq11", "rq9"])
+        BANDS[7] = (["diop", "rq9", "rq11", "rq9", "diop"], ["diop", "rq11", "rq9", "diop"])   # chrome diopside borders
         # whites (10 mm) move to the bottom band next to the focal; inner strand's centre bead is a white too
         BANDS[8] = (["opal10", "redglass", "pink", "rbic", "pink", "redglass", "opal10"],
                     ["opal10", "redglass", "pink", "pink", "redglass"])
@@ -1099,12 +1099,16 @@ if V4:
             first = Hs - sum(widths) - sum(mids) - last
             if st == 0:                         # outer green's extra length goes downward, not into the top section
                 first += widths[4] - 52.6
+                first += 8.0                        # rose band's diopside borders: room taken locally, not from the top
             if st == 1:                         # inner strand: green band raised 4 mm
                 mids[3] -= 4.0
                 mids[4] += 4.0
                 mids[5] -= 8.0                      # inner rose bicone takes its room from the run just above it
                 first += 8.0
                 mids[6] -= 8.0                      # second inner yellow glass takes its room from the run just below
+                first += 8.0
+                mids[6] -= 4.0                      # rose band's diopside borders: 4 mm from the run above it...
+                mids[7] -= 4.0                      # ...and 4 mm from the run below it
                 first += 8.0
             if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
                 mids[0] -= 3.0 - first
@@ -1122,10 +1126,12 @@ if V4:
                 _st = list(_cur)
                 for i in (3, 4, 5):                 # only the blue, green and brown bands move down to line up
                     _st[i] = V5_CEN[1][i] * Hs - widths[i] / 2
-                _st[3] += 17.0                      # outer blue band lowered so its blue glass sits just above the inner one
+                _st[3] += 11.0                      # outer blue band lowered so its blue glass sits just above the inner one
                 _st[4] += 4.0                       # outer green keeps its top; the extra diopside extends it downward
                 for i in (6, 7, 8):                 # bands below keep their places
                     _st[i] -= widths[4] - 52.6
+                _st[7] -= 4.0                       # rose band grows 4 mm upward and 4 mm downward
+                _st[8] -= 8.0
                 gaps = [_st[0]] + [_st[i + 1] - (_st[i] + widths[i]) for i in range(len(widths) - 1)] + \
                        [Hs - (_st[-1] + widths[-1])]
                 first, mids = gaps[0], gaps[1:-1]
