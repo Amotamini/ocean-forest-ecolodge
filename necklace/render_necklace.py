@@ -1017,6 +1017,8 @@ if V4:
             _s[0] = "orange"                        # top only; the lapis under the rose bicone stays
         _bo.append("diop"); _bi.append("diop")      # one chrome diopside under the lapis below the rose bicone
         BANDS[6] = (_bo, _bi)
+        BANDS[8] = tuple(b[:1] + ["diop"] + b[1:] for b in BANDS[8])   # chrome diopside between the lapis and the top white opal
+        assert all(b[2] == "opal10" for b in BANDS[8])
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
         # yellow band moves down, between the mookaite (brown) band and the white band
@@ -1124,6 +1126,7 @@ if V4:
                 widths = [sum(SZ[k] for k in stn) for stn in STN]
                 widths[5] -= SZ["diop"]             # diopside under the mookaite band grows it downward...
                 widths[6] += SZ["orange"]           # ...into the room left by the orange removed from the top of the yellow band
+                widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
@@ -1191,7 +1194,12 @@ if V4:
                 widths[4] += 6.0
                 widths[5] += SZ["diop"]
                 widths[6] -= SZ["orange"]
-                gaps[1] -= 6.0 + SZ["diop"] - SZ["orange"]                      # bands above (and incl.) green move up 6 mm into the lapis behind the neck
+                widths[8] += SZ["diop"]
+                _need = 6.0 + SZ["diop"] - SZ["orange"] + SZ["diop"]
+                for _gi, _fl in ((1, 3.0), (0, 1.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
+                    _take = min(_need, max(0.0, gaps[_gi] - _fl)); gaps[_gi] -= _take; _need -= _take
+                print(f"v5 strand {st} neck gaps after shift", [round(float(x), 1) for x in gaps[:4]], "unplaced", round(_need, 2))
+                # bands above the added beads move up into the lapis behind the neck; visible turquoise runs unchanged
             g = 0.0
             lap = LAP_BUDGET[st]
             for gi, gl in enumerate(gaps):
