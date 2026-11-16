@@ -1015,7 +1015,10 @@ if V4:
         for _s in (_bo, _bi):                       # lapis frame above the mookaite swapped for orange spiny oyster
             assert _s[0] == "lapisH" and _s[-1] == "lapisH"
             _s[0] = "orange"                        # top only; the lapis under the rose bicone stays
+        _bo.append("diop"); _bi.append("diop")      # one chrome diopside under the lapis below the rose bicone
         BANDS[6] = (_bo, _bi)
+        BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
+        assert all(b[1] == "orange" for b in BANDS[3])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
@@ -1119,6 +1122,8 @@ if V4:
                 mids = [st0[i + 1] - (st0[i] + w0[i]) for i in range(len(raw) - 1)]
                 last = Hs - (st0[-1] + w0[-1])
                 widths = [sum(SZ[k] for k in stn) for stn in STN]
+                widths[5] -= SZ["diop"]             # diopside under the mookaite band grows it downward...
+                widths[6] += SZ["orange"]           # ...into the room left by the orange removed from the top of the yellow band
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
@@ -1184,7 +1189,9 @@ if V4:
                            [Hs - 2 * PER_L_ - (_sx[-1] + widths[-1])]
                 print(f"v5 strand {st} pass gaps", [round(float(x),1) for x in gaps]) if V5_TARGET is not None else None
                 widths[4] += 6.0
-                gaps[1] -= 6.0                      # bands above (and incl.) green move up 6 mm into the lapis behind the neck
+                widths[5] += SZ["diop"]
+                widths[6] -= SZ["orange"]
+                gaps[1] -= 6.0 + SZ["diop"] - SZ["orange"]                      # bands above (and incl.) green move up 6 mm into the lapis behind the neck
             g = 0.0
             lap = LAP_BUDGET[st]
             for gi, gl in enumerate(gaps):
