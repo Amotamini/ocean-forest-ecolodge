@@ -1136,6 +1136,7 @@ if V4:
                        [Hs - (_st[-1] + widths[-1])]
                 first, mids = gaps[0], gaps[1:-1]
             print(f"v5 strand {st}: gaps {[round(float(x), 1) for x in gaps]}")
+            gaps[-1] -= PER_L_                  # room for a chrome diopside beside the centre bead
         g = 0.0
         lap = LAP_BUDGET[st]
         for gi, gl in enumerate(gaps):
@@ -1156,6 +1157,9 @@ if V4:
                     put(g + SZ[k] / 2, k)
                     V4_USED[k] = V4_USED.get(k, 0) + 2
                     g += SZ[k]
+        if V5:                                   # one chrome diopside touching the centre bead, each side
+            put(H2 - cz - PER_L_ / 2, "diop")
+            V4_USED["diop"] = V4_USED.get("diop", 0) + 2
         # centre bead at the bottom (one only)
         sp = H2 - Hh / 2
         j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
