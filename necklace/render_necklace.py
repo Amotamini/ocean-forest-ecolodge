@@ -1038,138 +1038,178 @@ if V4:
               "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel", "mookrd": "v5_mookrd", "mookorg": "v5_mookorg", "opal8": "v5_opal8",
               "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "blueglass": "conch8", "focal": "wjade"}
     HEI = {"red": 2, "orange": 3, "redglass": 5}
-    beads_out, beads_in = [], []
-    tourm = {0: [], 1: []}
-    barrels = {0: [], 1: []}
-    denim = []
-    V4_USED = {}
-    V5_CEN = {}
-    for st, STN in (((1, INNER), (0, OUTER)) if V5 else ((0, OUTER), (1, INNER))):
-        path, ss = (outer, s_out) if st == 0 else (inner, s_in)
-        Hh = HIDDEN_OUT if st == 0 else HIDDEN_IN
-        Lf = ss[-1] + Hh
-        H2 = Lf / 2
-        cz = SZ[CENTRE[st]] / 2
-        if V5:
-            STN = [b[st] for b in BANDS]
-        T = sum(SZ[k] for stn in STN for k in stn)
-        f = (H2 - cz - T) / (len(STN) + 0.5)
-        if f < 2.4:
-            raise SystemExit(f"v4 layout does not fit on strand {st}: gap {f:.2f} mm")
-        def put(g, kind, pitch=None):
-            for gg in (g, Lf - g):             # left side, then its mirror on the right
-                sp = gg - Hh / 2
-                if not (0 <= sp <= ss[-1]):
-                    continue
-                j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
-                x, y = path[j]
-                if kind in HEI or kind in ("turq", "lapisH"):
-                    rec = ((x, y, tang[j][0], tang[j][1], j, sp), st)
-                    (beads_out if st == 0 else beads_in).append(rec)
-                    SPLIT[(st, round(sp, 4))] = HEI.get(kind, 0 if kind == "turq" else 1)
-                    if kind == "turq":
-                        TURQ_T[(st, round(sp, 4))] = pitch
-                elif kind == "lapis8":
-                    denim.append((x, y, st))
+    V5_TARGET = None
+    V5_EQ = {}
+    for _pass in (range(2) if V5 else range(1)):
+        beads_out, beads_in = [], []
+        tourm = {0: [], 1: []}
+        barrels = {0: [], 1: []}
+        denim = []
+        V4_USED = {}
+        V5_CEN = {}
+        for st, STN in (((1, INNER), (0, OUTER)) if V5 else ((0, OUTER), (1, INNER))):
+            path, ss = (outer, s_out) if st == 0 else (inner, s_in)
+            Hh = HIDDEN_OUT if st == 0 else HIDDEN_IN
+            Lf = ss[-1] + Hh
+            H2 = Lf / 2
+            cz = SZ[CENTRE[st]] / 2
+            if V5:
+                STN = [b[st] for b in BANDS]
+            T = sum(SZ[k] for stn in STN for k in stn)
+            f = (H2 - cz - T) / (len(STN) + 0.5)
+            if f < 2.4:
+                raise SystemExit(f"v4 layout does not fit on strand {st}: gap {f:.2f} mm")
+            def put(g, kind, pitch=None):
+                for gg in (g, Lf - g):             # left side, then its mirror on the right
+                    sp = gg - Hh / 2
+                    if not (0 <= sp <= ss[-1]):
+                        continue
+                    j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
+                    x, y = path[j]
+                    if kind in HEI or kind in ("turq", "lapisH"):
+                        rec = ((x, y, tang[j][0], tang[j][1], j, sp), st)
+                        (beads_out if st == 0 else beads_in).append(rec)
+                        SPLIT[(st, round(sp, 4))] = HEI.get(kind, 0 if kind == "turq" else 1)
+                        if kind == "turq":
+                            TURQ_T[(st, round(sp, 4))] = pitch
+                    elif kind == "lapis8":
+                        denim.append((x, y, st))
+                    else:
+                        tourm[st].append((x, y, tang[j][0], tang[j][1], sp, KIND_T[kind]))
+            # gap filler: lapis heishi while the dark budget lasts, then turquoise
+            gaps = [f / 2] + [f] * len(STN)
+            if V5:
+                # align band centres by height: use common fractions computed from the widest of each band pair
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2
+                Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
+                gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
+                cen, acc = [], gapc / 2
+                for w in Wmax:
+                    cen.append((acc + w / 2) / Hin); acc += w + gapc
+                Hs = H2 - cz
+                # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
+                Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
+                gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
+                cen0, acc = [], gapc0 / 2
+                for w in Wmax0:
+                    cen0.append((acc + w / 2) / Hin); acc += w + gapc0
+                raw = [b[st] for b in BANDS_PREV]
+                w0 = [sum(SZ[k] for k in r) for r in raw]
+                st0 = [c * Hs - w / 2 for c, w in zip(cen0, w0)]
+                mids = [st0[i + 1] - (st0[i] + w0[i]) for i in range(len(raw) - 1)]
+                last = Hs - (st0[-1] + w0[-1])
+                widths = [sum(SZ[k] for k in stn) for stn in STN]
+                first = Hs - sum(widths) - sum(mids) - last
+                if st == 0:                         # outer green's extra length goes downward, not into the top section
+                    first += widths[4] - 52.6
+                    first += 8.0                        # rose band's diopside borders: room taken locally, not from the top
+                if st == 1:                         # inner strand: green band raised 4 mm
+                    mids[3] -= 4.0
+                    mids[4] += 4.0
+                    mids[5] -= 8.0                      # inner rose bicone takes its room from the run just above it
+                    first += 8.0
+                    mids[6] -= 8.0                      # second inner yellow glass takes its room from the run just below
+                    first += 8.0
+                    mids[6] -= 4.0                      # rose band's diopside borders: 4 mm from the run above it...
+                    mids[7] -= 4.0                      # ...and 4 mm from the run below it
+                    first += 8.0
+                if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
+                    mids[0] -= 3.0 - first
+                    first = 3.0
+                gaps = [first] + mids + [last]
+                if st == 1:                         # remember where the inner bands sit (fraction of the strand)
+                    _acc, _c = 0.0, []
+                    for _gi in range(len(widths)):
+                        _acc += gaps[_gi]; _c.append((_acc + widths[_gi] / 2) / Hs); _acc += widths[_gi]
+                    V5_CEN[1] = _c
+                else:                               # outer bands placed to line up with their inner partners
+                    _cur, _a = [], 0.0
+                    for _gi in range(len(widths)):
+                        _a += gaps[_gi]; _cur.append(_a); _a += widths[_gi]
+                    _st = list(_cur)
+                    for i in (3, 4, 5):                 # only the blue, green and brown bands move down to line up
+                        _st[i] = V5_CEN[1][i] * Hs - widths[i] / 2
+                    _st[3] += 11.0                      # outer blue band lowered so its blue glass sits just above the inner one
+                    _st[4] += 4.0                       # outer green keeps its top; the extra diopside extends it downward
+                    for i in (6, 7, 8):                 # bands below keep their places
+                        _st[i] -= widths[4] - 52.6
+                    _st[7] -= 4.0                       # rose band grows 4 mm upward and 4 mm downward
+                    _st[8] -= 8.0
+                    gaps = [_st[0]] + [_st[i + 1] - (_st[i] + widths[i]) for i in range(len(widths) - 1)] + \
+                           [Hs - (_st[-1] + widths[-1])]
+                    first, mids = gaps[0], gaps[1:-1]
+                print(f"v5 strand {st}: gaps {[round(float(x), 1) for x in gaps]}")
+                gaps[-1] -= PER_L_                  # room for a chrome diopside beside the centre bead
+                # equal turquoise runs between all coloured segments (lapis runs behind the neck unchanged)
+                _nl = 2 if st == 0 else 3
+                _avg = sum(gaps[_nl:]) / len(gaps[_nl:])
+                gaps = gaps[:_nl] + [_avg] * (len(gaps) - _nl)
+                _a2, _c2 = 0.0, []
+                for _gi in range(len(widths)):
+                    _a2 += gaps[_gi]; _c2.append((_a2 + widths[_gi] / 2) / Hs); _a2 += widths[_gi]
+                V5_EQ[st] = _c2
+                V5_EQ[("geo", st)] = (Hs, list(widths), _c2[1] * Hs + widths[1] / 2)   # end of band 1 (fixed)
+                if V5_TARGET is not None:       # second pass: every visible band at the shared (averaged) height
+                    _sx = [_c2[i] * Hs - widths[i] / 2 for i in range(len(widths))]
+                    for i in range(3, len(widths)):
+                        _sx[i] = V5_TARGET[i] * Hs - widths[i] / 2
+                    _sx[2] = V5_U[st]
+                    if _sx[2] < _sx[1] + widths[1] + 3.0:     # push band 1 up into the lapis behind the neck if needed
+                        _sx[1] = max(_sx[0] + widths[0] + 3.0, _sx[2] - 3.0 - widths[1])
+                        _sx[2] = max(_sx[2], _sx[1] + widths[1] + 3.0)
+                    gaps = [_sx[0]] + [_sx[i + 1] - (_sx[i] + widths[i]) for i in range(len(widths) - 1)] + \
+                           [Hs - PER_L_ - (_sx[-1] + widths[-1])]
+                print(f"v5 strand {st} pass gaps", [round(float(x),1) for x in gaps]) if V5_TARGET is not None else None
+            g = 0.0
+            lap = LAP_BUDGET[st]
+            for gi, gl in enumerate(gaps):
+                nl = max(1, int(round(gl / 3.0)))
+                if (lap >= nl and not V5) or (V5 and gi <= (1 if st == 0 else 2)):   # v5: same lapis runs as before
+                    for q in range(nl):
+                        put(g + gl / nl * (q + 0.5), "lapisH")
+                    lap -= nl
+                    V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
                 else:
-                    tourm[st].append((x, y, tang[j][0], tang[j][1], sp, KIND_T[kind]))
-        # gap filler: lapis heishi while the dark budget lasts, then turquoise
-        gaps = [f / 2] + [f] * len(STN)
-        if V5:
-            # align band centres by height: use common fractions computed from the widest of each band pair
-            Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2
-            Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
-            gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
-            cen, acc = [], gapc / 2
-            for w in Wmax:
-                cen.append((acc + w / 2) / Hin); acc += w + gapc
-            Hs = H2 - cz
-            # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
-            Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
-            gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
-            cen0, acc = [], gapc0 / 2
-            for w in Wmax0:
-                cen0.append((acc + w / 2) / Hin); acc += w + gapc0
-            raw = [b[st] for b in BANDS_PREV]
-            w0 = [sum(SZ[k] for k in r) for r in raw]
-            st0 = [c * Hs - w / 2 for c, w in zip(cen0, w0)]
-            mids = [st0[i + 1] - (st0[i] + w0[i]) for i in range(len(raw) - 1)]
-            last = Hs - (st0[-1] + w0[-1])
-            widths = [sum(SZ[k] for k in stn) for stn in STN]
-            first = Hs - sum(widths) - sum(mids) - last
-            if st == 0:                         # outer green's extra length goes downward, not into the top section
-                first += widths[4] - 52.6
-                first += 8.0                        # rose band's diopside borders: room taken locally, not from the top
-            if st == 1:                         # inner strand: green band raised 4 mm
-                mids[3] -= 4.0
-                mids[4] += 4.0
-                mids[5] -= 8.0                      # inner rose bicone takes its room from the run just above it
-                first += 8.0
-                mids[6] -= 8.0                      # second inner yellow glass takes its room from the run just below
-                first += 8.0
-                mids[6] -= 4.0                      # rose band's diopside borders: 4 mm from the run above it...
-                mids[7] -= 4.0                      # ...and 4 mm from the run below it
-                first += 8.0
-            if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
-                mids[0] -= 3.0 - first
-                first = 3.0
-            gaps = [first] + mids + [last]
-            if st == 1:                         # remember where the inner bands sit (fraction of the strand)
-                _acc, _c = 0.0, []
-                for _gi in range(len(widths)):
-                    _acc += gaps[_gi]; _c.append((_acc + widths[_gi] / 2) / Hs); _acc += widths[_gi]
-                V5_CEN[1] = _c
-            else:                               # outer bands placed to line up with their inner partners
-                _cur, _a = [], 0.0
-                for _gi in range(len(widths)):
-                    _a += gaps[_gi]; _cur.append(_a); _a += widths[_gi]
-                _st = list(_cur)
-                for i in (3, 4, 5):                 # only the blue, green and brown bands move down to line up
-                    _st[i] = V5_CEN[1][i] * Hs - widths[i] / 2
-                _st[3] += 11.0                      # outer blue band lowered so its blue glass sits just above the inner one
-                _st[4] += 4.0                       # outer green keeps its top; the extra diopside extends it downward
-                for i in (6, 7, 8):                 # bands below keep their places
-                    _st[i] -= widths[4] - 52.6
-                _st[7] -= 4.0                       # rose band grows 4 mm upward and 4 mm downward
-                _st[8] -= 8.0
-                gaps = [_st[0]] + [_st[i + 1] - (_st[i] + widths[i]) for i in range(len(widths) - 1)] + \
-                       [Hs - (_st[-1] + widths[-1])]
-                first, mids = gaps[0], gaps[1:-1]
-            print(f"v5 strand {st}: gaps {[round(float(x), 1) for x in gaps]}")
-            gaps[-1] -= PER_L_                  # room for a chrome diopside beside the centre bead
-            # equal turquoise runs between all coloured segments (lapis runs behind the neck unchanged)
-            _nl = 2 if st == 0 else 3
-            _avg = sum(gaps[_nl:]) / len(gaps[_nl:])
-            gaps = gaps[:_nl] + [_avg] * (len(gaps) - _nl)
-            print(f"v5 strand {st}: equal turquoise run {_avg:.1f} mm")
-        g = 0.0
-        lap = LAP_BUDGET[st]
-        for gi, gl in enumerate(gaps):
-            nl = max(1, int(round(gl / 3.0)))
-            if (lap >= nl and not V5) or (V5 and gi <= (1 if st == 0 else 2)):   # v5: same lapis runs as before
-                for q in range(nl):
-                    put(g + gl / nl * (q + 0.5), "lapisH")
-                lap -= nl
-                V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
-            else:
-                nt = max(1, int(round(gl / 2.4)))
-                for q in range(nt):
-                    put(g + gl / nt * (q + 0.5), "turq", gl / nt)
-                V4_USED["turq"] = V4_USED.get("turq", 0) + 2 * nt
-            g += gl
-            if gi < len(STN):
-                for k in STN[gi]:
-                    put(g + SZ[k] / 2, k)
-                    V4_USED[k] = V4_USED.get(k, 0) + 2
-                    g += SZ[k]
-        if V5:                                   # one chrome diopside touching the centre bead, each side
-            put(H2 - cz - PER_L_ / 2, "diop")
-            V4_USED["diop"] = V4_USED.get("diop", 0) + 2
-        # centre bead at the bottom (one only)
-        sp = H2 - Hh / 2
-        j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
-        tourm[st].append((path[j][0], path[j][1], tang[j][0], tang[j][1], sp, KIND_T[CENTRE[st]]))
-        V4_USED[CENTRE[st]] = V4_USED.get(CENTRE[st], 0) + 1
+                    nt = max(1, int(round(gl / 2.4)))
+                    for q in range(nt):
+                        put(g + gl / nt * (q + 0.5), "turq", gl / nt)
+                    V4_USED["turq"] = V4_USED.get("turq", 0) + 2 * nt
+                g += gl
+                if gi < len(STN):
+                    for k in STN[gi]:
+                        put(g + SZ[k] / 2, k)
+                        V4_USED[k] = V4_USED.get(k, 0) + 2
+                        g += SZ[k]
+            if V5:                                   # one chrome diopside touching the centre bead, each side
+                put(H2 - cz - PER_L_ / 2, "diop")
+                V4_USED["diop"] = V4_USED.get("diop", 0) + 2
+            # centre bead at the bottom (one only)
+            sp = H2 - Hh / 2
+            j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
+            tourm[st].append((path[j][0], path[j][1], tang[j][0], tang[j][1], sp, KIND_T[CENTRE[st]]))
+            V4_USED[CENTRE[st]] = V4_USED.get(CENTRE[st], 0) + 1
+
+        if V5 and _pass == 0:
+            # shared heights for bands 3..8, plus a per-strand start for band 2, chosen by least squares so the
+            # turquoise runs on BOTH strands come out as equal as possible
+            _nb = len(V5_EQ[0]); _k = _nb - 3                        # t3..t8
+            _nv = _k + 4                                              # + u0, u1 (band-2 starts) + m0, m1
+            _A, _b = [], []
+            for _s in (0, 1):
+                _H, _w, _e1 = V5_EQ[("geo", _s)]
+                iu, im = _k + _s, _k + 2 + _s
+                def R():
+                    return [0.0] * _nv
+                if _s == 0:                                           # outer: run above band 2 is turquoise
+                    r = R(); r[iu] = 1; r[im] = -1; _A.append(r); _b.append(_e1)
+                r = R(); r[0] = _H; r[iu] = -1; r[im] = -1; _A.append(r); _b.append(_w[3] / 2 + _w[2])   # run above blue
+                for j in range(_k - 1):
+                    i = 3 + j; r = R(); r[j + 1] = _H; r[j] = -_H; r[im] = -1
+                    _A.append(r); _b.append(_w[i + 1] / 2 + _w[i] / 2)
+                r = R(); r[_k - 1] = -_H; r[im] = -1; _A.append(r); _b.append(-_H + PER_L_ + _w[_nb - 1] / 2)
+            _sol = np.linalg.lstsq(np.array(_A), np.array(_b), rcond=None)[0]
+            V5_TARGET = list(V5_EQ[0][:3]) + list(_sol[:_k])
+            V5_U = {0: _sol[_k], 1: _sol[_k + 1]}
     print("v4 bead use (full necklace):", dict(sorted(V4_USED.items())))
 
 allbeads = beads_out + beads_in
