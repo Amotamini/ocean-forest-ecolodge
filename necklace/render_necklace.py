@@ -996,6 +996,15 @@ if V4:
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
+        # rose bicone moves from the top of the yellow band to the bottom of the brown mookaite band;
+        # in the yellow band it is replaced by two orange spiny oyster heishi; outer brown band loses one mookaite
+        def _swap_bic(seq):
+            seq = list(seq); k = seq.index("rbic")
+            return seq[:k] + ["orange", "orange"] + seq[k + 1:]
+        BANDS[3] = (_swap_bic(BANDS[3][0]), _swap_bic(BANDS[3][1]))
+        _bo = list(BANDS[6][0]); _bo.pop(len(_bo) - 2); _bo.insert(len(_bo) - 1, "rbic")      # drop last mookaite, add bicone
+        _bi = list(BANDS[6][1]); _bi.insert(len(_bi) - 1, "rbic")                               # inner: bicone at the bottom
+        BANDS[6] = (_bo, _bi)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
