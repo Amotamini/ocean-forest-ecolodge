@@ -1169,7 +1169,7 @@ if V4:
                         _sx[i] = V5_TARGET[i] * Hs - widths[i] / 2
                     _sx[2] = V5_U[st]
                     if st == 0:
-                        _sx[3] += 15.0                    # outer blue band down to sit level with the inner one
+                        _sx[3] += 6.0                     # outer blue band down to sit level with the inner one
                     if _sx[2] < _sx[1] + widths[1] + 3.0:     # push band 1 up into the lapis behind the neck if needed
                         _sx[1] = max(_sx[0] + widths[0] + 3.0, _sx[2] - 3.0 - widths[1])
                         _sx[2] = max(_sx[2], _sx[1] + widths[1] + 3.0)
