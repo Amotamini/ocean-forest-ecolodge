@@ -1137,6 +1137,11 @@ if V4:
                 first, mids = gaps[0], gaps[1:-1]
             print(f"v5 strand {st}: gaps {[round(float(x), 1) for x in gaps]}")
             gaps[-1] -= PER_L_                  # room for a chrome diopside beside the centre bead
+            # equal turquoise runs between all coloured segments (lapis runs behind the neck unchanged)
+            _nl = 2 if st == 0 else 3
+            _avg = sum(gaps[_nl:]) / len(gaps[_nl:])
+            gaps = gaps[:_nl] + [_avg] * (len(gaps) - _nl)
+            print(f"v5 strand {st}: equal turquoise run {_avg:.1f} mm")
         g = 0.0
         lap = LAP_BUDGET[st]
         for gi, gl in enumerate(gaps):
