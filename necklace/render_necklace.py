@@ -1045,7 +1045,7 @@ if V4:
         F(["jade", "jade"], "diop", 3),                            # G (light)
         F(["pink", "ajas", "pink"], "orange", 5),                  # R (light), then rose quartz at the centre
     ]
-    CENTRE = {0: "focal", 1: ("opal10" if V5 else "rq9")}   # v5: white opal at the inner strand's centre
+    CENTRE = {0: "focal", 1: ("rq11" if V5 else "rq9")}     # v5: 11 mm swirled rose quartz at the inner strand centre
     LAP_BUDGET = {0: 15, 1: 15}                # lapis heishi used as dark filler, from the top down (per side)
     KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
