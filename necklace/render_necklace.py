@@ -1,5 +1,6 @@
 """Double-strand turquoise/lapis heishi necklace hanging on a black velvet bust."""
-import math, random, sys
+import math, random, sys, os
+DBG_Y = os.environ.get('DBG_Y', '').split(',') if os.environ.get('DBG_Y') else None
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageChops
 
@@ -1017,6 +1018,12 @@ if V4:
             _s[0] = "orange"                        # top only; the lapis under the rose bicone stays
         _bo.append("diop"); _bi.append("diop")      # one chrome diopside under the lapis below the rose bicone
         BANDS[6] = (_bo, _bi)
+        _bl = list(BANDS[4][0]); assert _bl[0] == _bl[-1] == "lapisH"
+        _bl[0] = _bl[-1] = "red"                    # outer blue band: end lapis swapped for red spiny oyster borders
+        BANDS[4] = (_bl, BANDS[4][1])
+        _gi = list(BANDS[5][1]); assert _gi[2:4] == ["diop", "diop"]
+        _gi[2:4] = ["gglass"]                       # inner green: 8 mm green glass beside the outer one, for two diopside
+        BANDS[5] = (BANDS[5][0], _gi)
         BANDS[8] = tuple(b[:1] + ["diop"] + b[1:] for b in BANDS[8])   # chrome diopside between the lapis and the top white opal
         assert all(b[2] == "opal10" for b in BANDS[8])
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
@@ -1091,6 +1098,8 @@ if V4:
                         continue
                     j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
                     x, y = path[j]
+                    if DBG_Y and gg == g and kind in DBG_Y:
+                        print("DBG", st, kind, round(float(y), 1))
                     if kind in HEI or kind in ("turq", "lapisH"):
                         rec = ((x, y, tang[j][0], tang[j][1], j, sp), st)
                         (beads_out if st == 0 else beads_in).append(rec)
