@@ -1012,6 +1012,9 @@ if V4:
         _k = _bi.index("rbic")
         if _bi[_k - 1] == "redglass":
             _bi.pop(_k - 1)                                                                      # no red glass above it
+        for _s in (_bo, _bi):                       # lapis frame swapped for orange spiny oyster, both ends
+            assert _s[0] == "lapisH" and _s[-1] == "lapisH"
+            _s[0] = _s[-1] = "orange"
         BANDS[6] = (_bo, _bi)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
