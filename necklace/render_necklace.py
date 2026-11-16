@@ -965,6 +965,7 @@ if V4:
         _o[_o.index("tan")] = "rbic"                        # top tan tourmaline -> rose glass bicone
         _i = list(BANDS[3][1]); _i[len(_i) - 1 - _i[::-1].index("yellow")] = "mookyel"   # lower yellow glass, inner
         BANDS[3] = (_o + ["redglass", "red", "orange", "orange"], _i + ["redglass", "red", "orange", "orange"])
+        BANDS[4] = (BANDS[4][0], ["lapisH", "lapisH", "lapisH"] + list(BANDS[4][1]))   # 3 lapis above the inner blue glass
         # red-orange band: orange spondylus groups -> mookaite, going out from the maroon centre: red then orange;
         # one red spondylus disc dropped at each end to make room
         def _mookband(seq):
