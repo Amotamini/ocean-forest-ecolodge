@@ -996,6 +996,8 @@ if V4:
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
+        # orange spiny oyster border between the lapis frame and the green beads, both strands
+        BANDS[5] = tuple(b[:1] + ["orange"] + b[1:-1] + ["orange"] + b[-1:] for b in BANDS[5])
         # rose bicone moves from the top of the yellow band to the bottom of the brown mookaite band;
         # in the yellow band it is replaced by two orange spiny oyster heishi; outer brown band loses one mookaite
         def _swap_bic(seq):
@@ -1114,6 +1116,7 @@ if V4:
                 mids = [st0[i + 1] - (st0[i] + w0[i]) for i in range(len(raw) - 1)]
                 last = Hs - (st0[-1] + w0[-1])
                 widths = [sum(SZ[k] for k in stn) for stn in STN]
+                widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
                     first += widths[4] - 52.6
@@ -1177,6 +1180,8 @@ if V4:
                     gaps = [_sx[0]] + [_sx[i + 1] - (_sx[i] + widths[i]) for i in range(len(widths) - 1)] + \
                            [Hs - 2 * PER_L_ - (_sx[-1] + widths[-1])]
                 print(f"v5 strand {st} pass gaps", [round(float(x),1) for x in gaps]) if V5_TARGET is not None else None
+                widths[4] += 6.0
+                gaps[1] -= 6.0                      # bands above (and incl.) green move up 6 mm into the lapis behind the neck
             g = 0.0
             lap = LAP_BUDGET[st]
             for gi, gl in enumerate(gaps):
