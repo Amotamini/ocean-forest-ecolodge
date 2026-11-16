@@ -988,6 +988,11 @@ if V4:
                     F(["jade", "jade", "jade"], "diop", 6))
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
+        # rose quartz band where the whites were (per side: 3 x 9 mm + 2 x 11 mm, so 6 + 4 in all)
+        BANDS[7] = (["rq9", "rq11", "rq9"], ["rq11", "rq9"])
+        # whites (10 mm) move to the bottom band next to the focal; inner strand's centre bead is a white too
+        BANDS[8] = (["opal10", "redglass", "pink", "rbic", "pink", "redglass", "opal10"],
+                    ["opal10", "redglass", "pink", "pink", "redglass"])
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
@@ -1026,7 +1031,7 @@ if V4:
         F(["jade", "jade"], "diop", 3),                            # G (light)
         F(["pink", "ajas", "pink"], "orange", 5),                  # R (light), then rose quartz at the centre
     ]
-    CENTRE = {0: "focal", 1: "rq9"}
+    CENTRE = {0: "focal", 1: ("opal10" if V5 else "rq9")}   # v5: white opal at the inner strand's centre
     LAP_BUDGET = {0: 15, 1: 15}                # lapis heishi used as dark filler, from the top down (per side)
     KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
