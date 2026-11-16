@@ -1071,6 +1071,9 @@ if V4:
             last = Hs - (st0[-1] + w0[-1])
             widths = [sum(SZ[k] for k in stn) for stn in STN]
             first = Hs - sum(widths) - sum(mids) - last
+            if st == 1:                         # inner strand: green band (index 5) raised 4 mm
+                mids[4] -= 4.0
+                mids[5] += 4.0
             if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
                 mids[0] -= 3.0 - first
                 first = 3.0
