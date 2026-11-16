@@ -931,7 +931,7 @@ if V4:
     SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
           "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
           "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
-          "redglass": 3.0, "focal": 19.7}
+          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0}
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
         return [flank] * a + core + [flank] * b
@@ -948,6 +948,9 @@ if V4:
             (["opal10", "rq11", "opal10"],                       ["opal9", "opal10"]),                   # white
             (["redglass", "pink", "rbic", "pink", "redglass", "rq9"], ["redglass", "pink", "rq9", "pink", "redglass"]),  # pink/rose
         ]
+        # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
+        for _bi in (5, 6, 7):
+            BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
     OUTER = [
         F(["olive"], "diop", 6),                                   # G (dark)
         ["tan"],                                                   # Y
