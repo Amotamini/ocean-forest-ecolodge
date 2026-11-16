@@ -439,7 +439,7 @@ ROSE_D = 9.0
 PER_D, PER_L = 8.0, 4.0              # chrome diopside rondelle: 8 mm across, 4 mm along the strand
 def tsize(t):
     k = t[5] if len(t) > 5 else "tour"
-    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v5_opal8": 8.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_mookred": 8.0, "v5_tblue": 7.0, "v5_mookyel": 8.0, "v5_mookrd": 8.0, "v5_mookorg": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
+    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v5_opal8": 8.0, "v5_amet": 8.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_mookred": 8.0, "v5_tblue": 7.0, "v5_mookyel": 8.0, "v5_mookrd": 8.0, "v5_mookorg": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
 tourm = {0: [], 1: []}
 for n in range(0, 42):
     s_o = (n + 0.5) * INCH - HIDDEN_OUT / 2
@@ -931,7 +931,7 @@ if V4:
     SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
           "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
           "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
-          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0, "mookrd": 8.0, "mookorg": 8.0, "opal8": 8.0}
+          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0, "mookrd": 8.0, "mookorg": 8.0, "opal8": 8.0, "amet": 8.0}
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
         return [flank] * a + core + [flank] * b
@@ -989,7 +989,7 @@ if V4:
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # rose quartz band where the whites were (per side: 3 x 9 mm + 2 x 11 mm, so 6 + 4 in all)
-        BANDS[7] = (["diop", "rq9", "rq9", "rq11", "diop"], ["diop", "rq9", "rq11", "diop"])   # 11 mm at the bottom of the rose band
+        BANDS[7] = (["diop", "amet", "rq9", "rq9", "diop"], ["diop", "amet", "rq9", "diop"])     # amethyst on top, 9 mm rose quartz below; no 11 mm
         # whites (10 mm) move to the bottom band next to the focal; inner strand's centre bead is a white too
         BANDS[8] = (["opal10", "redglass", "pink", "rbic", "pink", "redglass", "opal10"],
                     ["opal10", "redglass", "pink", "pink", "redglass"])
@@ -1049,7 +1049,7 @@ if V4:
     LAP_BUDGET = {0: 15, 1: 15}                # lapis heishi used as dark filler, from the top down (per side)
     KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
-              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel", "mookrd": "v5_mookrd", "mookorg": "v5_mookorg", "opal8": "v5_opal8",
+              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel", "mookrd": "v5_mookrd", "mookorg": "v5_mookorg", "opal8": "v5_opal8", "amet": "v5_amet",
               "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "blueglass": "conch8", "focal": "wjade"}
     HEI = {"red": 2, "orange": 3, "redglass": 5}
     V5_TARGET = None
@@ -2175,6 +2175,11 @@ for st in (0, 1):
         x, y = t[0], t[1]
         tseed += 1
         if hidden(x, y):
+            continue
+        if len(t) > 5 and t[5] == "v5_amet":
+            spr = amethyst_sprite(tseed)                   # 8 mm lavender amethyst
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
         if len(t) > 5 and t[5] == "v5_opal8":
             spr = milky_opal_sprite(tseed, 8.0)
