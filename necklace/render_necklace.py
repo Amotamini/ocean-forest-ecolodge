@@ -970,7 +970,7 @@ if V4:
                 seq[iy], seq[im] = seq[im], seq[iy]
             return seq
         _o, _i = _ysw(_o), _ysw(_i)
-        BANDS[3] = (_o + ["redglass", "orange", "orange"], ["rbic"] + _i + ["redglass", "orange", "orange"])   # + rose bicone beside the outer one
+        BANDS[3] = (_o + ["redglass", "orange", "orange"], ["rbic"] + _i + ["yellow", "redglass", "orange", "orange"])   # + rose bicone; + second yellow glass (inner)
         BANDS = [tuple([("opal8" if k in ("opal10", "opal9") else k) for k in x] for x in b) for b in BANDS]   # 8 mm white opal
         BANDS[4] = (list(BANDS[4][0]) + ["lapisH"],                                      # 1 lapis below the outer blue beads
                     ["lapisH", "lapisH", "lapisH"] + list(BANDS[4][1]))   # 3 lapis above the inner blue glass
@@ -1098,6 +1098,8 @@ if V4:
                 mids[3] -= 4.0
                 mids[4] += 4.0
                 mids[5] -= 8.0                      # inner rose bicone takes its room from the run just above it
+                first += 8.0
+                mids[6] -= 8.0                      # second inner yellow glass takes its room from the run just below
                 first += 8.0
             if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
                 mids[0] -= 3.0 - first
