@@ -6,8 +6,9 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageChops
 random.seed(11)
 FLAT = "--flat" in sys.argv
 PER_L_ = 4.0
+V4 = "--v4" in sys.argv          # version 4: same beads, colour-sequence redesign
 V3 = "--v3" in sys.argv          # version 3: v2 with the 15.6 x 10.5 white rondelle + orange at the bottom
-V2 = "--v2" in sys.argv or V3          # version 2: greener accents up top, red accents lower   # laid flat on black, no mannequin, full loop visible
+V2 = "--v2" in sys.argv or V3 or V4          # version 2: greener accents up top, red accents lower   # laid flat on black, no mannequin, full loop visible
 S = 8                               # px per mm (supersampled)
 INCH = 25.4
 EXTRAS = False   # False = base design: heishi blocks + white barrels only (jasper/hematite/jade/lapis/spondylus/tourmaline off)
@@ -437,7 +438,7 @@ ROSE_D = 9.0
 PER_D, PER_L = 8.0, 4.0              # chrome diopside rondelle: 8 mm across, 4 mm along the strand
 def tsize(t):
     k = t[5] if len(t) > 5 else "tour"
-    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
+    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
 tourm = {0: [], 1: []}
 for n in range(0, 42):
     s_o = (n + 0.5) * INCH - HIDDEN_OUT / 2
@@ -921,6 +922,116 @@ if V2 and not V3:
             _p = _c0 + (_q - (_nd - 1) / 2) * PER_L_
             _j = min(int(np.searchsorted(s_out, _p)), len(outer) - 1)
             tourm[0].append((outer[_j][0], outer[_j][1], tang[_j][0], tang[_j][1], _p, "peridot"))
+
+
+if V4:
+    # ---------------- VERSION 4: same beads, new arrangement ----------------
+    # per side, top -> bottom. Outer colour order: G Y B R W ; inner: G R Y W B. Dark at top, light at bottom.
+    SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
+          "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
+          "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
+          "redglass": 3.0, "focal": 19.7}
+    def F(core, flank, n):                     # wrap a core with n flank beads split either side
+        a = n // 2; b = n - a
+        return [flank] * a + core + [flank] * b
+    OUTER = [
+        F(["olive"], "diop", 6),                                   # G (dark)
+        ["tan"],                                                   # Y
+        ["black", "sapph", "black"],                               # B (dark)
+        F(["mook"], "red", 8),                                     # R (dark)
+        ["opal9"],                                                 # W
+        F(["jade"], "diop", 6),                                    # G
+        ["yellow"],                                                # Y
+        ["sapph", "lapis8", "sapph"],                              # B
+        ["red", "red"] + F(["ajas"], "orange", 4) + ["red", "red"],# R
+        ["opal10", "rq9"],                                         # W
+        F(["jade", "gglass", "jade"], "diop", 4),                  # G (light)
+        ["yellow"],                                                # Y
+        ["blueglass"],                                             # B (light)
+        ["redglass", "redglass", "pink", "rbic", "pink", "redglass", "redglass"],   # R (light)
+        ["rq9"],                                                   # W, then the focal at the centre
+    ]
+    INNER = [
+        F(["gtourm"], "diop", 6),                                  # G (dark)
+        F(["mook"], "red", 8),                                     # R (dark)
+        ["tan"],                                                   # Y
+        ["opal10"],                                                # W
+        ["lapis8", "sapph"],                                       # B
+        F(["jade"], "diop", 6),                                    # G
+        F(["ajas"], "orange", 8),                                  # R
+        ["yellow"],                                                # Y
+        ["opal10", "rq11"],                                        # W
+        ["lapis8"],                                                # B
+        F(["jade", "jade"], "diop", 3),                            # G (light)
+        F(["pink", "ajas", "pink"], "orange", 5),                  # R (light), then rose quartz at the centre
+    ]
+    CENTRE = {0: "focal", 1: "rq9"}
+    LAP_BUDGET = {0: 15, 1: 15}                # lapis heishi used as dark filler, from the top down (per side)
+    KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
+              "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
+              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t",
+              "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "blueglass": "conch8", "focal": "wjade"}
+    HEI = {"red": 2, "orange": 3, "redglass": 5}
+    beads_out, beads_in = [], []
+    tourm = {0: [], 1: []}
+    barrels = {0: [], 1: []}
+    denim = []
+    V4_USED = {}
+    for st, STN in ((0, OUTER), (1, INNER)):
+        path, ss = (outer, s_out) if st == 0 else (inner, s_in)
+        Hh = HIDDEN_OUT if st == 0 else HIDDEN_IN
+        Lf = ss[-1] + Hh
+        H2 = Lf / 2
+        cz = SZ[CENTRE[st]] / 2
+        T = sum(SZ[k] for stn in STN for k in stn)
+        f = (H2 - cz - T) / (len(STN) + 0.5)
+        if f < 2.4:
+            raise SystemExit(f"v4 layout does not fit on strand {st}: gap {f:.2f} mm")
+        def put(g, kind, pitch=None):
+            for gg in (g, Lf - g):             # left side, then its mirror on the right
+                sp = gg - Hh / 2
+                if not (0 <= sp <= ss[-1]):
+                    continue
+                j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
+                x, y = path[j]
+                if kind in HEI or kind in ("turq", "lapisH"):
+                    rec = ((x, y, tang[j][0], tang[j][1], j, sp), st)
+                    (beads_out if st == 0 else beads_in).append(rec)
+                    SPLIT[(st, round(sp, 4))] = HEI.get(kind, 0 if kind == "turq" else 1)
+                    if kind == "turq":
+                        TURQ_T[(st, round(sp, 4))] = pitch
+                elif kind == "lapis8":
+                    denim.append((x, y, st))
+                else:
+                    tourm[st].append((x, y, tang[j][0], tang[j][1], sp, KIND_T[kind]))
+        # gap filler: lapis heishi while the dark budget lasts, then turquoise
+        gaps = [f / 2] + [f] * len(STN)
+        g = 0.0
+        lap = LAP_BUDGET[st]
+        for gi, gl in enumerate(gaps):
+            nl = max(1, int(round(gl / 3.0)))
+            if lap >= nl:
+                for q in range(nl):
+                    put(g + gl / nl * (q + 0.5), "lapisH")
+                lap -= nl
+                V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
+            else:
+                nt = max(1, int(round(gl / 2.4)))
+                for q in range(nt):
+                    put(g + gl / nt * (q + 0.5), "turq", gl / nt)
+                V4_USED["turq"] = V4_USED.get("turq", 0) + 2 * nt
+            g += gl
+            if gi < len(STN):
+                for k in STN[gi]:
+                    put(g + SZ[k] / 2, k)
+                    V4_USED[k] = V4_USED.get(k, 0) + 2
+                    g += SZ[k]
+        # centre bead at the bottom (one only)
+        sp = H2 - Hh / 2
+        j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
+        tourm[st].append((path[j][0], path[j][1], tang[j][0], tang[j][1], sp, KIND_T[CENTRE[st]]))
+        V4_USED[CENTRE[st]] = V4_USED.get(CENTRE[st], 0) + 1
+    print("v4 bead use (full necklace):", dict(sorted(V4_USED.items())))
 
 allbeads = beads_out + beads_in
 for (x, y, tx, ty, i, _p), strand in allbeads:
@@ -1864,6 +1975,27 @@ for st in (0, 1):
         tseed += 1
         if hidden(x, y):
             continue
+        if len(t) > 5 and t[5] in ("v4_opal10", "v4_opal9"):
+            spr = milky_opal_sprite(tseed, 10.0 if t[5] == "v4_opal10" else 9.0)
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if len(t) > 5 and t[5] == "v4_gglass":
+            spr = abglass_sprite(tseed, base_rgb=(150, 212, 170), deep_rgb=(70, 160, 110))
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if len(t) > 5 and t[5] == "v4_olive":
+            spr = tourmaline_sprite(tseed + 500, (124, 116, 64))
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if len(t) > 5 and t[5] == "v4_rbic":
+            draw_bicone(layer, x, y, t[2], t[3], tseed)
+            continue
+        if len(t) > 5 and t[5] == "v4_sapph":
+            draw_bicone(layer, x, y, t[2], t[3], tseed, base_rgb=(20, 110, 215), light_rgb=(120, 190, 255))
+            continue
         if len(t) > 5 and t[5] == "peridot":
             draw_peridot(layer, x, y, t[2], t[3], tseed)
             continue
@@ -2003,7 +2135,7 @@ SAPPH = set()
 for _sd in (-1, 1):
     _ds = sorted([k for k, d_ in enumerate(denim) if (d_[0] < 0) == (_sd < 0)],
                  key=lambda k: denim[k][1])
-    for _j in range(0, len(_ds), 2):
+    for _j in (range(0, len(_ds), 2) if not V4 else []):
         if len([k for k in SAPPH if (denim[k][0] < 0) == (_sd < 0)]) < 4:
             SAPPH.add(_ds[_j])
 print("sapphire bicones:", len(SAPPH))
