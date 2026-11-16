@@ -1023,6 +1023,7 @@ if V4:
         BANDS[4] = (_bl, BANDS[4][1])
         _gi = list(BANDS[5][1]); assert _gi[2:4] == ["diop", "diop"]
         _gi[2:4] = ["gglass"]                       # inner green: 8 mm green glass beside the outer one, for two diopside
+        _gi[2:4] = ["diop", "gglass"]               # chrome diopside on top of the green glass
         BANDS[5] = (BANDS[5][0], _gi)
         BANDS[8] = tuple(b[:1] + ["diop"] + b[1:] for b in BANDS[8])   # chrome diopside between the lapis and the top white opal
         assert all(b[2] == "opal10" for b in BANDS[8])
