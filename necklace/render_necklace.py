@@ -997,7 +997,7 @@ if V4:
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
         # orange spiny oyster border between the lapis frame and the green beads, both strands
-        BANDS[5] = tuple(b[:1] + ["orange"] + b[1:-1] + ["orange"] + b[-1:] for b in BANDS[5])
+        BANDS[5] = tuple(["red", "orange"] + b[1:-1] + ["orange", "red"] for b in BANDS[5])   # lapis frame swapped for red spiny oyster
         # rose bicone moves from the top of the yellow band to the bottom of the brown mookaite band;
         # in the yellow band it is replaced by two orange spiny oyster heishi; outer brown band loses one mookaite
         def _swap_bic(seq):
