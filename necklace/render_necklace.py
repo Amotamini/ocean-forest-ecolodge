@@ -964,7 +964,7 @@ if V4:
         _o = list(BANDS[3][0]); _o[_o.index("yellow") + 1] = "mookyel"
         _o[_o.index("tan")] = "rbic"                        # top tan tourmaline -> rose glass bicone
         _i = list(BANDS[3][1]); _i[len(_i) - 1 - _i[::-1].index("yellow")] = "mookyel"   # lower yellow glass, inner
-        BANDS[3] = (_o, _i)
+        BANDS[3] = (_o + ["redglass", "red", "orange", "orange"], _i + ["redglass", "red", "orange", "orange"])
         # red-orange band: orange spondylus groups -> mookaite, going out from the maroon centre: red then orange;
         # one red spondylus disc dropped at each end to make room
         def _mookband(seq):
@@ -1070,13 +1070,16 @@ if V4:
             last = Hs - (st0[-1] + w0[-1])
             widths = [sum(SZ[k] for k in stn) for stn in STN]
             first = Hs - sum(widths) - sum(mids) - last
-            print(f"v5 strand {st}: top gap {first:.1f} mm")
+            if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
+                mids[0] -= 3.0 - first
+                first = 3.0
+            print(f"v5 strand {st}: top gap {first:.1f} mm, behind-neck lapis run {mids[0]:.1f} mm")
             gaps = [first] + mids + [last]
         g = 0.0
         lap = LAP_BUDGET[st]
         for gi, gl in enumerate(gaps):
             nl = max(1, int(round(gl / 3.0)))
-            if lap >= nl:
+            if (lap >= nl and not V5) or (V5 and gi <= (1 if st == 0 else 2)):   # v5: same lapis runs as before
                 for q in range(nl):
                     put(g + gl / nl * (q + 0.5), "lapisH")
                 lap -= nl
