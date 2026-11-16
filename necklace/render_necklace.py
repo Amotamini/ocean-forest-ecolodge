@@ -439,7 +439,7 @@ ROSE_D = 9.0
 PER_D, PER_L = 8.0, 4.0              # chrome diopside rondelle: 8 mm across, 4 mm along the strand
 def tsize(t):
     k = t[5] if len(t) > 5 else "tour"
-    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
+    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_mookred": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
 tourm = {0: [], 1: []}
 for n in range(0, 42):
     s_o = (n + 0.5) * INCH - HIDDEN_OUT / 2
@@ -931,7 +931,7 @@ if V4:
     SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
           "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
           "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
-          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0}
+          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0}
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
         return [flank] * a + core + [flank] * b
@@ -954,6 +954,10 @@ if V4:
                       for i, b in enumerate(BANDS_RAW)]
         # room for the new borders comes from the top green band: fewer chrome diopside there
         BANDS[1] = (F(["olive"], "diop", 3), F(["gtourm"], "diop", 3))
+        # only 10 green jade: inner green band keeps 3 jade, the lost jade's space goes to 2 more chrome diopside
+        BANDS[5] = (BANDS[5][0], F(["jade", "jade", "jade"], "diop", 11))
+        # 8 mm maroon mookaite replaces the 10 mm apple jasper
+        BANDS[6] = tuple([("mookred" if k == "ajas" else k) for k in b] for b in BANDS[6])
         # frame the green, red-orange and white bands with one lapis heishi at each end, both strands
         for _bi in (2, 3, 5, 6, 7, 8):   # red, yellow, green, red-orange, white, pink
             BANDS[_bi] = tuple(["lapisH"] + list(b) + ["lapisH"] for b in BANDS[_bi])
@@ -992,7 +996,7 @@ if V4:
     LAP_BUDGET = {0: 15, 1: 15}                # lapis heishi used as dark filler, from the top down (per side)
     KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
-              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t",
+              "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred",
               "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "blueglass": "conch8", "focal": "wjade"}
     HEI = {"red": 2, "orange": 3, "redglass": 5}
     beads_out, beads_in = [], []
@@ -1707,7 +1711,7 @@ def conch_sprite(seed, diam=8.0):
 MOOK_SETS = [((92, 62, 44), (112, 78, 52)), ((84, 56, 42), (104, 70, 50)), ((98, 66, 46), (82, 54, 40)),
              ((88, 60, 46), (110, 74, 54))]   # dark matte brown mookaite only
 
-def mook_sprite(seed, diam=8.0):
+def mook_sprite(seed, diam=8.0, maroon=False):
     """8 mm matte mookaite jasper: mustard, burgundy, plum and cream, softly mottled, frosted finish."""
     rng = np.random.default_rng(seed + 19000)
     n = int(diam * S)
@@ -1717,6 +1721,8 @@ def mook_sprite(seed, diam=8.0):
     rr = np.hypot(nx_, ny_)
     z = np.sqrt(np.clip(1 - rr ** 2, 0, 1))
     a, b = MOOK_SETS[rng.integers(len(MOOK_SETS))]
+    if maroon:                               # matte maroon / reddish-plum mookaite
+        a, b = [((122, 42, 40), (140, 58, 50)), ((104, 36, 44), (126, 48, 52)), ((132, 50, 44), (110, 40, 46))][rng.integers(3)]
     m = np.array(Image.fromarray((rng.random((4, 4)) * 255).astype(np.uint8)).resize((n, n), Image.BICUBIC), float) / 255
     m = np.clip((m - 0.35) * 1.8, 0, 1)[..., None]
     base = np.array(a) * (1 - m) + np.array(b) * m
@@ -2026,6 +2032,11 @@ for st in (0, 1):
             continue
         if len(t) > 5 and t[5] in ("v4_opal10", "v4_opal9"):
             spr = milky_opal_sprite(tseed, 10.0 if t[5] == "v4_opal10" else 9.0)
+            px, py = P(x, y)
+            layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
+            continue
+        if len(t) > 5 and t[5] == "v5_mookred":
+            spr = mook_sprite(tseed, maroon=True)   # 8 mm matte maroon mookaite
             px, py = P(x, y)
             layer.paste(spr, (int(px - spr.width / 2), int(py - spr.height / 2)), spr)
             continue
