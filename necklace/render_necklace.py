@@ -955,7 +955,7 @@ if V4:
         # room for the new borders comes from the top green band: fewer chrome diopside there
         BANDS[1] = (F(["olive"], "diop", 3), F(["gtourm"], "diop", 3))
         # only 10 green jade: inner green band keeps 3 jade, the lost jade's space goes to 2 more chrome diopside
-        BANDS[5] = (BANDS[5][0], F(["jade", "jade", "jade"], "diop", 11))
+        BANDS[5] = (F(["jade", "gglass", "jade"], "diop", 6), F(["jade", "jade", "jade"], "diop", 8))   # outer: one fewer each end; inner: 4 above, 4 below
         # 8 mm maroon mookaite replaces the 10 mm apple jasper
         BANDS[6] = tuple([("mookred" if k == "ajas" else k) for k in b] for b in BANDS[6])
         # sapphire glass bicones -> 7 mm blue (indicolite) tourmaline
