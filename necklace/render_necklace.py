@@ -989,7 +989,7 @@ if V4:
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # rose quartz band where the whites were (per side: 3 x 9 mm + 2 x 11 mm, so 6 + 4 in all)
-        BANDS[7] = (["diop", "rq9", "rq11", "rq9", "diop"], ["diop", "rq11", "rq9", "diop"])   # chrome diopside borders
+        BANDS[7] = (["diop", "rq9", "rq9", "rq11", "diop"], ["diop", "rq9", "rq11", "diop"])   # 11 mm at the bottom of the rose band
         # whites (10 mm) move to the bottom band next to the focal; inner strand's centre bead is a white too
         BANDS[8] = (["opal10", "redglass", "pink", "rbic", "pink", "redglass", "opal10"],
                     ["opal10", "redglass", "pink", "pink", "redglass"])
