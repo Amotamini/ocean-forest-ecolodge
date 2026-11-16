@@ -1020,7 +1020,7 @@ if V4:
         BANDS[6] = (_bo, _bi)
         _bl = list(BANDS[4][0]); assert _bl[0] == _bl[-1] == "lapisH"
         _bl[0] = _bl[-1] = "red"                    # outer blue band: end lapis swapped for red spiny oyster borders
-        BANDS[4] = (_bl, BANDS[4][1])
+        BANDS[4] = (_bl, ["red"] + list(BANDS[4][1]) + ["red"])   # inner blue band: red spiny oyster added at both ends
         _gi = list(BANDS[5][1]); assert _gi[2:4] == ["diop", "diop"]
         _gi[2:4] = ["gglass"]                       # inner green: 8 mm green glass beside the outer one, for two diopside
         _gi[2:4] = ["diop", "gglass"]               # chrome diopside on top of the green glass
@@ -1137,6 +1137,8 @@ if V4:
                 widths[5] -= SZ["diop"]             # diopside under the mookaite band grows it downward...
                 widths[6] += SZ["orange"]           # ...into the room left by the orange removed from the top of the yellow band
                 widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
+                if st == 1:
+                    widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
@@ -1206,6 +1208,9 @@ if V4:
                 widths[6] -= SZ["orange"]
                 widths[8] += SZ["diop"]
                 _need = 6.0 + SZ["diop"] - SZ["orange"] + SZ["diop"]
+                if st == 1:
+                    widths[3] += 2 * SZ["red"]
+                    _need += 2 * SZ["red"]
                 for _gi, _fl in ((1, 3.0), (0, 1.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
                     _take = min(_need, max(0.0, gaps[_gi] - _fl)); gaps[_gi] -= _take; _need -= _take
                 print(f"v5 strand {st} neck gaps after shift", [round(float(x), 1) for x in gaps[:4]], "unplaced", round(_need, 2))
