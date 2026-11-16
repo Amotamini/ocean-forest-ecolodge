@@ -964,7 +964,13 @@ if V4:
         _o = list(BANDS[3][0]); _o[_o.index("yellow") + 1] = "mookyel"
         _o[_o.index("tan")] = "rbic"                        # top tan tourmaline -> rose glass bicone
         _i = list(BANDS[3][1]); _i[len(_i) - 1 - _i[::-1].index("yellow")] = "mookyel"   # lower yellow glass, inner
-        BANDS[3] = (_o + ["red", "red", "orange", "orange"], _i + ["red", "red", "orange", "orange"])   # upper red glass -> red spiny oyster
+        def _ysw(seq):                       # brighter yellow glass moves below the mookaite
+            seq = list(seq); iy, im = seq.index("yellow"), seq.index("mookyel")
+            if iy < im:
+                seq[iy], seq[im] = seq[im], seq[iy]
+            return seq
+        _o, _i = _ysw(_o), _ysw(_i)
+        BANDS[3] = (_o + ["redglass", "orange", "orange"], _i + ["redglass", "orange", "orange"])   # one red glass under the yellow
         BANDS = [tuple([("opal8" if k in ("opal10", "opal9") else k) for k in x] for x in b) for b in BANDS]   # 8 mm white opal
         BANDS[4] = (list(BANDS[4][0]) + ["lapisH"],                                      # 1 lapis below the outer blue beads
                     ["lapisH", "lapisH", "lapisH"] + list(BANDS[4][1]))   # 3 lapis above the inner blue glass
