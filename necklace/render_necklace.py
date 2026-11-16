@@ -1036,7 +1036,8 @@ if V4:
     barrels = {0: [], 1: []}
     denim = []
     V4_USED = {}
-    for st, STN in ((0, OUTER), (1, INNER)):
+    V5_CEN = {}
+    for st, STN in (((1, INNER), (0, OUTER)) if V5 else ((0, OUTER), (1, INNER))):
         path, ss = (outer, s_out) if st == 0 else (inner, s_in)
         Hh = HIDDEN_OUT if st == 0 else HIDDEN_IN
         Lf = ss[-1] + Hh
@@ -1095,8 +1096,23 @@ if V4:
             if first < 3.0:                     # take the shortfall from the lapis run behind the neck, not turquoise
                 mids[0] -= 3.0 - first
                 first = 3.0
-            print(f"v5 strand {st}: top gap {first:.1f} mm, behind-neck lapis run {mids[0]:.1f} mm")
             gaps = [first] + mids + [last]
+            if st == 1:                         # remember where the inner bands sit (fraction of the strand)
+                _acc, _c = 0.0, []
+                for _gi in range(len(widths)):
+                    _acc += gaps[_gi]; _c.append((_acc + widths[_gi] / 2) / Hs); _acc += widths[_gi]
+                V5_CEN[1] = _c
+            else:                               # outer bands placed to line up with their inner partners
+                _cur, _a = [], 0.0
+                for _gi in range(len(widths)):
+                    _a += gaps[_gi]; _cur.append(_a); _a += widths[_gi]
+                _st = list(_cur)
+                for i in (3, 4, 5):                 # only the blue, green and brown bands move down to line up
+                    _st[i] = V5_CEN[1][i] * Hs - widths[i] / 2
+                gaps = [_st[0]] + [_st[i + 1] - (_st[i] + widths[i]) for i in range(len(widths) - 1)] + \
+                       [Hs - (_st[-1] + widths[-1])]
+                first, mids = gaps[0], gaps[1:-1]
+            print(f"v5 strand {st}: gaps {[round(float(x), 1) for x in gaps]}")
         g = 0.0
         lap = LAP_BUDGET[st]
         for gi, gl in enumerate(gaps):
