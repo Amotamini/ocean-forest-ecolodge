@@ -1087,6 +1087,9 @@ if V4:
         def _conch(seq):                            # 7 x 2 mm white conch between the lapis and the green under the rose bicone
             seq = list(seq); assert seq[-3:] == ["rbic", "lapisH", "diop"], seq; return seq[:-1] + ["conch", "diop"]
         BANDS[6] = tuple(_conch(b) for b in BANDS[6])
+        def _conch2(seq):                           # white conch between the green and the lapis at the top of the yellow
+            seq = list(seq); assert seq[:2] == ["diop", "lapisH"], seq; return ["diop", "conch"] + seq[1:]
+        BANDS[3] = tuple(_conch2(b) for b in BANDS[3])
         # every 8 mm red glass rondelle becomes a red spiny oyster rondelle
         BANDS = [tuple([("red" if k == "redglass" else k) for k in x] for x in bb) for bb in BANDS]
         def _diop_up(seq):                          # green diopside moves up, right under the yellow glass
@@ -1118,8 +1121,8 @@ if V4:
         BANDS[6] = tuple(_mook_grad(b) for b in BANDS[6])
         _bo2 = list(BANDS[6][0]); _bo2.remove("mookorg")   # outer: lightest mookaite removed, two left above the bicone
         BANDS[6] = (_bo2, BANDS[6][1])
-        _yi3 = list(BANDS[3][1]); assert _yi3[2:5] == ["orange"] * 3, _yi3
-        del _yi3[2]                                  # inner yellow: one orange fewer above the yellow rounds
+        _yi3 = list(BANDS[3][1]); _k3 = _yi3.index("orange"); assert _yi3[_k3:_k3 + 3] == ["orange"] * 3, _yi3
+        del _yi3[_k3]                                  # inner yellow: one orange fewer above the yellow rounds
         BANDS[3] = (BANDS[3][0], _yi3)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
@@ -1258,6 +1261,7 @@ if V4:
                 if st == 1:
                     widths[6] += SZ["orange"]       # inner yellow band lost an orange: laid out as before
                 widths[5] -= SZ["conch"]            # white conch under the rose bicone: taken from the turquoise below
+                widths[6] -= SZ["conch"]            # white conch at the top of the yellow: same run
                 if st == 0:
                     widths[5] += SZ["mookorg"]      # outer mookaite band lost a round: laid out as before
                 if st == 0:
@@ -1338,6 +1342,8 @@ if V4:
                     widths[5] -= SZ["mookorg"]
                     gaps[5] += SZ["mookorg"]            # bicone stays put; more turquoise in the run above the mookaite
                 widths[5] += SZ["conch"]
+                gaps[6] -= SZ["conch"]
+                widths[6] += SZ["conch"]
                 gaps[6] -= SZ["conch"]
                 if st == 1:
                     widths[6] -= SZ["orange"]
