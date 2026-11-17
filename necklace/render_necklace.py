@@ -1016,7 +1016,7 @@ if V4:
         for _s in (_bo, _bi):                       # lapis frame above the mookaite swapped for orange spiny oyster
             assert _s[0] == "lapisH" and _s[-1] == "lapisH"
             _s[0] = "orange"                        # top only; the lapis under the rose bicone stays
-        _bo.append("diop"); _bi.append("diop")      # one chrome diopside under the lapis below the rose bicone
+        _bo.insert(len(_bo) - 1, "diop"); _bi.insert(len(_bi) - 1, "diop")   # chrome diopside right under the rose bicone, lapis below it
         BANDS[6] = (_bo, _bi)
         _bl = list(BANDS[4][0]); assert _bl[0] == _bl[-1] == "lapisH"
         _bl[0] = _bl[-1] = "red"                    # outer blue band: end lapis swapped for red spiny oyster borders
