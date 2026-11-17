@@ -1088,7 +1088,9 @@ if V4:
         BANDS[8] = tuple(_go_start(b) for b in BANDS[8])
         _go = list(BANDS[5][0]); _k = len(_go) - 1 - _go[::-1].index("jade")
         assert _go[_k + 1:_k + 3] == ["diop", "diop"]; del _go[_k + 1:_k + 3]   # outer green: 2 diopside fewer under the jade
-        BANDS[5] = (_go, BANDS[5][1])
+        _gi2 = list(BANDS[5][1]); _k = _gi2.index("gglass"); assert _gi2[_k + 1:_k + 4] == ["jade"] * 3
+        _gi2[_k:_k + 4] = ["jade", "jade", "gglass", "jade"]   # inner: green glass moved down between the jades
+        BANDS[5] = (_go, _gi2)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
