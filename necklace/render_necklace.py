@@ -1415,7 +1415,11 @@ if V4:
                 _n7 = sum(SZ[k] for k in STN[7]); _n8 = sum(SZ[k] for k in STN[8])
                 _ns7 = _c7 - _n7 / 2; _ns8 = _c8 - _n8 / 2
                 gaps[7] = _ns7 - _prev_end; gaps[8] = _ns8 - (_ns7 + _n7); gaps[9] = _end - (_ns8 + _n8)
-                print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps[6:]])
+                # turquoise between the yellow and the white sections made as long as the other runs on that strand;
+                # the white and rose quartz sections move down, taking it from the run at the centre bottom
+                _tgt = sum(gaps[i] for i in (3, 4, 5, 6, 8)) / 5
+                _d = _tgt - gaps[7]; gaps[7] += _d; gaps[9] -= _d
+                print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
             for gi, gl in enumerate(gaps):
