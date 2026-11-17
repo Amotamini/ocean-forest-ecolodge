@@ -1068,6 +1068,9 @@ if V4:
         for _e, _s in ((7, 8), (6, 3), (3, 7)):     # (3, 7): yellow band bottom / rose band top
             BANDS[_e] = tuple(_sw_end(b) for b in BANDS[_e])
             BANDS[_s] = tuple(_sw_start(b) for b in BANDS[_s])
+        def _y_red_low(seq):                        # 8 mm red glass between the lapis and the green at the bottom
+            seq = list(seq); assert seq[-2:] == ["lapisH", "diop"], seq; return seq[:-1] + ["redglass", "diop"]
+        BANDS[3] = tuple(_y_red_low(b) for b in BANDS[3])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
@@ -1177,8 +1180,8 @@ if V4:
                 widths[6] += SZ["orange"]           # ...into the room left by the orange removed from the top of the yellow band
                 widths[6] -= SZ["diop"] - SZ["orange"]   # yellow band's top diopside (1 mm more than the orange it replaced)
                 widths[6] -= SZ["diop"]             # yellow band's bottom diopside
-                if st == 0:
-                    widths[6] += SZ["redglass"]     # outer yellow band lost its red glass: layout as before
+                if st == 1:
+                    widths[6] -= SZ["redglass"]     # inner yellow band's extra red glass (the outer's replaces its old one)
                 widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
                 widths[3] -= SZ["orange"]           # orange atop the blue band: room from the neck lapis
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
@@ -1262,10 +1265,10 @@ if V4:
                 widths[6] += SZ["diop"]
                 gaps[6] -= SZ["diop"] / 2               # bottom diopside: half from the run above (band stays centred)...
                 gaps[7] -= SZ["diop"] / 2               # ...half from the run below
-                if st == 0:
-                    widths[6] -= SZ["redglass"]
-                    gaps[6] += SZ["redglass"] / 2       # band stays centred: turquoise either side 1.5 mm longer
-                    gaps[7] += SZ["redglass"] / 2
+                if st == 1:
+                    widths[6] += SZ["redglass"]
+                    gaps[6] -= SZ["redglass"] / 2       # inner red glass: half from the run above, half from below
+                    gaps[7] -= SZ["redglass"] / 2
                 widths[8] += SZ["diop"]
                 _need = 6.0 + SZ["diop"] - SZ["orange"] + SZ["diop"]
                 if st == 1:
