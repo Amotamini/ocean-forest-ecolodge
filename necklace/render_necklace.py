@@ -1056,6 +1056,9 @@ if V4:
             seq = list(seq); n = seq.count("orange"); seq = [k for k in seq if k != "orange"]
             assert seq[1] == "diop"; return seq[:2] + ["orange"] * n + seq[2:]
         BANDS[3] = tuple(_orange_up(b) for b in BANDS[3])
+        def _y_red_to_orange(seq):                 # red glass under the yellow glass -> orange spiny oyster
+            seq = list(seq); assert seq.count("redglass") == 1; seq[seq.index("redglass")] = "orange"; return seq
+        BANDS[3] = tuple(_y_red_to_orange(b) for b in BANDS[3])
         # borders of the turquoise runs (white opal / rose quartz, and mookaite bicone / yellow orange):
         # green touches the turquoise, blue lapis touches the coloured beads
         def _sw_end(seq):
