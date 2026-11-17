@@ -1019,6 +1019,8 @@ if V4:
             _s[0] = "orange"                        # top only; the lapis under the rose bicone stays
         _bo.insert(len(_bo) - 1, "diop"); _bi.insert(len(_bi) - 1, "diop")   # chrome diopside right under the rose bicone, lapis below it
         BANDS[6] = (_bo, _bi)
+        assert all(b[-1] == "lapisH" for b in BANDS[2])
+        BANDS[2] = tuple(list(b[:-1]) + ["orange"] for b in BANDS[2])   # top red band: orange instead of lapis at its lower end
         _bl = list(BANDS[4][0]); assert _bl[0] == _bl[-1] == "lapisH"
         _bl[0] = _bl[-1] = "red"                    # outer blue band: end lapis swapped for red spiny oyster borders
         BANDS[4] = (_bl, ["red"] + list(BANDS[4][1]) + ["red"])   # inner blue band: red spiny oyster added at both ends
