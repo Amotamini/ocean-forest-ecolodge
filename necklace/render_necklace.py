@@ -1086,6 +1086,9 @@ if V4:
             seq = list(seq); assert seq[-2:] == ["lapisH", "diop"], seq; seq[-2:] = ["diop", "orange"]; return seq
         BANDS[7] = tuple(_go_end(_go_start(b)) for b in BANDS[7])
         BANDS[8] = tuple(_go_start(b) for b in BANDS[8])
+        _go = list(BANDS[5][0]); _k = len(_go) - 1 - _go[::-1].index("jade")
+        assert _go[_k + 1:_k + 3] == ["diop", "diop"]; del _go[_k + 1:_k + 3]   # outer green: 2 diopside fewer under the jade
+        BANDS[5] = (_go, BANDS[5][1])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
@@ -1211,6 +1214,8 @@ if V4:
                 widths[8] -= V5_EXT2                # bottom band's red + orange: necklace lengthened, band grows downward
                 if st == 1:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
+                if st == 0:
+                    widths[4] += 2 * SZ["diop"]     # outer green lost 2 diopside: laid out as before, top moves down
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
@@ -1276,6 +1281,9 @@ if V4:
                            [Hs - 2 * PER_L_ - (_sx[-1] + widths[-1])]
                 print(f"v5 strand {st} pass gaps", [round(float(x),1) for x in gaps]) if V5_TARGET is not None else None
                 widths[4] += 6.0
+                if st == 0:
+                    widths[4] -= 2 * SZ["diop"]
+                    gaps[4] += 2 * SZ["diop"]           # jades lower; more turquoise in the run above the green
                 widths[5] += SZ["diop"]
                 widths[6] -= SZ["orange"]
                 widths[6] += SZ["diop"] - SZ["orange"]
