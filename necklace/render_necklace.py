@@ -443,7 +443,7 @@ ROSE_D = 9.0
 PER_D, PER_L = 8.0, 4.0              # chrome diopside rondelle: 8 mm across, 4 mm along the strand
 def tsize(t):
     k = t[5] if len(t) > 5 else "tour"
-    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v5_opal8": 8.0, "v5_amet": 8.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_mookred": 8.0, "v5_tblue": 7.0, "v5_mookyel": 8.0, "v5_mookrd": 8.0, "v5_mookorg": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
+    return {"rose": ROSE_D, "rose11": 11.0, "tour_ybright": 7.0, "wjade": (10.5 if V3 else 19.7), "conch12": 12.0, "lapis8": 8.0, "conch8": 8.0, "mook8": 8.0, "abgreen8": 8.0, "yellow8": 8.0, "bicone8": 8.0, "gjade7t": 7.3, "v4_gglass": 8.0, "v4_olive": 7.0, "v4_opal10": 10.0, "v4_opal9": 9.0, "v5_opal8": 8.0, "v5_amet": 8.0, "v4_rbic": 8.0, "v4_sapph": 8.0, "v5_abbic": 8.0, "v5_mookred": 8.0, "v5_tblue": 7.0, "v5_mookyel": 8.0, "v5_mookrd": 8.0, "v5_mookorg": 8.0, "ajas_t": 10.0, "bicone_lime": 8.0, "peridot": PER_L, "peridot2": 2 * PER_L, "peridot3": 3 * PER_L}.get(k, TOUR_D)
 tourm = {0: [], 1: []}
 for n in range(0, 42):
     s_o = (n + 0.5) * INCH - HIDDEN_OUT / 2
@@ -934,7 +934,7 @@ if V4:
     # per side, top -> bottom. Outer colour order: G Y B R W ; inner: G R Y W B. Dark at top, light at bottom.
     SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
           "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
-          "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
+          "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "abbic": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
           "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0, "mookrd": 8.0, "mookorg": 8.0, "opal8": 8.0, "amet": 8.0}
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
@@ -993,7 +993,7 @@ if V4:
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # rose quartz band where the whites were (per side: 3 x 9 mm + 2 x 11 mm, so 6 + 4 in all)
-        BANDS[7] = (["diop", "amet", "rq9", "rq9", "diop"], ["diop", "amet", "rq9", "diop"])     # amethyst on top, 9 mm rose quartz below; no 11 mm
+        BANDS[7] = (["diop", "amet", "rq9", "abbic", "diop"], ["diop", "amet", "rq9", "diop"])   # outer: lower rose quartz -> 8 mm AB crystal bicone     # amethyst on top, 9 mm rose quartz below; no 11 mm
         # whites (10 mm) move to the bottom band next to the focal; inner strand's centre bead is a white too
         BANDS[8] = (["opal10", "redglass", "pink", "rbic", "pink", "redglass", "opal10"],
                     ["opal10", "redglass", "pink", "pink", "redglass"])
@@ -1104,7 +1104,7 @@ if V4:
     KIND_T = {"diop": "peridot", "jade": "gjade7t", "gglass": "v4_gglass", "gtourm": "tour_green", "olive": "v4_olive",
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
               "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel", "mookrd": "v5_mookrd", "mookorg": "v5_mookorg", "opal8": "v5_opal8", "amet": "v5_amet",
-              "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "blueglass": "conch8", "focal": "wjade"}
+              "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "abbic": "v5_abbic", "blueglass": "conch8", "focal": "wjade"}
     HEI = {"red": 2, "orange": 3, "redglass": 5}
     V5_TARGET = None
     V5_EQ = {}
@@ -1179,6 +1179,8 @@ if V4:
                 widths[3] -= SZ["orange"]           # orange atop the blue band: room from the neck lapis
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
                 widths[5] -= V5_EXT3                # red above the mookaite band's bicone: necklace lengthened
+                if st == 0:
+                    widths[7] += SZ["rq9"] - SZ["abbic"]   # AB bicone is 1 mm shorter than the rose quartz: layout as before
                 widths[8] -= V5_EXT2                # bottom band's red + orange: necklace lengthened, band grows downward
                 if st == 1:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
@@ -1267,6 +1269,10 @@ if V4:
                 _need += SZ["orange"]
                 widths[3] += SZ["orange"]
                 widths[8] += V5_EXT2
+                if st == 0:
+                    widths[7] -= SZ["rq9"] - SZ["abbic"]
+                    gaps[7] += (SZ["rq9"] - SZ["abbic"]) / 2   # band stays centred; turquoise either side 0.5 mm longer
+                    gaps[8] += (SZ["rq9"] - SZ["abbic"]) / 2
                 widths[5] += V5_EXT3
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
@@ -2040,7 +2046,7 @@ def yellow_sprite(seed, diam=8.0):
     alpha = np.clip((1 - rr) * n / 2, 0, 1) * 255
     return Image.fromarray(np.dstack([np.clip(col, 0, 255), alpha]).astype(np.uint8), "RGBA")
 
-def draw_bicone(img, x, y, tx, ty, seed, D=8.0, base_rgb=(232, 72, 140), light_rgb=(255, 170, 205)):
+def draw_bicone(img, x, y, tx, ty, seed, D=8.0, base_rgb=(232, 72, 140), light_rgb=(255, 170, 205), ab=False):
     """8 mm rose crystal bicone: two cones tip-to-tip along the strand, faceted, transparent rose pink."""
     rng = np.random.default_rng(seed + 31000)
     nx, ny = ty, -tx
@@ -2060,6 +2066,11 @@ def draw_bicone(img, x, y, tx, ty, seed, D=8.0, base_rgb=(232, 72, 140), light_r
     band = np.floor((t + 1) * 3).astype(int) + 7 * (u > 0)
     fval = rng.uniform(0.7, 1.25, 14)[np.clip(band, 0, 13)]
     base = np.array(base_rgb) * fval[..., None]
+    if ab:                                    # clear crystal, aurora borealis: each facet flashes a different pastel hue
+        _pal = np.array([(236, 238, 242), (250, 196, 226), (252, 228, 160), (186, 240, 196), (170, 226, 250),
+                         (206, 188, 250), (244, 246, 250), (160, 200, 255), (255, 214, 190), (220, 250, 236)], float)
+        _pick = rng.integers(0, len(_pal), 14)
+        base = _pal[_pick][np.clip(band, 0, 13)] * fval[..., None]
     light = np.array(light_rgb)
     sparkle = (rng.random(14)[np.clip(band, 0, 13)] > 0.7)[..., None]
     col = np.where(sparkle, base * 0.4 + light * 0.6, base)
@@ -2331,6 +2342,9 @@ for st in (0, 1):
             continue
         if len(t) > 5 and t[5] == "v4_rbic":
             draw_bicone(layer, x, y, t[2], t[3], tseed)
+            continue
+        if len(t) > 5 and t[5] == "v5_abbic":
+            draw_bicone(layer, x, y, t[2], t[3], tseed, base_rgb=(236, 238, 242), light_rgb=(255, 255, 255), ab=True)
             continue
         if len(t) > 5 and t[5] == "v4_sapph":
             draw_bicone(layer, x, y, t[2], t[3], tseed, base_rgb=(20, 110, 215), light_rgb=(120, 190, 255))
