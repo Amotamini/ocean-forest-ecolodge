@@ -1481,6 +1481,9 @@ if V4:
                 STN[7][:3] = ["diop", "conch", "orange"]       # top of the white section: green against the turquoise, orange against the white
                 assert STN[6][-3:] == ["diop", "conch", "orange"], STN[6]
                 STN[6][-3:] = ["orange", "conch", "diop"]      # under the yellow: orange against the yellow, green against the turquoise
+                _g = list(STN[4])                              # green section: the diopside next to the orange moves out to the turquoise
+                assert _g[:4] == ["conch", "red", "orange", "diop"] and _g[-4:] == ["diop", "orange", "red", "conch"], _g
+                STN[4] = ["diop", "conch", "red", "orange"] + _g[4:-4] + ["orange", "red", "conch", "diop"]
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
