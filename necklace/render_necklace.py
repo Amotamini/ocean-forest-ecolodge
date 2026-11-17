@@ -1447,6 +1447,7 @@ if V4:
                 STN[7], STN[8] = _cw(STN[7]), _cw(STN[8])   # whites added: necklace lengthened, turquoise runs unchanged
                 _k = STN[7].index("abbic"); assert STN[7][_k - 1] == "red"
                 del STN[7][_k - 1]                          # red above the AB bicone removed: necklace shorter, turquoise unchanged
+                assert STN[8][-1] == "orange"; STN[8][-1] = "red"   # orange nearest the centre bead -> red spiny oyster
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
