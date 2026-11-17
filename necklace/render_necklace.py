@@ -20,7 +20,8 @@ V5_EXT3 = 0.0                            # (red above the bicone removed again) 
 V5_EXT4 = 7.0 if V5 else 0.0             # v5: a pink tourmaline moves from the outer to the inner bottom band (+7 mm per side)
 V5_EXT5 = 5 * 2.0 if V5 else 0.0         # v5: white conch at the 5 lower orange/green borders per strand side (+10 mm per side)
 V5_EXT6 = -3.0 - 1.0 if V5 else 0.0      # (and -1 mm: lapis replaces the 4 mm diopside by the centre-side conch)            # v5: red above the white-section AB bicones removed (-3 mm per side)
-C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4 + V5_EXT5 + V5_EXT6), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
+V5_EXT7 = 2.0 if V5 else 0.0             # v5: white conch beside the centre diopside (+2 mm per side)
+C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4 + V5_EXT5 + V5_EXT6 + V5_EXT7), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
 
@@ -1213,13 +1214,13 @@ if V4:
             gaps = [f / 2] + [f] * len(STN)
             if V5:
                 # align band centres by height: use common fractions computed from the widest of each band pair
-                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5 - V5_EXT6   # layout at the old length
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5 - V5_EXT6 - V5_EXT7   # layout at the old length
                 Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
                 gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
                 cen, acc = [], gapc / 2
                 for w in Wmax:
                     cen.append((acc + w / 2) / Hin); acc += w + gapc
-                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5 - V5_EXT6                # layout at the old length; the extension goes in below the blue band
+                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5 - V5_EXT6 - V5_EXT7                # layout at the old length; the extension goes in below the blue band
                 # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
                 Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
                 gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
@@ -1482,6 +1483,8 @@ if V4:
                 put(H2 - cz - PER_L_ / 2, "diop")
                 put(H2 - cz - 1.5 * PER_L_, "diop")
                 V4_USED["diop"] = V4_USED.get("diop", 0) + 4
+                put(H2 - cz - 2 * PER_L_ - SZ["conch"] / 2, "conch")   # white conch where the green meets the turquoise
+                V4_USED["conch"] = V4_USED.get("conch", 0) + 2
             # centre bead at the bottom (one only)
             sp = H2 - Hh / 2
             j = min(int(np.searchsorted(ss, sp)), len(path) - 1)
