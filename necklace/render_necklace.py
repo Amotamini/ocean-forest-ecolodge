@@ -17,7 +17,8 @@ EXTRAS = False   # False = base design: heishi blocks + white barrels only (jasp
 V5_EXT = 3.0 + 3 * 2.4 if V5 else 0.0   # v5: orange under the blue band + 3 more turquoise heishi below it, per side
 V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass becomes red + orange spiny oyster (+3 mm per side)
 V5_EXT3 = 0.0                            # (red above the bicone removed again)             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
-C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
+V5_EXT4 = 7.0 if V5 else 0.0             # v5: a pink tourmaline moves from the outer to the inner bottom band (+7 mm per side)
+C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
 
@@ -1045,6 +1046,9 @@ if V4:
         _bb.insert(_bb.index("redglass"), "redglass")   # inner: two red glass side by side under the white opal
         _bo8 = list(BANDS[8][0]); _bo8.remove("rbic")                  # outer bottom: rose bicone moves to the inner strand
         _k = _bb.index("pink"); assert _bb[_k + 1] == "pink"; _bb.insert(_k + 1, "rbic")   # inner: between the two pinks
+        _bo8.remove("pink")                                             # one pink tourmaline from the outer strand...
+        _k = _bb.index("rbic"); assert _bb[_k - 1] == "pink" and _bb[_k + 1] == "pink"
+        _bb[_k - 1:_k + 2] = ["rbic", "pink", "pink", "pink"]           # ...to the inner: rose bicone, then three tourmalines
         BANDS[8] = (_bo8, _bb)
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
@@ -1194,13 +1198,13 @@ if V4:
             gaps = [f / 2] + [f] * len(STN)
             if V5:
                 # align band centres by height: use common fractions computed from the widest of each band pair
-                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3   # layout at the old length
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4   # layout at the old length
                 Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
                 gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
                 cen, acc = [], gapc / 2
                 for w in Wmax:
                     cen.append((acc + w / 2) / Hin); acc += w + gapc
-                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3                # layout at the old length; the extension goes in below the blue band
+                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4                # layout at the old length; the extension goes in below the blue band
                 # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
                 Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
                 gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
@@ -1225,6 +1229,7 @@ if V4:
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
                 widths[5] -= V5_EXT3                # red above the mookaite band's bicone: necklace lengthened
                 widths[8] += SZ["rbic"] if st == 0 else -SZ["rbic"]   # bottom rose bicone moved outer -> inner: layout as before
+                widths[8] += SZ["pink"] if st == 0 else -SZ["pink"]   # and a pink tourmaline
                 if st == 1:
                     widths[8] -= SZ["redglass"]     # inner bottom band's second red glass
                 if st == 1:
@@ -1362,6 +1367,10 @@ if V4:
                 widths[8] -= _sg * SZ["rbic"]
                 gaps[8] -= _sg * SZ["rbic"] / 2         # bottom band stays centred: outer turquoise either side 4 mm longer,
                 gaps[9] -= _sg * SZ["rbic"] / 2         # inner 4 mm shorter
+                widths[8] -= _sg * SZ["pink"]
+                if st == 0:
+                    gaps[8] += SZ["pink"]               # outer: lost tourmaline made up with turquoise above the white opal
+                    gaps[9] += V5_EXT4                  # (necklace 7 mm longer per side: outer's share goes toward the centre)
                 widths[5] += V5_EXT3
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
