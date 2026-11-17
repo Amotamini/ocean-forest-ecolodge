@@ -19,7 +19,7 @@ V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass be
 V5_EXT3 = 0.0                            # (red above the bicone removed again)             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
 V5_EXT4 = 7.0 if V5 else 0.0             # v5: a pink tourmaline moves from the outer to the inner bottom band (+7 mm per side)
 V5_EXT5 = 5 * 2.0 if V5 else 0.0         # v5: white conch at the 5 lower orange/green borders per strand side (+10 mm per side)
-V5_EXT6 = -3.0 - 1.0 - 1.0 if V5 else 0.0   # (and -1 mm: lapis replaces the diopside above the amethyst)      # (and -1 mm: lapis replaces the 4 mm diopside by the centre-side conch)            # v5: red above the white-section AB bicones removed (-3 mm per side)
+V5_EXT6 = -3.0 - 1.0 if V5 else 0.0      # (and -1 mm: lapis replaces the 4 mm diopside by the centre-side conch)      # (and -1 mm: lapis replaces the 4 mm diopside by the centre-side conch)            # v5: red above the white-section AB bicones removed (-3 mm per side)
 V5_EXT7 = 2.0 if V5 else 0.0             # v5: white conch beside the centre diopside (+2 mm per side)
 V5_EXT8 = 3 * 2.0 if V5 else 0.0         # v5: white conch outside the oranges that touch turquoise, top red + blue bands (+6 mm per side)
 V5_EXT9 = 3 * 2.0 if V5 else 0.0         # v5: white conch between red and turquoise, green and mookaite bands (+6 mm per side)
@@ -1474,7 +1474,7 @@ if V4:
                 assert STN[7][-1] == "orange" and STN[8][0] == "orange"
                 STN[7][-1] = STN[8][0] = "red"                 # turquoise run between white and rose sections: red borders
                 assert STN[8][1:4] == ["conch", "diop", "amet"], STN[8]
-                STN[8][2] = "lapisH"                           # green above the amethyst / rose quartz -> blue lapis
+                STN[8][0:3] = ["diop", "conch", "red"]         # top of the rose section: green against the turquoise, red against the amethyst
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
