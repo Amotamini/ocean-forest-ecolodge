@@ -993,7 +993,7 @@ if V4:
         BANDS[6] = (["mookorg", "mookrd", "mookred", "mookrd"],                             # brown/red, one bead fewer
                     ["redglass", "mookrd", "mookred", "mookrd", "redglass"])                 # brown/red, one bead fewer
         # rose quartz band where the whites were (per side: 3 x 9 mm + 2 x 11 mm, so 6 + 4 in all)
-        BANDS[7] = (["diop", "amet", "rq9", "abbic", "diop"], ["diop", "amet", "rq9", "diop"])   # outer: lower rose quartz -> 8 mm AB crystal bicone     # amethyst on top, 9 mm rose quartz below; no 11 mm
+        BANDS[7] = (["diop", "amet", "rq9", "diop"], ["diop", "amet", "rq9", "abbic", "diop"])   # swapped: AB bicone arrangement on the inner strand   # outer: lower rose quartz -> 8 mm AB crystal bicone     # amethyst on top, 9 mm rose quartz below; no 11 mm
         # whites (10 mm) move to the bottom band next to the focal; inner strand's centre bead is a white too
         BANDS[8] = (["opal10", "redglass", "pink", "rbic", "pink", "redglass", "opal10"],
                     ["opal10", "redglass", "pink", "pink", "redglass"])
@@ -1227,7 +1227,9 @@ if V4:
                 if st == 1:
                     widths[8] -= SZ["abbic"]        # inner bottom band's AB bicone grows the band toward the centre
                 if st == 0:
-                    widths[7] += SZ["rq9"] - SZ["abbic"]   # AB bicone is 1 mm shorter than the rose quartz: layout as before
+                    widths[7] += SZ["rq9"]          # outer rose band now 2 rounds (was amethyst, rose quartz, AB): layout as before
+                if st == 1:
+                    widths[7] -= SZ["abbic"]        # inner rose band gains the AB bicone
                 widths[8] -= V5_EXT2                # bottom band's red + orange: necklace lengthened, band grows downward
                 if st == 1:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
@@ -1339,9 +1341,13 @@ if V4:
                 widths[3] += SZ["orange"]
                 widths[8] += V5_EXT2
                 if st == 0:
-                    widths[7] -= SZ["rq9"] - SZ["abbic"]
-                    gaps[7] += (SZ["rq9"] - SZ["abbic"]) / 2   # band stays centred; turquoise either side 0.5 mm longer
-                    gaps[8] += (SZ["rq9"] - SZ["abbic"]) / 2
+                    widths[7] -= SZ["rq9"]
+                    gaps[7] += SZ["rq9"] / 2            # outer band stays centred; turquoise either side 4.5 mm longer
+                    gaps[8] += SZ["rq9"] / 2
+                if st == 1:
+                    widths[7] += SZ["abbic"]
+                    gaps[7] -= SZ["abbic"] / 2          # inner band stays centred; turquoise either side 4 mm shorter
+                    gaps[8] -= SZ["abbic"] / 2
                 if st == 1:
                     widths[8] += SZ["abbic"]
                     gaps[9] -= SZ["abbic"]              # ...taken from the turquoise run below it, toward the centre
