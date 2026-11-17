@@ -1053,6 +1053,8 @@ if V4:
         assert _bo8[2] == "opal10", _bo8
         _bo8[2] = "rbic"                                                # outer: the white opal further out -> rose bicone
         assert _bo8[-2:] == ["opal10", "lapisH"]; _bo8[-2] = "abbic"   # outer: white opal nearest the centre -> AB crystal bicone
+        _bo8 = [("opal8" if k == "rbic" else k) for k in _bo8]            # bottom rose bicones and the inner 10 mm opal
+        _bb = [("opal8" if k in ("rbic", "opal10") else k) for k in _bb]  # -> 8 mm white rounds
         BANDS[8] = (_bo8, _bb)
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
@@ -1236,6 +1238,7 @@ if V4:
                 widths[8] += SZ["pink"] if st == 0 else -SZ["pink"]   # and a pink tourmaline
                 if st == 1:
                     widths[8] += 2 * SZ["pink"]     # inner lost two tourmalines: laid out as before
+                    widths[8] += SZ["opal10"] - SZ["opal8"]   # inner 10 mm opal -> 8 mm white round
                 if st == 0:
                     widths[8] += 2 * (SZ["opal10"] - SZ["abbic"])   # outer: both opals replaced by 8 mm bicones
                 if st == 1:
@@ -1382,6 +1385,8 @@ if V4:
                 if st == 1:
                     widths[8] -= 2 * SZ["pink"]
                     gaps[9] += 2 * SZ["pink"]           # more turquoise at the centre bottom of the inner strand
+                    widths[8] -= SZ["opal10"] - SZ["opal8"]
+                    gaps[8] += SZ["opal10"] - SZ["opal8"]   # ...2 mm to the turquoise just above it
                 if st == 0:
                     widths[8] -= SZ["opal10"] - SZ["abbic"]
                     gaps[8] += SZ["opal10"] - SZ["abbic"]   # ...2 mm to the turquoise above the band
