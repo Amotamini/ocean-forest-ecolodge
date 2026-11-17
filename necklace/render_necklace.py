@@ -1027,6 +1027,7 @@ if V4:
         BANDS[2] = tuple(list(b[:-1]) + ["orange"] for b in BANDS[2])   # top red band: orange instead of lapis at its lower end
         _bl = list(BANDS[4][0]); assert _bl[0] == _bl[-1] == "lapisH"
         _bl[0] = _bl[-1] = "red"                    # outer blue band: end lapis swapped for red spiny oyster borders
+        _k = len(_bl) - 1 - _bl[::-1].index("lapis8"); _bl[_k] = "sapph"   # lower 8 mm lapis -> sapphire glass bicone
         BANDS[4] = (_bl, ["red"] + list(BANDS[4][1]) + ["red"])   # inner blue band: red spiny oyster added at both ends
         BANDS[4] = tuple(["orange"] + list(b) + ["orange"] for b in BANDS[4])  # orange above the top red and under the bottom red, both strands
         _gi = list(BANDS[5][1]); assert _gi[2:4] == ["diop", "diop"]
