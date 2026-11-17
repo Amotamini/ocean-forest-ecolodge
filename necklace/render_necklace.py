@@ -1072,6 +1072,8 @@ if V4:
         def _y_red_low(seq):                        # 8 mm red glass between the lapis and the green at the bottom
             seq = list(seq); assert seq[-2:] == ["lapisH", "diop"], seq; return seq[:-1] + ["redglass", "diop"]
         BANDS[3] = tuple(_y_red_low(b) for b in BANDS[3])
+        # every 8 mm red glass rondelle becomes a red spiny oyster rondelle
+        BANDS = [tuple([("red" if k == "redglass" else k) for k in x] for x in bb) for bb in BANDS]
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
