@@ -19,7 +19,8 @@ V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass be
 V5_EXT3 = 0.0                            # (red above the bicone removed again)             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
 V5_EXT4 = 7.0 if V5 else 0.0             # v5: a pink tourmaline moves from the outer to the inner bottom band (+7 mm per side)
 V5_EXT5 = 5 * 2.0 if V5 else 0.0         # v5: white conch at the 5 lower orange/green borders per strand side (+10 mm per side)
-C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4 + V5_EXT5), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
+V5_EXT6 = -3.0 if V5 else 0.0            # v5: red above the white-section AB bicones removed (-3 mm per side)
+C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4 + V5_EXT5 + V5_EXT6), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
 
@@ -1212,13 +1213,13 @@ if V4:
             gaps = [f / 2] + [f] * len(STN)
             if V5:
                 # align band centres by height: use common fractions computed from the widest of each band pair
-                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5   # layout at the old length
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5 - V5_EXT6   # layout at the old length
                 Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
                 gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
                 cen, acc = [], gapc / 2
                 for w in Wmax:
                     cen.append((acc + w / 2) / Hin); acc += w + gapc
-                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5                # layout at the old length; the extension goes in below the blue band
+                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5 - V5_EXT6                # layout at the old length; the extension goes in below the blue band
                 # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
                 Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
                 gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
@@ -1444,6 +1445,8 @@ if V4:
                 _tgt = sum(gaps[i] for i in (3, 4, 5, 6, 8)) / 5
                 _d = _tgt - gaps[7]; gaps[7] += _d; gaps[9] -= _d
                 STN[7], STN[8] = _cw(STN[7]), _cw(STN[8])   # whites added: necklace lengthened, turquoise runs unchanged
+                _k = STN[7].index("abbic"); assert STN[7][_k - 1] == "red"
+                del STN[7][_k - 1]                          # red above the AB bicone removed: necklace shorter, turquoise unchanged
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
