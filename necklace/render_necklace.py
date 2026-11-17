@@ -1049,6 +1049,7 @@ if V4:
         _bo8.remove("pink")                                             # one pink tourmaline from the outer strand...
         _k = _bb.index("rbic"); assert _bb[_k - 1] == "pink" and _bb[_k + 1] == "pink"
         _bb[_k - 1:_k + 2] = ["rbic", "pink", "pink", "pink"]           # ...to the inner: rose bicone, then three tourmalines
+        _bb.remove("pink"); _bb.remove("pink")                          # inner: two tourmalines removed, one left
         BANDS[8] = (_bo8, _bb)
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
@@ -1231,6 +1232,8 @@ if V4:
                 widths[8] += SZ["rbic"] if st == 0 else -SZ["rbic"]   # bottom rose bicone moved outer -> inner: layout as before
                 widths[8] += SZ["pink"] if st == 0 else -SZ["pink"]   # and a pink tourmaline
                 if st == 1:
+                    widths[8] += 2 * SZ["pink"]     # inner lost two tourmalines: laid out as before
+                if st == 1:
                     widths[8] -= SZ["redglass"]     # inner bottom band's second red glass
                 if st == 1:
                     widths[8] -= SZ["abbic"]        # inner bottom band's AB bicone grows the band toward the centre
@@ -1371,6 +1374,9 @@ if V4:
                 if st == 0:
                     gaps[8] += SZ["pink"]               # outer: lost tourmaline made up with turquoise above the white opal
                     gaps[9] += V5_EXT4                  # (necklace 7 mm longer per side: outer's share goes toward the centre)
+                if st == 1:
+                    widths[8] -= 2 * SZ["pink"]
+                    gaps[9] += 2 * SZ["pink"]           # more turquoise at the centre bottom of the inner strand
                 widths[5] += V5_EXT3
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
