@@ -1071,6 +1071,7 @@ if V4:
         def _y_red_low(seq):                        # 8 mm red glass between the lapis and the green at the bottom
             seq = list(seq); assert seq[-2:] == ["lapisH", "diop"], seq; return seq[:-1] + ["redglass", "diop"]
         BANDS[3] = tuple(_y_red_low(b) for b in BANDS[3])
+        BANDS[7] = (BANDS[7][0], _y_red_low(BANDS[7][1]))   # inner rose band: red glass between the lapis and the green below
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
@@ -1187,6 +1188,8 @@ if V4:
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
                 widths[5] -= V5_EXT3                # red above the mookaite band's bicone: necklace lengthened
                 if st == 1:
+                    widths[7] -= SZ["redglass"]     # inner rose band's red glass
+                if st == 1:
                     widths[8] -= SZ["abbic"]        # inner bottom band's AB bicone grows the band toward the centre
                 if st == 0:
                     widths[7] += SZ["rq9"] - SZ["abbic"]   # AB bicone is 1 mm shorter than the rose quartz: layout as before
@@ -1282,6 +1285,10 @@ if V4:
                     widths[7] -= SZ["rq9"] - SZ["abbic"]
                     gaps[7] += (SZ["rq9"] - SZ["abbic"]) / 2   # band stays centred; turquoise either side 0.5 mm longer
                     gaps[8] += (SZ["rq9"] - SZ["abbic"]) / 2
+                if st == 1:
+                    widths[7] += SZ["redglass"]
+                    gaps[7] -= SZ["redglass"] / 2       # half from the turquoise above the rose band, half from below
+                    gaps[8] -= SZ["redglass"] / 2
                 if st == 1:
                     widths[8] += SZ["abbic"]
                     gaps[9] -= SZ["abbic"]              # ...taken from the turquoise run below it, toward the centre
