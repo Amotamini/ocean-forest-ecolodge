@@ -1022,6 +1022,9 @@ if V4:
         _bo.insert(len(_bo) - 1, "diop"); _bi.insert(len(_bi) - 1, "diop")   # chrome diopside right under the rose bicone, lapis below it
         for _s in (_bo, _bi):
             _s.insert(_s.index("rbic"), "red")      # red spiny oyster right above the rose bicone
+        for _s in (_bo, _bi):
+            assert _s[:2] == ["orange", "redglass"]
+            _s[:2] = ["redglass", "orange"]         # red glass on top, orange against the mookaite
         BANDS[6] = (_bo, _bi)
         assert all(b[-1] == "lapisH" for b in BANDS[2])
         BANDS[2] = tuple(list(b[:-1]) + ["orange"] for b in BANDS[2])   # top red band: orange instead of lapis at its lower end
