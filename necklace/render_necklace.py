@@ -18,7 +18,8 @@ V5_EXT = 3.0 + 3 * 2.4 if V5 else 0.0   # v5: orange under the blue band + 3 mor
 V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass becomes red + orange spiny oyster (+3 mm per side)
 V5_EXT3 = 0.0                            # (red above the bicone removed again)             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
 V5_EXT4 = 7.0 if V5 else 0.0             # v5: a pink tourmaline moves from the outer to the inner bottom band (+7 mm per side)
-C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
+V5_EXT5 = 5 * 2.0 if V5 else 0.0         # v5: white conch at the 5 lower orange/green borders per strand side (+10 mm per side)
+C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4 + V5_EXT5), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
 
@@ -1096,6 +1097,7 @@ if V4:
             seq = list(seq); assert seq[-4:] == ["yellow", "lapisH", "red", "diop"], seq
             seq[-3:] = ["diop", "orange"]; return seq   # lapis under the green removed; orange (was red) touches the green
         BANDS[3] = tuple(_diop_up(b) for b in BANDS[3])
+        BANDS[3] = tuple(list(b[:-1]) + ["conch", "orange"] for b in BANDS[3])   # white conch between the green and orange under the yellow
         # below the yellow (rose band top and bottom, bottom band top): green against the round beads,
         # lapis -> orange spiny oyster against the turquoise
         def _go_start(seq):
@@ -1210,13 +1212,13 @@ if V4:
             gaps = [f / 2] + [f] * len(STN)
             if V5:
                 # align band centres by height: use common fractions computed from the widest of each band pair
-                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4   # layout at the old length
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5   # layout at the old length
                 Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
                 gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
                 cen, acc = [], gapc / 2
                 for w in Wmax:
                     cen.append((acc + w / 2) / Hin); acc += w + gapc
-                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4                # layout at the old length; the extension goes in below the blue band
+                Hs = H2 - cz - V5_EXT - V5_EXT2 - V5_EXT3 - V5_EXT4 - V5_EXT5                # layout at the old length; the extension goes in below the blue band
                 # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
                 Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
                 gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
@@ -1262,6 +1264,7 @@ if V4:
                     widths[6] += SZ["orange"]       # inner yellow band lost an orange: laid out as before
                 widths[5] -= SZ["conch"]            # white conch under the rose bicone: taken from the turquoise below
                 widths[6] -= SZ["conch"]            # white conch at the top of the yellow: same run
+                widths[6] -= SZ["conch"]            # white conch at the bottom of the yellow: from the run below
                 if st == 0:
                     widths[5] += SZ["mookorg"]      # outer mookaite band lost a round: laid out as before
                 if st == 0:
@@ -1345,6 +1348,7 @@ if V4:
                 gaps[6] -= SZ["conch"]
                 widths[6] += SZ["conch"]
                 gaps[6] -= SZ["conch"]
+                widths[6] += SZ["conch"]                # (bottom-of-yellow conch: necklace lengthened instead)
                 if st == 1:
                     widths[6] -= SZ["orange"]
                     gaps[6] += SZ["orange"]             # yellow rounds stay put; more turquoise in the run above
@@ -1427,6 +1431,10 @@ if V4:
                 _wh[-4] = "red"                              # red (not orange) between the tourmaline and the AB bicone
                 if len(_iw) == 1:                          # outer: add the 8 mm white after the red under the 10 mm
                     assert _wh[_iw[0] + 1] == "red"; _wh.insert(_iw[0] + 2, "opal8")
+                def _cw(seq):                              # white conch between every orange/green border pair
+                    seq = list(seq)
+                    assert seq[:2] == ["orange", "diop"] and seq[-2:] == ["diop", "orange"], seq
+                    return ["orange", "conch"] + seq[1:-1] + ["conch", "orange"]
                 STN[7], STN[8] = _wh, list(STN[7])
                 _n7 = sum(SZ[k] for k in STN[7]); _n8 = sum(SZ[k] for k in STN[8])
                 _ns7 = _c7 - _n7 / 2; _ns8 = _c8 - _n8 / 2
@@ -1435,6 +1443,7 @@ if V4:
                 # the white and rose quartz sections move down, taking it from the run at the centre bottom
                 _tgt = sum(gaps[i] for i in (3, 4, 5, 6, 8)) / 5
                 _d = _tgt - gaps[7]; gaps[7] += _d; gaps[9] -= _d
+                STN[7], STN[8] = _cw(STN[7]), _cw(STN[8])   # whites added: necklace lengthened, turquoise runs unchanged
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
