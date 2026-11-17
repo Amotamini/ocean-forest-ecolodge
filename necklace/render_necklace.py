@@ -1043,7 +1043,9 @@ if V4:
         _bb = list(BANDS[8][1]); assert _bb[-2:] == ["red", "lapisH"], _bb
         _bb.insert(len(_bb) - 1, "abbic")           # inner: AB crystal bicone between the red and the lapis
         _bb.insert(_bb.index("redglass"), "redglass")   # inner: two red glass side by side under the white opal
-        BANDS[8] = (BANDS[8][0], _bb)
+        _bo8 = list(BANDS[8][0]); _bo8.remove("rbic")                  # outer bottom: rose bicone moves to the inner strand
+        _k = _bb.index("pink"); assert _bb[_k + 1] == "pink"; _bb.insert(_k + 1, "rbic")   # inner: between the two pinks
+        BANDS[8] = (_bo8, _bb)
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
         BANDS[3] = tuple(b[:1] + ["diop"] + b[2:] for b in BANDS[3])   # chrome diopside instead of orange atop the yellow mookaite
@@ -1222,6 +1224,7 @@ if V4:
                 widths[3] -= SZ["orange"]           # orange atop the blue band: room from the neck lapis
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
                 widths[5] -= V5_EXT3                # red above the mookaite band's bicone: necklace lengthened
+                widths[8] += SZ["rbic"] if st == 0 else -SZ["rbic"]   # bottom rose bicone moved outer -> inner: layout as before
                 if st == 1:
                     widths[8] -= SZ["redglass"]     # inner bottom band's second red glass
                 if st == 1:
@@ -1355,6 +1358,10 @@ if V4:
                     gaps[9] -= SZ["abbic"]              # ...taken from the turquoise run below it, toward the centre
                     widths[8] += SZ["redglass"]
                     gaps[9] -= SZ["redglass"]           # second red glass: also from the run toward the centre (opals stay level)
+                _sg = -1 if st == 0 else 1
+                widths[8] -= _sg * SZ["rbic"]
+                gaps[8] -= _sg * SZ["rbic"] / 2         # bottom band stays centred: outer turquoise either side 4 mm longer,
+                gaps[9] -= _sg * SZ["rbic"] / 2         # inner 4 mm shorter
                 widths[5] += V5_EXT3
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
