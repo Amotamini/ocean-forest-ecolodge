@@ -1076,7 +1076,7 @@ if V4:
         BANDS = [tuple([("red" if k == "redglass" else k) for k in x] for x in bb) for bb in BANDS]
         def _diop_up(seq):                          # green diopside moves up, right under the yellow glass
             seq = list(seq); assert seq[-4:] == ["yellow", "lapisH", "red", "diop"], seq
-            seq[-3:] = ["diop", "red"]; return seq   # lapis under the green removed: red touches the green
+            seq[-3:] = ["diop", "orange"]; return seq   # lapis under the green removed; orange (was red) touches the green
         BANDS[3] = tuple(_diop_up(b) for b in BANDS[3])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
