@@ -1052,6 +1052,15 @@ if V4:
             seq = list(seq); n = seq.count("orange"); seq = [k for k in seq if k != "orange"]
             assert seq[1] == "diop"; return seq[:2] + ["orange"] * n + seq[2:]
         BANDS[3] = tuple(_orange_up(b) for b in BANDS[3])
+        # borders of the turquoise runs (white opal / rose quartz, and mookaite bicone / yellow orange):
+        # green touches the turquoise, blue lapis touches the coloured beads
+        def _sw_end(seq):
+            seq = list(seq); assert seq[-2:] == ["diop", "lapisH"], seq; seq[-2:] = ["lapisH", "diop"]; return seq
+        def _sw_start(seq):
+            seq = list(seq); assert seq[:2] == ["lapisH", "diop"], seq; seq[:2] = ["diop", "lapisH"]; return seq
+        for _e, _s in ((7, 8), (6, 3)):
+            BANDS[_e] = tuple(_sw_end(b) for b in BANDS[_e])
+            BANDS[_s] = tuple(_sw_start(b) for b in BANDS[_s])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
