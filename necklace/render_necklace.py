@@ -16,7 +16,7 @@ INCH = 25.4
 EXTRAS = False   # False = base design: heishi blocks + white barrels only (jasper/hematite/jade/lapis/spondylus/tourmaline off)
 V5_EXT = 3.0 + 3 * 2.4 if V5 else 0.0   # v5: orange under the blue band + 3 more turquoise heishi below it, per side
 V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass becomes red + orange spiny oyster (+3 mm per side)
-V5_EXT3 = 3.0 if V5 else 0.0             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
+V5_EXT3 = 0.0                            # (red above the bicone removed again)             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
 C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
@@ -1020,8 +1020,6 @@ if V4:
             assert _s[0] == "lapisH" and _s[-1] == "lapisH"
             _s[0] = "orange"                        # top only; the lapis under the rose bicone stays
         _bo.insert(len(_bo) - 1, "diop"); _bi.insert(len(_bi) - 1, "diop")   # chrome diopside right under the rose bicone, lapis below it
-        for _s in (_bo, _bi):
-            _s.insert(_s.index("rbic"), "red")      # red spiny oyster right above the rose bicone
         for _s in (_bo, _bi):
             assert _s[:2] == ["orange", "redglass"]
             _s[:2] = ["redglass", "orange"]         # red glass on top, orange against the mookaite
