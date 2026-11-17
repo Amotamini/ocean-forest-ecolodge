@@ -1409,6 +1409,8 @@ if V4:
                 _wh = list(STN[8])
                 _iw = [i for i, k in enumerate(_wh) if k == "opal8"]
                 # (all round whites are 8 mm now; the top one stays 8 mm)
+                assert _wh[-3:] == ["red", "abbic", "lapisH"], _wh
+                _wh[-3:] = ["abbic", "diop", "orange"]     # no red above the AB bicone; under it green then orange
                 if len(_iw) == 1:                          # outer: add the 8 mm white after the red under the 10 mm
                     assert _wh[_iw[0] + 1] == "red"; _wh.insert(_iw[0] + 2, "opal8")
                 STN[7], STN[8] = _wh, list(STN[7])
