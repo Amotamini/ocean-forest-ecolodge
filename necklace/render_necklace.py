@@ -15,7 +15,8 @@ S = 8                               # px per mm (supersampled)
 INCH = 25.4
 EXTRAS = False   # False = base design: heishi blocks + white barrels only (jasper/hematite/jade/lapis/spondylus/tourmaline off)
 V5_EXT = 3.0 + 3 * 2.4 if V5 else 0.0   # v5: orange under the blue band + 3 more turquoise heishi below it, per side
-C_OUT, GAP, BEAD_D = 42 * INCH + 2 * V5_EXT, (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
+V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass becomes red + orange spiny oyster (+3 mm per side)
+C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
 
@@ -1031,6 +1032,9 @@ if V4:
         BANDS[5] = (BANDS[5][0], _gi)
         BANDS[8] = tuple(b[:1] + ["diop"] + b[1:] for b in BANDS[8])   # chrome diopside between the lapis and the top white opal
         assert all(b[2] == "opal10" for b in BANDS[8])
+        def _low_red(seq):                          # lowest red glass of the bottom band -> red + orange spiny oyster
+            seq = list(seq); k = len(seq) - 1 - seq[::-1].index("redglass"); return seq[:k] + ["red", "orange"] + seq[k + 1:]
+        BANDS[8] = tuple(_low_red(b) for b in BANDS[8])
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
         BANDS[3] = tuple(b[:1] + ["diop"] + b[2:] for b in BANDS[3])   # chrome diopside instead of orange atop the yellow mookaite
@@ -1123,13 +1127,13 @@ if V4:
             gaps = [f / 2] + [f] * len(STN)
             if V5:
                 # align band centres by height: use common fractions computed from the widest of each band pair
-                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT   # layout at the old length
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT - V5_EXT2   # layout at the old length
                 Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
                 gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
                 cen, acc = [], gapc / 2
                 for w in Wmax:
                     cen.append((acc + w / 2) / Hin); acc += w + gapc
-                Hs = H2 - cz - V5_EXT                # layout at the old length; the extension goes in below the blue band
+                Hs = H2 - cz - V5_EXT - V5_EXT2                # layout at the old length; the extension goes in below the blue band
                 # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
                 Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
                 gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
@@ -1149,6 +1153,7 @@ if V4:
                 widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
                 widths[3] -= SZ["orange"]           # orange atop the blue band: room from the neck lapis
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
+                widths[8] -= V5_EXT2                # bottom band's red + orange: necklace lengthened, band grows downward
                 if st == 1:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
@@ -1231,6 +1236,7 @@ if V4:
                 widths[3] += SZ["orange"]
                 _need += SZ["orange"]
                 widths[3] += SZ["orange"]
+                widths[8] += V5_EXT2
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
                     _take = min(_need, max(0.0, gaps[_gi] - _fl)); gaps[_gi] -= _take; _need -= _take
