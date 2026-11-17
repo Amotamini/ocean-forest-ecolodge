@@ -1050,6 +1050,8 @@ if V4:
         _k = _bb.index("rbic"); assert _bb[_k - 1] == "pink" and _bb[_k + 1] == "pink"
         _bb[_k - 1:_k + 2] = ["rbic", "pink", "pink", "pink"]           # ...to the inner: rose bicone, then three tourmalines
         _bb.remove("pink"); _bb.remove("pink")                          # inner: two tourmalines removed, one left
+        assert _bo8[-2:] == ["opal10", "lapisH"], _bo8
+        _bo8[-2] = "abbic"                                              # outer: opal nearest the centre -> AB crystal bicone
         BANDS[8] = (_bo8, _bb)
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
@@ -1233,6 +1235,8 @@ if V4:
                 widths[8] += SZ["pink"] if st == 0 else -SZ["pink"]   # and a pink tourmaline
                 if st == 1:
                     widths[8] += 2 * SZ["pink"]     # inner lost two tourmalines: laid out as before
+                if st == 0:
+                    widths[8] += SZ["opal10"] - SZ["abbic"]   # outer: AB bicone 2 mm shorter than the opal it replaced
                 if st == 1:
                     widths[8] -= SZ["redglass"]     # inner bottom band's second red glass
                 if st == 1:
@@ -1377,6 +1381,9 @@ if V4:
                 if st == 1:
                     widths[8] -= 2 * SZ["pink"]
                     gaps[9] += 2 * SZ["pink"]           # more turquoise at the centre bottom of the inner strand
+                if st == 0:
+                    widths[8] -= SZ["opal10"] - SZ["abbic"]
+                    gaps[9] += SZ["opal10"] - SZ["abbic"]   # ...the 2 mm go to the turquoise toward the centre
                 widths[5] += V5_EXT3
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
