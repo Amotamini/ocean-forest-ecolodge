@@ -1475,6 +1475,12 @@ if V4:
                 STN[7][-1] = STN[8][0] = "red"                 # turquoise run between white and rose sections: red borders
                 assert STN[8][1:4] == ["conch", "diop", "amet"], STN[8]
                 STN[8][0:3] = ["diop", "conch", "red"]         # top of the rose section: green against the turquoise, red against the amethyst
+                assert STN[7][-4:] == ["abbic", "diop", "conch", "red"], STN[7]
+                STN[7][-3:] = ["red", "conch", "diop"]         # bottom of the white section: red against the bicone, green against the turquoise
+                assert STN[7][:3] == ["orange", "conch", "diop"], STN[7]
+                STN[7][:3] = ["diop", "conch", "orange"]       # top of the white section: green against the turquoise, orange against the white
+                assert STN[6][-3:] == ["diop", "conch", "orange"], STN[6]
+                STN[6][-3:] = ["orange", "conch", "diop"]      # under the yellow: orange against the yellow, green against the turquoise
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
