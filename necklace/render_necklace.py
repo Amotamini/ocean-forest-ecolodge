@@ -14,7 +14,8 @@ V2 = "--v2" in sys.argv or V3 or V4          # version 2: greener accents up top
 S = 8                               # px per mm (supersampled)
 INCH = 25.4
 EXTRAS = False   # False = base design: heishi blocks + white barrels only (jasper/hematite/jade/lapis/spondylus/tourmaline off)
-C_OUT, GAP, BEAD_D = 42 * INCH, (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
+V5_EXT = 3.0 + 3 * 2.4 if V5 else 0.0   # v5: orange under the blue band + 3 more turquoise heishi below it, per side
+C_OUT, GAP, BEAD_D = 42 * INCH + 2 * V5_EXT, (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
 
@@ -1021,7 +1022,7 @@ if V4:
         _bl = list(BANDS[4][0]); assert _bl[0] == _bl[-1] == "lapisH"
         _bl[0] = _bl[-1] = "red"                    # outer blue band: end lapis swapped for red spiny oyster borders
         BANDS[4] = (_bl, ["red"] + list(BANDS[4][1]) + ["red"])   # inner blue band: red spiny oyster added at both ends
-        BANDS[4] = tuple(["orange"] + list(b) for b in BANDS[4])  # orange above the top red, both strands
+        BANDS[4] = tuple(["orange"] + list(b) + ["orange"] for b in BANDS[4])  # orange above the top red and under the bottom red, both strands
         _gi = list(BANDS[5][1]); assert _gi[2:4] == ["diop", "diop"]
         _gi[2:4] = ["gglass"]                       # inner green: 8 mm green glass beside the outer one, for two diopside
         _gi[2:4] = ["diop", "gglass"]               # chrome diopside on top of the green glass
@@ -1120,13 +1121,13 @@ if V4:
             gaps = [f / 2] + [f] * len(STN)
             if V5:
                 # align band centres by height: use common fractions computed from the widest of each band pair
-                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2
+                Hin = (s_in[-1] + HIDDEN_IN) / 2 - SZ[CENTRE[1]] / 2 - V5_EXT   # layout at the old length
                 Wmax = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS]
                 gapc = (Hin - sum(Wmax)) / (len(BANDS) + 0.5)
                 cen, acc = [], gapc / 2
                 for w in Wmax:
                     cen.append((acc + w / 2) / Hin); acc += w + gapc
-                Hs = H2 - cz
+                Hs = H2 - cz - V5_EXT                # layout at the old length; the extension goes in below the blue band
                 # turquoise gaps come from the unframed layout; the extra frame width is taken from the top section
                 Wmax0 = [max(sum(SZ[k] for k in b[0]), sum(SZ[k] for k in b[1])) for b in BANDS_PREV]
                 gapc0 = (Hin - sum(Wmax0)) / (len(BANDS_PREV) + 0.5)
@@ -1145,6 +1146,7 @@ if V4:
                 widths[6] -= SZ["diop"]             # yellow band's bottom diopside
                 widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
                 widths[3] -= SZ["orange"]           # orange atop the blue band: room from the neck lapis
+                widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
                 if st == 1:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
@@ -1226,6 +1228,8 @@ if V4:
                     _need += 2 * SZ["red"]
                 widths[3] += SZ["orange"]
                 _need += SZ["orange"]
+                widths[3] += SZ["orange"]
+                gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
                     _take = min(_need, max(0.0, gaps[_gi] - _fl)); gaps[_gi] -= _take; _need -= _take
                 print(f"v5 strand {st} neck gaps after shift", [round(float(x), 1) for x in gaps[:4]], "unplaced", round(_need, 2))
@@ -2502,6 +2506,8 @@ f1 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf", 46)
 f2 = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 24)
 t1 = "Turquoise, Lapis & Spondylus Heishi"
 t2 = (f'Double strand  ·  42" outer / {C_IN/INCH:.0f}" inner  ·  turquoise, lapis & red/orange spondylus in 1" blocks')
+if V5:
+    t2 = t2.replace('42" outer / ' + f'{C_IN/INCH:.0f}" inner', f'{C_OUT/INCH:.1f}" outer / {C_IN/INCH:.1f}" inner')
 for txt, fnt, yy_, col in ((t1, f1, ih - 120, (214, 205, 185)), (t2, f2, ih - 62, (150, 145, 135))):
     cd.text(((iw - cd.textlength(txt, font=fnt)) / 2, yy_), txt, font=fnt, fill=col)
 out = sys.argv[1] if len(sys.argv) > 1 else "necklace_hanging.png"
