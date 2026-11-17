@@ -1408,7 +1408,7 @@ if V4:
                 _prev_end = _s7 - gaps[7]; _end = _s8 + _w[8] + gaps[9]
                 _wh = list(STN[8])
                 _iw = [i for i, k in enumerate(_wh) if k == "opal8"]
-                _wh[_iw[0]] = "opal10"
+                # (all round whites are 8 mm now; the top one stays 8 mm)
                 if len(_iw) == 1:                          # outer: add the 8 mm white after the red under the 10 mm
                     assert _wh[_iw[0] + 1] == "red"; _wh.insert(_iw[0] + 2, "opal8")
                 STN[7], STN[8] = _wh, list(STN[7])
