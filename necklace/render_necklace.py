@@ -1076,7 +1076,7 @@ if V4:
         BANDS = [tuple([("red" if k == "redglass" else k) for k in x] for x in bb) for bb in BANDS]
         def _diop_up(seq):                          # green diopside moves up, right under the yellow glass
             seq = list(seq); assert seq[-4:] == ["yellow", "lapisH", "red", "diop"], seq
-            seq[-3:] = ["diop", "lapisH", "red"]; return seq
+            seq[-3:] = ["diop", "red"]; return seq   # lapis under the green removed: red touches the green
         BANDS[3] = tuple(_diop_up(b) for b in BANDS[3])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
@@ -1187,6 +1187,7 @@ if V4:
                 widths[6] += SZ["orange"]           # ...into the room left by the orange removed from the top of the yellow band
                 widths[6] -= SZ["diop"] - SZ["orange"]   # yellow band's top diopside (1 mm more than the orange it replaced)
                 widths[6] -= SZ["diop"]             # yellow band's bottom diopside
+                widths[6] += SZ["lapisH"]           # its bottom lapis removed: layout as before
                 if st == 1:
                     widths[6] -= SZ["redglass"]     # inner yellow band's extra red glass (the outer's replaces its old one)
                 widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
@@ -1274,6 +1275,9 @@ if V4:
                 widths[6] += SZ["diop"]
                 gaps[6] -= SZ["diop"] / 2               # bottom diopside: half from the run above (band stays centred)...
                 gaps[7] -= SZ["diop"] / 2               # ...half from the run below
+                widths[6] -= SZ["lapisH"]
+                gaps[6] += SZ["lapisH"] / 2             # lapis removed: band stays centred, turquoise either side 1.5 mm longer
+                gaps[7] += SZ["lapisH"] / 2
                 if st == 1:
                     widths[6] += SZ["redglass"]
                     gaps[6] -= SZ["redglass"] / 2       # inner red glass: half from the run above, half from below
