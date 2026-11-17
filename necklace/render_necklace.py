@@ -1450,6 +1450,7 @@ if V4:
                 del STN[7][_k - 1]                          # red above the AB bicone removed: necklace shorter, turquoise unchanged
                 assert STN[8][-1] == "orange"; STN[8][-1] = "red"   # orange nearest the centre bead -> red spiny oyster
                 assert STN[8][-3:-1] == ["diop", "conch"]; STN[8][-3] = "lapisH"   # green next to that white -> blue lapis
+                STN[8][-3], STN[8][-1] = "red", "lapisH"       # red and blue swapped: lapis touches the turquoise
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
