@@ -1090,6 +1090,7 @@ if V4:
         assert _go[_k + 1:_k + 3] == ["diop", "diop"]; del _go[_k + 1:_k + 3]   # outer green: 2 diopside fewer under the jade
         _gi2 = list(BANDS[5][1]); _k = _gi2.index("gglass"); assert _gi2[_k + 1:_k + 4] == ["jade"] * 3
         _gi2[_k:_k + 4] = ["jade", "jade", "gglass", "jade"]   # inner: green glass moved down between the jades
+        _go.remove("diop"); _go.reverse(); _go.remove("diop"); _go.reverse()   # outer green: one diopside fewer at top and bottom
         BANDS[5] = (_go, _gi2)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
@@ -1218,6 +1219,7 @@ if V4:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
                 if st == 0:
                     widths[4] += 2 * SZ["diop"]     # outer green lost 2 diopside: laid out as before, top moves down
+                    widths[4] += 2 * SZ["diop"]     # ...and one more at each end
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
@@ -1286,6 +1288,9 @@ if V4:
                 if st == 0:
                     widths[4] -= 2 * SZ["diop"]
                     gaps[4] += 2 * SZ["diop"]           # jades lower; more turquoise in the run above the green
+                    widths[4] -= 2 * SZ["diop"]
+                    gaps[4] += SZ["diop"]               # one diopside fewer at each end: turquoise above and below fills in
+                    gaps[5] += SZ["diop"]
                 widths[5] += SZ["diop"]
                 widths[6] -= SZ["orange"]
                 widths[6] += SZ["diop"] - SZ["orange"]
