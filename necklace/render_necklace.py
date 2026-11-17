@@ -1092,6 +1092,15 @@ if V4:
         _gi2[_k:_k + 4] = ["jade", "jade", "gglass", "jade"]   # inner: green glass moved down between the jades
         _go.remove("diop"); _go.reverse(); _go.remove("diop"); _go.reverse()   # outer green: one diopside fewer at top and bottom
         BANDS[5] = (_go, _gi2)
+        def _mook_grad(seq):                        # mookaite rounds: darkest on top, lightest at the bottom by the bicone
+            rank = {"mookred": 0, "mookrd": 1, "mookorg": 2}
+            idx = [i for i, k in enumerate(seq) if k in rank]
+            vals = sorted((seq[i] for i in idx), key=rank.get)
+            seq = list(seq)
+            for i, v in zip(idx, vals):
+                seq[i] = v
+            return seq
+        BANDS[6] = tuple(_mook_grad(b) for b in BANDS[6])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
