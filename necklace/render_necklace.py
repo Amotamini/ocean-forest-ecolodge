@@ -1058,7 +1058,7 @@ if V4:
             seq = list(seq); assert seq[-2:] == ["diop", "lapisH"], seq; seq[-2:] = ["lapisH", "diop"]; return seq
         def _sw_start(seq):
             seq = list(seq); assert seq[:2] == ["lapisH", "diop"], seq; seq[:2] = ["diop", "lapisH"]; return seq
-        for _e, _s in ((7, 8), (6, 3)):
+        for _e, _s in ((7, 8), (6, 3), (3, 7)):     # (3, 7): yellow band bottom / rose band top
             BANDS[_e] = tuple(_sw_end(b) for b in BANDS[_e])
             BANDS[_s] = tuple(_sw_start(b) for b in BANDS[_s])
         # yellow band moves down, between the mookaite (brown) band and the white band
