@@ -1103,6 +1103,9 @@ if V4:
         BANDS[6] = tuple(_mook_grad(b) for b in BANDS[6])
         _bo2 = list(BANDS[6][0]); _bo2.remove("mookorg")   # outer: lightest mookaite removed, two left above the bicone
         BANDS[6] = (_bo2, BANDS[6][1])
+        _yi3 = list(BANDS[3][1]); assert _yi3[2:5] == ["orange"] * 3, _yi3
+        del _yi3[2]                                  # inner yellow: one orange fewer above the yellow rounds
+        BANDS[3] = (BANDS[3][0], _yi3)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
@@ -1228,6 +1231,8 @@ if V4:
                 widths[8] -= V5_EXT2                # bottom band's red + orange: necklace lengthened, band grows downward
                 if st == 1:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
+                if st == 1:
+                    widths[6] += SZ["orange"]       # inner yellow band lost an orange: laid out as before
                 if st == 0:
                     widths[5] += SZ["mookorg"]      # outer mookaite band lost a round: laid out as before
                 if st == 0:
@@ -1307,6 +1312,9 @@ if V4:
                 if st == 0:
                     widths[5] -= SZ["mookorg"]
                     gaps[5] += SZ["mookorg"]            # bicone stays put; more turquoise in the run above the mookaite
+                if st == 1:
+                    widths[6] -= SZ["orange"]
+                    gaps[6] += SZ["orange"]             # yellow rounds stay put; more turquoise in the run above
                 widths[5] += SZ["diop"]
                 widths[6] -= SZ["orange"]
                 widths[6] += SZ["diop"] - SZ["orange"]
