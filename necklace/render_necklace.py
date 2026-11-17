@@ -1051,7 +1051,8 @@ if V4:
         _bb[_k - 1:_k + 2] = ["rbic", "pink", "pink", "pink"]           # ...to the inner: rose bicone, then three tourmalines
         _bb.remove("pink"); _bb.remove("pink")                          # inner: two tourmalines removed, one left
         assert _bo8[2] == "opal10", _bo8
-        _bo8[2] = "abbic"                                               # outer: the white opal further out -> AB crystal bicone
+        _bo8[2] = "rbic"                                                # outer: the white opal further out -> rose bicone
+        assert _bo8[-2:] == ["opal10", "lapisH"]; _bo8[-2] = "abbic"   # outer: white opal nearest the centre -> AB crystal bicone
         BANDS[8] = (_bo8, _bb)
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
@@ -1236,7 +1237,7 @@ if V4:
                 if st == 1:
                     widths[8] += 2 * SZ["pink"]     # inner lost two tourmalines: laid out as before
                 if st == 0:
-                    widths[8] += SZ["opal10"] - SZ["abbic"]   # outer: AB bicone 2 mm shorter than the opal it replaced
+                    widths[8] += 2 * (SZ["opal10"] - SZ["abbic"])   # outer: both opals replaced by 8 mm bicones
                 if st == 1:
                     widths[8] -= SZ["redglass"]     # inner bottom band's second red glass
                 if st == 1:
@@ -1383,7 +1384,9 @@ if V4:
                     gaps[9] += 2 * SZ["pink"]           # more turquoise at the centre bottom of the inner strand
                 if st == 0:
                     widths[8] -= SZ["opal10"] - SZ["abbic"]
-                    gaps[8] += SZ["opal10"] - SZ["abbic"]   # ...the 2 mm go to the turquoise just above it
+                    gaps[8] += SZ["opal10"] - SZ["abbic"]   # ...2 mm to the turquoise above the band
+                    widths[8] -= SZ["opal10"] - SZ["abbic"]
+                    gaps[9] += SZ["opal10"] - SZ["abbic"]   # ...2 mm to the turquoise toward the centre
                 widths[5] += V5_EXT3
                 gaps[4] += V5_EXT - SZ["orange"]     # 3 more turquoise heishi under the blue band (necklace a little longer)
                 for _gi, _fl in ((1, 3.0), (0, 1.0)) + (((2, 0.0),) if st == 1 else ()) + ((1, 0.0), (0, 0.0), (2, 3.0)):   # neck lapis first; any shortfall from the next run up
