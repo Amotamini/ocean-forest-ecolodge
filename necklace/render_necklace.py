@@ -1047,6 +1047,10 @@ if V4:
         _yo = list(BANDS[3][0]); _yo.remove("redglass"); _yo.insert(len(_yo) - 2, "redglass")   # outer: red glass lowered onto the green
         _yi = list(BANDS[3][1]); _yi.insert(len(_yi) - 2, "redglass")                          # inner: red glass added over the green
         BANDS[3] = (_yo, _yi)
+        def _orange_up(seq):                        # orange spiny oyster above the round yellow beads
+            seq = list(seq); n = seq.count("orange"); seq = [k for k in seq if k != "orange"]
+            assert seq[1] == "diop"; return seq[:2] + ["orange"] * n + seq[2:]
+        BANDS[3] = tuple(_orange_up(b) for b in BANDS[3])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
