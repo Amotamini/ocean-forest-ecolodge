@@ -1123,6 +1123,7 @@ if V4:
         _gi2 = list(BANDS[5][1]); _k = _gi2.index("gglass"); assert _gi2[_k + 1:_k + 4] == ["jade"] * 3
         _gi2[_k:_k + 4] = ["jade", "jade", "gglass", "jade"]   # inner: green glass moved down between the jades
         _go.remove("diop"); _go.reverse(); _go.remove("diop"); _go.reverse()   # outer green: one diopside fewer at top and bottom
+        _go.remove("diop"); _go.reverse(); _go.remove("diop"); _go.reverse()   # ...and one more at top and bottom
         BANDS[5] = (_go, _gi2)
         def _mook_grad(seq):                        # mookaite rounds: darkest on top, lightest at the bottom by the bicone
             rank = {"mookred": 0, "mookrd": 1, "mookorg": 2}
@@ -1284,6 +1285,7 @@ if V4:
                 if st == 0:
                     widths[4] += 2 * SZ["diop"]     # outer green lost 2 diopside: laid out as before, top moves down
                     widths[4] += 2 * SZ["diop"]     # ...and one more at each end
+                    widths[4] += 2 * SZ["diop"]     # ...and another at each end
                 widths[4] -= 6.0                    # green's orange borders: laid out at the old width, room taken from the neck lapis below
                 first = Hs - sum(widths) - sum(mids) - last
                 if st == 0:                         # outer green's extra length goes downward, not into the top section
@@ -1354,6 +1356,9 @@ if V4:
                     gaps[4] += 2 * SZ["diop"]           # jades lower; more turquoise in the run above the green
                     widths[4] -= 2 * SZ["diop"]
                     gaps[4] += SZ["diop"]               # one diopside fewer at each end: turquoise above and below fills in
+                    gaps[5] += SZ["diop"]
+                    widths[4] -= 2 * SZ["diop"]
+                    gaps[4] += SZ["diop"]               # another fewer at each end: more turquoise above and below
                     gaps[5] += SZ["diop"]
                 if st == 0:
                     widths[5] -= SZ["mookorg"]
