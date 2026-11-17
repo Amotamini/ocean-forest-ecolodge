@@ -1031,9 +1031,6 @@ if V4:
         BANDS[5] = (BANDS[5][0], _gi)
         BANDS[8] = tuple(b[:1] + ["diop"] + b[1:] for b in BANDS[8])   # chrome diopside between the lapis and the top white opal
         assert all(b[2] == "opal10" for b in BANDS[8])
-        def _low_red(seq):                          # lowest red glass of the bottom band -> red spiny oyster
-            seq = list(seq); k = len(seq) - 1 - seq[::-1].index("redglass"); seq[k] = "red"; return seq
-        BANDS[8] = tuple(_low_red(b) for b in BANDS[8])
         BANDS[3] = tuple(b[:1] + b[2:] for b in BANDS[3])   # one orange fewer at the top of the yellow band (room for that diopside)
         assert all(b[1] == "orange" for b in BANDS[3])
         BANDS[3] = tuple(b[:1] + ["diop"] + b[2:] for b in BANDS[3])   # chrome diopside instead of orange atop the yellow mookaite
