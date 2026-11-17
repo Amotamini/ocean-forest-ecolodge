@@ -19,7 +19,7 @@ V5_EXT2 = 3.0 if V5 else 0.0             # v5: bottom band's lowest red glass be
 V5_EXT3 = 0.0                            # (red above the bicone removed again)             # v5: red spiny oyster above each mookaite-band rose bicone (+3 mm per side)
 V5_EXT4 = 7.0 if V5 else 0.0             # v5: a pink tourmaline moves from the outer to the inner bottom band (+7 mm per side)
 V5_EXT5 = 5 * 2.0 if V5 else 0.0         # v5: white conch at the 5 lower orange/green borders per strand side (+10 mm per side)
-V5_EXT6 = -3.0 if V5 else 0.0            # v5: red above the white-section AB bicones removed (-3 mm per side)
+V5_EXT6 = -3.0 - 1.0 if V5 else 0.0      # (and -1 mm: lapis replaces the 4 mm diopside by the centre-side conch)            # v5: red above the white-section AB bicones removed (-3 mm per side)
 C_OUT, GAP, BEAD_D = 42 * INCH + 2 * (V5_EXT + V5_EXT2 + V5_EXT3 + V5_EXT4 + V5_EXT5 + V5_EXT6), (11.2 if EXTRAS else (14.0 if V2 else 10.0)), 7.0   # v2: room for 18 mm naga conch
 C_IN = C_OUT - 2 * math.pi * GAP    # inner strand: 8 mm smaller radius -> ~38"
 NSEG, BPS = 42, 16                  # 1 inch blocks, ~16 heishi (1.6 mm) per block
@@ -1448,6 +1448,7 @@ if V4:
                 _k = STN[7].index("abbic"); assert STN[7][_k - 1] == "red"
                 del STN[7][_k - 1]                          # red above the AB bicone removed: necklace shorter, turquoise unchanged
                 assert STN[8][-1] == "orange"; STN[8][-1] = "red"   # orange nearest the centre bead -> red spiny oyster
+                assert STN[8][-3:-1] == ["diop", "conch"]; STN[8][-3] = "lapisH"   # green next to that white -> blue lapis
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
