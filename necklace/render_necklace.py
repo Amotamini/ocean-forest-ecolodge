@@ -1398,6 +1398,24 @@ if V4:
                     _take = min(_need, max(0.0, gaps[_gi] - _fl)); gaps[_gi] -= _take; _need -= _take
                 print(f"v5 strand {st} neck gaps after shift", [round(float(x), 1) for x in gaps[:4]], "unplaced", round(_need, 2))
                 # bands above the added beads move up into the lapis behind the neck; visible turquoise runs unchanged
+            if V5 and V5_TARGET is not None:
+                # swap the rose quartz section and the bottom white section: each keeps the other's slot centre;
+                # the moved white section gets one 10 mm + one 8 mm white opal on each strand (10 mm on top)
+                STN = list(STN)
+                _w = [sum(SZ[k] for k in b_) for b_ in STN]
+                _s7 = sum(gaps[:8]) + sum(_w[:7]); _c7 = _s7 + _w[7] / 2
+                _s8 = _s7 + _w[7] + gaps[8]; _c8 = _s8 + _w[8] / 2
+                _prev_end = _s7 - gaps[7]; _end = _s8 + _w[8] + gaps[9]
+                _wh = list(STN[8])
+                _iw = [i for i, k in enumerate(_wh) if k == "opal8"]
+                _wh[_iw[0]] = "opal10"
+                if len(_iw) == 1:                          # outer: add the 8 mm white after the red under the 10 mm
+                    assert _wh[_iw[0] + 1] == "red"; _wh.insert(_iw[0] + 2, "opal8")
+                STN[7], STN[8] = _wh, list(STN[7])
+                _n7 = sum(SZ[k] for k in STN[7]); _n8 = sum(SZ[k] for k in STN[8])
+                _ns7 = _c7 - _n7 / 2; _ns8 = _c8 - _n8 / 2
+                gaps[7] = _ns7 - _prev_end; gaps[8] = _ns8 - (_ns7 + _n7); gaps[9] = _end - (_ns8 + _n8)
+                print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps[6:]])
             g = 0.0
             lap = LAP_BUDGET[st]
             for gi, gl in enumerate(gaps):
