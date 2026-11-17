@@ -1348,6 +1348,8 @@ if V4:
                     widths[7] += SZ["abbic"]
                     gaps[7] -= SZ["abbic"] / 2          # inner band stays centred; turquoise either side 4 mm shorter
                     gaps[8] -= SZ["abbic"] / 2
+                    gaps[7] += 2 * 2.4                  # inner rose band lowered: 2 turquoise heishi move from below to above
+                    gaps[8] -= 2 * 2.4
                 if st == 1:
                     widths[8] += SZ["abbic"]
                     gaps[9] -= SZ["abbic"]              # ...taken from the turquoise run below it, toward the centre
