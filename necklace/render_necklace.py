@@ -936,7 +936,7 @@ if V4:
     SZ = {"diop": PER_L_, "jade": 7.3, "gglass": 8.0, "gtourm": 7.0, "olive": 7.0, "tan": 7.0, "pink": 7.0,
           "black": 7.0, "yellow": 8.0, "opal10": 10.0, "opal9": 9.0, "rq9": 9.0, "rq11": 11.0, "ajas": 10.0,
           "mook": 8.0, "rbic": 8.0, "sapph": 8.0, "abbic": 8.0, "lapis8": 8.0, "blueglass": 8.0, "red": 3.0, "orange": 3.0,
-          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0, "mookrd": 8.0, "mookorg": 8.0, "opal8": 8.0, "amet": 8.0}
+          "redglass": 3.0, "focal": 19.7, "lapisH": 3.0, "mookred": 8.0, "tblue": 7.0, "mookyel": 8.0, "mookrd": 8.0, "mookorg": 8.0, "opal8": 8.0, "amet": 8.0, "conch": 2.0}
     def F(core, flank, n):                     # wrap a core with n flank beads split either side
         a = n // 2; b = n - a
         return [flank] * a + core + [flank] * b
@@ -1084,6 +1084,9 @@ if V4:
         def _y_red_low(seq):                        # 8 mm red glass between the lapis and the green at the bottom
             seq = list(seq); assert seq[-2:] == ["lapisH", "diop"], seq; return seq[:-1] + ["redglass", "diop"]
         BANDS[3] = tuple(_y_red_low(b) for b in BANDS[3])
+        def _conch(seq):                            # 7 x 2 mm white conch between the lapis and the green under the rose bicone
+            seq = list(seq); assert seq[-3:] == ["rbic", "lapisH", "diop"], seq; return seq[:-1] + ["conch", "diop"]
+        BANDS[6] = tuple(_conch(b) for b in BANDS[6])
         # every 8 mm red glass rondelle becomes a red spiny oyster rondelle
         BANDS = [tuple([("red" if k == "redglass" else k) for k in x] for x in bb) for bb in BANDS]
         def _diop_up(seq):                          # green diopside moves up, right under the yellow glass
@@ -1159,7 +1162,7 @@ if V4:
               "tan": "tour_yellow", "pink": "tour_pink", "black": "tour_black", "yellow": "bicone_lime",
               "opal10": "v4_opal10", "opal9": "v4_opal9", "rq9": "rose", "rq11": "rose11", "ajas": "ajas_t", "mookred": "v5_mookred", "tblue": "v5_tblue", "mookyel": "v5_mookyel", "mookrd": "v5_mookrd", "mookorg": "v5_mookorg", "opal8": "v5_opal8", "amet": "v5_amet",
               "mook": "mook8", "rbic": "v4_rbic", "sapph": "v4_sapph", "abbic": "v5_abbic", "blueglass": "conch8", "focal": "wjade"}
-    HEI = {"red": 2, "orange": 3, "redglass": 5}
+    HEI = {"red": 2, "orange": 3, "redglass": 5, "conch": 6}
     V5_TARGET = None
     V5_EQ = {}
     for _pass in (range(2) if V5 else range(1)):
@@ -1254,6 +1257,7 @@ if V4:
                     widths[3] -= 2 * SZ["red"]      # inner blue's red ends: band grows upward, room from the neck lapis
                 if st == 1:
                     widths[6] += SZ["orange"]       # inner yellow band lost an orange: laid out as before
+                widths[5] -= SZ["conch"]            # white conch under the rose bicone: taken from the turquoise below
                 if st == 0:
                     widths[5] += SZ["mookorg"]      # outer mookaite band lost a round: laid out as before
                 if st == 0:
@@ -1333,6 +1337,8 @@ if V4:
                 if st == 0:
                     widths[5] -= SZ["mookorg"]
                     gaps[5] += SZ["mookorg"]            # bicone stays put; more turquoise in the run above the mookaite
+                widths[5] += SZ["conch"]
+                gaps[6] -= SZ["conch"]
                 if st == 1:
                     widths[6] -= SZ["orange"]
                     gaps[6] += SZ["orange"]             # yellow rounds stay put; more turquoise in the run above
@@ -1531,6 +1537,24 @@ for (x, y, tx, ty, i, _p), strand in allbeads:
         d.polygon(quad(x, y, tx, ty, -0.5, 0.5, 0.9), fill=(150, 225, 245))      # light through the hole
         gx, gy = P(x + nx * 1.2, y + ny * 1.2)
         d.ellipse([gx - 2.5, gy - 2.5, gx + 2.5, gy + 2.5], fill=(240, 252, 255))
+        continue
+    if kind == 6:
+        # 7 x 2 mm white conch shell rondelle: creamy white, satin, faint growth lines
+        R = 3.5
+        nstrip = 12
+        col = jitter(random.choice([(244, 238, 226), (238, 232, 218), (248, 244, 234)]), 6)
+        for k in range(nstrip):
+            a0 = -R + 2 * R * k / nstrip
+            a1 = -R + 2 * R * (k + 1) / nstrip
+            ac = (a0 + a1) / 2
+            u = (k + 0.5) / nstrip
+            half = 0.98 * (max(0.0, 1 - (abs(ac) / R) ** 4)) ** 0.5
+            f = 0.62 + 0.45 * math.sin(math.pi * u) ** 0.8
+            d.polygon(quad(x, y, tx, ty, a0, a1, max(half, 0.12)), fill=sh(col, f))
+        a = random.uniform(-0.6 * R, 0.6 * R)
+        d.polygon(quad(x + nx * a, y + ny * a, tx, ty, -0.2, 0.2, 0.8), fill=sh(col, 0.9))
+        gx, gy = P(x + nx * 0.35 * R, y + ny * 0.35 * R)
+        d.ellipse([gx - 2, gy - 2, gx + 2, gy + 2], fill=(255, 255, 252))
         continue
     if kind == 5:
         # 8 mm opaque red glass rondelle: glossy, puffy rim
