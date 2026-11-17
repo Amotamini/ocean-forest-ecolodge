@@ -1041,6 +1041,9 @@ if V4:
         assert all(b[2] == "mookyel" for b in BANDS[3])
         assert all(b[-1] == "lapisH" and b[-2] == "orange" for b in BANDS[3])
         BANDS[3] = tuple(b[:-1] + ["diop", "lapisH"] for b in BANDS[3])   # chrome diopside between the bottom orange and the lapis
+        _yo = list(BANDS[3][0]); _yo.remove("redglass"); _yo.insert(len(_yo) - 2, "redglass")   # outer: red glass lowered onto the green
+        _yi = list(BANDS[3][1]); _yi.insert(len(_yi) - 2, "redglass")                          # inner: red glass added over the green
+        BANDS[3] = (_yo, _yi)
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
@@ -1150,6 +1153,8 @@ if V4:
                 widths[6] += SZ["orange"]           # ...into the room left by the orange removed from the top of the yellow band
                 widths[6] -= SZ["diop"] - SZ["orange"]   # yellow band's top diopside (1 mm more than the orange it replaced)
                 widths[6] -= SZ["diop"]             # yellow band's bottom diopside
+                if st == 1:
+                    widths[6] -= SZ["redglass"]     # inner yellow band's added red glass
                 widths[8] -= SZ["diop"]             # diopside above the white opal: band grows upward, room from the neck
                 widths[3] -= SZ["orange"]           # orange atop the blue band: room from the neck lapis
                 widths[3] -= SZ["orange"]           # orange under the blue band: necklace lengthened instead
@@ -1228,6 +1233,10 @@ if V4:
                 widths[6] += SZ["diop"]
                 gaps[6] -= SZ["diop"] / 2               # bottom diopside: half from the run above (band stays centred)...
                 gaps[7] -= SZ["diop"] / 2               # ...half from the run below
+                if st == 1:
+                    widths[6] += SZ["redglass"]
+                    gaps[6] -= SZ["redglass"] / 2       # inner red glass: half from the run above, half from below
+                    gaps[7] -= SZ["redglass"] / 2
                 widths[8] += SZ["diop"]
                 _need = 6.0 + SZ["diop"] - SZ["orange"] + SZ["diop"]
                 if st == 1:
