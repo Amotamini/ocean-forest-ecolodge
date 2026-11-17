@@ -1078,6 +1078,14 @@ if V4:
             seq = list(seq); assert seq[-4:] == ["yellow", "lapisH", "red", "diop"], seq
             seq[-3:] = ["diop", "orange"]; return seq   # lapis under the green removed; orange (was red) touches the green
         BANDS[3] = tuple(_diop_up(b) for b in BANDS[3])
+        # below the yellow (rose band top and bottom, bottom band top): green against the round beads,
+        # lapis -> orange spiny oyster against the turquoise
+        def _go_start(seq):
+            seq = list(seq); assert seq[:2] == ["diop", "lapisH"], seq; seq[:2] = ["orange", "diop"]; return seq
+        def _go_end(seq):
+            seq = list(seq); assert seq[-2:] == ["lapisH", "diop"], seq; seq[-2:] = ["diop", "orange"]; return seq
+        BANDS[7] = tuple(_go_end(_go_start(b)) for b in BANDS[7])
+        BANDS[8] = tuple(_go_start(b) for b in BANDS[8])
         # yellow band moves down, between the mookaite (brown) band and the white band
         _ord = [0, 1, 2, 4, 5, 6, 3, 7, 8]
         BANDS = [BANDS[i] for i in _ord]
