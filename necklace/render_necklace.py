@@ -1559,22 +1559,21 @@ if V4:
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
                 elif V5 and gi == 3 and gl >= 13.0:       # red-to-blue run: tourmalines in the upper half, turquoise in the lower half
                     nt = max(1, int(round((gl - GAP3_EXTRA.get(st, 0.0)) / 2 / 7.0)))   # same tourmalines as before
-                    for q in range(nt):
-                        _tk = ("pink", "tan", "black")[q % 3]
-                        put(g + 7.0 * (q + 0.5), _tk)
-                        V4_USED[_tk] = V4_USED.get(_tk, 0) + 2
+                    _ll = 7.0 * nt                           # upper part: plain lapis heishi (was tourmaline rounds)
+                    nl2 = max(1, int(round(_ll / 3.0)))
+                    for q in range(nl2):
+                        put(g + _ll / nl2 * (q + 0.5), "lapisH")
+                    V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl2
                     _t0, _tl = g + 7.0 * nt, gl - 7.0 * nt
                     nq = max(1, int(round(_tl / 2.4)))
                     for q in range(nq):
                         put(_t0 + _tl / nq * (q + 0.5), "turq", _tl / nq)
                     V4_USED["turq"] = V4_USED.get("turq", 0) + 2 * nq
-                elif V5 and gi in (2, 3) and gl >= 6.5:   # top runs: 7 mm pink / tan / black tourmaline rounds instead of turquoise
-                    nt = max(1, int(gl // 7.0))
+                elif V5 and gi in (2, 3) and gl >= 6.5:   # top runs: plain lapis heishi (were tourmaline rounds)
+                    nt = max(1, int(round(gl / 3.0)))
                     for q in range(nt):
-                        _tk = ("pink", "tan", "black")[q % 3]
-                        put(g + gl / nt * (q + 0.5), _tk)
-                        V4_USED[_tk] = V4_USED.get(_tk, 0) + 2
-                    TOP_TOURM[st] = TOP_TOURM.get(st, 0) + nt
+                        put(g + gl / nt * (q + 0.5), "lapisH")
+                    V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nt
                 else:
                     nt = max(1, int(round(gl / 2.4)))
                     for q in range(nt):
