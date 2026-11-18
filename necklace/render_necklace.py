@@ -1559,11 +1559,14 @@ if V4:
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
                 elif V5 and gi == 3 and gl >= 13.0:       # red-to-blue run: tourmalines in the upper half, turquoise in the lower half
                     nt = max(1, int(round((gl - GAP3_EXTRA.get(st, 0.0)) / 2 / 7.0)))   # same tourmalines as before
-                    _ll = 7.0 * nt                           # upper part: plain lapis heishi (was tourmaline rounds)
-                    nl2 = max(1, int(round(_ll / 3.0)))
+                    _ll = 7.0 * nt - SZ["pink"]              # upper part: plain lapis heishi, then a pink tourmaline
+                    nl2 = max(1, int(round(_ll / 3.0))) if _ll > 1.5 else 0
                     for q in range(nl2):
                         put(g + _ll / nl2 * (q + 0.5), "lapisH")
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl2
+                    put(g + _ll + SZ["pink"] / 2, "pink")    # pink tourmaline above the diopside (room from the lapis)
+                    V4_USED["pink"] = V4_USED.get("pink", 0) + 2
+                    _ll += SZ["pink"]
                     put(g + _ll + SZ["diop"] / 2, "diop")    # chrome diopside where the lapis meets the turquoise
                     V4_USED["diop"] = V4_USED.get("diop", 0) + 2
                     _t0, _tl = g + _ll + SZ["diop"], gl - _ll - SZ["diop"]
