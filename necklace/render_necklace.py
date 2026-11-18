@@ -1500,6 +1500,13 @@ if V4:
                     _a, _r = STN[8].index("amet"), STN[8].index("rq9")
                     STN[8][_a], STN[8][_r] = "rq9", "amet"
                 print(f"v5 strand {st} trim: cut {_cut:.1f} mm per side, centre run change {_cut + V5_EXT10:+.1f} mm")
+                # remove the yellow mookaite (yellow section) and the darkest mookaite (top of the mookaite section);
+                # their room and all the visible turquoise runs are evened out to one length per strand
+                STN[5].remove("mookred"); STN[6].remove("mookyel")
+                _vis = list(range(3, len(gaps)))
+                _tot = sum(gaps[i] for i in _vis) + SZ["mookred"] + SZ["mookyel"]
+                for i in _vis:
+                    gaps[i] = _tot / len(_vis)
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
