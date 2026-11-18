@@ -1510,6 +1510,8 @@ if V4:
                 _k = STN[8].index("rq9"); assert STN[8][_k - 1] == "red", STN[8]
                 del STN[8][_k - 1]                               # red touching the rose quartz removed; section stays centred
                 gaps[8] += SZ["red"] / 2; gaps[9] += SZ["red"] / 2
+                _nr = STN[4].count("red"); STN[4] = [k for k in STN[4] if k != "red"]   # green section: reds removed
+                gaps[4] += _nr * SZ["red"] / 2; gaps[5] += _nr * SZ["red"] / 2           # turquoise above and below fills in
                 if st == 0:                                      # outer: one white round fewer; turquoise above and below fills in
                     STN[7].remove("opal8")
                     gaps[7] += SZ["opal8"] / 2; gaps[8] += SZ["opal8"] / 2
