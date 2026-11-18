@@ -1191,6 +1191,7 @@ if V4:
         barrels = {0: [], 1: []}
         denim = []
         V4_USED = {}
+        TOP_TOURM = {}
         V5_CEN = {}
         for st, STN in (((1, INNER), (0, OUTER)) if V5 else ((0, OUTER), (1, INNER))):
             path, ss = (outer, s_out) if st == 0 else (inner, s_in)
@@ -1544,6 +1545,13 @@ if V4:
                         put(g + gl / nl * (q + 0.5), "lapisH")
                     lap -= nl
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
+                elif V5 and gi in (2, 3) and gl >= 6.5:   # top runs: 7 mm pink / tan / black tourmaline rounds instead of turquoise
+                    nt = max(1, int(gl // 7.0))
+                    for q in range(nt):
+                        _tk = ("pink", "tan", "black")[q % 3]
+                        put(g + gl / nt * (q + 0.5), _tk)
+                        V4_USED[_tk] = V4_USED.get(_tk, 0) + 2
+                    TOP_TOURM[st] = TOP_TOURM.get(st, 0) + nt
                 else:
                     nt = max(1, int(round(gl / 2.4)))
                     for q in range(nt):
