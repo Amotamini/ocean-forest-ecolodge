@@ -1495,7 +1495,7 @@ if V4:
                 STN[7] = ["conch", "orange", "opal8", "opal8", "abbic", "red", "conch"]
                 _cut = _old - sum(SZ[k] for i in (5, 6, 7) for k in STN[i])
                 gaps[9] += _cut + V5_EXT10                       # beads below move up; centre run keeps (almost) its length
-                if st == 1:                                      # inner rose section: rose quartz above the amethyst
+                if True:                                         # rose section (both strands): rose quartz above the amethyst
                     _a, _r = STN[8].index("amet"), STN[8].index("rq9")
                     STN[8][_a], STN[8][_r] = "rq9", "amet"
                 print(f"v5 strand {st} trim: cut {_cut:.1f} mm per side, centre run change {_cut + V5_EXT10:+.1f} mm")
