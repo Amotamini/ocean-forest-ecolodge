@@ -1516,6 +1516,8 @@ if V4:
                 STN[7][_k + 1] = "diop"                          # under the crystal bicone: green instead of red
                 _k = STN[8].index("rq9"); STN[8].insert(_k, "red")   # red back on top of the rose quartz
                 gaps[8] -= (SZ["diop"] - SZ["red"]) + SZ["red"]  # 4 mm more beads: taken from the turquoise run between them
+                assert STN[8][0] == "diop", STN[8]
+                del STN[8][0]; gaps[8] += SZ["diop"]             # rose section: green border removed, white conch touches the turquoise
                 if st == 0:                                      # outer: one white round fewer; turquoise above and below fills in
                     STN[7].remove("opal8")
                     gaps[7] += SZ["opal8"] / 2; gaps[8] += SZ["opal8"] / 2
