@@ -1192,6 +1192,7 @@ if V4:
         denim = []
         V4_USED = {}
         TOP_TOURM = {}
+        GAP3_EXTRA = {}
         V5_CEN = {}
         for st, STN in (((1, INNER), (0, OUTER)) if V5 else ((0, OUTER), (1, INNER))):
             path, ss = (outer, s_out) if st == 0 else (inner, s_in)
@@ -1530,6 +1531,14 @@ if V4:
                 if st == 0:                                      # outer: one white round fewer; turquoise above and below fills in
                     STN[7].remove("opal8")
                     gaps[7] += SZ["opal8"] / 2; gaps[8] += SZ["opal8"] / 2
+                # turquoise runs from the centre out to the blue section trimmed to one (the shortest) length;
+                # what they give up goes into the run above the blue section, which moves the blue down
+                _low = list(range(4, len(gaps)))
+                _L = min(gaps[i] for i in _low)
+                _x = sum(gaps[i] - _L for i in _low)
+                for i in _low:
+                    gaps[i] = _L
+                gaps[3] += _x; GAP3_EXTRA[st] = _x
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
@@ -1549,7 +1558,7 @@ if V4:
                     lap -= nl
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
                 elif V5 and gi == 3 and gl >= 13.0:       # red-to-blue run: tourmalines in the upper half, turquoise in the lower half
-                    nt = max(1, int(round(gl / 2 / 7.0)))
+                    nt = max(1, int(round((gl - GAP3_EXTRA.get(st, 0.0)) / 2 / 7.0)))   # same tourmalines as before
                     for q in range(nt):
                         _tk = ("pink", "tan", "black")[q % 3]
                         put(g + 7.0 * (q + 0.5), _tk)
