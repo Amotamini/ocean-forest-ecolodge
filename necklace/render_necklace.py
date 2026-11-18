@@ -1492,7 +1492,7 @@ if V4:
                 _rd = (lambda inner, outer: inner if st == 1 else outer)
                 STN[5] = ["conch", "red"] + _rd(["mookred", "mookrd", "mookrd"], ["mookred", "mookrd"]) + ["rbic", "red", "conch"]
                 STN[6] = ["conch", "orange"] + _rd(["mookyel", "yellow", "yellow"], ["mookyel", "yellow"]) + ["orange", "conch"]
-                STN[7] = ["conch", "orange", "opal8", "opal8", "abbic", "red", "conch"]
+                STN[7] = ["conch", "diop", "opal8", "opal8", "abbic", "red", "conch"]   # green chrome above the white rounds
                 _cut = _old - sum(SZ[k] for i in (5, 6, 7) for k in STN[i])
                 gaps[9] += _cut + V5_EXT10                       # beads below move up; centre run keeps (almost) its length
                 if True:                                         # rose section (both strands): rose quartz above the amethyst
