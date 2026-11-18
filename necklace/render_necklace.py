@@ -1548,6 +1548,17 @@ if V4:
                         put(g + gl / nl * (q + 0.5), "lapisH")
                     lap -= nl
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl
+                elif V5 and gi == 3 and gl >= 13.0:       # red-to-blue run: tourmalines in the upper half, turquoise in the lower half
+                    nt = max(1, int(round(gl / 2 / 7.0)))
+                    for q in range(nt):
+                        _tk = ("pink", "tan", "black")[q % 3]
+                        put(g + 7.0 * (q + 0.5), _tk)
+                        V4_USED[_tk] = V4_USED.get(_tk, 0) + 2
+                    _t0, _tl = g + 7.0 * nt, gl - 7.0 * nt
+                    nq = max(1, int(round(_tl / 2.4)))
+                    for q in range(nq):
+                        put(_t0 + _tl / nq * (q + 0.5), "turq", _tl / nq)
+                    V4_USED["turq"] = V4_USED.get("turq", 0) + 2 * nq
                 elif V5 and gi in (2, 3) and gl >= 6.5:   # top runs: 7 mm pink / tan / black tourmaline rounds instead of turquoise
                     nt = max(1, int(gl // 7.0))
                     for q in range(nt):
