@@ -1564,7 +1564,9 @@ if V4:
                     for q in range(nl2):
                         put(g + _ll / nl2 * (q + 0.5), "lapisH")
                     V4_USED["lapisH"] = V4_USED.get("lapisH", 0) + 2 * nl2
-                    _t0, _tl = g + 7.0 * nt, gl - 7.0 * nt
+                    put(g + _ll + SZ["diop"] / 2, "diop")    # chrome diopside where the lapis meets the turquoise
+                    V4_USED["diop"] = V4_USED.get("diop", 0) + 2
+                    _t0, _tl = g + _ll + SZ["diop"], gl - _ll - SZ["diop"]
                     nq = max(1, int(round(_tl / 2.4)))
                     for q in range(nq):
                         put(_t0 + _tl / nq * (q + 0.5), "turq", _tl / nq)
