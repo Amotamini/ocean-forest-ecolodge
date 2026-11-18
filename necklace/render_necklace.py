@@ -1485,7 +1485,8 @@ if V4:
                 STN[6][-3:] = ["orange", "conch", "diop"]      # under the yellow: orange against the yellow, green against the turquoise
                 _g = list(STN[4])                              # green section: the diopside next to the orange moves out to the turquoise
                 assert _g[:4] == ["conch", "red", "orange", "diop"] and _g[-4:] == ["diop", "orange", "red", "conch"], _g
-                STN[4] = ["diop", "conch", "red", "orange"] + _g[4:-4] + ["orange", "red", "conch", "diop"]
+                STN[4] = ["conch", "red", "orange"] + _g[4:-4] + ["orange", "red", "conch"]   # outer green border beads removed again:
+                gaps[6] += 2 * SZ["diop"]                      # white touches the turquoise; their room goes to the mookaite-yellow run
                 # trim for a 42" necklace: mookaite, yellow and white sections keep 3 round beads on the inner strand
                 # and 2 on the outer (plus their bicone), with 2 border rondelles at each end (white conch against the turquoise)
                 _old = sum(SZ[k] for i in (5, 6, 7) for k in STN[i])
