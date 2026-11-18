@@ -1507,6 +1507,9 @@ if V4:
                 _tot = sum(gaps[i] for i in _vis) + SZ["mookred"] + SZ["mookyel"]
                 for i in _vis:
                     gaps[i] = _tot / len(_vis)
+                _k = STN[8].index("rq9"); assert STN[8][_k - 1] == "red", STN[8]
+                del STN[8][_k - 1]                               # red touching the rose quartz removed; section stays centred
+                gaps[8] += SZ["red"] / 2; gaps[9] += SZ["red"] / 2
                 if st == 0:                                      # outer: one white round fewer; turquoise above and below fills in
                     STN[7].remove("opal8")
                     gaps[7] += SZ["opal8"] / 2; gaps[8] += SZ["opal8"] / 2
