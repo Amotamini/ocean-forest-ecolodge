@@ -1522,6 +1522,9 @@ if V4:
                 assert STN[3][1] == "orange" and STN[3][-2] == "orange", STN[3]
                 del STN[3][-2]; del STN[3][1]                    # blue section: oranges removed, reds remain
                 gaps[3] += SZ["orange"]; gaps[4] += SZ["orange"]
+                assert STN[2][0] == "lapisH", STN[2]
+                STN[2] = ["conch", "orange"] + STN[2][1:]        # top red section: lapis -> orange, plus a white conch border
+                gaps[3] -= SZ["conch"]                           # 2 mm from the tourmaline run below it
                 if st == 0:                                      # outer blue section: blue tourmaline removed, turquoise above and below
                     STN[3].remove("tblue"); gaps[3] += SZ["tblue"] / 2; gaps[4] += SZ["tblue"] / 2
                 if st == 0:                                      # outer: one white round fewer; turquoise above and below fills in
