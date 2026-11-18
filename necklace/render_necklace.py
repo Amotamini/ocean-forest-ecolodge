@@ -1507,6 +1507,9 @@ if V4:
                 _tot = sum(gaps[i] for i in _vis) + SZ["mookred"] + SZ["mookyel"]
                 for i in _vis:
                     gaps[i] = _tot / len(_vis)
+                if st == 0:                                      # outer: one white round fewer; turquoise above and below fills in
+                    STN[7].remove("opal8")
+                    gaps[7] += SZ["opal8"] / 2; gaps[8] += SZ["opal8"] / 2
                 print(f"v5 strand {st} swapped 7/8 gaps", [round(float(x), 1) for x in gaps])
             g = 0.0
             lap = LAP_BUDGET[st]
